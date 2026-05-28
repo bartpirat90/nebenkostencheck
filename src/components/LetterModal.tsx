@@ -23,9 +23,10 @@ export default function LetterModal({ open, onClose, type, initialContact, error
   const initialContactRef = useRef<ContactData>(initialContact);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  // Update ref only when modal is closed so open-modal edits are never overwritten
   useEffect(() => {
     if (!open) initialContactRef.current = initialContact;
-  }, [open, initialContact]);
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (open) {
