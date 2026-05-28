@@ -22,6 +22,7 @@ export interface ContactData {
 }
 
 export interface AnalysisResult {
+  notAStatement?: boolean;
   summary: string;
   errors: ErrorItem[];
   totalPotentialEur?: number | null;
