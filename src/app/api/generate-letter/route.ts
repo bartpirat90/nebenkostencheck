@@ -4,6 +4,17 @@ import { LetterRequest } from "@/types";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+function classifyError(message: string): string {
+  const msg = message.toLowerCase();
+  if (msg.includes("503") || msg.includes("service unavailable") || msg.includes("high demand")) {
+    return "Die KI ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
+  }
+  if (msg.includes("fetch failed") || msg.includes("network") || msg.includes("timeout") || msg.includes("econnrefused")) {
+    return "Verbindung unterbrochen. Bitte erneut versuchen.";
+  }
+  return "Ein unbekannter Fehler ist aufgetreten. Bitte erneut versuchen.";
+}
+
 function buildPrompt(req: LetterRequest): string {
   const { type, contact, errors } = req;
   const today = new Date().toLocaleDateString("de-DE", {
@@ -57,7 +68,6 @@ ANFORDERUNGEN AN DEN BRIEF:
 Gib AUSSCHLIESSLICH den fertigen Brief zurück, ohne Erklärungen, ohne Markdown-Formatierung. Der Brief soll direkt kopierbar sein.`;
   }
 
-  // document_review
   return `Erstelle ein formelles Schreiben zur Aufforderung der Belegeinsicht nach § 259 BGB.
 
 ABSENDER (Mieter):
@@ -102,7 +112,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ letter });
   } catch (err: unknown) {
     console.error("Letter generation error:", err);
-    const message = err instanceof Error ? err.message : "Interner Fehler";
-    return NextResponse.json({ error: message }, { status: 500 });
+    const message = err instanceof Error ? err.message : "";
+    return NextResponse.json({ error: classifyError(message) }, { status: 500 });
   }
 }
