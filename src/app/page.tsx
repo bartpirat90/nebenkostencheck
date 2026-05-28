@@ -3,6 +3,9 @@
 import { useState, useCallback } from "react";
 import UploadZone from "@/components/UploadZone";
 import ResultView from "@/components/ResultView";
+import LandingHero from "@/components/LandingHero";
+import StatsBar from "@/components/StatsBar";
+import HowItWorks from "@/components/HowItWorks";
 import { AnalysisResult } from "@/types";
 
 export default function Home() {
@@ -45,69 +48,46 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F2EC]">
-      {/* Header */}
-      <header className="px-6 py-5 flex items-center justify-between border-b border-[#E0DBD0]">
+    <main className="min-h-screen bg-[#0F172A]">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-[#1E293B] bg-[#0F172A]/90 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#1A1A1A] rounded-sm flex items-center justify-center">
-            <span className="text-[#F5F2EC] text-xs font-bold">NK</span>
+          <div className="w-8 h-8 bg-gradient-to-br from-[#6366F1] to-[#8B5CF6] rounded-lg flex items-center justify-center">
+            <span className="text-white text-xs font-black">NK</span>
           </div>
-          <span className="font-bold text-[#1A1A1A] tracking-tight text-lg">
+          <span className="font-black text-[#F1F5F9] tracking-tight text-lg">
             Nebenkostencheck
           </span>
         </div>
-        <span className="text-xs text-[#888] bg-[#E8E3DA] px-2 py-1 rounded-full">
+        <span className="text-xs text-[#64748B] bg-[#1E293B] px-3 py-1 rounded-full border border-[#334155]">
           Kostenlos & ohne Anmeldung
         </span>
-      </header>
+      </nav>
 
-      <div className="max-w-2xl mx-auto px-6 py-12">
-        {/* Hero */}
+      <div className="max-w-2xl mx-auto px-6 pb-12">
+        {/* Landing sections – nur vor der Analyse */}
         {!result && !loading && (
-          <div className="mb-10">
-            <div className="inline-block bg-[#D4E8C2] text-[#2D5A1B] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              KI-gestützte Prüfung in Sekunden
-            </div>
-            <h1 className="text-4xl font-bold text-[#1A1A1A] leading-tight mb-4 tracking-tight">
-              Steckt Geld in deiner<br />
-              <span className="text-[#2D5A1B]">Nebenkostenabrechnung?</span>
-            </h1>
-            <p className="text-[#555] text-lg leading-relaxed">
-              Lade deine Abrechnung hoch – unsere KI prüft sie auf typische Fehler
-              und schätzt dein Erstattungspotenzial.
-            </p>
-          </div>
+          <>
+            <LandingHero />
+            <StatsBar />
+            <HowItWorks />
+          </>
         )}
 
-        {/* Upload or Result */}
-        {!result ? (
-          <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
-        ) : (
-          <ResultView result={result} onReset={handleReset} />
-        )}
+        {/* Upload oder Ergebnis */}
+        <div id="upload">
+          {!result ? (
+            <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
+          ) : (
+            <ResultView result={result} onReset={handleReset} />
+          )}
+        </div>
 
-        {/* Trust signals */}
+        {/* Footer-Disclaimer */}
         {!result && !loading && (
-          <div className="mt-8 flex flex-wrap gap-4 text-sm text-[#888]">
-            <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-[#2D5A1B]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              Datei wird nicht gespeichert
-            </div>
-            <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-[#2D5A1B]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              DSGVO-konform
-            </div>
-            <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-[#2D5A1B]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              Kein Account nötig
-            </div>
-          </div>
+          <p className="mt-8 text-center text-xs text-[#334155] leading-relaxed">
+            © 2026 Nebenkostencheck · DSGVO-konform · Keine Datenspeicherung
+          </p>
         )}
       </div>
     </main>
@@ -119,7 +99,7 @@ function fileToBase64(file: File): Promise<string> {
     const reader = new FileReader();
     reader.onload = () => {
       const result = reader.result as string;
-      resolve(result.split(",")[1]); // strip data:...;base64,
+      resolve(result.split(",")[1]);
     };
     reader.onerror = reject;
     reader.readAsDataURL(file);
