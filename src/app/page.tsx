@@ -29,8 +29,16 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || "Analyse fehlgeschlagen");
+        let errorMessage = "Analyse fehlgeschlagen. Bitte erneut versuchen.";
+        try {
+          const err = await response.json();
+          errorMessage = err.error || errorMessage;
+        } catch {
+          if (response.status === 504 || response.status === 503) {
+            errorMessage = "Die KI ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
+          }
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
