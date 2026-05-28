@@ -81,22 +81,22 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div
-        className="bg-[#F5F2EC] rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl"
+        className="bg-[#1E293B] rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-[#334155]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between p-6 border-b border-[#E0DBD0]">
+        <div className="flex items-start justify-between p-6 border-b border-[#334155]">
           <div>
-            <h2 className="text-xl font-bold text-[#1A1A1A]">{title}</h2>
-            <p className="text-sm text-[#888] mt-1">{description}</p>
+            <h2 className="text-xl font-bold text-[#F1F5F9]">{title}</h2>
+            <p className="text-sm text-[#64748B] mt-1">{description}</p>
           </div>
           <button
             onClick={onClose}
-            className="text-[#888] hover:text-[#1A1A1A] p-1"
+            className="text-[#475569] hover:text-[#94A3B8] p-1"
             aria-label="Schließen"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,10 +113,10 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
           {step === "letter" && (
             <div className="space-y-3">
-              <div className="bg-white border border-[#E0DBD0] rounded-xl p-5 font-mono text-sm text-[#1A1A1A] whitespace-pre-wrap leading-relaxed">
+              <div className="bg-[#0F172A] border border-[#334155] rounded-xl p-5 font-mono text-sm text-[#94A3B8] whitespace-pre-wrap leading-relaxed">
                 {letter}
               </div>
-              <p className="text-xs text-[#888]">
+              <p className="text-xs text-[#475569]">
                 Bitte vor dem Versenden nochmal durchlesen und ggf. anpassen. Dieses Schreiben ist
                 eine KI-Vorlage ohne Rechtsverbindlichkeit.
               </p>
@@ -124,27 +124,27 @@ export default function LetterModal({ open, onClose, type, initialContact, error
           )}
 
           {error && (
-            <div className="mt-4 bg-[#FEF2F2] border border-[#FECACA] rounded-xl p-3 text-sm text-[#991B1B]">
+            <div className="mt-4 bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-3 text-sm text-[#FCA5A5]">
               {error}
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="border-t border-[#E0DBD0] p-4 flex flex-col sm:flex-row gap-2">
+        <div className="border-t border-[#334155] p-4 flex flex-col sm:flex-row gap-2">
           {step === "form" && (
             <>
               <button
                 onClick={onClose}
-                className="flex-1 sm:flex-none rounded-xl border border-[#E0DBD0] text-[#555] font-semibold py-3 px-4 text-sm hover:bg-white"
+                className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
               >
                 Abbrechen
               </button>
               <button
                 onClick={generateLetter}
                 disabled={loading}
-                className="flex-1 rounded-xl bg-[#1A1A1A] text-white font-semibold py-3 px-4 text-sm
-                  hover:bg-[#2D5A1B] transition-colors disabled:opacity-60"
+                className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm
+                  hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {loading ? "Brief wird erstellt…" : "Brief erstellen"}
               </button>
@@ -155,19 +155,19 @@ export default function LetterModal({ open, onClose, type, initialContact, error
             <>
               <button
                 onClick={() => setStep("form")}
-                className="flex-1 sm:flex-none rounded-xl border border-[#E0DBD0] text-[#555] font-semibold py-3 px-4 text-sm hover:bg-white"
+                className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
               >
                 Zurück
               </button>
               <button
                 onClick={downloadAsText}
-                className="flex-1 sm:flex-none rounded-xl border-2 border-[#1A1A1A] text-[#1A1A1A] font-semibold py-3 px-4 text-sm hover:bg-[#1A1A1A] hover:text-white transition-colors"
+                className="flex-1 sm:flex-none rounded-xl border-2 border-[#6366F1] text-[#818CF8] font-semibold py-3 px-4 text-sm hover:bg-[#6366F1] hover:text-white transition-colors"
               >
                 Als .txt herunterladen
               </button>
               <button
                 onClick={copyToClipboard}
-                className="flex-1 rounded-xl bg-[#1A1A1A] text-white font-semibold py-3 px-4 text-sm hover:bg-[#2D5A1B] transition-colors"
+                className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm hover:opacity-90 transition-opacity"
               >
                 {copied ? "✓ Kopiert!" : "In Zwischenablage kopieren"}
               </button>
