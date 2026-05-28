@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnalysisResult, ErrorItem, LetterType } from "@/types";
+import { AnalysisResult, ErrorItem, LetterType, Confidence } from "@/types";
 import LetterModal from "./LetterModal";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   onReset: () => void;
 }
 
-const CONFIDENCE_CONFIG = {
+const CONFIDENCE_CONFIG: Record<Confidence, { label: string; bg: string; border: string; text: string; dot: string }> = {
   sicher: {
     label: "Sicher",
     bg: "bg-[#0F2B1F]",
@@ -85,8 +85,8 @@ export default function ResultView({ result, onReset }: Props) {
             title="Sofort angreifbar"
             subtitle="Eindeutige Rechtsverstöße – direkter Widerspruch möglich"
           />
-          {directErrors.map((err, i) => (
-            <ErrorCard key={i} error={err} />
+          {directErrors.map((err) => (
+            <ErrorCard key={`direct-${err.title}`} error={err} />
           ))}
           <button
             onClick={() => setLetterModal("objection")}
@@ -111,8 +111,8 @@ export default function ResultView({ result, onReset }: Props) {
             title="Belegeinsicht erforderlich"
             subtitle="Verdacht auf Fehler – Belege beim Vermieter anfordern"
           />
-          {reviewErrors.map((err, i) => (
-            <ErrorCard key={i} error={err} />
+          {reviewErrors.map((err) => (
+            <ErrorCard key={`review-${err.title}`} error={err} />
           ))}
           <button
             onClick={() => setLetterModal("document_review")}
@@ -215,7 +215,7 @@ function SectionHeader({ badge, badgeColor, title, subtitle }: {
 }
 
 function ErrorCard({ error }: { error: ErrorItem }) {
-  const conf = CONFIDENCE_CONFIG[error.confidence] || CONFIDENCE_CONFIG.wahrscheinlich;
+  const conf = CONFIDENCE_CONFIG[error.confidence];
 
   return (
     <div className={`rounded-xl border p-4 ${conf.bg} ${conf.border}`}>
@@ -262,5 +262,5 @@ function formatEur(value: number): string {
 }
 
 function sumPotential(errors: ErrorItem[]): number {
-  return errors.reduce((sum, e) => sum + (e.potentialEur || 0), 0);
+  return errors.reduce((sum, e) => sum + (e.potentialEur ?? 0), 0);
 }
