@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ContactData, ErrorItem, LetterType } from "@/types";
 import ContactForm from "./ContactForm";
 
@@ -20,15 +20,23 @@ export default function LetterModal({ open, onClose, type, initialContact, error
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
+  const initialContactRef = useRef<ContactData>(initialContact);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) initialContactRef.current = initialContact;
+  }, [open, initialContact]);
+
   useEffect(() => {
     if (open) {
       setStep("form");
-      setContact(initialContact);
+      setContact(initialContactRef.current);
       setLetter("");
       setError(null);
       setCopied(false);
+      setTimeout(() => modalRef.current?.focus(), 0);
     }
-  }, [open, initialContact]);
+  }, [open]);
 
   if (!open) return null;
 
@@ -62,9 +70,13 @@ export default function LetterModal({ open, onClose, type, initialContact, error
   };
 
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(letter);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(letter);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setError("Kopieren fehlgeschlagen. Bitte manuell kopieren.");
+    }
   };
 
   const downloadAsText = () => {
@@ -82,16 +94,21 @@ export default function LetterModal({ open, onClose, type, initialContact, error
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
-      onClick={onClose}
+      onClick={(e) => { if (e.button === 0) onClose(); }}
     >
       <div
-        className="bg-[#1E293B] rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-[#334155]"
+        ref={modalRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="letter-modal-title"
+        className="bg-[#1E293B] rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-[#334155] outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-start justify-between p-6 border-b border-[#334155]">
           <div>
-            <h2 className="text-xl font-bold text-[#F1F5F9]">{title}</h2>
+            <h2 id="letter-modal-title" className="text-xl font-bold text-[#F1F5F9]">{title}</h2>
             <p className="text-sm text-[#64748B] mt-1">{description}</p>
           </div>
           <button
