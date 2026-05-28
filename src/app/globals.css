@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: #0F172A;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   background-color: #0F172A;
