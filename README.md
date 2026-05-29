@@ -2,7 +2,7 @@
 
 Automatisierte Prüfung deutscher Nebenkostenabrechnungen: Abrechnung hochladen, Rechtsverstöße erkennen, Widerspruch- und Belegeinsicht-Schreiben als PDF erhalten.
 
-> **Stand dieser Doku:** 2026-05-29 · Branch `monetarisierung` (lokal end-to-end getestet, noch nicht auf `main` gemergt/deployed).
+> **Stand dieser Doku:** 2026-05-29 · Branch `monetarisierung` (lokal end-to-end getestet, noch nicht auf `main` gemergt/deployed). Go-Live-Vorbereitung läuft: Rechtstexte mit Betreiberdaten gefüllt; offen sind geschäftliche E-Mail + eigene Domain.
 > Die produktive Live-Version unter [nebenkostencheck-six.vercel.app](https://nebenkostencheck-six.vercel.app) entspricht noch dem **vorherigen, kostenlosen** Stand (Gemini, ohne Bezahlung).
 
 ---
@@ -126,7 +126,8 @@ Vor dem echten Launch erforderlich:
 - [ ] **Anthropic** produktiv: bezahltes Guthaben, `ANTHROPIC_API_KEY` in Vercel
 - [ ] **Stripe Live-Modus**: Konto aktivieren, Live-Keys, Webhook-Endpoint (`/api/stripe-webhook`) registrieren, Zahlungsmethoden im Dashboard prüfen (z. B. PayPal aktivieren, exotische abschalten)
 - [ ] **Upstash/Vercel KV** Produktiv-Instanz, Env-Variablen in Vercel
-- [ ] **Rechtstexte** (Impressum/Datenschutz/AGB) anwaltlich oder über Generator prüfen lassen — die mitgelieferten sind unverbindliche Entwürfe
+- [x] Betreiberdaten in Impressum/Datenschutz/AGB eingetragen (Einzelunternehmer, Kleinunternehmer § 19 UStG) — **offen:** geschäftliche E-Mail (Platzhalter im Code) + eigene Domain
+- [ ] **Rechtstexte** final prüfen lassen (anwaltlich/Generator), danach ⚠️-Entwurf-Banner auf den Seiten entfernen
 - [ ] **Gewerbe / Umsatzsteuer** klären (Kleinunternehmerregelung etc.)
 - [ ] `MOCK_ANALYSIS` in Produktion **nicht** setzen (bzw. `false`)
 
