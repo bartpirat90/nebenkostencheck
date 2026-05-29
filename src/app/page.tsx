@@ -8,6 +8,7 @@ import StatsBar from "@/components/StatsBar";
 import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
 import Logo from "@/components/Logo";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [preview, setPreview] = useState<PreviewData | null>(null);
@@ -62,7 +63,7 @@ export default function Home() {
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-[#1E293B] bg-[#0F172A]/90 backdrop-blur-sm">
         <Logo />
         <span className="text-xs text-[#64748B] bg-[#1E293B] px-3 py-1 rounded-full border border-[#334155]">
-          Kostenlos & ohne Anmeldung
+          Erst-Prüfung gratis · ohne Anmeldung
         </span>
       </nav>
 
@@ -87,13 +88,9 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer-Disclaimer */}
-        {!preview && !loading && (
-          <p className="mt-8 text-center text-xs text-[#334155] leading-relaxed">
-            © 2026 Nebenkostencheck · DSGVO-konform · Keine Datenspeicherung
-          </p>
-        )}
       </div>
+
+      <Footer />
     </main>
   );
 }
