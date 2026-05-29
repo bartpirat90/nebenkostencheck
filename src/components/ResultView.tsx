@@ -142,6 +142,27 @@ export default function ResultView({ result, id, onReset }: Props) {
         </section>
       )}
 
+      {/* Combined letter */}
+      {directErrors.length > 0 && reviewErrors.length > 0 && (
+        <section className="space-y-2 bg-[#1E293B] border border-[#334155] rounded-2xl p-4">
+          <p className="text-sm text-[#94A3B8]">
+            Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung
+            zur Belegeinsicht in einem PDF.
+          </p>
+          <button
+            onClick={() => setLetterModal("combined")}
+            className="w-full rounded-xl border-2 border-[#6366F1] text-[#818CF8] font-semibold py-3.5 text-sm
+              hover:bg-[#1E1B4B]/30 transition-colors flex items-center justify-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z M9 13h6m-6 4h6" />
+            </svg>
+            Kombiniertes Schreiben erstellen
+          </button>
+        </section>
+      )}
+
       {/* No errors state */}
       {!hasErrors && (
         <div className="bg-[#0F2B1F] border border-[#166534] rounded-2xl p-6 text-center">
@@ -202,7 +223,13 @@ export default function ResultView({ result, id, onReset }: Props) {
           onClose={() => setLetterModal(null)}
           type={letterModal}
           initialContact={result.contactData || {}}
-          errors={letterModal === "objection" ? directErrors : reviewErrors}
+          errors={
+            letterModal === "objection"
+              ? directErrors
+              : letterModal === "document_review"
+              ? reviewErrors
+              : result.errors
+          }
           id={id}
         />
       )}

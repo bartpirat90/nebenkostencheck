@@ -149,15 +149,18 @@ export function buildLetterPrompt(req: LetterRequest): string {
     year: "numeric",
   });
 
-  const errorList = errors
-    .map((e, i) => {
-      const parts = [`${i + 1}. ${e.title}`];
-      parts.push(`   Beschreibung: ${e.description}`);
-      if (e.legalBasis) parts.push(`   Rechtsgrundlage: ${e.legalBasis}`);
-      if (e.potentialEur != null) parts.push(`   Geschätztes Potenzial: ${e.potentialEur.toFixed(2)} €`);
-      return parts.join("\n");
-    })
-    .join("\n\n");
+  const formatErrors = (items: typeof errors) =>
+    items
+      .map((e, i) => {
+        const parts = [`${i + 1}. ${e.title}`];
+        parts.push(`   Beschreibung: ${e.description}`);
+        if (e.legalBasis) parts.push(`   Rechtsgrundlage: ${e.legalBasis}`);
+        if (e.potentialEur != null) parts.push(`   Geschätztes Potenzial: ${e.potentialEur.toFixed(2)} €`);
+        return parts.join("\n");
+      })
+      .join("\n\n");
+
+  const errorList = formatErrors(errors);
 
   const tenant = `${contact.tenantName || "[Name Mieter]"}\n${contact.tenantAddress || "[Adresse Mieter]"}`;
   const landlord = `${contact.landlordName || "[Name Vermieter]"}\n${contact.landlordAddress || "[Adresse Vermieter]"}`;
@@ -190,6 +193,45 @@ ANFORDERUNGEN AN DEN BRIEF:
 - Höfliche Schlussformel
 - KEIN juristisches Übermaß, klar und nachvollziehbar
 - Tonfall: bestimmt, sachlich, nicht aggressiv
+
+Gib AUSSCHLIESSLICH den fertigen Brief zurück, ohne Erklärungen, ohne Markdown-Formatierung. Der Brief soll direkt kopierbar sein.`;
+  }
+
+  if (type === "combined") {
+    const directErrors = errors.filter((e) => e.category === "direct");
+    const reviewErrors = errors.filter((e) => e.category === "needs_review");
+    const directList = directErrors.length ? formatErrors(directErrors) : "(keine)";
+    const reviewList = reviewErrors.length ? formatErrors(reviewErrors) : "(keine)";
+
+    return `Erstelle ein EINZIGES formelles, höfliches aber bestimmtes deutsches Geschäftsschreiben, das ZWEI Anliegen in einem Brief zusammenfasst: einen Widerspruch gegen die sofort angreifbaren Punkte (Teil A) UND eine Aufforderung zur Belegeinsicht nach § 259 BGB für die zu prüfenden Punkte (Teil B).
+
+ABSENDER (Mieter):
+${tenant}
+
+EMPFÄNGER (Vermieter):
+${landlord}
+
+Datum: ${today}
+Vertragsnummer: ${contract}
+Abrechnungszeitraum: ${period}
+
+TEIL A – WIDERSPRUCHSPUNKTE (sofort angreifbare Rechtsverstöße):
+${directList}
+
+TEIL B – POSITIONEN FÜR BELEGEINSICHT (§ 259 BGB):
+${reviewList}
+
+ANFORDERUNGEN AN DEN BRIEF:
+- Formaler deutscher Geschäftsbrief mit Briefkopf, Anrede, Betreff
+- Betreff: "Widerspruch und Aufforderung zur Belegeinsicht – Nebenkostenabrechnung ${period}"
+- Einleitung: kurzer Bezug auf die erhaltene Abrechnung und beide Anliegen
+- Gliederung in zwei klar erkennbare Abschnitte:
+  • Abschnitt "Teil A – Widerspruch": jeden Widerspruchspunkt einzeln nummerieren mit konkretem Verweis auf die Rechtsgrundlage; Forderung nach Korrektur der Abrechnung und Erstattung der zu Unrecht abgerechneten Beträge; Fristsetzung 14 Tage zur schriftlichen Stellungnahme
+  • Abschnitt "Teil B – Aufforderung zur Belegeinsicht": jede Position nummeriert mit Begründung warum Belegeinsicht erforderlich ist; Forderung nach Einsicht in die Originalbelege (Rechnungen, Verträge, Aufschlüsselungen) – wahlweise vor Ort oder durch Übersendung von Kopien; Hinweis auf Vorbehalt der Anfechtung dieser Positionen bis zur Belegeinsicht; Fristsetzung 4 Wochen zur Terminvereinbarung bzw. Übersendung der Kopien
+- Falls ein Teil keine Punkte enthält ("(keine)"), lasse diesen Abschnitt ersatzlos weg und passe Einleitung und Betreff sinngemäß an
+- Höfliche, gemeinsame Schlussformel
+- KEIN juristisches Übermaß, klar und nachvollziehbar
+- Tonfall: bestimmt, sachlich, kooperativ, nicht aggressiv
 
 Gib AUSSCHLIESSLICH den fertigen Brief zurück, ohne Erklärungen, ohne Markdown-Formatierung. Der Brief soll direkt kopierbar sein.`;
   }

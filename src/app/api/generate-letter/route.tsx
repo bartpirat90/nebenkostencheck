@@ -20,8 +20,14 @@ export async function POST(req: NextRequest) {
     if (!record.paid) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
 
     // Fehler serverseitig aus dem bezahlten Ergebnis beziehen (nicht aus Client-Input).
-    const category = body.type === "objection" ? "direct" : "needs_review";
-    const errors = record.full.errors.filter((e) => e.category === category);
+    const errors =
+      body.type === "combined"
+        ? record.full.errors.filter(
+            (e) => e.category === "direct" || e.category === "needs_review"
+          )
+        : record.full.errors.filter(
+            (e) => e.category === (body.type === "objection" ? "direct" : "needs_review")
+          );
     if (!errors.length) {
       return NextResponse.json(
         { error: "Für dieses Schreiben liegen keine passenden Punkte vor." },
@@ -29,13 +35,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const filename =
+      body.type === "combined"
+        ? "Widerspruch_und_Belegeinsicht"
+        : body.type === "objection"
+        ? "Widerspruch"
+        : "Belegeinsicht";
+
     const letter = await generateLetter({ type: body.type, contact: body.contact, errors });
     const pdf = await renderToBuffer(<LetterDoc letter={letter} />);
 
     return new NextResponse(new Uint8Array(pdf), {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${body.type === "objection" ? "Widerspruch" : "Belegeinsicht"}.pdf"`,
+        "Content-Disposition": `attachment; filename="${filename}.pdf"`,
       },
     });
   } catch (err: unknown) {

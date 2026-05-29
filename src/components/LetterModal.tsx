@@ -36,11 +36,18 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
   if (!open) return null;
 
-  const title = type === "objection" ? "Widerspruch erstellen" : "Belegeinsicht anfordern";
+  const title =
+    type === "objection"
+      ? "Widerspruch erstellen"
+      : type === "document_review"
+      ? "Belegeinsicht anfordern"
+      : "Kombiniertes Schreiben erstellen";
   const description =
     type === "objection"
       ? "Wir erstellen einen Widerspruch gegen die sofort angreifbaren Punkte."
-      : "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen.";
+      : type === "document_review"
+      ? "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen."
+      : "Wir fassen Widerspruch und Aufforderung zur Belegeinsicht in einem Schreiben zusammen.";
 
   const generateLetter = async () => {
     setLoading(true);
@@ -59,7 +66,13 @@ export default function LetterModal({ open, onClose, type, initialContact, error
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${type === "objection" ? "Widerspruch" : "Belegeinsicht"}.pdf`;
+      a.download = `${
+        type === "objection"
+          ? "Widerspruch"
+          : type === "document_review"
+          ? "Belegeinsicht"
+          : "Widerspruch_und_Belegeinsicht"
+      }.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

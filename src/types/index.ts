@@ -32,7 +32,7 @@ export interface AnalysisResult {
   contactData?: ContactData;
 }
 
-export type LetterType = "objection" | "document_review";
+export type LetterType = "objection" | "document_review" | "combined";
 
 export interface LetterRequest {
   type: LetterType;
