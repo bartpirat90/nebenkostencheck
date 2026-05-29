@@ -51,7 +51,7 @@ function ErgebnisInner() {
 
   if (loading) return <p className="text-center text-[#94A3B8] py-20">Dein Bericht wird geladen…</p>;
   if (error || !result) return <p className="text-center text-[#FCA5A5] py-20">{error}</p>;
-  return <ResultView result={result} onReset={() => (window.location.href = "/")} />;
+  return <ResultView result={result} id={id!} onReset={() => (window.location.href = "/")} />;
 }
 
 export default function ErgebnisPage() {

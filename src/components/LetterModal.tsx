@@ -10,15 +10,13 @@ interface Props {
   type: LetterType;
   initialContact: ContactData;
   errors: ErrorItem[];
+  id: string;
 }
 
-export default function LetterModal({ open, onClose, type, initialContact, errors }: Props) {
-  const [step, setStep] = useState<"form" | "letter">("form");
+export default function LetterModal({ open, onClose, type, initialContact, errors, id }: Props) {
   const [contact, setContact] = useState<ContactData>(initialContact);
-  const [letter, setLetter] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
 
   const initialContactRef = useRef<ContactData>(initialContact);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -30,11 +28,8 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
   useEffect(() => {
     if (open) {
-      setStep("form");
       setContact(initialContactRef.current);
-      setLetter("");
       setError(null);
-      setCopied(false);
       setTimeout(() => modalRef.current?.focus(), 0);
     }
   }, [open]);
@@ -54,42 +49,27 @@ export default function LetterModal({ open, onClose, type, initialContact, error
       const res = await fetch("/api/generate-letter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, contact, errors }),
+        body: JSON.stringify({ type, contact, errors, id }),
       });
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Brief konnte nicht erstellt werden");
+        const e = await res.json();
+        throw new Error(e.error || "Brief konnte nicht erstellt werden");
       }
-      const data = await res.json();
-      setLetter(data.letter);
-      setStep("letter");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${type === "objection" ? "Widerspruch" : "Belegeinsicht"}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      onClose();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Unbekannter Fehler");
     } finally {
       setLoading(false);
     }
-  };
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(letter);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setError("Kopieren fehlgeschlagen. Bitte manuell kopieren.");
-    }
-  };
-
-  const downloadAsText = () => {
-    const blob = new Blob([letter], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${type === "objection" ? "Widerspruch" : "Belegeinsicht"}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   return (
@@ -125,21 +105,7 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-6">
-          {step === "form" && (
-            <ContactForm contact={contact} onChange={setContact} />
-          )}
-
-          {step === "letter" && (
-            <div className="space-y-3">
-              <div className="bg-[#0F172A] border border-[#334155] rounded-xl p-5 font-mono text-sm text-[#94A3B8] whitespace-pre-wrap leading-relaxed">
-                {letter}
-              </div>
-              <p className="text-xs text-[#475569]">
-                Bitte vor dem Versenden nochmal durchlesen und ggf. anpassen. Dieses Schreiben ist
-                eine KI-Vorlage ohne Rechtsverbindlichkeit.
-              </p>
-            </div>
-          )}
+          <ContactForm contact={contact} onChange={setContact} />
 
           {error && (
             <div className="mt-4 bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-3 text-sm text-[#FCA5A5]">
@@ -150,47 +116,20 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
         {/* Footer */}
         <div className="border-t border-[#334155] p-4 flex flex-col sm:flex-row gap-2">
-          {step === "form" && (
-            <>
-              <button
-                onClick={onClose}
-                className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
-              >
-                Abbrechen
-              </button>
-              <button
-                onClick={generateLetter}
-                disabled={loading}
-                className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm
-                  hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {loading ? "Brief wird erstellt…" : "Brief erstellen"}
-              </button>
-            </>
-          )}
-
-          {step === "letter" && (
-            <>
-              <button
-                onClick={() => setStep("form")}
-                className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
-              >
-                Zurück
-              </button>
-              <button
-                onClick={downloadAsText}
-                className="flex-1 sm:flex-none rounded-xl border-2 border-[#6366F1] text-[#818CF8] font-semibold py-3 px-4 text-sm hover:bg-[#6366F1] hover:text-white transition-colors"
-              >
-                Als .txt herunterladen
-              </button>
-              <button
-                onClick={copyToClipboard}
-                className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm hover:opacity-90 transition-opacity"
-              >
-                {copied ? "✓ Kopiert!" : "In Zwischenablage kopieren"}
-              </button>
-            </>
-          )}
+          <button
+            onClick={onClose}
+            className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
+          >
+            Abbrechen
+          </button>
+          <button
+            onClick={generateLetter}
+            disabled={loading}
+            className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm
+              hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            {loading ? "PDF wird erstellt…" : "PDF erstellen"}
+          </button>
         </div>
       </div>
     </div>

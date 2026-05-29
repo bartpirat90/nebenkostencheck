@@ -6,6 +6,7 @@ import LetterModal from "./LetterModal";
 
 interface Props {
   result: AnalysisResult;
+  id: string;
   onReset: () => void;
 }
 
@@ -33,7 +34,7 @@ const CONFIDENCE_CONFIG: Record<Confidence, { label: string; bg: string; border:
   },
 };
 
-export default function ResultView({ result, onReset }: Props) {
+export default function ResultView({ result, id, onReset }: Props) {
   const [letterModal, setLetterModal] = useState<LetterType | null>(null);
 
   const directErrors = result.errors.filter((e) => e.category === "direct");
@@ -75,6 +76,19 @@ export default function ResultView({ result, onReset }: Props) {
           </p>
         )}
       </div>
+
+      {/* Report PDF download */}
+      <button
+        onClick={() => window.open(`/api/generate-report?id=${id}`, "_blank")}
+        className="w-full rounded-xl border-2 border-[#334155] text-[#94A3B8] font-semibold py-3.5 text-sm
+          hover:border-[#6366F1] hover:text-[#818CF8] transition-colors flex items-center justify-center gap-2"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Bericht als PDF herunterladen
+      </button>
 
       {/* Direct errors section */}
       {directErrors.length > 0 && (
@@ -166,7 +180,7 @@ export default function ResultView({ result, onReset }: Props) {
 
       {/* Legal disclaimer */}
       <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 text-xs text-[#64748B] leading-relaxed">
-        <strong className="text-[#94A3B8]">Hinweis:</strong> Diese Analyse ist eine automatisierte KI-Einschätzung
+        <strong className="text-[#94A3B8]">Hinweis:</strong> Diese Analyse ist eine automatisierte Einschätzung
         ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen
         und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen
         und sollten vor dem Versand geprüft und ggf. angepasst werden.
@@ -189,6 +203,7 @@ export default function ResultView({ result, onReset }: Props) {
           type={letterModal}
           initialContact={result.contactData || {}}
           errors={letterModal === "objection" ? directErrors : reviewErrors}
+          id={id}
         />
       )}
     </div>
