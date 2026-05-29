@@ -1,7 +1,7 @@
 # Monetarisierung & Go-Live — Design (Spec)
 
 **Datum:** 2026-05-29
-**Projekt:** Nebenkostencheck (Next.js 15, React 19, TypeScript, Tailwind v3, Gemini 2.5 Flash)
+**Projekt:** Nebenkostencheck (Next.js 15, React 19, TypeScript, Tailwind v3, Anthropic Claude)
 **Ziel:** Die App vom kostenlosen Prototyp zu einem rechtssicher betreibbaren, monetarisierten Produkt machen — mit minimaler Reibung für den Kunden.
 
 ---
@@ -13,7 +13,7 @@
   - Anzahl gefundener Auffälligkeiten
   - Gesamt-Erstattungspotenzial in €
   - Fehler-**Titel** als Liste (ohne Details)
-  - Verschwommene **generische** Brief-Layout-Vorschau mit „VORSCHAU"-Wasserzeichen (statisches Mockup, **nicht** der echte personalisierte Brief — der wird erst nach Zahlung generiert; so vermeiden wir einen teuren zweiten Gemini-Call vor der Zahlung und geben keinen nutzbaren Inhalt preis)
+  - Verschwommene **generische** Brief-Layout-Vorschau mit „VORSCHAU"-Wasserzeichen (statisches Mockup, **nicht** der echte personalisierte Brief — der wird erst nach Zahlung generiert; so vermeiden wir einen teuren zweiten Claude-Call vor der Zahlung und geben keinen nutzbaren Inhalt preis)
 - **Nach Zahlung freigeschaltet** (das vollständige Paket):
   1. Detailbericht: alle Fehler mit Beschreibung, Beleg (`evidence`), Rechtsgrundlage, Handlungsempfehlung, €-Potenzial — immer enthalten
   2. **Widerspruchsbrief** als sauberes PDF — **nur wenn mindestens ein `direct`-Fehler** (sofort angreifbar) vorliegt
@@ -21,9 +21,9 @@
 
   Das Bezahl-Paket besteht also immer aus dem Detailbericht plus den situativ passenden Briefen. Fehlt eine Kategorie komplett, wird der entsprechende Brief weder generiert noch angeboten.
 
-**Marktkontext:** NebenkostenPro (direktester Wettbewerber) fährt dasselbe Modell für 7,90–14,90 €. Mineko (49 €) und Anwaltsdienste (64 €+) arbeiten mit menschlicher Prüfung. 9,90 € positioniert uns als günstigste sofortige KI-Lösung mit Impulskauf-Schwelle.
+**Marktkontext:** NebenkostenPro (direktester Wettbewerber) fährt dasselbe Modell für 7,90–14,90 €. Mineko (49 €) und Anwaltsdienste (64 €+) arbeiten mit menschlicher Prüfung. 9,90 € positioniert uns als günstigste sofortige Lösung mit Impulskauf-Schwelle.
 
-**Margen-Überschlag:** 9,90 € − ~0,55 € Stripe − Bruchteile Cent Gemini − anteilig KV/Vercel ≈ **9 € Deckungsbeitrag** pro Verkauf.
+**Margen-Überschlag:** 9,90 € − ~0,55 € Stripe − wenige Cent Claude (mit Prompt-Caching) − anteilig KV/Vercel ≈ **~9 € Deckungsbeitrag** pro Verkauf.
 
 ---
 
@@ -33,7 +33,7 @@
 
 **Neuer Ablauf:**
 
-1. **Upload** → `/api/analyze` → Gemini liefert volles Ergebnis → Server speichert es unter einer zufälligen ID (`crypto.randomUUID()`) in Vercel KV → schickt dem Browser **nur die Teaser-Daten** + die ID.
+1. **Upload** → `/api/analyze` → Claude liefert volles Ergebnis → Server speichert es unter einer zufälligen ID (`crypto.randomUUID()`) in Vercel KV → schickt dem Browser **nur die Teaser-Daten** + die ID.
 2. **„Freischalten"-Klick** → `/api/checkout` erzeugt Stripe-Checkout-Session (Analyse-ID als `metadata` + `client_reference_id`) → Redirect zu Stripe.
 3. **Zahlung** → Stripe-Webhook (`checkout.session.completed`) setzt in KV `paid: true` für die ID.
 4. **Rückkehr auf Erfolgsseite** → `/api/result?id=…` prüft das `paid`-Flag → gibt bei `true` das volle Ergebnis frei.
@@ -61,8 +61,8 @@ Der `full`-Teil wird über `/api/result` **nur** bei `paid === true` herausgegeb
 | Komponente | Maßnahme | Begründung |
 |------------|----------|------------|
 | **Vercel** | Upgrade **Hobby → Pro (~20 $/Mo), zwingend** | Hobby verbietet kommerzielle Nutzung; Pro bringt höhere Limits, mehr Bandbreite, längere Timeouts |
-| **Gemini** | **Cloud Billing aktivieren → Tier 1** (~150–300 RPM) | Free-Tier nur ~10 RPM (Dez. 2025 um 50–80 % gekürzt) → bei Traffic garantierte 429-Fehler. Tier 1 sofort verfügbar, automatisches Hochstufen. Kosten pro Analyse vernachlässigbar |
-| **Code** | **Retry mit exponential Backoff** (2–3 Versuche) bei 429/503 | Aktuell gibt die App sofort auf. Backoff fängt transiente Lastspitzen ab, ohne dass der Kunde es merkt |
+| **Claude (Anthropic)** | **Bezahltes Konto in der Anthropic Console**; Rate-Limit-Tier steigt automatisch mit Verbrauch | Standard-Tier reicht für den Start. **Prompt-Caching** für den langen System-Prompt senkt Kosten und Latenz deutlich. Kosten pro Analyse (wenige Cent) bei 9,90 €/Verkauf vernachlässigbar |
+| **Code** | **Retry mit exponential Backoff** (2–3 Versuche) bei 429/529/Überlast | Aktuell gibt die App sofort auf. Backoff fängt transiente Lastspitzen ab, ohne dass der Kunde es merkt |
 | **KV** | Kein Engpass; skaliert, Auto-Ablauf | ~2–3 Ops/Analyse |
 
 ---
@@ -80,6 +80,11 @@ Der `full`-Teil wird über `/api/result` **nur** bei `paid === true` herausgegeb
 - `POST /api/stripe-webhook` — verifiziert Signatur, setzt paid-Flag
 - `GET /api/result?id=…` — gibt volles Ergebnis bei bezahltem Status frei
 
+**Test-Zugang ohne echte Zahlung** (für eigene Funktionsprüfung + Freunde):
+- **Stripe-Testmodus:** Mit Test-Schlüsseln durchläuft man den kompletten Flow mit Test-Karte (`4242 4242 4242 4242`) — kein echtes Geld. Für die eigene Entwicklung/Verifikation.
+- **100 %-Gutscheincode** (z.B. `FREUNDE`): in Stripe als Coupon hinterlegt, im Checkout aktivierbar (`allow_promotion_codes: true`). Tester zahlen 0 €, durchlaufen aber den **realen** Flow inkl. Webhook + Freischaltung. Bevorzugter Weg für Freunde im Live-Betrieb — kein Code-Bypass, kein Sicherheitsleck.
+- Ein geheimer Bypass-Link wird **bewusst nicht** gebaut (zusätzliche Angriffsfläche auf die Paywall); der Gutscheincode deckt den Bedarf sauberer ab.
+
 ---
 
 ## 5. PDF-Generierung
@@ -89,7 +94,7 @@ Der `full`-Teil wird über `/api/result` **nur** bei `paid === true` herausgegeb
 - Erzeugt: (1) Detailbericht-PDF (immer), (2) Widerspruchsbrief-PDF (nur bei `direct`-Fehlern), (3) Belegeinsicht-Brief-PDF (nur bei `needs_review`-Fehlern).
 - **Teaser-Wasserzeichen:** ein statisches, generisches Brief-Layout-Bild mit „VORSCHAU"-Overlay (kein echter Inhalt) — als Köder im Frontend, ohne Server-Roundtrip.
 
-**Route:** Die bestehende `generate-letter`-Route wird zu `generate-pdf` erweitert: Sie generiert weiterhin den Brieftext (Gemini), rendert ihn aber zusätzlich als PDF und gibt das Paket **nur bei bezahltem Status** (KV-`paid`-Flag) frei. So bleibt es bei **einem** Brief-Generierungspfad statt zwei.
+**Route:** Die bestehende `generate-letter`-Route wird zu `generate-pdf` erweitert: Sie generiert weiterhin den Brieftext (Claude), rendert ihn aber zusätzlich als PDF und gibt das Paket **nur bei bezahltem Status** (KV-`paid`-Flag) frei. So bleibt es bei **einem** Brief-Generierungspfad statt zwei.
 
 ---
 
@@ -100,7 +105,7 @@ Ich entwerfe **Roh-Vorlagen** für die Pflichttexte und baue die technische Einb
 | Pflicht | Umsetzung |
 |---------|-----------|
 | **Impressum** (§ 5 DDG) | Eigene Seite `/impressum`, Footer-Link. Roh-Vorlage mit Platzhaltern (Anschrift, Kontakt, USt-IdNr.) |
-| **Datenschutzerklärung** (DSGVO) | Eigene Seite `/datenschutz`. Muss offenlegen: Upload, **Weitergabe an Google Gemini (USA = Drittlandtransfer)**, KV-Speicherung 24 h, Stripe-Zahlungsdaten |
+| **Datenschutzerklärung** (DSGVO) | Eigene Seite `/datenschutz`. Muss offenlegen: Upload, **Weitergabe an Anthropic (Claude, USA = Drittlandtransfer)**, KV-Speicherung 24 h, Stripe-Zahlungsdaten |
 | **AGB + Haftungsausschluss** | Eigene Seite `/agb`. „Automatisiertes Werkzeug, **keine Rechtsberatung**" (schützt vor RDG-Pflicht) |
 | **Widerrufsrecht-Erlöschen** | **Geschäftskritisch:** Pflicht-Checkbox **vor** der Zahlung: Kunde stimmt der sofortigen Ausführung zu und bestätigt das Erlöschen seines 14-tägigen Widerrufsrechts mit vollständiger Bereitstellung. Ohne aktivierte Checkbox kein Checkout |
 | **Datenschutz-Angabe korrigieren** | Footer/Texte: „Keine Datenspeicherung" → „Automatische Löschung nach 24 Stunden" |
@@ -122,7 +127,13 @@ Ich entwerfe **Roh-Vorlagen** für die Pflichttexte und baue die technische Einb
 
 Grundsatz: ehrlich bleiben (kein Vortäuschen menschlicher Prüfung), aber den Fokus auf **Rechtsgrundlage, Geschwindigkeit und Ergebnis** legen.
 
-**Wichtig — Transparenzpflicht bleibt:** In der **Datenschutzerklärung** wird die Verarbeitung durch **Google Gemini** vollständig offengelegt. Die Wording-Entschärfung betrifft ausschließlich das Marketing, nicht die rechtliche Transparenz.
+**Vertrauens-Claim — prominent platzieren** (z.B. im Hero und/oder als Badge):
+
+> „Geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung."
+
+Bewusst **kein** absoluter Claim wie „immer aktuellste Rechtsprechung" — eine solche Tatsachenbehauptung wäre als irreführende Werbung (UWG) abmahnfähig und technisch nicht haltbar (jedes Sprachmodell hat einen Wissensstichtag; Aktualität entsteht durch gepflegte Prüfregeln, nicht durch das Modell selbst). Die gewählte Formulierung ist konkret, kompetent und haltbar.
+
+**Wichtig — Transparenzpflicht bleibt:** In der **Datenschutzerklärung** wird die Verarbeitung durch **Anthropic (Claude)** vollständig offengelegt. Die Wording-Entschärfung betrifft ausschließlich das Marketing, nicht die rechtliche Transparenz.
 
 **Claims an das neue Modell anpassen** (heute irreführend):
 - StatsBar „100 % Kostenlos" → z.B. „Vorschau kostenlos" oder durch eine andere Kennzahl ersetzen.
@@ -145,12 +156,12 @@ Grundsatz: ehrlich bleiben (kein Vortäuschen menschlicher Prüfung), aber den F
 | Aktion | Datei | Zweck |
 |--------|-------|-------|
 | Neu | `src/lib/kv.ts` | KV-Client + Helfer (`storeAnalysis`, `getAnalysis`, `markPaid`) |
-| Neu | `src/lib/gemini.ts` | Gemini-Aufruf mit Retry/Backoff (aus `analyze`-Route extrahiert) |
-| Ändern | `src/app/api/analyze/route.ts` | Speichert Ergebnis in KV, liefert nur Teaser + ID |
+| Neu | `src/lib/claude.ts` | Anthropic-Aufruf mit Retry/Backoff + Prompt-Caching (ersetzt Gemini-SDK) |
+| Ändern | `src/app/api/analyze/route.ts` | Nutzt Claude (statt Gemini), speichert Ergebnis in KV, liefert nur Teaser + ID |
 | Neu | `src/app/api/checkout/route.ts` | Stripe-Checkout-Session |
 | Neu | `src/app/api/stripe-webhook/route.ts` | Webhook → paid-Flag |
 | Neu | `src/app/api/result/route.ts` | Volles Ergebnis bei bezahltem Status |
-| Ändern | `src/app/api/generate-letter/route.ts` | Brieftext (Gemini) + PDF-Rendering (react-pdf), Freigabe nur bei bezahltem Status |
+| Ändern | `src/app/api/generate-letter/route.ts` | Brieftext (Claude) + PDF-Rendering (react-pdf), Freigabe nur bei bezahltem Status |
 | Neu | `src/components/PreviewView.tsx` | Teaser-Ansicht + CTA + Widerrufs-Checkbox |
 | Ändern | `src/components/ResultView.tsx` | Wird zur `FullResultView` (nach Zahlung) |
 | Neu | `src/app/ergebnis/page.tsx` | Erfolgsseite nach Stripe-Rückkehr |
@@ -163,9 +174,10 @@ Grundsatz: ehrlich bleiben (kein Vortäuschen menschlicher Prüfung), aber den F
 | Ändern | `src/components/HowItWorks.tsx` | Schritt-2-Wording ohne „KI" |
 | Ändern | `src/components/StatsBar.tsx` | Claim „100 % Kostenlos" anpassen |
 | Ändern | `src/components/UploadZone.tsx` | Ladezustand-Text ohne „KI" |
+| Ändern | `src/components/LandingHero.tsx` o.ä. | Rechts-Claim prominent platzieren (siehe Abschnitt 7) |
 | Ändern | `src/types/index.ts` | `PreviewData`-Typ, KV-Datensatz-Typ |
 
-**Neue Dependencies:** `stripe`, `@stripe/stripe-js`, `@vercel/kv` (oder `@upstash/redis`), `@react-pdf/renderer`.
+**Neue Dependencies:** `@anthropic-ai/sdk` (ersetzt `@google/generative-ai`), `stripe`, `@stripe/stripe-js`, `@vercel/kv` (oder `@upstash/redis`), `@react-pdf/renderer`.
 
 ---
 
@@ -176,9 +188,11 @@ Grundsatz: ehrlich bleiben (kein Vortäuschen menschlicher Prüfung), aber den F
 - [ ] Zahlung wird ausschließlich über Webhook-`paid`-Flag verifiziert (manipulierte Rückkehr-URL gibt nichts frei)
 - [ ] Detailbericht-PDF immer; Widerspruchs-PDF nur bei `direct`-Fehlern; Belegeinsicht-PDF nur bei `needs_review`-Fehlern
 - [ ] Logo (Schutzschild + Häkchen) in Nav und Footer; eigene `Logo`-Komponente
-- [ ] Kein „KI" mehr im sichtbaren Marketing; Datenschutz legt Google-Gemini-Verarbeitung dennoch offen
+- [ ] Kein „KI" mehr im sichtbaren Marketing; Datenschutz legt Anthropic-Claude-Verarbeitung dennoch offen
+- [ ] Rechts-Claim „Geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung" prominent platziert
 - [ ] Irreführende Claims korrigiert („100 % Kostenlos", „Datei wird nicht gespeichert")
-- [ ] Gemini-Aufruf hat Retry/Backoff; 429/503 führen nicht sofort zum Abbruch
+- [ ] Analyse läuft über Claude (Anthropic) mit Retry/Backoff + Prompt-Caching; 429/529 führen nicht sofort zum Abbruch
+- [ ] Test-Zugang funktioniert: Stripe-Testmodus + 100 %-Gutscheincode schalten ohne echte Zahlung frei
 - [ ] KV-Einträge laufen nach 24 h ab
 - [ ] Widerrufs-Checkbox ist Pflicht vor Checkout
 - [ ] Impressum / Datenschutz / AGB als Roh-Vorlagen erreichbar, im Footer verlinkt, mit Prüf-Hinweis
@@ -191,8 +205,8 @@ Grundsatz: ehrlich bleiben (kein Vortäuschen menschlicher Prüfung), aber den F
 
 Diese muss der Betreiber selbst erledigen (kein Code):
 - Vercel Pro abonnieren
-- Gemini Cloud Billing aktivieren
-- Stripe-Konto anlegen, Produkte/Keys konfigurieren, Webhook-Endpoint registrieren
+- Anthropic-Konto anlegen, bezahltes API-Guthaben einrichten, `ANTHROPIC_API_KEY` setzen (ersetzt `GEMINI_API_KEY`)
+- Stripe-Konto anlegen, Produkte/Keys konfigurieren, Webhook-Endpoint registrieren, 100 %-Gutscheincode für Tester anlegen
 - Vercel KV / Upstash-Integration einrichten, Env-Variablen setzen
 - Rechtstexte anwaltlich/über Generator prüfen lassen
 - Gewerbe/Umsatzsteuer klären (Kleinunternehmerregelung etc.)
