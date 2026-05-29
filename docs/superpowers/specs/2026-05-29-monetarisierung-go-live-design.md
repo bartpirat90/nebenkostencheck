@@ -15,9 +15,11 @@
   - Fehler-**Titel** als Liste (ohne Details)
   - Verschwommene **generische** Brief-Layout-Vorschau mit „VORSCHAU"-Wasserzeichen (statisches Mockup, **nicht** der echte personalisierte Brief — der wird erst nach Zahlung generiert; so vermeiden wir einen teuren zweiten Gemini-Call vor der Zahlung und geben keinen nutzbaren Inhalt preis)
 - **Nach Zahlung freigeschaltet** (das vollständige Paket):
-  1. Detailbericht: alle Fehler mit Beschreibung, Beleg (`evidence`), Rechtsgrundlage, Handlungsempfehlung, €-Potenzial
-  2. Widerspruchsbrief als sauberes PDF
-  3. Belegeinsicht-Brief (§ 259 BGB) als sauberes PDF
+  1. Detailbericht: alle Fehler mit Beschreibung, Beleg (`evidence`), Rechtsgrundlage, Handlungsempfehlung, €-Potenzial — immer enthalten
+  2. **Widerspruchsbrief** als sauberes PDF — **nur wenn mindestens ein `direct`-Fehler** (sofort angreifbar) vorliegt
+  3. **Belegeinsicht-Brief** (§ 259 BGB) als sauberes PDF — **nur wenn mindestens ein `needs_review`-Fehler** vorliegt (Belegeinsicht ist sonst gegenstandslos)
+
+  Das Bezahl-Paket besteht also immer aus dem Detailbericht plus den situativ passenden Briefen. Fehlt eine Kategorie komplett, wird der entsprechende Brief weder generiert noch angeboten.
 
 **Marktkontext:** NebenkostenPro (direktester Wettbewerber) fährt dasselbe Modell für 7,90–14,90 €. Mineko (49 €) und Anwaltsdienste (64 €+) arbeiten mit menschlicher Prüfung. 9,90 € positioniert uns als günstigste sofortige KI-Lösung mit Impulskauf-Schwelle.
 
@@ -84,7 +86,7 @@ Der `full`-Teil wird über `/api/result` **nur** bei `paid === true` herausgegeb
 
 **`@react-pdf/renderer`, serverseitig** in einer API-Route.
 - Kontrolliertes, professionelles Layout ohne Headless-Browser (Puppeteer auf Vercel bewusst verworfen: schwergewichtig, kaltstart-anfällig).
-- Erzeugt: (1) Detailbericht-PDF, (2) Widerspruchsbrief-PDF, (3) Belegeinsicht-Brief-PDF.
+- Erzeugt: (1) Detailbericht-PDF (immer), (2) Widerspruchsbrief-PDF (nur bei `direct`-Fehlern), (3) Belegeinsicht-Brief-PDF (nur bei `needs_review`-Fehlern).
 - **Teaser-Wasserzeichen:** ein statisches, generisches Brief-Layout-Bild mit „VORSCHAU"-Overlay (kein echter Inhalt) — als Köder im Frontend, ohne Server-Roundtrip.
 
 **Route:** Die bestehende `generate-letter`-Route wird zu `generate-pdf` erweitert: Sie generiert weiterhin den Brieftext (Gemini), rendert ihn aber zusätzlich als PDF und gibt das Paket **nur bei bezahltem Status** (KV-`paid`-Flag) frei. So bleibt es bei **einem** Brief-Generierungspfad statt zwei.
@@ -105,17 +107,40 @@ Ich entwerfe **Roh-Vorlagen** für die Pflichttexte und baue die technische Einb
 
 ---
 
-## 7. Frontend-Anpassungen
+## 7. Branding & Tonalität
+
+**Logo:** Schutzschild mit Häkchen als Bildzeichen + Wortmarke „Nebenkostencheck", im bestehenden Indigo-Violett-Gradient. Ersetzt das aktuelle „NK"-Badge in der Navigation. Als eigene SVG-Komponente (`src/components/Logo.tsx`), damit es überall (Nav, Footer, evtl. PDF-Briefkopf) wiederverwendbar ist.
+
+**Wording — „KI" aus dem sichtbaren Marketing entfernen.** Viele Nutzer sind skeptisch, sobald sie „KI" lesen. Wir formulieren ergebnis- und rechtsbezogen statt technologiebezogen:
+
+| Stelle | Alt | Neu (Richtung) |
+|--------|-----|----------------|
+| `layout.tsx` Titel/Description | „KI-gestützte Abrechnungsprüfung", „Unsere KI prüft…" | „Nebenkostenabrechnung prüfen & Geld zurückholen", „…wird in Sekunden auf typische Fehler geprüft" |
+| `LandingHero` | „unsere KI prüft sie in Sekunden" | „…wird in Sekunden auf typische Fehler geprüft – nach BetrKV, HeizkV und aktueller Rechtsprechung" |
+| `HowItWorks` Schritt 2 | „KI analysiert in Sekunden" | „Automatische Prüfung in Sekunden" |
+| `UploadZone` Ladezustand | „KI analysiert deine Abrechnung…" | „Deine Abrechnung wird geprüft…" |
+
+Grundsatz: ehrlich bleiben (kein Vortäuschen menschlicher Prüfung), aber den Fokus auf **Rechtsgrundlage, Geschwindigkeit und Ergebnis** legen.
+
+**Wichtig — Transparenzpflicht bleibt:** In der **Datenschutzerklärung** wird die Verarbeitung durch **Google Gemini** vollständig offengelegt. Die Wording-Entschärfung betrifft ausschließlich das Marketing, nicht die rechtliche Transparenz.
+
+**Claims an das neue Modell anpassen** (heute irreführend):
+- StatsBar „100 % Kostenlos" → z.B. „Vorschau kostenlos" oder durch eine andere Kennzahl ersetzen.
+- LandingHero-Badge „Datei wird nicht gespeichert" → „Automatische Löschung nach 24 h".
+
+---
+
+## 8. Frontend-Anpassungen
 
 - **`ResultView`** aufteilen in **`PreviewView`** (Teaser) und **`FullResultView`** (nach Zahlung).
 - `PreviewView`: Fehleranzahl, €-Potenzial, Titel-Liste, Wasserzeichen-PDF-Vorschau, prominenter „Für 9,90 € freischalten"-CTA + Widerrufs-Checkbox.
 - Neue **Erfolgsseite** (z.B. `/ergebnis?id=…`), die nach Stripe-Rückkehr das volle Ergebnis + PDF-Downloads zeigt.
-- **Footer** mit Links zu Impressum / Datenschutz / AGB auf allen Seiten.
+- **Footer** mit Logo + Links zu Impressum / Datenschutz / AGB auf allen Seiten.
 - Bestehendes Design-System (Dark-Theme, Indigo-Violett-Gradient) durchgängig beibehalten.
 
 ---
 
-## 8. Komponenten- & Dateiübersicht (Soll)
+## 9. Komponenten- & Dateiübersicht (Soll)
 
 | Aktion | Datei | Zweck |
 |--------|-------|-------|
@@ -130,20 +155,29 @@ Ich entwerfe **Roh-Vorlagen** für die Pflichttexte und baue die technische Einb
 | Ändern | `src/components/ResultView.tsx` | Wird zur `FullResultView` (nach Zahlung) |
 | Neu | `src/app/ergebnis/page.tsx` | Erfolgsseite nach Stripe-Rückkehr |
 | Neu | `src/app/impressum`, `/datenschutz`, `/agb` | Rechtsseiten (Roh-Vorlagen) |
-| Neu | `src/components/Footer.tsx` | Footer mit Rechtslinks |
-| Ändern | `src/app/page.tsx` | Preview/Full-Logik, Footer einbinden, Datenschutz-Text korrigieren |
+| Neu | `src/components/Footer.tsx` | Footer mit Logo + Rechtslinks |
+| Neu | `src/components/Logo.tsx` | Schutzschild-Häkchen-SVG + Wortmarke, wiederverwendbar |
+| Ändern | `src/app/page.tsx` | Preview/Full-Logik, Footer einbinden, Logo in Nav, Datenschutz-Text korrigieren |
+| Ändern | `src/app/layout.tsx` | Titel/Description ohne „KI" |
+| Ändern | `src/components/LandingHero.tsx` | Wording ohne „KI", Badge-Claim „Löschung nach 24 h" |
+| Ändern | `src/components/HowItWorks.tsx` | Schritt-2-Wording ohne „KI" |
+| Ändern | `src/components/StatsBar.tsx` | Claim „100 % Kostenlos" anpassen |
+| Ändern | `src/components/UploadZone.tsx` | Ladezustand-Text ohne „KI" |
 | Ändern | `src/types/index.ts` | `PreviewData`-Typ, KV-Datensatz-Typ |
 
 **Neue Dependencies:** `stripe`, `@stripe/stripe-js`, `@vercel/kv` (oder `@upstash/redis`), `@react-pdf/renderer`.
 
 ---
 
-## 9. Erfolgskriterien
+## 10. Erfolgskriterien
 
 - [ ] Vorschau zeigt Fehleranzahl + €-Potenzial + Titel + Wasserzeichen-PDF; Details/Briefe sind serverseitig gesperrt (nicht im Netzwerk-Tab auslesbar)
 - [ ] „Freischalten" → Stripe-Checkout → erfolgreiche Zahlung → volles Ergebnis + PDF-Downloads
 - [ ] Zahlung wird ausschließlich über Webhook-`paid`-Flag verifiziert (manipulierte Rückkehr-URL gibt nichts frei)
-- [ ] Drei PDFs (Detailbericht, Widerspruch, Belegeinsicht) werden sauber generiert
+- [ ] Detailbericht-PDF immer; Widerspruchs-PDF nur bei `direct`-Fehlern; Belegeinsicht-PDF nur bei `needs_review`-Fehlern
+- [ ] Logo (Schutzschild + Häkchen) in Nav und Footer; eigene `Logo`-Komponente
+- [ ] Kein „KI" mehr im sichtbaren Marketing; Datenschutz legt Google-Gemini-Verarbeitung dennoch offen
+- [ ] Irreführende Claims korrigiert („100 % Kostenlos", „Datei wird nicht gespeichert")
 - [ ] Gemini-Aufruf hat Retry/Backoff; 429/503 führen nicht sofort zum Abbruch
 - [ ] KV-Einträge laufen nach 24 h ab
 - [ ] Widerrufs-Checkbox ist Pflicht vor Checkout
@@ -153,7 +187,7 @@ Ich entwerfe **Roh-Vorlagen** für die Pflichttexte und baue die technische Einb
 
 ---
 
-## 10. Offene Betreiber-Aufgaben (außerhalb des Codes)
+## 11. Offene Betreiber-Aufgaben (außerhalb des Codes)
 
 Diese muss der Betreiber selbst erledigen (kein Code):
 - Vercel Pro abonnieren
