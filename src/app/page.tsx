@@ -7,6 +7,7 @@ import LandingHero from "@/components/LandingHero";
 import StatsBar from "@/components/StatsBar";
 import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
+import Logo from "@/components/Logo";
 
 export default function Home() {
   const [preview, setPreview] = useState<PreviewData | null>(null);
@@ -59,14 +60,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#0F172A]">
       {/* Navigation */}
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-[#1E293B] bg-[#0F172A]/90 backdrop-blur-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-[#6366F1] to-[#8B5CF6] rounded-lg flex items-center justify-center">
-            <span className="text-white text-xs font-black">NK</span>
-          </div>
-          <span className="font-black text-[#F1F5F9] tracking-tight text-lg">
-            Nebenkostencheck
-          </span>
-        </div>
+        <Logo />
         <span className="text-xs text-[#64748B] bg-[#1E293B] px-3 py-1 rounded-full border border-[#334155]">
           Kostenlos & ohne Anmeldung
         </span>
