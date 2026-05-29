@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ContactData, ErrorItem, LetterType } from "@/types";
 import ContactForm from "./ContactForm";
+import { ProgressBar, PhaseList } from "./ActivityIndicator";
 
 interface Props {
   open: boolean;
@@ -88,7 +89,7 @@ export default function LetterModal({ open, onClose, type, initialContact, error
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
-      onClick={(e) => { if (e.button === 0) onClose(); }}
+      onClick={(e) => { if (e.button === 0 && !loading) onClose(); }}
     >
       <div
         ref={modalRef}
@@ -118,32 +119,52 @@ export default function LetterModal({ open, onClose, type, initialContact, error
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-6">
-          <ContactForm contact={contact} onChange={setContact} />
-
-          {error && (
-            <div className="mt-4 bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-3 text-sm text-[#FCA5A5]">
-              {error}
+          {loading ? (
+            <div className="flex flex-col items-center gap-4 py-8 w-full">
+              <div className="w-full max-w-xs">
+                <ProgressBar />
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-[#334155] border-t-[#6366F1] animate-spin" />
+              <div className="space-y-1 text-center">
+                <p className="font-semibold text-[#F1F5F9]">Dein Schreiben wird erstellt…</p>
+                <p className="text-sm text-[#64748B]">Das dauert meist 5–15 Sekunden.</p>
+              </div>
+              <PhaseList
+                phases={["Schreiben wird formuliert", "PDF wird erzeugt"]}
+                intervalMs={5000}
+              />
             </div>
+          ) : (
+            <>
+              <ContactForm contact={contact} onChange={setContact} />
+
+              {error && (
+                <div className="mt-4 bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-3 text-sm text-[#FCA5A5]">
+                  {error}
+                </div>
+              )}
+            </>
           )}
         </div>
 
         {/* Footer */}
-        <div className="border-t border-[#334155] p-4 flex flex-col sm:flex-row gap-2">
-          <button
-            onClick={onClose}
-            className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
-          >
-            Abbrechen
-          </button>
-          <button
-            onClick={generateLetter}
-            disabled={loading}
-            className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm
-              hover:opacity-90 transition-opacity disabled:opacity-50"
-          >
-            {loading ? "PDF wird erstellt…" : "PDF erstellen"}
-          </button>
-        </div>
+        {!loading && (
+          <div className="border-t border-[#334155] p-4 flex flex-col sm:flex-row gap-2">
+            <button
+              onClick={onClose}
+              className="flex-1 sm:flex-none rounded-xl border border-[#334155] text-[#94A3B8] font-semibold py-3 px-4 text-sm hover:bg-[#334155] transition-colors"
+            >
+              Abbrechen
+            </button>
+            <button
+              onClick={generateLetter}
+              className="flex-1 rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-4 text-sm
+                hover:opacity-90 transition-opacity"
+            >
+              PDF erstellen
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
