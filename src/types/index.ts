@@ -43,3 +43,22 @@ export interface LetterRequest {
 export interface LetterResponse {
   letter: string;
 }
+
+/** Reduzierte Daten, die der Browser vor der Zahlung sieht. */
+export interface PreviewData {
+  id: string;
+  notAStatement?: boolean;
+  errorCount: number;
+  totalPotentialEur?: number | null;
+  totalPotentialLabel?: string | null;
+  errorTitles: string[];
+  hasDirect: boolean; // mind. ein "direct"-Fehler → Widerspruchsbrief verfügbar
+  hasReview: boolean; // mind. ein "needs_review"-Fehler → Belegeinsicht verfügbar
+}
+
+/** Was in Vercel KV unter der Analyse-ID liegt. */
+export interface StoredAnalysis {
+  full: AnalysisResult;
+  paid: boolean;
+  createdAt: string;
+}
