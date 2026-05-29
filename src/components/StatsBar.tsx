@@ -1,7 +1,7 @@
 const STATS = [
   { value: "Ø 187 €", label: "Erstattungspotenzial" },
   { value: "15 Sek.", label: "Analyse-Dauer" },
-  { value: "100 %", label: "Kostenlos" },
+  { value: "Gratis", label: "Erst-Prüfung" },
 ];
 
 export default function StatsBar() {

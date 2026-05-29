@@ -5,13 +5,13 @@ const STEPS = [
       "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen.",
   },
   {
-    title: "KI analysiert in Sekunden",
+    title: "Automatische Prüfung in Sekunden",
     description:
       "Prüft auf HeizkV-Verstöße, falsche Umlagen, Fristfehler und mehr.",
   },
   {
     title: "Widerspruch mit einem Klick",
-    description: "Fertiger Brief direkt kopierbar oder als .txt-Download.",
+    description: "Fertiger Widerspruchsbrief als PDF zum Download.",
   },
 ];
 

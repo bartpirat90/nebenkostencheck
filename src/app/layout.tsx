@@ -5,9 +5,9 @@ import "./globals.css";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nebenkostencheck – KI-gestützte Abrechnungsprüfung",
+  title: "Nebenkostencheck – Abrechnung prüfen & Geld zurückholen",
   description:
-    "Lade deine Nebenkostenabrechnung hoch. Unsere KI prüft sie kostenlos auf Fehler und zeigt dein Erstattungspotenzial – ohne Anmeldung.",
+    "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung.",
   keywords: ["Nebenkostenabrechnung", "Prüfung", "Fehler", "Erstattung", "Mieter"],
 };
 

@@ -122,7 +122,7 @@ function LoadingState() {
     <div className="flex flex-col items-center gap-4">
       <div className="w-12 h-12 rounded-full border-2 border-[#334155] border-t-[#6366F1] animate-spin" />
       <div className="space-y-1 text-center">
-        <p className="font-semibold text-[#F1F5F9]">KI analysiert deine Abrechnung…</p>
+        <p className="font-semibold text-[#F1F5F9]">Deine Abrechnung wird geprüft…</p>
         <p className="text-sm text-[#64748B]">Das dauert meist 10–20 Sekunden</p>
       </div>
       <div className="flex flex-col gap-1.5 w-full max-w-xs text-xs text-[#64748B]">
