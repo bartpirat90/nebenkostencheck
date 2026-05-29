@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
+import { ProgressBar, PhaseList } from "./ActivityIndicator";
 
 interface Props {
   onUpload: (file: File) => void;
@@ -119,29 +120,24 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
 
 function LoadingState() {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 w-full max-w-xs">
+      <div className="w-full">
+        <ProgressBar />
+      </div>
       <div className="w-12 h-12 rounded-full border-2 border-[#334155] border-t-[#6366F1] animate-spin" />
       <div className="space-y-1 text-center">
         <p className="font-semibold text-[#F1F5F9]">Deine Abrechnung wird geprüft…</p>
         <p className="text-sm text-[#64748B]">Das dauert meist 10–20 Sekunden</p>
       </div>
-      <div className="flex flex-col gap-1.5 w-full max-w-xs text-xs text-[#64748B]">
-        {[
+      <PhaseList
+        phases={[
           "Dokument wird gelesen",
-          "Positionen werden extrahiert",
-          "Fehler werden geprüft",
-          "Gutschriftpotenzial wird berechnet",
-        ].map((step, i) => (
-          <div
-            key={step}
-            className="flex items-center gap-2 animate-pulse"
-            style={{ animationDelay: `${i * 400}ms` }}
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-[#6366F1] opacity-60" />
-            {step}
-          </div>
-        ))}
-      </div>
+          "Positionen werden erfasst",
+          "Rechtsgrundlagen werden geprüft",
+          "Erstattungspotenzial wird berechnet",
+          "Bericht wird zusammengestellt",
+        ]}
+      />
     </div>
   );
 }
