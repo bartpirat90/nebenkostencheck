@@ -9,7 +9,9 @@ export default function DatenschutzPage() {
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Verantwortlicher</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          [Name / Firma, Anschrift, E-Mail]
+          Franz Petschull<br />
+          Hintere Reichenstraße 12, 02625 Bautzen<br />
+          E-Mail: [GESCHÄFTLICHE E-MAIL – NOCH EINZURICHTEN]
         </p>
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Welche Daten wir verarbeiten</h2>
@@ -62,7 +64,7 @@ export default function DatenschutzPage() {
           Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.
         </p>
         <p className="mb-3 leading-relaxed text-sm">
-          Bei Fragen wenden Sie sich an: [E-Mail-Adresse]
+          Bei Fragen wenden Sie sich an: [GESCHÄFTLICHE E-MAIL – NOCH EINZURICHTEN]
         </p>
 
         <a href="/" className="inline-block mt-8 text-[#818CF8] text-sm">← Zurück</a>

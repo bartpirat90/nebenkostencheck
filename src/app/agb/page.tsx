@@ -27,7 +27,8 @@ export default function AgbPage() {
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">3. Preis</h2>
         <p className="mb-3 leading-relaxed text-sm">
           Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig
-          9,90&nbsp;€ (inkl. gesetzlicher Umsatzsteuer). Die erste Prüfung mit Vorschau ist kostenlos.
+          9,90&nbsp;€. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen.
+          Die erste Prüfung mit Vorschau ist kostenlos.
         </p>
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">
@@ -51,7 +52,8 @@ export default function AgbPage() {
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">6. Anbieter</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          [Anbieterdaten – siehe <a href="/impressum" className="text-[#818CF8]">Impressum</a>]
+          Franz Petschull, Hintere Reichenstraße 12, 02625 Bautzen. Weitere Angaben im{" "}
+          <a href="/impressum" className="text-[#818CF8]">Impressum</a>.
         </p>
 
         <a href="/" className="inline-block mt-8 text-[#818CF8] text-sm">← Zurück</a>

@@ -9,29 +9,27 @@ export default function ImpressumPage() {
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Angaben gemäß § 5 DDG</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          [Name / Firma]<br />
-          [Straße und Hausnummer]<br />
-          [PLZ und Ort]
+          Franz Petschull<br />
+          Hintere Reichenstraße 12<br />
+          02625 Bautzen
         </p>
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Kontakt</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          E-Mail: [E-Mail-Adresse]<br />
-          Telefon: [Telefonnummer (optional)]
+          E-Mail: [GESCHÄFTLICHE E-MAIL – NOCH EINZURICHTEN]
         </p>
 
-        <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Umsatzsteuer-ID</h2>
+        <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Umsatzsteuer</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-          [USt-IdNr., falls vorhanden]
+          Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen.
         </p>
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">
           Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
         </h2>
         <p className="mb-3 leading-relaxed text-sm">
-          [Name]<br />
-          [Anschrift]
+          Franz Petschull<br />
+          Hintere Reichenstraße 12, 02625 Bautzen
         </p>
 
         <a href="/" className="inline-block mt-8 text-[#818CF8] text-sm">← Zurück</a>
