@@ -1,6 +1,10 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { ANALYSIS_SYSTEM_PROMPT, buildLetterPrompt } from "./prompts";
 import { AnalysisResult, LetterRequest } from "@/types";
+import { MOCK_ANALYSIS_RESULT, MOCK_LETTER } from "./mockData";
+
+// Testmodus: liefert Beispieldaten ohne (kostenpflichtigen) Claude-Aufruf.
+const MOCK = process.env.MOCK_ANALYSIS === "true";
 
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzten API-Key) das Modul importieren kann, ohne zu werfen.
@@ -50,6 +54,12 @@ export async function analyzeStatement(
   mediaType: string,
   fileName: string,
 ): Promise<AnalysisResult> {
+  if (MOCK) {
+    // kleine künstliche Verzögerung, damit die Lade-Animation sichtbar ist
+    await new Promise((r) => setTimeout(r, 1500));
+    return MOCK_ANALYSIS_RESULT;
+  }
+
   const isPdf = mediaType === "application/pdf";
 
   const docBlock: Anthropic.DocumentBlockParam | Anthropic.ImageBlockParam = isPdf
@@ -102,6 +112,11 @@ export async function analyzeStatement(
 }
 
 export async function generateLetter(req: LetterRequest): Promise<string> {
+  if (MOCK) {
+    await new Promise((r) => setTimeout(r, 1200));
+    return MOCK_LETTER;
+  }
+
   const message = await withRetry(() =>
     client().messages.create({
       model: MODEL,
