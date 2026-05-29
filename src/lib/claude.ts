@@ -2,7 +2,14 @@ import Anthropic from "@anthropic-ai/sdk";
 import { ANALYSIS_SYSTEM_PROMPT, buildLetterPrompt } from "./prompts";
 import { AnalysisResult, LetterRequest } from "@/types";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+// Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
+// (ohne gesetzten API-Key) das Modul importieren kann, ohne zu werfen.
+let _client: Anthropic | null = null;
+function client(): Anthropic {
+  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+  return _client;
+}
+
 const MODEL = "claude-sonnet-4-6";
 
 const RETRYABLE_STATUSES = new Set([429, 503, 529]);
@@ -64,7 +71,7 @@ export async function analyzeStatement(
       };
 
   const message = await withRetry(() =>
-    client.messages.create({
+    client().messages.create({
       model: MODEL,
       max_tokens: 4096,
       system: [
@@ -96,7 +103,7 @@ export async function analyzeStatement(
 
 export async function generateLetter(req: LetterRequest): Promise<string> {
   const message = await withRetry(() =>
-    client.messages.create({
+    client().messages.create({
       model: MODEL,
       max_tokens: 2048,
       messages: [{ role: "user", content: buildLetterPrompt(req) }],
