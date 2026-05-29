@@ -1,5 +1,5 @@
 /**
- * Übersetzt technische Fehlermeldungen (z.B. von der Gemini-API) in
+ * Übersetzt technische Fehlermeldungen (z.B. vom KI-Prüfdienst) in
  * nutzerfreundliche deutsche Texte. Wird von allen API-Routen geteilt.
  */
 export function classifyError(message: string): string {
