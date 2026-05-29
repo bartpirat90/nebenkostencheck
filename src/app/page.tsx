@@ -2,21 +2,21 @@
 
 import { useState, useCallback } from "react";
 import UploadZone from "@/components/UploadZone";
-import ResultView from "@/components/ResultView";
+import PreviewView from "@/components/PreviewView";
 import LandingHero from "@/components/LandingHero";
 import StatsBar from "@/components/StatsBar";
 import HowItWorks from "@/components/HowItWorks";
-import { AnalysisResult } from "@/types";
+import { PreviewData } from "@/types";
 
 export default function Home() {
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [preview, setPreview] = useState<PreviewData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = useCallback(async (file: File) => {
     setLoading(true);
     setError(null);
-    setResult(null);
+    setPreview(null);
 
     try {
       const base64 = await fileToBase64(file);
@@ -35,14 +35,14 @@ export default function Home() {
           errorMessage = err.error || errorMessage;
         } catch {
           if (response.status === 504 || response.status === 503) {
-            errorMessage = "Die KI ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
+            errorMessage = "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
           }
         }
         throw new Error(errorMessage);
       }
 
-      const data = await response.json();
-      setResult(data);
+      const data: PreviewData = await response.json();
+      setPreview(data);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Unbekannter Fehler");
     } finally {
@@ -51,7 +51,7 @@ export default function Home() {
   }, []);
 
   const handleReset = () => {
-    setResult(null);
+    setPreview(null);
     setError(null);
   };
 
@@ -74,7 +74,7 @@ export default function Home() {
 
       <div className="max-w-2xl mx-auto px-6 pb-12">
         {/* Landing sections – nur vor der Analyse */}
-        {!result && !loading && (
+        {!preview && !loading && (
           <>
             <LandingHero />
             <StatsBar />
@@ -82,19 +82,19 @@ export default function Home() {
           </>
         )}
 
-        {/* Upload oder Ergebnis */}
+        {/* Upload oder Vorschau */}
         <div id="upload">
-          {!result ? (
+          {!preview ? (
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
-          ) : result.notAStatement ? (
+          ) : preview.notAStatement ? (
             <NotAStatementBox onReset={handleReset} />
           ) : (
-            <ResultView result={result} onReset={handleReset} />
+            <PreviewView preview={preview} onReset={handleReset} />
           )}
         </div>
 
         {/* Footer-Disclaimer */}
-        {!result && !loading && (
+        {!preview && !loading && (
           <p className="mt-8 text-center text-xs text-[#334155] leading-relaxed">
             © 2026 Nebenkostencheck · DSGVO-konform · Keine Datenspeicherung
           </p>
