@@ -1,19 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { LetterRequest } from "@/types";
+import { classifyError } from "@/lib/errors";
+
+// Briefgenerierung via Gemini; Vercel-Standard (10s) reicht oft nicht.
+export const maxDuration = 60;
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-
-function classifyError(message: string): string {
-  const msg = message.toLowerCase();
-  if (msg.includes("503") || msg.includes("service unavailable") || msg.includes("high demand")) {
-    return "Die KI ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
-  }
-  if (msg.includes("fetch failed") || msg.includes("network") || msg.includes("timeout") || msg.includes("econnrefused")) {
-    return "Verbindung unterbrochen. Bitte erneut versuchen.";
-  }
-  return "Ein unbekannter Fehler ist aufgetreten. Bitte erneut versuchen.";
-}
 
 function buildPrompt(req: LetterRequest): string {
   const { type, contact, errors } = req;

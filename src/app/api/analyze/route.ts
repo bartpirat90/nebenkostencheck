@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { classifyError } from "@/lib/errors";
+
+// Gemini-Analyse kann länger dauern; Vercel-Standard (10s) reicht oft nicht.
+// Hobby erlaubt bis zu 60s.
+export const maxDuration = 60;
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -143,17 +148,6 @@ Gehe vor der Ausgabe jeden Fehler durch und prüfe:
 1. Steht die genannte Zahl WÖRTLICH im Dokument? Falls nein → entfernen.
 2. Habe ich einen klaren Beleg im Dokument für diesen Fehler? Falls nein → entfernen.
 3. Bei § 9 HeizkV: Habe ich nur die fehlende Wärmemengenzähler-Messung kritisiert (nicht die Temperaturwerte in der Formel)? Falls nein → korrigieren.`;
-
-function classifyError(message: string): string {
-  const msg = message.toLowerCase();
-  if (msg.includes("503") || msg.includes("service unavailable") || msg.includes("high demand")) {
-    return "Die KI ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
-  }
-  if (msg.includes("fetch failed") || msg.includes("network") || msg.includes("timeout") || msg.includes("econnrefused")) {
-    return "Verbindung unterbrochen. Bitte erneut versuchen.";
-  }
-  return "Ein unbekannter Fehler ist aufgetreten. Bitte erneut versuchen.";
-}
 
 export async function POST(req: NextRequest) {
   try {
