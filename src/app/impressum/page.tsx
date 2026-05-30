@@ -16,7 +16,7 @@ export default function ImpressumPage() {
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Kontakt</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          E-Mail: [GESCHÄFTLICHE E-MAIL – NOCH EINZURICHTEN]
+          E-Mail: kontakt@nebenkostencheck24.de
         </p>
 
         <h2 className="text-lg font-bold text-[#F1F5F9] mt-6 mb-2">Umsatzsteuer</h2>
