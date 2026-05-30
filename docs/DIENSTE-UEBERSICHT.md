@@ -6,15 +6,15 @@
 
 ## Auf einen Blick
 
-| # | Dienst | Website | Wofür | Status |
+| # | Dienst | Website (Login/Dashboard) | Wofür | Status |
 |---|--------|---------|-------|--------|
-| 1 | **Anthropic (Claude)** | console.anthropic.com | Die KI-Analyse der Abrechnung | ✅ Konto + Karte + API-Key |
-| 2 | **Upstash (Redis/KV)** | upstash.com | Zwischenspeicher für Ergebnisse (24 h) | ✅ Datenbank angelegt |
-| 3 | **Stripe** | dashboard.stripe.com | Zahlungsabwicklung (9,90 €) | ✅ Testmodus · ⏳ Live offen |
-| 4 | **Stripe CLI** | (lokal installiert) | Webhook-Tests auf dem PC | ✅ installiert (nur Entwicklung) |
-| 5 | **IONOS** | ionos.de | Domain + geschäftliche E-Mail | ⏳ Domain registriert, Postfach offen |
-| 6 | **Vercel** | vercel.com | Hosting der Website + Auto-Deploy | ⏳ Hobby aktiv, Pro + Config offen |
-| 7 | **GitHub** | github.com/bartpirat90/nebenkostencheck | Code-Speicher, löst Deploy aus | ✅ vorhanden |
+| 1 | **Anthropic (Claude)** | [console.anthropic.com](https://console.anthropic.com) | Die KI-Analyse der Abrechnung | ✅ Konto + Karte + API-Key |
+| 2 | **Upstash (Redis/KV)** | [console.upstash.com](https://console.upstash.com) | Zwischenspeicher für Ergebnisse (24 h) | ✅ Datenbank angelegt |
+| 3 | **Stripe** | [dashboard.stripe.com](https://dashboard.stripe.com) | Zahlungsabwicklung (9,90 €) | ✅ Testmodus · ⏳ Live offen |
+| 4 | **Stripe CLI** | [docs.stripe.com/stripe-cli](https://docs.stripe.com/stripe-cli) | Webhook-Tests auf dem PC | ✅ installiert (nur Entwicklung) |
+| 5 | **IONOS** | [login.ionos.de](https://login.ionos.de) | Domain + geschäftliche E-Mail | ⏳ Domain registriert, Postfach offen |
+| 6 | **Vercel** | [vercel.com/dashboard](https://vercel.com/dashboard) | Hosting der Website + Auto-Deploy | ⏳ Hobby aktiv, Pro + Config offen |
+| 7 | **GitHub** | [github.com/bartpirat90/nebenkostencheck](https://github.com/bartpirat90/nebenkostencheck) | Code-Speicher, löst Deploy aus | ✅ vorhanden |
 
 ---
 
