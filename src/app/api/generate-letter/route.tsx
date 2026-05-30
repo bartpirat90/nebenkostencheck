@@ -45,11 +45,10 @@ export async function POST(req: NextRequest) {
     const letter = await generateLetter({ type: body.type, contact: body.contact, errors });
     const pdf = await renderToBuffer(<LetterDoc letter={letter} />);
 
-    return new NextResponse(new Uint8Array(pdf), {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${filename}.pdf"`,
-      },
+    return NextResponse.json({
+      letter,
+      pdfBase64: Buffer.from(pdf).toString("base64"),
+      filename: `${filename}.pdf`,
     });
   } catch (err: unknown) {
     console.error("Letter generation error:", err);

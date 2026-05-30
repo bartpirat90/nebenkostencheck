@@ -44,6 +44,13 @@ export interface LetterResponse {
   letter: string;
 }
 
+/** Antwort der generate-letter-Route: Brieftext + PDF (Base64) + Dateiname. */
+export interface LetterPdfResponse {
+  letter: string;
+  pdfBase64: string;
+  filename: string;
+}
+
 /** Reduzierte Daten, die der Browser vor der Zahlung sieht. */
 export interface PreviewData {
   id: string;
@@ -61,4 +68,5 @@ export interface StoredAnalysis {
   full: AnalysisResult;
   paid: boolean;
   createdAt: string;
+  customerEmail?: string;
 }
