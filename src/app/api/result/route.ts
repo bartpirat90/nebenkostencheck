@@ -12,5 +12,5 @@ export async function GET(req: NextRequest) {
   if (!record.paid) {
     return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
   }
-  return NextResponse.json(record.full);
+  return NextResponse.json({ ...record.full, _customerEmail: record.customerEmail ?? null });
 }

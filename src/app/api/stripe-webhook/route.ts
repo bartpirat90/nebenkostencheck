@@ -25,7 +25,8 @@ export async function POST(req: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const id = session.metadata?.analysisId ?? session.client_reference_id;
-    if (id) await markPaid(id);
+    const email = session.customer_details?.email ?? session.customer_email;
+    if (id) await markPaid(id, email ?? undefined);
   }
 
   return NextResponse.json({ received: true });

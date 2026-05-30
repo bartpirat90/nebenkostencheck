@@ -29,11 +29,12 @@ export async function getAnalysis(id: string): Promise<StoredAnalysis | null> {
   return (await redis().get<StoredAnalysis>(key(id))) ?? null;
 }
 
-/** Setzt das paid-Flag (behält die Rest-TTL bei). */
-export async function markPaid(id: string): Promise<void> {
+/** Setzt das paid-Flag (behält die Rest-TTL bei). Speichert optional die Kunden-E-Mail. */
+export async function markPaid(id: string, customerEmail?: string): Promise<void> {
   const record = await getAnalysis(id);
   if (!record) return;
   record.paid = true;
+  if (customerEmail) record.customerEmail = customerEmail;
   const ttl = await redis().ttl(key(id));
   await redis().set(key(id), record, { ex: ttl > 0 ? ttl : TTL_SECONDS });
 }
