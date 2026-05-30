@@ -231,6 +231,7 @@ export default function ResultView({ result, id, onReset }: Props) {
               : result.errors
           }
           id={id}
+          customerEmail={(result as AnalysisResult & { _customerEmail?: string })._customerEmail ?? undefined}
         />
       )}
     </div>
