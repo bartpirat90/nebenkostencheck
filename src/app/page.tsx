@@ -62,7 +62,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-[#1E293B] bg-[#0F172A]/90 backdrop-blur-sm">
         <Logo />
-        <span className="text-xs text-[#64748B] bg-[#1E293B] px-3 py-1 rounded-full border border-[#334155]">
+        <span className="hidden sm:inline-block text-xs text-[#64748B] bg-[#1E293B] px-3 py-1 rounded-full border border-[#334155]">
           Erst-Prüfung gratis · ohne Anmeldung
         </span>
       </nav>

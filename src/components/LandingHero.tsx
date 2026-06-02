@@ -4,7 +4,7 @@ export default function LandingHero() {
       <div className="inline-block bg-[#1E1B4B] text-[#A78BFA] text-xs font-bold px-3 py-1.5 rounded-full mb-5 border border-[#3730A3]">
         🏆 Bereits 2.400+ Abrechnungen geprüft
       </div>
-      <h1 className="text-4xl font-black leading-tight mb-4 tracking-tight text-[#F1F5F9]">
+      <h1 className="text-2xl sm:text-4xl font-black leading-tight mb-4 tracking-tight text-[#F1F5F9] hyphens-auto">
         Steckt Geld in deiner<br />
         <span className="bg-gradient-to-r from-[#818CF8] via-[#A78BFA] to-[#C084FC] bg-clip-text text-transparent">
           Nebenkostenabrechnung?
