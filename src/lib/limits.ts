@@ -13,8 +13,13 @@ export const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 /** Maximale Input-Token, die ein Dokument an Claude kosten darf. */
 export const MAX_INPUT_TOKENS = 80_000;
 
+// Gilt pro öffentlicher IP. Bewusst nicht zu knapp, weil sich Nutzer oft eine
+// IP teilen (Haushalt, Büro, Mobilfunk/CGNAT). Gezählt werden nur wohlgeformte
+// Analyse-Versuche — abgelehnte Uploads (falscher Typ, zu groß) zählen NICHT,
+// weil das Gate erst hinter MIME-/Größen-Prüfung läuft (siehe analyze-Route).
+
 /** Maximale kostenlose Analysen pro IP und Stunde. */
-export const RATE_LIMIT_PER_HOUR = 5;
+export const RATE_LIMIT_PER_HOUR = 10;
 
 /** Maximale kostenlose Analysen pro IP und Tag. */
-export const RATE_LIMIT_PER_DAY = 15;
+export const RATE_LIMIT_PER_DAY = 30;
