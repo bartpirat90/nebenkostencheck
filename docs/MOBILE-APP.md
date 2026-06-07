@@ -1,0 +1,195 @@
+# Native Android-App — Dokumentation
+
+**Stand:** 2026-06-07 · Meilenstein 1 abgeschlossen & auf Emulator verifiziert
+**Code:** Unterordner [`mobile/`](../mobile) · auf `monetarisierung` gemergt + zu GitHub gepusht
+
+---
+
+## 1. Überblick
+
+Die Nebenkostencheck-Web-App bekommt eine **echte native Android-App**. Sie ist
+ein eigenständiges **React-Native-Projekt (Expo)** im Ordner `mobile/` und spricht
+als reiner Client das **bestehende Vercel-Backend** an — es gibt **keine**
+Backend-Änderungen.
+
+**Warum React Native + Expo (statt PWA oder Kotlin)?**
+- Rendert echte native Komponenten (native Kamera, Push, Play-Store-Binary) — für
+  diese Art App (Upload → Analyse → Ergebnis) kein für Endnutzer spürbarer
+  Unterschied zu Kotlin.
+- Nutzt das vorhandene React-/TypeScript-Wissen und die bestehenden API-Verträge.
+- Android-first; iOS bliebe später nahezu geschenkt.
+
+Entscheidung und Begründung im Detail:
+`docs/superpowers/specs/2026-06-07-native-app-meilenstein-1-design.md`.
+
+---
+
+## 2. Tech-Stack
+
+| | |
+|---|---|
+| Framework | React Native via **Expo SDK 56** |
+| Sprache | TypeScript (strict) |
+| Navigation | Expo Router (datei-basiert, `typedRoutes`) |
+| Laufzeit | React 19.2, React Native 0.85 |
+| Tests | Jest (`jest-expo`) |
+| Native Module | `expo-document-picker`, `expo-image-picker`, `expo-file-system`, `expo-linear-gradient`, `react-native-svg` |
+
+> ⚠️ **SDK 56 ist neu.** Vor Codeänderungen die versionierten Docs prüfen:
+> https://docs.expo.dev/versions/v56.0.0/ (siehe auch `mobile/AGENTS.md`).
+
+---
+
+## 3. Architektur
+
+```
+┌─────────────────────────┐         HTTPS POST {base64,mediaType,fileName}
+│  Android-App (mobile/)  │ ───────────────────────────────────────────────┐
+│  React Native / Expo    │                                                 ▼
+│  Home → Upload → Ergebnis│                          ┌──────────────────────────────┐
+└─────────────────────────┘ ◄─── PreviewData (JSON) ──│  Vercel-Backend (unverändert) │
+                                                       │  /api/analyze  (Next.js)      │
+                                                       └──────────────────────────────┘
+```
+
+- Die App enthält **keine** Geschäftslogik der Analyse — sie schickt das Dokument
+  (base64) an `/api/analyze` und zeigt die zurückgegebenen Teaser-Daten an.
+- **API-Basis-URL** ist konfigurierbar (`src/config.ts` / `EXPO_PUBLIC_API_BASE_URL`).
+  Standard = die **Preview mit `MOCK_ANALYSIS=true`** → Entwicklung/Tests kosten
+  **0 Cent** (keine KI-Aufrufe). Produktion später: `https://nebenkostencheck24.de`.
+- **Vercel ignoriert `mobile/`**: Der Web-Build läuft am Repo-Root (`next build`),
+  der Unterordner wird nicht gebaut. Die Web-App ist unberührt.
+
+---
+
+## 4. Projektstruktur (`mobile/src/`)
+
+```
+src/
+  app/                 # Expo-Router-Routen = Screens
+    _layout.tsx        # Stack-Navigator + globales Dark-Theme
+    index.tsx          # Home/Landing (Logo, Nutzenversprechen, CTA)
+    upload.tsx         # Upload (PDF/Foto-Picker, Größen-Guard, Analyse-Aufruf)
+    result.tsx         # Ergebnis-Teaser (Fehleranzahl, €-Potenzial, Paywall-Platzhalter)
+  api/
+    analyze.ts         # analyzeDocument() — Request/Antwort/Fehler typisiert
+    analyze.test.ts    # Unit-Tests (gemocktes fetch)
+  components/
+    Logo.tsx           # Schutzschild + Häkchen (SVG, aus Web übernommen)
+    LoadingIndicator.tsx # native Lade-Animation mit wechselnden Texten
+  lib/
+    fileGuard.ts       # 3-MB-Größen-Guard (pure Funktion)
+    fileGuard.test.ts  # Unit-Tests
+  theme.ts             # Farben/Spacing/Radius (1:1 aus dem Web-Design)
+  config.ts            # API_BASE_URL
+  types.ts             # PreviewData (gespiegelt aus dem Web-Typ)
+```
+
+Design-System-Farben (aus dem Web): BG `#0F172A`, Cards `#1E293B`, Border `#334155`,
+Text `#F1F5F9`/`#94A3B8`, Accent-Gradient `#6366F1 → #8B5CF6`.
+
+---
+
+## 5. App lokal ausführen
+
+### Variante A — Echtes Android-Handy (kein Setup)
+1. „**Expo Go**" aus dem Play Store installieren.
+2. Handy und PC ins **gleiche WLAN**.
+3. Im Ordner `mobile/`: `npx expo start` → QR-Code mit Expo Go scannen.
+
+### Variante B — Android-Emulator auf dem PC
+Einmaliges Setup (auf diesem PC bereits erledigt):
+- **Android Studio** installiert; **Android SDK liegt auf `E:\Android`** (nicht am
+  Windows-Default-Ort).
+- Umgebungsvariablen (dauerhaft, User-Scope): `ANDROID_HOME` = `ANDROID_SDK_ROOT` =
+  `E:\Android`; PATH ergänzt um `E:\Android\platform-tools` und `E:\Android\emulator`.
+- **AVD liegt auf `E:\Android\avd`** (`ANDROID_AVD_HOME=E:\Android\avd`) — bewusst
+  verlagert, weil `C:` zu wenig frei hatte (die userdata-Partition braucht ~12 GB;
+  `E:` hat reichlich Platz). Gerät: `Pixel_7`, Android 17 / API 37, x86_64.
+
+Starten:
+```powershell
+# 1) Emulator hochfahren
+& E:\Android\emulator\emulator.exe -avd Pixel_7
+
+# 2) Dev-Server starten (im Ordner mobile/)
+npx expo start
+#    Beim ersten Mal installiert sich „Expo Go" automatisch auf dem Emulator.
+#    Im Terminal 'a' drücken, um auf Android zu öffnen.
+```
+
+Nützlich beim Testen (App neu laden über adb):
+```powershell
+$ip = "<LAN-IP-des-PC>"   # z.B. 192.168.2.182, steht im expo-start-Log
+adb shell am force-stop host.exp.exponent
+adb shell am start -a android.intent.action.VIEW -d "exp://$ip:8081" host.exp.exponent
+```
+
+---
+
+## 6. Tests & Checks
+
+Im Ordner `mobile/`:
+```bash
+npx tsc --noEmit   # Typprüfung (muss fehlerfrei sein)
+npx jest           # Unit-Tests (aktuell 7/7 grün)
+```
+Getestet werden die puren Logikmodule (`fileGuard`, `analyzeDocument` inkl.
+Netzwerk-/Server-Fehlerpfade). Die Screens werden auf dem Gerät/Emulator visuell
+verifiziert.
+
+---
+
+## 7. Stand Meilenstein 1 — was funktioniert (auf Emulator verifiziert)
+
+| Funktion | Status |
+|---|---|
+| Home-Screen (Logo, Titel, CTA, Dark-Design) | ✅ |
+| Navigation Home → Upload | ✅ |
+| Upload-UI; „Prüfen" gesperrt, solange keine Datei gewählt | ✅ |
+| **Bild wählen → base64 → MOCK-`/api/analyze` → Teaser** (3 Fehler, 132,5 €) | ✅ |
+| Fehlerbehandlung (deutsche Meldung statt Absturz) | ✅ |
+| `tsc` sauber, `jest` 7/7, Code-Review APPROVE | ✅ |
+
+**Bewusst NICHT in Meilenstein 1** (spätere Meilensteine): Bezahlung in der App
+(Google Play Billing ~15 %), voller Bericht nach Zahlung, Brief-PDFs/Mailversand,
+Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung.
+
+---
+
+## 8. SDK-56-Besonderheiten & gelöste Stolpersteine
+
+1. **`src/`-Layout:** Quellcode liegt unter `mobile/src/`, Routen unter
+   `mobile/src/app/`. Alias `@/*`→`./src/*` existiert, wir nutzen aber durchgängig
+   **relative Imports** (kein Jest-`moduleNameMapper` nötig).
+2. **Neue `expo-file-system`-API:** `import { File }`, `new File(uri).base64()` /
+   `.size`. Die klassischen Funktionen (`readAsStringAsync`) liegen unter
+   `expo-file-system/legacy`.
+3. **`expo-image-picker`:** `mediaTypes: ["images"]` (String-Array); das alte
+   `MediaTypeOptions` ist deprecated.
+4. **Datei → base64 in Expo Go:** `new File(uri).base64()` auf einer
+   DocumentPicker-Cachedatei scheitert **in Expo Go** mit „Missing READ permission"
+   (Sandbox des neuen, scoped FileSystem). In einem echten Dev-/Standalone-Build
+   greift das nicht. **Lösung im Code:**
+   - **Bilder:** ImagePicker mit `base64: true` → base64 kommt direkt, kein
+     Dateilesen → läuft auch in Expo Go (und ist robuster).
+   - **PDF:** offizielles `new File(uri).base64()` (greift im echten Build).
+   - `submit()` ist mit `try/catch` + deutscher Meldung abgesichert.
+
+---
+
+## 9. Offene Punkte / Nächste Schritte
+
+- **PDF-Pfad im echten Build gegentesten:** `npx expo run:android` (Dev-Build) bauen
+  und den PDF-Upload final verifizieren — in Expo Go prinzipbedingt nicht möglich.
+- **Nächste Meilensteine:** echte Analyse (MOCK aus), Bezahlung in der App,
+  weitere Screens (voller Bericht/Briefe), Push, iOS, Play-Store-Release.
+
+---
+
+## 10. Referenzen
+
+- Spec: `docs/superpowers/specs/2026-06-07-native-app-meilenstein-1-design.md`
+- Plan (inkl. SDK-56-Nachträgen): `docs/superpowers/plans/2026-06-07-native-app-meilenstein-1.md`
+- Roadmap: `docs/ROADMAP.md`
+- Web-Projekt & Dienste: `docs/ARCHITECTURE.md`, `docs/DIENSTE-UEBERSICHT.md`
