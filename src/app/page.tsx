@@ -7,6 +7,7 @@ import LandingHero from "@/components/LandingHero";
 import StatsBar from "@/components/StatsBar";
 import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
+import { MAX_FILE_BYTES } from "@/lib/limits";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,11 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = useCallback(async (file: File) => {
+    if (file.size > MAX_FILE_BYTES) {
+      setError("Die Datei ist zu groß (max. 15 MB). Bitte lade nur die Nebenkostenabrechnung hoch.");
+      setPreview(null);
+      return;
+    }
     setLoading(true);
     setError(null);
     setPreview(null);
