@@ -36,6 +36,31 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
   throw lastErr;
 }
 
+function buildDocBlock(
+  base64: string,
+  mediaType: string,
+): Anthropic.DocumentBlockParam | Anthropic.ImageBlockParam {
+  const isPdf = mediaType === "application/pdf";
+  return isPdf
+    ? {
+        type: "document",
+        source: { type: "base64", media_type: "application/pdf", data: base64 },
+      }
+    : {
+        type: "image",
+        source: {
+          type: "base64",
+          media_type: mediaType as Anthropic.Base64ImageSource["media_type"],
+          data: base64,
+        },
+      };
+}
+
+const ANALYSIS_USER_TEXT = (fileName: string) =>
+  `Bitte analysiere diese Nebenkostenabrechnung (Dateiname: ${
+    fileName || "unbekannt"
+  }) und gib deine Prüfung als JSON zurück.`;
+
 function extractJson(text: string): unknown {
   const cleaned = text.replace(/```json\n?|```/g, "").trim();
   return JSON.parse(cleaned);
@@ -60,25 +85,7 @@ export async function analyzeStatement(
     return MOCK_ANALYSIS_RESULT;
   }
 
-  const isPdf = mediaType === "application/pdf";
-
-  const docBlock: Anthropic.DocumentBlockParam | Anthropic.ImageBlockParam = isPdf
-    ? {
-        type: "document",
-        source: {
-          type: "base64",
-          media_type: "application/pdf",
-          data: base64,
-        },
-      }
-    : {
-        type: "image",
-        source: {
-          type: "base64",
-          media_type: mediaType as Anthropic.Base64ImageSource["media_type"],
-          data: base64,
-        },
-      };
+  const docBlock = buildDocBlock(base64, mediaType);
 
   const message = await withRetry(() =>
     client().messages.create({
@@ -96,12 +103,7 @@ export async function analyzeStatement(
           role: "user",
           content: [
             docBlock,
-            {
-              type: "text",
-              text: `Bitte analysiere diese Nebenkostenabrechnung (Dateiname: ${
-                fileName || "unbekannt"
-              }) und gib deine Prüfung als JSON zurück.`,
-            },
+            { type: "text", text: ANALYSIS_USER_TEXT(fileName) },
           ],
         },
       ],
@@ -109,6 +111,33 @@ export async function analyzeStatement(
   );
 
   return extractJson(extractText(message)) as AnalysisResult;
+}
+
+/**
+ * Zählt die Input-Token, die das Dokument kosten würde — kostenloser
+ * Anthropic-Endpoint. Im MOCK-Modus ohne API-Call (Demo bleibt bei 0 Cent).
+ */
+export async function countDocumentTokens(
+  base64: string,
+  mediaType: string,
+  fileName: string,
+): Promise<number> {
+  if (MOCK) return 1000;
+
+  const res = await client().messages.countTokens({
+    model: MODEL,
+    system: ANALYSIS_SYSTEM_PROMPT,
+    messages: [
+      {
+        role: "user",
+        content: [
+          buildDocBlock(base64, mediaType),
+          { type: "text", text: ANALYSIS_USER_TEXT(fileName) },
+        ],
+      },
+    ],
+  });
+  return res.input_tokens;
 }
 
 export async function generateLetter(req: LetterRequest): Promise<string> {
