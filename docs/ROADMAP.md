@@ -1,6 +1,6 @@
 # Roadmap & Projektstand
 
-**Stand:** 2026-05-30 · Branch `monetarisierung` (auf GitHub, NICHT nach `main` gemergt). Demo voll funktionsfähig & teilbar:
+**Stand:** 2026-06-07 · Branch `monetarisierung` (auf GitHub, NICHT nach `main` gemergt). Demo voll funktionsfähig & teilbar:
 `https://nebenkostencheck-git-monetarisierung-bartpirat-s-projects.vercel.app`
 
 ---
@@ -25,6 +25,13 @@
 - Gefixt: Hero-Headline (responsive Größe) + Nav-Badge (auf Mobile ausgeblendet)
 - → solides **responsives** Fundament; PWA/Native kann darauf aufsetzen
 
+**Kostenschutz für die Analyse** (2026-06-07)
+- 4 Gates vor jedem Claude-Call in `/api/analyze`: MIME → Dateigröße → IP-Rate-Limit → Token-Zählung
+- **Rate-Limit:** 10/Stunde + 30/Tag pro IP (Upstash); sitzt hinter MIME/Größe → abgelehnte Uploads zählen nicht
+- **Token-Gate:** Anthropics kostenloser `countTokens`, max 80.000 Token → fängt „1000-Seiten-Roman" ab, bevor teure Token fließen
+- **Dateigröße:** max 3 MB (Vercel kappt Function-Body bei ~4,5 MB; base64 ×1,33 ⇒ ~3 MB Nutzdatei). Frontend fängt auch Vercels Roh-413 mit deutscher Meldung ab
+- Grenzwerte zentral in `src/lib/limits.ts`; MOCK-sicher (Demo bleibt 0 Cent). Spec/Plan unter `docs/superpowers/{specs,plans}/2026-06-07-kostenschutz*`
+
 ---
 
 ## ⛔ Launch-Blocker
@@ -46,6 +53,12 @@
 
 **Empfehlung:** A (PWA) — bestes App-Gefühl ohne Store-Gebühren/IAP-Konflikt. B nur erwägen, wenn Store-Präsenz strategisch wichtig ist (dann Zahlungsmodell-Frage vorher klären).
 → **To-do nächste Session: Diese Entscheidung treffen, dann umsetzen.**
+
+---
+
+## 💡 Offene Verbesserungen (nicht blockierend)
+
+- **Große Uploads (>3 MB) unterstützen:** Vercel kappt Serverless-Function-Bodies bei ~4,5 MB → echte Datei-Obergrenze aktuell ~3 MB. Für Nutzer mit großen mehrseitigen Scans/Fotos: **Direkt-Upload zu Vercel Blob** im Browser (umgeht die Body-Grenze), API bekommt nur die URL und lädt serverseitig. Eigenes Feature (brainstorming → plan), noch nicht gebaut. Bis dahin zeigt das Frontend bei zu großen Dateien eine freundliche deutsche Meldung.
 
 ---
 
