@@ -14,6 +14,30 @@
 
 ---
 
+## ⚠️ Nachtrag nach Scaffold (SDK 56 — Plan-Korrektur)
+
+Task 1 hat **Expo SDK 56** mit einem **`src/`-Layout** erzeugt (RN 0.85, React 19.2, TS 6, `typedRoutes` an, Alias `@/*` → `./src/*`). Die `mobile/AGENTS.md` verlangt, die versionierten Docs (https://docs.expo.dev/versions/v56.0.0/) zu beachten. Daraus folgen zwei Korrekturen, die für **alle** Tasks gelten:
+
+**1. Pfad-Remap:** Jede unten genannte Quelldatei `mobile/<X>` liegt tatsächlich unter **`mobile/src/<X>`**. Konkret:
+`mobile/theme.ts` → `mobile/src/theme.ts`, `mobile/config.ts` → `mobile/src/config.ts`, `mobile/types.ts` → `mobile/src/types.ts`, `mobile/lib/…` → `mobile/src/lib/…`, `mobile/api/…` → `mobile/src/api/…`, `mobile/components/…` → `mobile/src/components/…`, `mobile/app/…` → `mobile/src/app/…`.
+**Ausnahmen, die am `mobile/`-Root bleiben:** `package.json`, `.env`, `babel.config.js` (falls vorhanden), `app.json`, `tsconfig.json`.
+Die **relativen Imports im Plan-Code bleiben unverändert gültig**, weil die relative Struktur identisch ist (z. B. `src/app/index.tsx` → `../components/Logo` = `src/components/Logo`). Wir nutzen durchgängig **relative Imports** (kein `@/`-Alias) — so braucht Jest keinen `moduleNameMapper`.
+
+**2. SDK-56-API-Ersetzungen in Task 11** (verifiziert gegen die v56-Docs):
+- `expo-file-system`: statt `readAsStringAsync`/`getInfoAsync`/`EncodingType`:
+  ```ts
+  import { File } from "expo-file-system";
+  const f = new File(picked.uri);
+  const byteSize = f.size;              // number (bytes), 0 wenn nicht existent
+  const base64 = await f.base64();      // base64-String
+  ```
+- `expo-image-picker`: `mediaTypes: ["images"]` (String-Array) statt `ImagePicker.MediaTypeOptions.Images`. Asset-Felder: `uri`, `fileName` (string|null), `fileSize` (number), `mimeType` (string|null).
+- `typedRoutes` ist an: Routenstrings (`"/upload"`, `"/result"`) müssen existierenden Dateien entsprechen. Falls `router.push` typseitig zickt, die Objektform `router.push({ pathname: "/result", params: { data } })` nutzen.
+
+**3. tsconfig `strict: true`** ist aktiv — sauberes Typing erforderlich.
+
+---
+
 ## File Structure (mobile/)
 
 ```
