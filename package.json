@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.100.1",
     "@react-pdf/renderer": "^4.5.1",
     "@stripe/stripe-js": "^9.7.0",
+    "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "next": "15.3.9",
     "nodemailer": "^8.0.10",
