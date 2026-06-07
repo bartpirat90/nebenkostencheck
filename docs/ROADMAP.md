@@ -41,18 +41,15 @@
 
 ---
 
-## ⏭️ Nächstes Mal: Entscheidung Mobile-Strategie
+## 📱 Native Android-App (Entscheidung getroffen 2026-06-07)
 
-**Frage: Port auf Mobil nativ — oder nicht?**
+**Entscheidung:** Echte native App mit **React Native + Expo** (Android-first; iOS später). Nicht PWA, nicht Kotlin — RN bietet native Komponenten/Kamera/Push bei React-/TS-Wiederverwendung; für diese App-Art kein für Endnutzer spürbarer Unterschied zu Kotlin. App-Code im Unterordner `mobile/` (reiner Client zum bestehenden Backend, keine Backend-Änderung). Spec/Plan: `docs/superpowers/{specs,plans}/2026-06-07-native-app-meilenstein-1*`.
 
-| Option | Aufwand | Vor-/Nachteile |
-|--------|---------|----------------|
-| **A) Bei Web bleiben + PWA** *(empfohlen)* | gering | Bestehende App installierbar machen (Homescreen-Icon, Vollbild). Kostenlos, kein App-Store, **kein Apple-30%-IAP-Problem**, Code 1:1. |
-| **B) Native Store-App** (Capacitor-Wrapper) | hoch | App Store/Play Store. **Aber: Apple verlangt bei digitalen Verkäufen oft In-App-Purchase → 30 % Gebühr**; Developer-Accounts; Store-Review; Pflege zweier Plattformen. Belastet das 9,90-€-Modell. |
-| **C) Responsive-only belassen** | keiner | Aktueller Stand. Läuft im Handy-Browser einwandfrei. |
-
-**Empfehlung:** A (PWA) — bestes App-Gefühl ohne Store-Gebühren/IAP-Konflikt. B nur erwägen, wenn Store-Präsenz strategisch wichtig ist (dann Zahlungsmodell-Frage vorher klären).
-→ **To-do nächste Session: Diese Entscheidung treffen, dann umsetzen.**
+**Meilenstein 1 — Code fertig & reviewt, Gerätetest offen** (Branch `mobile-app`, lokal):
+- Drei Screens: Home → Upload (PDF/Foto-Picker, 3-MB-Größen-Guard) → Ergebnis-Teaser. `tsc` sauber, `jest` 7/7 grün, Code-Review APPROVE.
+- Expo **SDK 56**, `src/`-Layout; Dev zeigt auf die MOCK-Preview → Gerätetest kostenlos.
+- **Offen:** Test auf echtem Android (Expo Go = null Setup, oder Android-Studio-Emulator), dann Branch-Merge.
+- Später (eigene Meilensteine): Bezahlung in der App (**Google Play Billing ~15 %**), voller Bericht/PDF/Mail nativ, Push, iOS, Play-Store-Release.
 
 ---
 
