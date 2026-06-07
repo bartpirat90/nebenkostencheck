@@ -1,8 +1,14 @@
 // Zentrale Grenzwerte für den Kostenschutz der Analyse.
 // Großzügig gewählt (~2,5x über dem Normalfall einer Abrechnung mit ~31k Token).
 
-/** Maximale Dateigröße eines Uploads in Bytes (15 MB). */
-export const MAX_FILE_BYTES = 15 * 1024 * 1024;
+/**
+ * Maximale Dateigröße eines Uploads. Vercel kappt den Serverless-Function-Body
+ * bei ~4,5 MB; durch die base64-Aufblähung (×1,33) bleibt als Nutzdatei ~3 MB.
+ * Höher zu setzen brächte nichts — Vercel würde den Request vorher mit einem
+ * rohen 413 ablehnen.
+ */
+export const MAX_FILE_MB = 3;
+export const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
 /** Maximale Input-Token, die ein Dokument an Claude kosten darf. */
 export const MAX_INPUT_TOKENS = 80_000;

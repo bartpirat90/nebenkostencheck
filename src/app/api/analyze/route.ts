@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzeStatement, countDocumentTokens } from "@/lib/claude";
 import { checkRateLimit, getClientIp } from "@/lib/ratelimit";
-import { MAX_FILE_BYTES, MAX_INPUT_TOKENS } from "@/lib/limits";
+import { MAX_FILE_BYTES, MAX_FILE_MB, MAX_INPUT_TOKENS } from "@/lib/limits";
 import { storeAnalysis } from "@/lib/kv";
 import { classifyError } from "@/lib/errors";
 import { AnalysisResult, PreviewData } from "@/types";
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     const byteSize = (base64.length * 3) / 4 - padding;
     if (byteSize > MAX_FILE_BYTES) {
       return NextResponse.json(
-        { error: "Die Datei ist zu groß (max. 15 MB). Bitte lade nur die Nebenkostenabrechnung hoch." },
+        { error: `Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade nur die Nebenkostenabrechnung hoch.` },
         { status: 413 },
       );
     }

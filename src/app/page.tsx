@@ -7,7 +7,7 @@ import LandingHero from "@/components/LandingHero";
 import StatsBar from "@/components/StatsBar";
 import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
-import { MAX_FILE_BYTES } from "@/lib/limits";
+import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 
@@ -18,7 +18,7 @@ export default function Home() {
 
   const handleFileUpload = useCallback(async (file: File) => {
     if (file.size > MAX_FILE_BYTES) {
-      setError("Die Datei ist zu groß (max. 15 MB). Bitte lade nur die Nebenkostenabrechnung hoch.");
+      setError(`Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.`);
       setPreview(null);
       return;
     }
@@ -42,7 +42,9 @@ export default function Home() {
           const err = await response.json();
           errorMessage = err.error || errorMessage;
         } catch {
-          if (response.status === 504 || response.status === 503) {
+          if (response.status === 413) {
+            errorMessage = `Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.`;
+          } else if (response.status === 504 || response.status === 503) {
             errorMessage = "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
           }
         }
