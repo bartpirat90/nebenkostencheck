@@ -36,6 +36,12 @@ Die **relativen Imports im Plan-Code bleiben unverändert gültig**, weil die re
 
 **3. tsconfig `strict: true`** ist aktiv — sauberes Typing erforderlich.
 
+**4. Gerätetest-Befund (Bild- vs. PDF-Lesen):** Beim Test auf dem Android-Emulator zeigte sich: Das Lesen der vom DocumentPicker erzeugten Cache-Datei (`new File(uri).base64()`, exakt das offizielle v56-Muster) scheitert **in Expo Go** mit „Missing READ permission / isn't readable" — eine Sandbox-Einschränkung des neuen, scoped FileSystem (Datei liegt in Expo Gos globalem Cache, nicht im Experience-Scope). In einem echten Dev-/Standalone-Build greift das nicht. Daraus folgt der finale `upload.tsx`-Ansatz:
+- **Bilder:** ImagePicker mit `base64: true` → `asset.base64` direkt verwenden (kein Dateilesen) → funktioniert **auch in Expo Go** und ist robuster.
+- **PDF:** `new File(uri).base64()` (offizielles v56-Muster) — greift in echten Builds; in Expo Go nur die PDF-Auswahl betroffen.
+- `submit()` ist mit `try/catch` abgesichert (deutsche Meldung statt hängender Lade-Animation).
+- Voller Flow (Bild → MOCK-`/api/analyze` → Teaser) auf dem Emulator verifiziert.
+
 ---
 
 ## File Structure (mobile/)

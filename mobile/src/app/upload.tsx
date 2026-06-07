@@ -9,7 +9,9 @@ import { isFileTooLarge, MAX_FILE_MB } from "../lib/fileGuard";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { colors, spacing, radius } from "../theme";
 
-type Picked = { uri: string; mediaType: string; fileName: string };
+// Bei Bildern liefert der ImagePicker base64 direkt mit (kein Dateilesen nötig);
+// bei PDF lesen wir die Cache-Datei per File-API. base64 ist daher optional.
+type Picked = { uri: string; mediaType: string; fileName: string; base64?: string };
 
 export default function UploadScreen() {
   const router = useRouter();
@@ -30,10 +32,16 @@ export default function UploadScreen() {
     const res = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       quality: 0.8,
+      base64: true,
     });
     if (res.canceled) return;
     const a = res.assets[0];
-    setPicked({ uri: a.uri, mediaType: a.mimeType ?? "image/jpeg", fileName: a.fileName ?? "foto.jpg" });
+    setPicked({
+      uri: a.uri,
+      mediaType: a.mimeType ?? "image/jpeg",
+      fileName: a.fileName ?? "foto.jpg",
+      base64: a.base64 ?? undefined,
+    });
   }
 
   async function takePhoto() {
@@ -42,32 +50,57 @@ export default function UploadScreen() {
       Alert.alert("Kamera", "Bitte erlaube den Kamerazugriff, um ein Foto aufzunehmen.");
       return;
     }
-    const res = await ImagePicker.launchCameraAsync({ quality: 0.8 });
+    const res = await ImagePicker.launchCameraAsync({ quality: 0.8, base64: true });
     if (res.canceled) return;
     const a = res.assets[0];
-    setPicked({ uri: a.uri, mediaType: a.mimeType ?? "image/jpeg", fileName: a.fileName ?? "foto.jpg" });
+    setPicked({
+      uri: a.uri,
+      mediaType: a.mimeType ?? "image/jpeg",
+      fileName: a.fileName ?? "foto.jpg",
+      base64: a.base64 ?? undefined,
+    });
   }
 
-  async function submit() {
-    if (!picked) return;
-    const file = new File(picked.uri);
-    const byteSize = file.size ?? 0;
+  function tooLarge(byteSize: number): boolean {
     if (isFileTooLarge(byteSize)) {
       Alert.alert(
         "Datei zu groß",
         `Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade nur die Nebenkostenabrechnung hoch.`,
       );
-      return;
+      return true;
     }
-    setLoading(true);
-    const base64 = await file.base64();
-    const result = await analyzeDocument(base64, picked.mediaType, picked.fileName);
-    setLoading(false);
-    if (!result.ok) {
-      Alert.alert("Hinweis", result.message);
-      return;
+    return false;
+  }
+
+  async function submit() {
+    if (!picked) return;
+    try {
+      let base64 = picked.base64;
+      if (base64) {
+        // Bild: base64 liegt schon vor (ImagePicker). Größe aus base64-Länge.
+        if (tooLarge(Math.floor((base64.length * 3) / 4))) return;
+        setLoading(true);
+      } else {
+        // PDF: aus der Cache-Datei lesen (neue File-API, SDK 56).
+        const file = new File(picked.uri);
+        if (tooLarge(file.size ?? 0)) return;
+        setLoading(true);
+        base64 = await file.base64();
+      }
+      const result = await analyzeDocument(base64, picked.mediaType, picked.fileName);
+      setLoading(false);
+      if (!result.ok) {
+        Alert.alert("Hinweis", result.message);
+        return;
+      }
+      router.push({ pathname: "/result", params: { data: JSON.stringify(result.data) } });
+    } catch {
+      setLoading(false);
+      Alert.alert(
+        "Hinweis",
+        "Die Datei konnte nicht gelesen werden. Bitte versuche es mit einer anderen Datei.",
+      );
     }
-    router.push({ pathname: "/result", params: { data: JSON.stringify(result.data) } });
   }
 
   if (loading) {
