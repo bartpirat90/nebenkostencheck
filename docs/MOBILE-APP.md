@@ -1,6 +1,6 @@
 # Native Android-App — Dokumentation
 
-**Stand:** 2026-06-07 · Meilenstein 1 abgeschlossen & auf Emulator verifiziert
+**Stand:** 2026-06-08 · Meilenstein 1 abgeschlossen & auf Emulator verifiziert — **Bild- UND PDF-Pfad** (PDF im echten Dev-Build)
 **Code:** Unterordner [`mobile/`](../mobile) · auf `monetarisierung` gemergt + zu GitHub gepusht
 
 ---
@@ -125,6 +125,28 @@ adb shell am force-stop host.exp.exponent
 adb shell am start -a android.intent.action.VIEW -d "exp://$ip:8081" host.exp.exponent
 ```
 
+### Variante C — Echter Dev-Build (nativ, `expo run:android`)
+Nötig, sobald native Module/Dateizugriffe getestet werden, die Expo Go nicht kann
+(z. B. **PDF-Upload** via `new File(uri).base64()` — siehe Abschnitt 8). Baut eine
+echte `app-debug.apk` und installiert sie auf den Emulator/das Gerät.
+
+> ⚠️ **JDK-17-Pflicht!** RN 0.85 / Expo SDK 56 bauen mit **Gradle 9**, das aber ein
+> **JDK 17** als Toolchain erwartet. Mit dem von Android Studio gebündelten **JBR 21**
+> bricht der Build ab (`JvmVendorSpec … IBM_SEMERU` — siehe Abschnitt 8). Auf diesem PC
+> liegt ein Temurin **JDK 17** unter `E:\Java\jdk-17.0.13+11`; `JAVA_HOME` ist dauerhaft
+> (User-Scope) darauf gesetzt.
+
+```powershell
+$env:JAVA_HOME = "E:\Java\jdk-17.0.13+11"   # bereits dauerhaft gesetzt
+# Emulator muss laufen (siehe Variante B), dann im Ordner mobile/:
+npx expo run:android
+#   → erzeugt beim ersten Mal android/ (prebuild), baut, installiert, startet die App
+#     und hängt Metro an. Erstbuild ~8 min, danach inkrementell deutlich schneller.
+```
+
+Der native Ordner `android/` ist **gitignored** (Expo „Continuous Native Generation" —
+wird bei Bedarf aus `app.json` regeneriert, nicht eingecheckt).
+
 ---
 
 ## 6. Tests & Checks
@@ -148,6 +170,7 @@ verifiziert.
 | Navigation Home → Upload | ✅ |
 | Upload-UI; „Prüfen" gesperrt, solange keine Datei gewählt | ✅ |
 | **Bild wählen → base64 → MOCK-`/api/analyze` → Teaser** (3 Fehler, 132,5 €) | ✅ |
+| **PDF wählen → `File.base64()` → MOCK-`/api/analyze` → Teaser** (im echten Dev-Build) | ✅ |
 | Fehlerbehandlung (deutsche Meldung statt Absturz) | ✅ |
 | `tsc` sauber, `jest` 7/7, Code-Review APPROVE | ✅ |
 
@@ -176,14 +199,32 @@ Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung.
    - **PDF:** offizielles `new File(uri).base64()` (greift im echten Build).
    - `submit()` ist mit `try/catch` + deutscher Meldung abgesichert.
 
+   ✅ **Im echten Dev-Build (`expo run:android`) am 2026-06-08 verifiziert:** PDF aus
+   dem System-Picker wählen → `File.base64()` liest fehlerfrei (kein „Missing READ
+   permission" mehr in logcat) → MOCK-`/api/analyze` → Teaser rendert (3 Fehler,
+   132,5 €). Der Expo-Go-Fehler war also wie vermutet reine Sandbox-Limitierung.
+5. **JDK 17 für den nativen Build (Gradle 9 / Foojay-Falle):** RN 0.85 / SDK 56 bauen mit
+   **Gradle 9.3.1**, das ein **JDK 17** als Toolchain erwartet. Das von Android Studio
+   gebündelte **JBR 21** lässt Gradle versuchen, per Foojay-Resolver (gepinnte alte
+   Version 0.5.0 im RN-Plugin) ein JDK herunterzuladen — und der crasht auf Gradle 9 mit
+   `Class JvmVendorSpec does not have member field 'IBM_SEMERU'`. **Fix:** ein lokales
+   **JDK 17** bereitstellen (Temurin 17 unter `E:\Java\jdk-17.0.13+11`, `JAVA_HOME`
+   dauerhaft gesetzt). Dann ist die Toolchain lokal erfüllt, Foojay wird nie aufgerufen,
+   Build läuft sauber.
+
 ---
 
 ## 9. Offene Punkte / Nächste Schritte
 
-- **PDF-Pfad im echten Build gegentesten:** `npx expo run:android` (Dev-Build) bauen
-  und den PDF-Upload final verifizieren — in Expo Go prinzipbedingt nicht möglich.
-- **Nächste Meilensteine:** echte Analyse (MOCK aus), Bezahlung in der App,
-  weitere Screens (voller Bericht/Briefe), Push, iOS, Play-Store-Release.
+- ~~PDF-Pfad im echten Build gegentesten~~ ✅ **erledigt (2026-06-08)** — im Dev-Build
+  end-to-end verifiziert (siehe Abschnitt 7/8).
+- **Android-`package` final festlegen:** aktuell domain-basierter Default
+  `de.nebenkostencheck24.app` (in `app.json`). Vor dem Play-Store-Release einmal final
+  bestätigen — der Name ist nach Veröffentlichung **permanent** und hängt am noch
+  offenen Betreiber-/Play-Store-Konto (vgl. LLC-Blocker im Hauptprojekt).
+- **Nächste Meilensteine:** echte Analyse (MOCK aus), Bezahlung in der App
+  (Google Play Billing ~15 %), weitere Screens (voller Bericht/Briefe), Push, iOS,
+  Play-Store-Release.
 
 ---
 
