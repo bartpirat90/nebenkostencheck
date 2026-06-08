@@ -7,6 +7,7 @@ import { File } from "expo-file-system";
 import { analyzeDocument } from "../api/analyze";
 import { isFileTooLarge, MAX_FILE_MB } from "../lib/fileGuard";
 import { LoadingIndicator } from "../components/LoadingIndicator";
+import { Icon } from "../components/Icon";
 import { colors, spacing, radius } from "../theme";
 
 // Bei Bildern liefert der ImagePicker base64 direkt mit (kein Dateilesen nötig);
@@ -117,20 +118,37 @@ export default function UploadScreen() {
       <Text style={styles.hint}>PDF oder Foto deiner Nebenkostenabrechnung (max. {MAX_FILE_MB} MB).</Text>
 
       <Pressable style={styles.choice} onPress={pickPdf}>
-        <Text style={styles.choiceText}>📄  PDF auswählen</Text>
+        <Icon name="document" size={22} color={colors.text} />
+        <Text style={styles.choiceText}>PDF auswählen</Text>
       </Pressable>
       <Pressable style={styles.choice} onPress={pickPhoto}>
-        <Text style={styles.choiceText}>🖼️  Foto aus Galerie</Text>
+        <Icon name="image" size={22} color={colors.text} />
+        <Text style={styles.choiceText}>Foto aus Galerie</Text>
       </Pressable>
       <Pressable style={styles.choice} onPress={takePhoto}>
-        <Text style={styles.choiceText}>📷  Foto aufnehmen</Text>
+        <Icon name="camera" size={22} color={colors.text} />
+        <Text style={styles.choiceText}>Foto aufnehmen</Text>
       </Pressable>
 
       {picked && (
         <View style={styles.selected}>
+          <Icon
+            name={picked.mediaType.startsWith("image") ? "image" : "document"}
+            size={18}
+            color={colors.textMuted}
+          />
           <Text style={styles.selectedText} numberOfLines={1}>
-            Ausgewählt: {picked.fileName}
+            {picked.fileName}
           </Text>
+          <Pressable
+            onPress={() => setPicked(null)}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel="Auswahl entfernen"
+            style={styles.removeBtn}
+          >
+            <Icon name="close" size={16} color={colors.text} />
+          </Pressable>
         </View>
       )}
 
@@ -151,6 +169,9 @@ const styles = StyleSheet.create({
   heading: { color: colors.text, fontSize: 24, fontWeight: "800" },
   hint: { color: colors.textMuted, fontSize: 14, marginBottom: spacing.sm },
   choice: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
     backgroundColor: colors.card,
     borderColor: colors.border,
     borderWidth: 1,
@@ -158,8 +179,24 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   choiceText: { color: colors.text, fontSize: 16 },
-  selected: { backgroundColor: colors.card, borderRadius: radius.md, padding: spacing.md, marginTop: spacing.sm },
-  selectedText: { color: colors.textMuted, fontSize: 14 },
+  selected: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    backgroundColor: colors.card,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginTop: spacing.sm,
+  },
+  selectedText: { color: colors.text, fontSize: 14, flex: 1 },
+  removeBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.border,
+  },
   submit: { backgroundColor: colors.accentFrom, borderRadius: radius.lg, padding: spacing.md, alignItems: "center", marginTop: spacing.lg },
   submitDisabled: { opacity: 0.4 },
   submitText: { color: "#fff", fontSize: 18, fontWeight: "700" },

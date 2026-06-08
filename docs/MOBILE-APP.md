@@ -69,13 +69,14 @@ src/
   app/                 # Expo-Router-Routen = Screens
     _layout.tsx        # Stack-Navigator + globales Dark-Theme
     index.tsx          # Home/Landing (Logo, Nutzenversprechen, CTA)
-    upload.tsx         # Upload (PDF/Foto-Picker, Größen-Guard, Analyse-Aufruf)
+    upload.tsx         # Upload (PDF/Foto-Picker, Auswahl entfernbar, Größen-Guard, Analyse-Aufruf)
     result.tsx         # Ergebnis-Teaser (Fehleranzahl, €-Potenzial, Paywall-Platzhalter)
   api/
     analyze.ts         # analyzeDocument() — Request/Antwort/Fehler typisiert
     analyze.test.ts    # Unit-Tests (gemocktes fetch)
   components/
     Logo.tsx           # Schutzschild + Häkchen (SVG, aus Web übernommen)
+    Icon.tsx           # Line-Icons (Dokument/Bild/Kamera/×) im Logo-Stil, react-native-svg — statt System-Emojis
     LoadingIndicator.tsx # native Lade-Animation mit wechselnden Texten
   lib/
     fileGuard.ts       # 3-MB-Größen-Guard (pure Funktion)
