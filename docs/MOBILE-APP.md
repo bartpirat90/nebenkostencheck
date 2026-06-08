@@ -223,9 +223,16 @@ Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung.
   `de.nebenkostencheck24.app` (in `app.json`). Vor dem Play-Store-Release einmal final
   bestätigen — der Name ist nach Veröffentlichung **permanent** und hängt am noch
   offenen Betreiber-/Play-Store-Konto (vgl. LLC-Blocker im Hauptprojekt).
-- **Nächste Meilensteine:** echte Analyse (MOCK aus), Bezahlung in der App
-  (Google Play Billing ~15 %), weitere Screens (voller Bericht/Briefe), Push, iOS,
-  Play-Store-Release.
+- **Meilenstein 2 (designt & geplant, Umsetzung offen):** Bericht-Screen (voller
+  `AnalysisResult`) + Brief-Flow (Widerspruch/Belegeinsicht/kombiniert) als teilbares
+  PDF (natives Teilen-Sheet), editierbares Kontaktformular. Datenquelle = echter Pfad
+  (`/api/result?id`), Bezahlschranke nur im MOCK/Demo offen (Produktion bleibt
+  gesperrt). Neue Dependency: `expo-sharing`.
+  - Spec: `docs/superpowers/specs/2026-06-08-native-app-meilenstein-2-design.md`
+  - Plan (11 TDD-Tasks): `docs/superpowers/plans/2026-06-08-native-app-meilenstein-2.md`
+  - **Nächster Schritt:** Ausführungsmodus wählen (Subagent-Driven empfohlen) und Plan abarbeiten.
+- **Spätere Meilensteine:** echte Bezahlung in der App (Google Play Billing ~15 %),
+  echte Analyse (MOCK aus), Push, iOS, Play-Store-Release.
 
 ---
 
