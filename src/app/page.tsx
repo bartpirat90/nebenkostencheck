@@ -10,6 +10,7 @@ import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
 
 export default function Home() {
   const [preview, setPreview] = useState<PreviewData | null>(null);
@@ -66,12 +67,12 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0F172A]">
+    <main className="min-h-[100dvh] bg-ink">
       {/* Navigation */}
-      <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-[#1E293B] bg-[#0F172A]/90 backdrop-blur-sm">
+      <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
         <Logo />
-        <span className="hidden sm:inline-block text-xs text-[#64748B] bg-[#1E293B] px-3 py-1 rounded-full border border-[#334155]">
-          Erst-Prüfung gratis · ohne Anmeldung
+        <span className="hidden sm:inline-block text-[11px] font-medium tracking-[0.14em] text-faint">
+          PRÜFBERICHT · GRATIS
         </span>
       </nav>
 
@@ -80,8 +81,12 @@ export default function Home() {
         {!preview && !loading && (
           <>
             <LandingHero />
-            <StatsBar />
-            <HowItWorks />
+            <Reveal>
+              <StatsBar />
+            </Reveal>
+            <Reveal delay={80}>
+              <HowItWorks />
+            </Reveal>
           </>
         )}
 
@@ -119,7 +124,7 @@ function NotAStatementBox({ onReset }: { onReset: () => void }) {
       </p>
       <button
         onClick={onReset}
-        className="rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3 px-6 text-sm hover:opacity-90 transition-opacity"
+        className="rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3 px-6 text-sm transition-colors"
       >
         Andere Datei hochladen
       </button>

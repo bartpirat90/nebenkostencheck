@@ -66,12 +66,12 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
         }}
         onDrop={onDrop}
         className={`
-          relative rounded-2xl border-2 border-dashed transition-all cursor-pointer
+          relative rounded-2xl border-2 border-dashed transition-colors cursor-pointer
           flex flex-col items-center justify-center
           min-h-[220px] p-8 text-center
           ${dragging
-            ? "border-[#6366F1] bg-[#1E1B4B]/30"
-            : "border-[#334155] bg-[#1E293B] hover:border-[#6366F1] hover:bg-[#1E1B4B]/20"
+            ? "border-accent bg-accent-bg/40"
+            : "border-line bg-surface hover:border-accent hover:bg-accent-bg/30"
           }
           ${loading ? "pointer-events-none opacity-60" : ""}
         `}
@@ -89,17 +89,17 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           <LoadingState />
         ) : (
           <>
-            <div className="w-14 h-14 bg-[#1E1B4B] rounded-full flex items-center justify-center mb-4">
-              <svg className="w-7 h-7 text-[#818CF8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-14 h-14 bg-accent-bg rounded-full flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                   d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <p className="font-semibold text-[#F1F5F9] text-base mb-1">
-              Abrechnung hier ablegen
+            <p className="font-semibold text-fg text-base mb-1">
+              Abrechnung hier einreichen
             </p>
-            <p className="text-sm text-[#64748B] mb-4">oder klicken zum Auswählen</p>
-            <span className="text-xs bg-[#1E293B] border border-[#334155] text-[#475569] px-3 py-1 rounded-full">
+            <p className="text-sm text-muted mb-4">PDF oder Foto ablegen oder klicken zum Auswählen</p>
+            <span className="text-xs bg-surface border border-line text-muted px-3 py-1 rounded-full">
               PDF, JPG, PNG · max. 10 MB
             </span>
           </>
@@ -124,10 +124,10 @@ function LoadingState() {
       <div className="w-full">
         <ProgressBar />
       </div>
-      <div className="w-12 h-12 rounded-full border-2 border-[#334155] border-t-[#6366F1] animate-spin" />
+      <div className="w-12 h-12 rounded-full border-2 border-line border-t-accent animate-spin" />
       <div className="space-y-1 text-center">
-        <p className="font-semibold text-[#F1F5F9]">Deine Abrechnung wird geprüft…</p>
-        <p className="text-sm text-[#64748B]">Das dauert meist 10–20 Sekunden</p>
+        <p className="font-semibold text-fg">Deine Abrechnung wird geprüft…</p>
+        <p className="text-sm text-muted">Das dauert meist 10–20 Sekunden</p>
       </div>
       <PhaseList
         phases={[

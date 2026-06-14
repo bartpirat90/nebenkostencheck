@@ -1,23 +1,27 @@
 const STATS = [
-  { value: "Ø 187 €", label: "Erstattungspotenzial" },
-  { value: "15 Sek.", label: "Analyse-Dauer" },
-  { value: "Gratis", label: "Erst-Prüfung" },
+  { label: "Abrechnungen mit Fehlern", value: "~50 %", accent: true },
+  { label: "Analyse-Dauer", value: "15 Sek.", accent: false },
+  { label: "Erst-Prüfung", value: "0 €", accent: true },
 ];
 
 export default function StatsBar() {
   return (
-    <div className="flex rounded-2xl border border-[#334155] bg-[#1E293B] overflow-hidden mb-10">
-      {STATS.map((stat, i) => (
-        <div
-          key={stat.label}
-          className={`flex-1 text-center py-5 px-4 ${i > 0 ? "border-l border-[#334155]" : ""}`}
-        >
-          <div className="text-2xl font-black bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] bg-clip-text text-transparent">
-            {stat.value}
+    <div className="mb-12">
+      <div className="border border-line rounded-xl divide-y divide-line">
+        {STATS.map((stat) => (
+          <div key={stat.label} className="flex items-center justify-between px-4 py-3.5">
+            <span className="text-sm text-muted">{stat.label}</span>
+            <span
+              className={`text-base font-medium tabular-nums ${
+                stat.accent ? "text-accent-soft" : "text-fg"
+              }`}
+            >
+              {stat.value}
+            </span>
           </div>
-          <div className="text-xs text-[#64748B] mt-1">{stat.label}</div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <p className="text-xs text-faint mt-2">Quelle: Deutscher Mieterbund</p>
     </div>
   );
 }

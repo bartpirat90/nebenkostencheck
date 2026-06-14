@@ -1,35 +1,25 @@
 export default function LandingHero() {
   return (
-    <section className="text-center pt-16 pb-10">
-      <div className="inline-block bg-[#1E1B4B] text-[#A78BFA] text-xs font-bold px-3 py-1.5 rounded-full mb-5 border border-[#3730A3]">
-        🏆 Bereits 2.400+ Abrechnungen geprüft
-      </div>
-      <h1 className="text-2xl sm:text-4xl font-black leading-tight mb-4 tracking-tight text-[#F1F5F9] hyphens-auto">
-        Steckt Geld in deiner<br />
-        <span className="bg-gradient-to-r from-[#818CF8] via-[#A78BFA] to-[#C084FC] bg-clip-text text-transparent">
-          Nebenkostenabrechnung?
-        </span>
+    <section className="pt-16 pb-10">
+      <p className="text-xs font-semibold tracking-wide text-accent-bright mb-4">
+        § geprüft nach BetrKV / HeizkV / BGH
+      </p>
+      <h1 className="text-2xl sm:text-4xl font-black leading-[1.15] mb-4 tracking-tight text-fg text-balance hyphens-auto break-words">
+        Steckt Geld in deiner Nebenkostenabrechnung?
       </h1>
-      <p className="text-[#94A3B8] text-lg leading-relaxed mb-3 max-w-lg mx-auto">
-        Lade deine Abrechnung hoch – sie wird in Sekunden auf typische Fehler geprüft und
-        dein Erstattungspotenzial berechnet.
+      <p className="text-muted text-lg leading-relaxed mb-7 max-w-lg">
+        Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft
+        und dein Erstattungspotenzial berechnet.
       </p>
-      <p className="text-xs text-[#818CF8] font-semibold mb-8">
-        Geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung
-      </p>
-      <a
-        href="#upload"
-        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#6366F1] to-[#8B5CF6]
-          text-white font-bold text-base px-7 py-3.5 rounded-xl hover:opacity-90 transition-opacity"
-      >
-        Abrechnung jetzt prüfen <span aria-hidden>→</span>
-      </a>
-      <div className="flex justify-center flex-wrap gap-5 mt-6">
-        {["Automatische Löschung nach 24 h", "DSGVO-konform", "Kein Account nötig"].map((item) => (
-          <span key={item} className="flex items-center gap-1.5 text-sm text-[#64748B]">
-            <span className="text-[#818CF8]">✓</span> {item}
-          </span>
-        ))}
+      <div className="flex items-center gap-4 flex-wrap">
+        <a
+          href="#upload"
+          className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover active:scale-[0.98]
+            text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
+        >
+          Abrechnung prüfen <span aria-hidden>→</span>
+        </a>
+        <span className="text-sm text-muted">kein Account nötig</span>
       </div>
     </section>
   );
