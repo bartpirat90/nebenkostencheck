@@ -18,6 +18,7 @@ function toPreview(id: string, r: AnalysisResult): PreviewData {
     errorTitles: (r.errors ?? []).map((e) => e.title),
     hasDirect: (r.errors ?? []).some((e) => e.category === "direct"),
     hasReview: (r.errors ?? []).some((e) => e.category === "needs_review"),
+    mock: process.env.MOCK_ANALYSIS === "true",
   };
 }
 

@@ -61,6 +61,7 @@ export interface PreviewData {
   errorTitles: string[];
   hasDirect: boolean; // mind. ein "direct"-Fehler → Widerspruchsbrief verfügbar
   hasReview: boolean; // mind. ein "needs_review"-Fehler → Belegeinsicht verfügbar
+  mock?: boolean; // nur im MOCK-Modus true → Teaser zeigt Demo-Direktlink zum Bericht
 }
 
 /** Was in Vercel KV unter der Analyse-ID liegt. */

@@ -122,6 +122,15 @@ export default function PreviewView({ preview, onReset }: Props) {
         {error && <p className="mt-3 text-sm text-[#FCA5A5]">{error}</p>}
       </div>
 
+      {preview.mock && (
+        <a
+          href={`/ergebnis?id=${preview.id}`}
+          className="block text-center rounded-xl border border-dashed border-[#92400E] bg-[#1C1A0E] text-[#FCD34D] text-sm font-semibold py-3 px-4 hover:bg-[#231f12] transition-colors"
+        >
+          Demo-Modus: Bericht ohne Bezahlung öffnen →
+        </a>
+      )}
+
       <button onClick={onReset} className="w-full text-sm text-muted hover:text-fg py-2 transition-colors">
         Andere Datei prüfen
       </button>
