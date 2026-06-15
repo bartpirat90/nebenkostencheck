@@ -39,6 +39,20 @@ export default function PreviewView({ preview, onReset }: Props) {
       ? `~${preview.totalPotentialEur.toFixed(0)} €`
       : preview.totalPotentialLabel ?? "Potenzial erkannt";
 
+  // Schreiben-Typ aus der Befundlage (Fall-Bezug, ohne Inhalt zu verraten).
+  const letterKind =
+    preview.hasDirect && preview.hasReview
+      ? "Widerspruch und Belegeinsicht"
+      : preview.hasReview
+      ? "Belegeinsicht-Schreiben"
+      : "Widerspruchsschreiben";
+
+  const nextSteps = [
+    { title: "Bericht freischalten", desc: "Alle Befunde im Detail: Begründung, Beleg im Dokument und Rechtsgrundlage." },
+    { title: "Schreiben erstellen", desc: `${letterKind} als fertiges PDF, mit deinen Daten vorausgefüllt.` },
+    { title: "An Vermieter senden", desc: "PDF herunterladen und per E-Mail oder Post einreichen." },
+  ];
+
   return (
     <div className="space-y-5">
       {/* Bericht-Kopf */}
@@ -72,32 +86,25 @@ export default function PreviewView({ preview, onReset }: Props) {
         </div>
       )}
 
-      {/* Geschwärzter Bericht-Auszug: echter Top-Befund, Rest gesperrt */}
-      {preview.teaser && (
-        <div className="rounded-xl border border-line overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-line">
-            <span className="text-[11px] font-medium tracking-[0.12em] text-faint">AUSZUG AUS DEM PRÜFBERICHT</span>
-            <span className="flex items-center gap-1.5 text-xs text-faint"><LockIcon /> gesperrt</span>
-          </div>
-          <div className="p-4">
-            <div className="flex items-start justify-between gap-3 mb-1.5">
-              <p className="font-semibold text-sm text-fg">{preview.teaser.title}</p>
-              {preview.teaser.potentialEur != null && (
-                <span className="text-sm font-bold tabular-nums text-accent-soft shrink-0">
-                  ~{Math.round(preview.teaser.potentialEur)} €
-                </span>
-              )}
-            </div>
-            <p className="text-sm text-muted leading-relaxed">
-              {preview.teaser.snippet}<span className="text-faint">…</span>
-            </p>
-            <div className="mt-3 pt-3 border-t border-line flex items-start gap-2 text-xs text-faint">
-              <span className="mt-0.5 shrink-0"><LockIcon /></span>
-              <span>Vollständige Begründung, Beleg &amp; Rechtsgrundlage nach Freischaltung</span>
-            </div>
-          </div>
+      {/* So geht's weiter (kein Befund-Inhalt, Fall-Bezug über Schreiben-Typ) */}
+      <div className="rounded-xl border border-line overflow-hidden">
+        <div className="px-4 py-2.5 border-b border-line">
+          <span className="text-[11px] font-medium tracking-[0.12em] text-faint">SO GEHT&apos;S WEITER</span>
         </div>
-      )}
+        <div className="divide-y divide-line">
+          {nextSteps.map((step, i) => (
+            <div key={step.title} className="flex items-start gap-3 px-4 py-3">
+              <span className="text-xs font-medium tabular-nums text-accent-soft w-6 shrink-0 pt-0.5">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-fg">{step.title}</p>
+                <p className="text-xs text-muted leading-relaxed mt-0.5">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="border border-accent-border bg-accent-bg/40 rounded-xl p-6">
         <p className="font-bold text-fg mb-3">Vollständigen Bericht freischalten</p>

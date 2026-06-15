@@ -4,28 +4,12 @@ import { checkRateLimit, getClientIp } from "@/lib/ratelimit";
 import { MAX_FILE_BYTES, MAX_FILE_MB, MAX_INPUT_TOKENS } from "@/lib/limits";
 import { storeAnalysis } from "@/lib/kv";
 import { classifyError } from "@/lib/errors";
-import { AnalysisResult, ErrorItem, PreviewData } from "@/types";
+import { AnalysisResult, PreviewData } from "@/types";
 
 export const maxDuration = 60;
 
-/** Größter Befund (nach €-Potenzial) – als angerissene Bericht-Vorschau. */
-function topError(errors: ErrorItem[]): ErrorItem | null {
-  if (!errors.length) return null;
-  return [...errors].sort((a, b) => (b.potentialEur ?? 0) - (a.potentialEur ?? 0))[0];
-}
-
-/** Kürzt eine Begründung auf ~120 Zeichen an einer Wortgrenze (für den Teaser). */
-function truncate(text: string, max = 120): string {
-  const t = (text ?? "").trim();
-  if (t.length <= max) return t;
-  const cut = t.slice(0, max);
-  const lastSpace = cut.lastIndexOf(" ");
-  return (lastSpace > 60 ? cut.slice(0, lastSpace) : cut).trimEnd();
-}
-
 function toPreview(id: string, r: AnalysisResult): PreviewData {
   const errors = r.errors ?? [];
-  const top = topError(errors);
   return {
     id,
     notAStatement: r.notAStatement,
@@ -36,9 +20,6 @@ function toPreview(id: string, r: AnalysisResult): PreviewData {
     hasDirect: errors.some((e) => e.category === "direct"),
     hasReview: errors.some((e) => e.category === "needs_review"),
     mock: process.env.MOCK_ANALYSIS === "true",
-    teaser: top
-      ? { title: top.title, snippet: truncate(top.description), potentialEur: top.potentialEur ?? null }
-      : null,
   };
 }
 
