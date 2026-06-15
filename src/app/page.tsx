@@ -78,9 +78,22 @@ export default function Home() {
 
       {!preview && !loading ? (
         /* Landing: eine Lesespalte + schmale, klebende Akten-Randleiste (nur Desktop) */
-        <div className="max-w-5xl mx-auto px-6 pt-10 lg:pt-14 pb-16">
-          <div className="lg:grid lg:grid-cols-[1fr_14rem] lg:gap-12">
-            <div className="max-w-2xl">
+        <div className="max-w-6xl mx-auto px-6 pt-10 lg:pt-14 pb-16">
+          <div className="lg:grid lg:grid-cols-[12rem_minmax(0,1fr)_14rem] lg:gap-10">
+
+            {/* Linke Randspalte: belegtes Editorial-Zitat (nur Desktop) */}
+            <aside className="hidden lg:block">
+              <figure className="sticky top-24 m-0 border-r border-line pr-6">
+                <div aria-hidden className="text-accent-soft text-4xl leading-none mb-1">&ldquo;</div>
+                <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
+                  Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.
+                </blockquote>
+                <figcaption className="mt-3 text-xs text-faint">Deutscher Mieterbund</figcaption>
+              </figure>
+            </aside>
+
+            {/* Hauptspalte */}
+            <div className="min-w-0">
               <LandingHero />
               <Reveal>
                 <StatsBar />
@@ -93,10 +106,11 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Rechte Akten-Randleiste (nur Desktop) */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 border-l border-line pl-6 space-y-7">
                 <div>
-                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">GEPRÜFT NACH</p>
+                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">GEPRÜFT, NICHT GESCHÄTZT</p>
                   <ul className="space-y-1.5 text-sm text-muted">
                     <li>BetrKV</li>
                     <li>HeizkV</li>
