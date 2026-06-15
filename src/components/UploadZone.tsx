@@ -68,7 +68,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
         className={`
           relative rounded-2xl border-2 border-dashed transition-colors cursor-pointer
           flex flex-col items-center justify-center
-          min-h-[260px] lg:min-h-[420px] p-8 lg:p-12 text-center
+          min-h-[240px] p-8 text-center
           ${dragging
             ? "border-accent bg-accent-bg/40"
             : "border-line bg-surface hover:border-accent hover:bg-accent-bg/30"
@@ -89,17 +89,17 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           <LoadingState />
         ) : (
           <>
-            <div className="w-14 h-14 lg:w-20 lg:h-20 bg-accent-bg rounded-full flex items-center justify-center mb-4 lg:mb-6">
-              <svg className="w-7 h-7 lg:w-10 lg:h-10 text-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-14 h-14 bg-accent-bg rounded-full flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                   d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <p className="font-semibold text-fg text-base lg:text-xl mb-1 lg:mb-2">
+            <p className="font-semibold text-fg text-base mb-1">
               Abrechnung hier einreichen
             </p>
-            <p className="text-sm lg:text-base text-muted mb-4 lg:mb-6">PDF oder Foto ablegen oder klicken zum Auswählen</p>
-            <span className="text-xs lg:text-sm bg-surface border border-line text-muted px-3 py-1 rounded-full">
+            <p className="text-sm text-muted mb-4">PDF oder Foto ablegen oder klicken zum Auswählen</p>
+            <span className="text-xs bg-surface border border-line text-muted px-3 py-1 rounded-full">
               PDF, JPG, PNG · max. 10 MB
             </span>
           </>

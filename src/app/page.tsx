@@ -77,10 +77,10 @@ export default function Home() {
       </nav>
 
       {!preview && !loading ? (
-        /* Landing: zweispaltig ab lg – Story links, Upload rechts; mobil gestapelt */
+        /* Landing: eine Lesespalte + schmale, klebende Akten-Randleiste (nur Desktop) */
         <div className="max-w-5xl mx-auto px-6 pt-10 lg:pt-14 pb-16">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
-            <div>
+          <div className="lg:grid lg:grid-cols-[1fr_14rem] lg:gap-12">
+            <div className="max-w-2xl">
               <LandingHero />
               <Reveal>
                 <StatsBar />
@@ -88,10 +88,31 @@ export default function Home() {
               <Reveal delay={80}>
                 <HowItWorks />
               </Reveal>
+              <div id="upload" className="mt-2">
+                <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
+              </div>
             </div>
-            <div id="upload" className="lg:sticky lg:top-24">
-              <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
-            </div>
+
+            <aside className="hidden lg:block">
+              <div className="sticky top-24 border-l border-line pl-6 space-y-7">
+                <div>
+                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">GEPRÜFT NACH</p>
+                  <ul className="space-y-1.5 text-sm text-muted">
+                    <li>BetrKV</li>
+                    <li>HeizkV</li>
+                    <li>BGH-Rechtsprechung</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">DEINE SICHERHEIT</p>
+                  <ul className="space-y-2 text-sm text-muted">
+                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> DSGVO-konform</li>
+                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> Löschung nach 24 h</li>
+                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> Kein Account nötig</li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
       ) : (

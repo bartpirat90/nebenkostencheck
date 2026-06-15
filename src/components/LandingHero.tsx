@@ -11,16 +11,18 @@ export default function LandingHero() {
         Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft
         und dein Erstattungspotenzial berechnet.
       </p>
-      <div className="flex items-center gap-4 flex-wrap">
-        <a
-          href="#upload"
-          className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover active:scale-[0.98]
-            text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
-        >
-          Abrechnung prüfen <span aria-hidden>→</span>
-        </a>
-        <span className="text-sm text-muted">kein Account nötig</span>
-      </div>
+      <a
+        href="#upload"
+        className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover active:scale-[0.98]
+          text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
+      >
+        Abrechnung prüfen <span aria-hidden>→</span>
+      </a>
+      <ul className="lg:hidden flex flex-wrap gap-x-5 gap-y-1.5 mt-6 text-sm text-muted">
+        <li className="flex items-center gap-1.5"><span className="text-accent-soft">✓</span> DSGVO-konform</li>
+        <li className="flex items-center gap-1.5"><span className="text-accent-soft">✓</span> Löschung nach 24 h</li>
+        <li className="flex items-center gap-1.5"><span className="text-accent-soft">✓</span> Kein Account nötig</li>
+      </ul>
     </section>
   );
 }
