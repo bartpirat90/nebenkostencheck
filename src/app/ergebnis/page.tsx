@@ -57,7 +57,7 @@ function ErgebnisInner() {
 export default function ErgebnisPage() {
   return (
     <main className="min-h-[100dvh] bg-ink">
-      <div className="max-w-2xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto px-6 py-10">
         <Suspense fallback={<p className="text-center text-muted py-20">Laden…</p>}>
           <ErgebnisInner />
         </Suspense>
