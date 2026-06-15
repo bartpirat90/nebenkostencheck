@@ -81,15 +81,31 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 pt-10 lg:pt-14 pb-16">
           <div className="lg:grid lg:grid-cols-[12rem_minmax(0,1fr)_14rem] lg:gap-10">
 
-            {/* Linke Randspalte: belegtes Editorial-Zitat (nur Desktop) */}
+            {/* Linke Randspalte: belegte Editorial-Stimmen (nur Desktop) */}
             <aside className="hidden lg:block">
-              <figure className="sticky top-24 m-0 border-r border-line pr-6">
-                <div aria-hidden className="text-accent-soft text-4xl leading-none mb-1">&ldquo;</div>
-                <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                  Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.
-                </blockquote>
-                <figcaption className="mt-3 text-xs text-faint">Deutscher Mieterbund</figcaption>
-              </figure>
+              <div className="sticky top-24 border-r border-line pr-6 space-y-5">
+                <figure className="m-0">
+                  <div aria-hidden className="text-accent-soft text-4xl leading-none mb-1">&ldquo;</div>
+                  <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
+                    Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.
+                  </blockquote>
+                  <figcaption className="mt-2 text-xs text-faint">Deutscher Mieterbund</figcaption>
+                </figure>
+
+                <figure className="m-0 border-t border-line pt-5">
+                  <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
+                    37 % der geprüften Abrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.
+                  </blockquote>
+                  <figcaption className="mt-2 text-xs text-faint">Verbraucherzentrale</figcaption>
+                </figure>
+
+                <figure className="m-0 border-t border-line pt-5">
+                  <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
+                    Zwölf Monate Zeit für den Widerspruch, auch nach bereits erfolgter Zahlung.
+                  </blockquote>
+                  <figcaption className="mt-2 text-xs text-faint">§ 556 Abs. 3 BGB</figcaption>
+                </figure>
+              </div>
             </aside>
 
             {/* Hauptspalte */}
