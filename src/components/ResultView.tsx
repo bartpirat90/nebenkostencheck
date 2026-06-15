@@ -10,6 +10,8 @@ interface Props {
   onReset: () => void;
 }
 
+// Semantische Konfidenz-Skala (grün/gelb/rot) – bewusst NICHT das Marken-Grün,
+// sondern eine eigenständige Ampel für die Erfolgsaussicht.
 const CONFIDENCE_CONFIG: Record<Confidence, { label: string; bg: string; border: string; text: string; dot: string }> = {
   sicher: {
     label: "Sicher",
@@ -48,30 +50,30 @@ export default function ResultView({ result, id, onReset }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Summary card */}
-      <div className="bg-[#1E293B] rounded-2xl p-6 border border-[#334155]">
-        <p className="text-sm text-[#64748B] mb-1">Geschätztes Erstattungspotenzial</p>
-        <p className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-[#818CF8] to-[#C084FC] bg-clip-text text-transparent">
+      {/* Bericht-Kopf */}
+      <div className="bg-surface rounded-2xl p-6 border border-line">
+        <p className="text-sm text-muted mb-1">Geschätztes Erstattungspotenzial</p>
+        <p className="text-4xl font-bold tracking-tight mb-4 text-accent-soft tabular-nums">
           {hasErrors ? formatEur(total) : "0 €"}
         </p>
 
         {hasErrors && (
-          <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-[#334155]">
+          <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-line">
             <div>
-              <p className="text-xs text-[#64748B]">Sofort angreifbar</p>
-              <p className="text-lg font-bold text-[#4ADE80]">{formatEur(directTotal)}</p>
-              <p className="text-xs text-[#475569]">{directErrors.length} Punkt{directErrors.length !== 1 ? "e" : ""}</p>
+              <p className="text-xs text-muted">Sofort angreifbar</p>
+              <p className="text-lg font-bold text-[#4ADE80] tabular-nums">{formatEur(directTotal)}</p>
+              <p className="text-xs text-faint tabular-nums">{directErrors.length} Punkt{directErrors.length !== 1 ? "e" : ""}</p>
             </div>
             <div>
-              <p className="text-xs text-[#64748B]">Nach Belegeinsicht</p>
-              <p className="text-lg font-bold text-[#FCD34D]">{formatEur(reviewTotal)}</p>
-              <p className="text-xs text-[#475569]">{reviewErrors.length} Punkt{reviewErrors.length !== 1 ? "e" : ""}</p>
+              <p className="text-xs text-muted">Nach Belegeinsicht</p>
+              <p className="text-lg font-bold text-[#FCD34D] tabular-nums">{formatEur(reviewTotal)}</p>
+              <p className="text-xs text-faint tabular-nums">{reviewErrors.length} Punkt{reviewErrors.length !== 1 ? "e" : ""}</p>
             </div>
           </div>
         )}
 
         {result.summary && (
-          <p className="mt-4 text-sm text-[#94A3B8] leading-relaxed border-t border-[#334155] pt-4">
+          <p className="mt-4 text-sm text-muted leading-relaxed border-t border-line pt-4">
             {result.summary}
           </p>
         )}
@@ -80,8 +82,8 @@ export default function ResultView({ result, id, onReset }: Props) {
       {/* Report PDF download */}
       <button
         onClick={() => window.open(`/api/generate-report?id=${id}`, "_blank")}
-        className="w-full rounded-xl border-2 border-[#334155] text-[#94A3B8] font-semibold py-3.5 text-sm
-          hover:border-[#6366F1] hover:text-[#818CF8] transition-colors flex items-center justify-center gap-2"
+        className="w-full rounded-xl border border-line text-muted font-semibold py-3.5 text-sm
+          hover:border-accent hover:text-accent-bright transition-colors flex items-center justify-center gap-2"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -95,7 +97,6 @@ export default function ResultView({ result, id, onReset }: Props) {
         <section className="space-y-3">
           <SectionHeader
             badge="A"
-            badgeColor="bg-[#1E293B] border border-[#334155]"
             title="Sofort angreifbar"
             subtitle="Eindeutige Rechtsverstöße – direkter Widerspruch möglich"
           />
@@ -104,8 +105,8 @@ export default function ResultView({ result, id, onReset }: Props) {
           ))}
           <button
             onClick={() => setLetterModal("objection")}
-            className="w-full rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-semibold py-3.5 text-sm
-              hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+            className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3.5 text-sm
+              transition-colors flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -121,7 +122,6 @@ export default function ResultView({ result, id, onReset }: Props) {
         <section className="space-y-3">
           <SectionHeader
             badge="B"
-            badgeColor="bg-[#334155]"
             title="Belegeinsicht erforderlich"
             subtitle="Verdacht auf Fehler – Belege beim Vermieter anfordern"
           />
@@ -130,8 +130,8 @@ export default function ResultView({ result, id, onReset }: Props) {
           ))}
           <button
             onClick={() => setLetterModal("document_review")}
-            className="w-full rounded-xl bg-[#334155] text-[#CBD5E1] font-semibold py-3.5 text-sm
-              hover:bg-[#475569] transition-colors flex items-center justify-center gap-2"
+            className="w-full rounded-xl border border-line bg-surface text-fg font-semibold py-3.5 text-sm
+              hover:border-accent hover:text-accent-bright transition-colors flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -144,15 +144,15 @@ export default function ResultView({ result, id, onReset }: Props) {
 
       {/* Combined letter */}
       {directErrors.length > 0 && reviewErrors.length > 0 && (
-        <section className="space-y-2 bg-[#1E293B] border border-[#334155] rounded-2xl p-4">
-          <p className="text-sm text-[#94A3B8]">
+        <section className="space-y-2 bg-surface border border-line rounded-2xl p-4">
+          <p className="text-sm text-muted">
             Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung
             zur Belegeinsicht in einem PDF.
           </p>
           <button
             onClick={() => setLetterModal("combined")}
-            className="w-full rounded-xl border-2 border-[#6366F1] text-[#818CF8] font-semibold py-3.5 text-sm
-              hover:bg-[#1E1B4B]/30 transition-colors flex items-center justify-center gap-2"
+            className="w-full rounded-xl border border-accent-border text-accent-bright font-semibold py-3.5 text-sm
+              hover:bg-accent-bg/40 transition-colors flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -180,8 +180,8 @@ export default function ResultView({ result, id, onReset }: Props) {
 
       {/* Color legend */}
       {hasErrors && (
-        <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 text-xs text-[#94A3B8]">
-          <p className="font-semibold mb-2 text-[#F1F5F9]">Farblegende – Erfolgsaussichten:</p>
+        <div className="bg-surface border border-line rounded-xl p-4 text-xs text-muted">
+          <p className="font-semibold mb-2 text-fg">Farblegende – Erfolgsaussichten:</p>
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#22C55E]" />
@@ -200,8 +200,8 @@ export default function ResultView({ result, id, onReset }: Props) {
       )}
 
       {/* Legal disclaimer */}
-      <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 text-xs text-[#64748B] leading-relaxed">
-        <strong className="text-[#94A3B8]">Hinweis:</strong> Diese Analyse ist eine automatisierte Einschätzung
+      <div className="bg-surface border border-line rounded-xl p-4 text-xs text-faint leading-relaxed">
+        <strong className="text-muted">Hinweis:</strong> Diese Analyse ist eine automatisierte Einschätzung
         ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen
         und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen
         und sollten vor dem Versand geprüft und ggf. angepasst werden.
@@ -210,8 +210,8 @@ export default function ResultView({ result, id, onReset }: Props) {
       {/* Reset CTA */}
       <button
         onClick={onReset}
-        className="w-full rounded-xl border-2 border-[#334155] text-[#94A3B8] font-semibold py-3.5 text-sm
-          hover:border-[#6366F1] hover:text-[#818CF8] transition-colors"
+        className="w-full rounded-xl border border-line text-muted font-semibold py-3.5 text-sm
+          hover:border-accent hover:text-accent-bright transition-colors"
       >
         Neue Abrechnung prüfen
       </button>
@@ -238,20 +238,19 @@ export default function ResultView({ result, id, onReset }: Props) {
   );
 }
 
-function SectionHeader({ badge, badgeColor, title, subtitle }: {
+function SectionHeader({ badge, title, subtitle }: {
   badge: string;
-  badgeColor: string;
   title: string;
   subtitle: string;
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className={`shrink-0 w-8 h-8 rounded-lg ${badgeColor} text-[#F1F5F9] font-bold flex items-center justify-center text-sm`}>
+      <div className="shrink-0 w-8 h-8 rounded-lg bg-surface border border-line text-fg font-bold flex items-center justify-center text-sm tabular-nums">
         {badge}
       </div>
       <div>
-        <h2 className="font-bold text-[#F1F5F9] text-base leading-tight">{title}</h2>
-        <p className="text-xs text-[#64748B] mt-0.5">{subtitle}</p>
+        <h2 className="font-bold text-fg text-base leading-tight">{title}</h2>
+        <p className="text-xs text-muted mt-0.5">{subtitle}</p>
       </div>
     </div>
   );
@@ -273,25 +272,25 @@ function ErrorCard({ error }: { error: ErrorItem }) {
               </span>
             </div>
             {error.potentialEur != null && (
-              <span className={`text-xs font-bold shrink-0 ${conf.text}`}>
+              <span className={`text-xs font-bold shrink-0 tabular-nums ${conf.text}`}>
                 ~{formatEur(error.potentialEur)}
               </span>
             )}
           </div>
-          <p className="text-sm text-[#94A3B8] mt-2 leading-relaxed">{error.description}</p>
+          <p className="text-sm text-muted mt-2 leading-relaxed">{error.description}</p>
           {error.legalBasis && (
-            <p className="text-xs text-[#64748B] mt-2">
+            <p className="text-xs text-faint mt-2">
               Rechtsgrundlage: {error.legalBasis}
             </p>
           )}
           {error.evidence && (
-            <p className="text-xs text-[#475569] mt-1 italic">
+            <p className="text-xs text-faint mt-1 italic">
               Beleg im Dokument: „{error.evidence}"
             </p>
           )}
           {error.actionText && (
-            <p className="text-xs text-[#64748B] mt-2 bg-[#0F172A]/60 rounded-md px-2 py-1.5">
-              <strong className="text-[#94A3B8]">Empfehlung:</strong> {error.actionText}
+            <p className="text-xs text-muted mt-2 bg-ink/60 rounded-md px-2 py-1.5">
+              <strong className="text-fg">Empfehlung:</strong> {error.actionText}
             </p>
           )}
         </div>

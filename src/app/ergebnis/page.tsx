@@ -49,16 +49,16 @@ function ErgebnisInner() {
     };
   }, [id]);
 
-  if (loading) return <p className="text-center text-[#94A3B8] py-20">Dein Bericht wird geladen…</p>;
+  if (loading) return <p className="text-center text-muted py-20">Dein Bericht wird geladen…</p>;
   if (error || !result) return <p className="text-center text-[#FCA5A5] py-20">{error}</p>;
   return <ResultView result={result} id={id!} onReset={() => (window.location.href = "/")} />;
 }
 
 export default function ErgebnisPage() {
   return (
-    <main className="min-h-screen bg-[#0F172A]">
+    <main className="min-h-[100dvh] bg-ink">
       <div className="max-w-2xl mx-auto px-6 py-10">
-        <Suspense fallback={<p className="text-center text-[#94A3B8] py-20">Laden…</p>}>
+        <Suspense fallback={<p className="text-center text-muted py-20">Laden…</p>}>
           <ErgebnisInner />
         </Suspense>
       </div>

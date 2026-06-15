@@ -14,7 +14,7 @@ export default function ContactForm({ contact, onChange }: Props) {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-[#64748B]">
+      <p className="text-sm text-muted">
         Bitte prüfe die automatisch erkannten Daten und korrigiere sie bei Bedarf.
         Sie werden für den Brief verwendet.
       </p>
@@ -82,14 +82,14 @@ function Field({
   multiline?: boolean;
 }) {
   const baseClass = `
-    w-full px-3 py-2 rounded-lg border border-[#334155] bg-[#0F172A]
-    text-sm text-[#F1F5F9] placeholder:text-[#475569]
-    focus:outline-none focus:border-[#6366F1] focus:ring-1 focus:ring-[#6366F1]
+    w-full px-3 py-2 rounded-lg border border-line bg-ink
+    text-sm text-fg placeholder:text-faint
+    focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
 
   return (
     <label className="block">
-      <span className="text-xs font-semibold text-[#94A3B8] block mb-1">{label}</span>
+      <span className="text-xs font-semibold text-muted block mb-1">{label}</span>
       {multiline ? (
         <textarea
           rows={2}

@@ -41,63 +41,70 @@ export default function PreviewView({ preview, onReset }: Props) {
 
   return (
     <div className="space-y-5">
-      <div className="bg-[#1E293B] border border-[#334155] rounded-2xl p-6 text-center">
-        <p className="text-sm text-[#94A3B8] mb-1">Erste Prüfung abgeschlossen</p>
-        <p className="text-3xl font-black text-[#F1F5F9]">
-          {preview.errorCount} {preview.errorCount === 1 ? "Auffälligkeit" : "Auffälligkeiten"} gefunden
+      {/* Bericht-Kopf */}
+      <div className="border border-line rounded-xl p-6">
+        <p className="text-xs font-semibold tracking-wide text-accent-bright mb-2">
+          Erste Prüfung abgeschlossen
         </p>
-        <p className="mt-2 text-lg font-bold bg-gradient-to-r from-[#818CF8] to-[#C084FC] bg-clip-text text-transparent">
-          Mögliches Erstattungspotenzial: {potential}
+        <p className="text-3xl font-black text-fg tabular-nums">
+          {preview.errorCount}{" "}
+          {preview.errorCount === 1 ? "Auffälligkeit" : "Auffälligkeiten"}
         </p>
+        <div className="flex items-baseline justify-between gap-3 border-t border-line mt-4 pt-4">
+          <span className="text-sm text-muted">Mögliches Erstattungspotenzial</span>
+          <span className="text-lg font-bold text-accent-soft tabular-nums">{potential}</span>
+        </div>
       </div>
 
       {preview.errorTitles.length > 0 && (
-        <ul className="space-y-2">
+        <div className="border border-line rounded-xl divide-y divide-line">
           {preview.errorTitles.map((title, i) => (
-            <li key={i} className="flex items-center gap-3 bg-[#1E293B] border border-[#334155] rounded-xl p-3">
-              <span className="w-6 h-6 rounded-full bg-[#1E1B4B] text-[#818CF8] text-xs font-bold flex items-center justify-center flex-shrink-0">
-                {i + 1}
+            <div key={i} className="flex items-center gap-3 px-4 py-3">
+              <span className="text-xs font-medium tabular-nums text-accent-soft w-6 shrink-0">
+                {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="text-sm font-medium text-[#F1F5F9]">{title}</span>
-              <span className="ml-auto text-xs text-[#475569]">🔒 Details gesperrt</span>
-            </li>
+              <span className="text-sm font-medium text-fg">{title}</span>
+              <span className="ml-auto flex items-center gap-1.5 text-xs text-faint shrink-0">
+                <LockIcon /> gesperrt
+              </span>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
       {/* Wasserzeichen-Brief-Vorschau (statisches Mockup, kein echter Inhalt) */}
-      <div className="relative rounded-2xl overflow-hidden border border-[#334155]">
-        <div className="bg-[#0F172A] p-6 blur-[3px] select-none pointer-events-none space-y-2" aria-hidden="true">
-          <div className="h-2.5 w-1/3 bg-[#334155] rounded" />
-          <div className="h-2 w-1/2 bg-[#1E293B] rounded" />
-          <div className="h-2 w-2/3 bg-[#1E293B] rounded mt-4" />
+      <div className="relative rounded-xl overflow-hidden border border-line">
+        <div className="bg-ink p-6 blur-[3px] select-none pointer-events-none space-y-2" aria-hidden="true">
+          <div className="h-2.5 w-1/3 bg-line rounded" />
+          <div className="h-2 w-1/2 bg-surface rounded" />
+          <div className="h-2 w-2/3 bg-surface rounded mt-4" />
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-2 w-full bg-[#1E293B] rounded" />
+            <div key={i} className="h-2 w-full bg-surface rounded" />
           ))}
-          <div className="h-2 w-1/4 bg-[#334155] rounded mt-4" />
+          <div className="h-2 w-1/4 bg-line rounded mt-4" />
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="rotate-[-8deg] text-[#94A3B8] font-black text-xl tracking-widest border-2 border-[#475569] rounded-lg px-4 py-1 bg-[#0F172A]/60">
+          <span className="rotate-[-8deg] text-muted font-black text-xl tracking-widest border-2 border-line rounded-lg px-4 py-1 bg-ink/60">
             VORSCHAU
           </span>
         </div>
       </div>
 
-      <div className="bg-gradient-to-br from-[#1E1B4B] to-[#1E293B] border border-[#3730A3] rounded-2xl p-6">
-        <p className="font-bold text-[#F1F5F9] mb-1">Vollständigen Bericht freischalten</p>
-        <ul className="text-sm text-[#94A3B8] space-y-1 mb-4">
-          <li>✓ Alle Fehler mit Begründung, Beleg & Rechtsgrundlage</li>
-          {preview.hasDirect && <li>✓ Fertiger Widerspruchsbrief als PDF</li>}
-          {preview.hasReview && <li>✓ Belegeinsicht-Schreiben (§ 259 BGB) als PDF</li>}
-          <li>✓ Konkrete Handlungsempfehlungen</li>
+      <div className="border border-accent-border bg-accent-bg/40 rounded-xl p-6">
+        <p className="font-bold text-fg mb-3">Vollständigen Bericht freischalten</p>
+        <ul className="text-sm text-muted space-y-1.5 mb-4">
+          <li className="flex gap-2"><span className="text-accent-soft">✓</span> Alle Fehler mit Begründung, Beleg &amp; Rechtsgrundlage</li>
+          {preview.hasDirect && <li className="flex gap-2"><span className="text-accent-soft">✓</span> Fertiger Widerspruchsbrief als PDF</li>}
+          {preview.hasReview && <li className="flex gap-2"><span className="text-accent-soft">✓</span> Belegeinsicht-Schreiben (§ 259 BGB) als PDF</li>}
+          <li className="flex gap-2"><span className="text-accent-soft">✓</span> Konkrete Handlungsempfehlungen</li>
         </ul>
 
-        <label className="flex items-start gap-2 text-xs text-[#94A3B8] mb-4 cursor-pointer">
+        <label className="flex items-start gap-2 text-xs text-muted mb-4 cursor-pointer">
           <input
             type="checkbox"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5"
+            className="mt-0.5 accent-accent"
           />
           <span>
             Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht
@@ -108,16 +115,25 @@ export default function PreviewView({ preview, onReset }: Props) {
         <button
           onClick={startCheckout}
           disabled={!consent || loading}
-          className="w-full rounded-xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-bold py-3.5 text-base hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-bold py-3.5 text-base tabular-nums transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
         >
           {loading ? "Weiterleitung…" : "Für 9,90 € freischalten"}
         </button>
         {error && <p className="mt-3 text-sm text-[#FCA5A5]">{error}</p>}
       </div>
 
-      <button onClick={onReset} className="w-full text-sm text-[#64748B] hover:text-[#94A3B8] py-2">
+      <button onClick={onReset} className="w-full text-sm text-muted hover:text-fg py-2 transition-colors">
         Andere Datei prüfen
       </button>
     </div>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </svg>
   );
 }
