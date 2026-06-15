@@ -76,32 +76,36 @@ export default function Home() {
         </span>
       </nav>
 
-      <div className="max-w-2xl mx-auto px-6 pb-12">
-        {/* Landing sections – nur vor der Analyse */}
-        {!preview && !loading && (
-          <>
-            <LandingHero />
-            <Reveal>
-              <StatsBar />
-            </Reveal>
-            <Reveal delay={80}>
-              <HowItWorks />
-            </Reveal>
-          </>
-        )}
-
-        {/* Upload oder Vorschau */}
-        <div id="upload">
-          {!preview ? (
+      {!preview && !loading ? (
+        /* Landing: zweispaltig ab lg – Story links, Upload rechts; mobil gestapelt */
+        <div className="max-w-5xl mx-auto px-6 pt-10 lg:pt-14 pb-16">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+            <div>
+              <LandingHero />
+              <Reveal>
+                <StatsBar />
+              </Reveal>
+              <Reveal delay={80}>
+                <HowItWorks />
+              </Reveal>
+            </div>
+            <div id="upload" className="lg:sticky lg:top-24">
+              <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Laden / Teaser / Ergebnis: schmale Lesespalte */
+        <div id="upload" className="max-w-2xl mx-auto px-6 pt-10 pb-12">
+          {loading ? (
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
-          ) : preview.notAStatement ? (
+          ) : preview?.notAStatement ? (
             <NotAStatementBox onReset={handleReset} />
           ) : (
-            <PreviewView preview={preview} onReset={handleReset} />
+            <PreviewView preview={preview!} onReset={handleReset} />
           )}
         </div>
-
-      </div>
+      )}
 
       <Footer />
     </main>

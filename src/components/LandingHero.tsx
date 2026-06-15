@@ -1,6 +1,6 @@
 export default function LandingHero() {
   return (
-    <section className="pt-16 pb-10">
+    <section className="pb-10">
       <p className="text-xs font-semibold tracking-wide text-accent-bright mb-4">
         § geprüft nach BetrKV / HeizkV / BGH
       </p>
