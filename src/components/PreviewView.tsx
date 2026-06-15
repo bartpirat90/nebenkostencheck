@@ -72,23 +72,32 @@ export default function PreviewView({ preview, onReset }: Props) {
         </div>
       )}
 
-      {/* Wasserzeichen-Brief-Vorschau (statisches Mockup, kein echter Inhalt) */}
-      <div className="relative rounded-xl overflow-hidden border border-line">
-        <div className="bg-ink p-6 blur-[3px] select-none pointer-events-none space-y-2" aria-hidden="true">
-          <div className="h-2.5 w-1/3 bg-line rounded" />
-          <div className="h-2 w-1/2 bg-surface rounded" />
-          <div className="h-2 w-2/3 bg-surface rounded mt-4" />
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-2 w-full bg-surface rounded" />
-          ))}
-          <div className="h-2 w-1/4 bg-line rounded mt-4" />
+      {/* Geschwärzter Bericht-Auszug: echter Top-Befund, Rest gesperrt */}
+      {preview.teaser && (
+        <div className="rounded-xl border border-line overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-line">
+            <span className="text-[11px] font-medium tracking-[0.12em] text-faint">AUSZUG AUS DEM PRÜFBERICHT</span>
+            <span className="flex items-center gap-1.5 text-xs text-faint"><LockIcon /> gesperrt</span>
+          </div>
+          <div className="p-4">
+            <div className="flex items-start justify-between gap-3 mb-1.5">
+              <p className="font-semibold text-sm text-fg">{preview.teaser.title}</p>
+              {preview.teaser.potentialEur != null && (
+                <span className="text-sm font-bold tabular-nums text-accent-soft shrink-0">
+                  ~{Math.round(preview.teaser.potentialEur)} €
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-muted leading-relaxed">
+              {preview.teaser.snippet}<span className="text-faint">…</span>
+            </p>
+            <div className="mt-3 pt-3 border-t border-line flex items-start gap-2 text-xs text-faint">
+              <span className="mt-0.5 shrink-0"><LockIcon /></span>
+              <span>Vollständige Begründung, Beleg &amp; Rechtsgrundlage nach Freischaltung</span>
+            </div>
+          </div>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="rotate-[-8deg] text-muted font-black text-xl tracking-widest border-2 border-line rounded-lg px-4 py-1 bg-ink/60">
-            VORSCHAU
-          </span>
-        </div>
-      </div>
+      )}
 
       <div className="border border-accent-border bg-accent-bg/40 rounded-xl p-6">
         <p className="font-bold text-fg mb-3">Vollständigen Bericht freischalten</p>
