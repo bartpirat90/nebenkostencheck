@@ -29,6 +29,16 @@ export async function getAnalysis(id: string): Promise<StoredAnalysis | null> {
   return (await redis().get<StoredAnalysis>(key(id))) ?? null;
 }
 
+/**
+ * Ob das volle Ergebnis ausgeliefert werden darf. In Produktion ausschließlich
+ * nach Zahlung (`paid`). Im MOCK-Modus (`MOCK_ANALYSIS=true`, nur Preview/Demo)
+ * immer offen, damit der komplette Flow ohne Bezahlung getestet werden kann.
+ * Produktion (MOCK aus) bleibt damit voll gesperrt – kein Bezahl-Bypass.
+ */
+export function isUnlocked(record: StoredAnalysis): boolean {
+  return record.paid || process.env.MOCK_ANALYSIS === "true";
+}
+
 /** Setzt das paid-Flag (behält die Rest-TTL bei). Speichert optional die Kunden-E-Mail. */
 export async function markPaid(id: string, customerEmail?: string): Promise<void> {
   const record = await getAnalysis(id);

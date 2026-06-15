@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnalysis } from "@/lib/kv";
+import { getAnalysis, isUnlocked } from "@/lib/kv";
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   if (!record) {
     return NextResponse.json({ error: "Ergebnis abgelaufen oder nicht gefunden." }, { status: 404 });
   }
-  if (!record.paid) {
+  if (!isUnlocked(record)) {
     return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
   }
   return NextResponse.json({ ...record.full, _customerEmail: record.customerEmail ?? null });
