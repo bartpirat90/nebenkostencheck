@@ -9,8 +9,8 @@ export default function DatenschutzPage() {
 
         <h2 className="text-lg font-bold text-fg mt-6 mb-2">Verantwortlicher</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          Franz Petschull<br />
-          Hintere Reichenstraße 12, 02625 Bautzen<br />
+          [Name des Betreibers]<br />
+          [Straße & Hausnummer], [PLZ Ort]<br />
           E-Mail: kontakt@nebenkostencheck24.de
         </p>
 

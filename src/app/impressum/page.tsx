@@ -9,9 +9,9 @@ export default function ImpressumPage() {
 
         <h2 className="text-lg font-bold text-fg mt-6 mb-2">Angaben gemäß § 5 DDG</h2>
         <p className="mb-3 leading-relaxed text-sm">
-          Franz Petschull<br />
-          Hintere Reichenstraße 12<br />
-          02625 Bautzen
+          [Name des Betreibers]<br />
+          [Straße & Hausnummer]<br />
+          [PLZ Ort]
         </p>
 
         <h2 className="text-lg font-bold text-fg mt-6 mb-2">Kontakt</h2>
@@ -28,8 +28,8 @@ export default function ImpressumPage() {
           Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
         </h2>
         <p className="mb-3 leading-relaxed text-sm">
-          Franz Petschull<br />
-          Hintere Reichenstraße 12, 02625 Bautzen
+          [Name des Betreibers]<br />
+          [Straße & Hausnummer], [PLZ Ort]
         </p>
 
         <a href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</a>
