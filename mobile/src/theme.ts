@@ -1,15 +1,19 @@
 import type { Confidence } from "./types";
 
+// Gespiegelt aus dem Web-„Prüfbericht"-Design (grün/ink statt lila/slate).
+// Token-Namen bleiben (accentFrom/accentTo) für Kompatibilität; sie tragen jetzt
+// einen dezenten Grün-Verlauf statt des alten Lila.
 export const colors = {
-  bg: "#0F172A",
-  card: "#1E293B",
-  border: "#334155",
-  text: "#F1F5F9",
-  textMuted: "#94A3B8",
-  accentFrom: "#6366F1",
-  accentTo: "#8B5CF6",
-  green: "#22C55E",
-  yellow: "#EAB308",
+  bg: "#0C1016", // ink
+  card: "#11161D", // surface
+  border: "#1E2733", // line
+  text: "#E7ECF2", // fg
+  textMuted: "#9AA6B4", // muted
+  faint: "#828C9A", // faint
+  accentFrom: "#059669", // accent
+  accentTo: "#10B981", // accent-soft
+  green: "#34D399", // accent-bright (Erstattung/„sofort angreifbar")
+  yellow: "#F59E0B", // Belegeinsicht/amber
   red: "#EF4444",
 } as const;
 
