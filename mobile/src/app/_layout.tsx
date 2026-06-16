@@ -17,6 +17,8 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ title: "Nebenkostencheck" }} />
         <Stack.Screen name="upload" options={{ title: "Abrechnung hochladen" }} />
         <Stack.Screen name="result" options={{ title: "Ergebnis" }} />
+        <Stack.Screen name="report" options={{ title: "Prüfbericht" }} />
+        <Stack.Screen name="letter" options={{ title: "Schreiben erstellen" }} />
       </Stack>
     </>
   );

@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import type { PreviewData } from "../types";
 import { colors, spacing, radius } from "../theme";
 
 export default function ResultScreen() {
   const { data } = useLocalSearchParams<{ data: string }>();
+  const router = useRouter();
   let preview: PreviewData | null = null;
   try {
     preview = JSON.parse(data);
@@ -53,13 +54,18 @@ export default function ResultScreen() {
         </View>
       ))}
 
-      <View style={styles.paywall}>
-        <Text style={styles.paywallTitle}>Vollständigen Bericht freischalten</Text>
+      {/* Im Demo führt diese Aktion direkt zum Bericht.
+          Hier kommt später die Bezahlung dazwischen (Google Play Billing). */}
+      <Pressable
+        style={styles.paywall}
+        onPress={() => router.push({ pathname: "/report", params: { id: preview.id } })}
+      >
+        <Text style={styles.paywallTitle}>Vollständigen Bericht anzeigen</Text>
         <Text style={styles.muted}>
           Detaillierte Begründung je Fehler, rechtliche Grundlage und fertige
-          Schreiben — in Kürze in der App verfügbar.
+          Schreiben zum Teilen.
         </Text>
-      </View>
+      </Pressable>
     </ScrollView>
   );
 }
