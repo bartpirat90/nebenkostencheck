@@ -94,9 +94,9 @@ export default function Home() {
 
                 <figure className="m-0 border-t border-line pt-5">
                   <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    37 % der geprüften Abrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.
+                    37 % von 1.046 geprüften Heizkostenabrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.
                   </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">Verbraucherzentrale</figcaption>
+                  <figcaption className="mt-2 text-xs text-faint">Verbraucherzentrale Rheinland-Pfalz</figcaption>
                 </figure>
 
                 <figure className="m-0 border-t border-line pt-5">
