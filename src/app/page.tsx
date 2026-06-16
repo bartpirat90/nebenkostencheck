@@ -11,6 +11,7 @@ import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import Faq from "@/components/Faq";
 import { reviews } from "@/lib/reviews";
 
 export default function Home() {
@@ -144,6 +145,9 @@ export default function Home() {
               <div id="upload" className="mt-2">
                 <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
               </div>
+              <Reveal delay={120}>
+                <Faq />
+              </Reveal>
             </div>
 
             {/* Rechte Akten-Randleiste (nur Desktop) */}
