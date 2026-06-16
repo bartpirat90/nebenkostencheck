@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Impressum",
+  description: "Anbieterkennzeichnung von Nebenkostencheck nach § 5 DDG.",
+};
+
 export default function ImpressumPage() {
   return (
     <main className="min-h-[100dvh] bg-ink text-muted">

@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AGB",
+  description:
+    "Allgemeine Geschäftsbedingungen von Nebenkostencheck – Leistung, Preis (9,90 €), Widerrufsrecht und Haftung.",
+};
+
 export default function AgbPage() {
   return (
     <main className="min-h-[100dvh] bg-ink text-muted">

@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Datenschutzerklärung",
+  description:
+    "Wie Nebenkostencheck personenbezogene Daten verarbeitet – Verarbeitung, Speicherung, Löschung und deine Rechte nach DSGVO.",
+};
+
 export default function DatenschutzPage() {
   return (
     <main className="min-h-[100dvh] bg-ink text-muted">
