@@ -96,8 +96,9 @@ src/
   types.ts             # PreviewData + AnalysisResult/ErrorItem/ContactData/LetterType/LetterPdfResponse (M2)
 ```
 
-Design-System-Farben (aus dem Web): BG `#0F172A`, Cards `#1E293B`, Border `#334155`,
-Text `#F1F5F9`/`#94A3B8`, Accent-Gradient `#6366F1 → #8B5CF6`.
+Design-System-Farben (aus dem neuen grünen Web-„Ledger"): BG `#0C1016` (ink),
+Cards `#11161D` (surface), Border `#1E2733` (line), Text `#E7ECF2`/`#9AA6B4`,
+Accent `#059669`/`#10B981` (grün), Erstattung `#34D399`, Belegeinsicht `#F59E0B`.
 
 ---
 
@@ -208,9 +209,8 @@ Backend-MOCK-Freigabe (siehe Abschnitt 3) liegt auf der Preview, daher liefert d
 im MOCK den vollen `AnalysisResult` + Beispiel-Briefe ohne Bezahlung. Kombiniertes
 Schreiben nutzt denselben `generateLetter`-Pfad wie der Widerspruch.
 
-> Hinweis: Die App nutzt noch die **alte lila/slate-Palette** (M1), nicht das neue grüne
-> „Ledger"-Web-Design. Ein Angleichen der App ans neue Web-Design ist ein eigener,
-> noch offener Schritt.
+> Design: Die App wurde am 2026-06-16 ans **neue grüne „Prüfbericht"-Web-Design** angeglichen
+> (Theme-Tokens grün/ink + Outline-Logo mit durchbrechendem Haken).
 
 ---
 
@@ -260,8 +260,9 @@ Schreiben nutzt denselben `generateLetter`-Pfad wie der Widerspruch.
   — Plan komplett abgearbeitet, auf Emulator E2E verifiziert (siehe Abschnitt 7b).
   Spec/Plan: `docs/superpowers/{specs/2026-06-08-native-app-meilenstein-2-design.md,
   plans/2026-06-08-native-app-meilenstein-2.md}`.
-- **App-Design an neues Web-„Ledger" angleichen:** App läuft noch auf der alten
-  lila/slate-Palette; Web wurde auf grün/ink (Prüfbericht-Charakter) umgestellt. Eigener Schritt.
+- ~~**App-Design an neues Web-„Ledger" angleichen**~~ ✅ **erledigt (2026-06-16)** — Theme
+  (grün/ink) + Outline-Logo gespiegelt aus dem Web. Auf Gerät visuell noch ausstehend
+  (Emulator/Metro-Cache-Flakiness, s. u.); statisch via tsc/jest + Render-Vorschau bestätigt.
 - **Spätere Meilensteine:** echte Bezahlung in der App (Google Play Billing ~15 %),
   echte Analyse (MOCK aus), Push, iOS, Play-Store-Release.
 
