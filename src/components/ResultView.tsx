@@ -53,7 +53,7 @@ export default function ResultView({ result, id, onReset }: Props) {
 
   return (
     <>
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_14rem] lg:gap-10 lg:items-start">
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_14rem] lg:gap-10">
         <div className="space-y-6 min-w-0">
           {/* Bericht-Kopf */}
           <div className="bg-surface rounded-2xl p-6 border border-line">
