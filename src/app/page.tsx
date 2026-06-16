@@ -11,6 +11,7 @@ import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import { reviews } from "@/lib/reviews";
 
 export default function Home() {
   const [preview, setPreview] = useState<PreviewData | null>(null);
@@ -105,6 +106,29 @@ export default function Home() {
                   </blockquote>
                   <figcaption className="mt-2 text-xs text-faint">§ 556 Abs. 3 BGB</figcaption>
                 </figure>
+
+                {/* Echte Kundenstimmen – erscheint nur, wenn welche eingetragen sind (src/lib/reviews.ts) */}
+                {reviews.length > 0 && (
+                  <div className="border-t border-line pt-5 space-y-5">
+                    <p className="text-[11px] font-medium tracking-[0.12em] text-faint">ERFAHRUNGEN</p>
+                    {reviews.map((r, i) => (
+                      <figure key={i} className="m-0">
+                        <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
+                          {r.text}
+                        </blockquote>
+                        <figcaption className="mt-2 text-xs text-faint">
+                          {r.name}
+                          {r.location ? ` · ${r.location}` : ""}
+                        </figcaption>
+                        {r.savedEur != null && (
+                          <p className="mt-1 text-xs font-semibold text-accent-soft tabular-nums">
+                            {r.savedEur} € zurückgeholt
+                          </p>
+                        )}
+                      </figure>
+                    ))}
+                  </div>
+                )}
               </div>
             </aside>
 
