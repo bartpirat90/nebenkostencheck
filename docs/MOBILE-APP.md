@@ -260,9 +260,9 @@ Schreiben nutzt denselben `generateLetter`-Pfad wie der Widerspruch.
   — Plan komplett abgearbeitet, auf Emulator E2E verifiziert (siehe Abschnitt 7b).
   Spec/Plan: `docs/superpowers/{specs/2026-06-08-native-app-meilenstein-2-design.md,
   plans/2026-06-08-native-app-meilenstein-2.md}`.
-- ~~**App-Design an neues Web-„Ledger" angleichen**~~ ✅ **erledigt (2026-06-16)** — Theme
-  (grün/ink) + Outline-Logo gespiegelt aus dem Web. Auf Gerät visuell noch ausstehend
-  (Emulator/Metro-Cache-Flakiness, s. u.); statisch via tsc/jest + Render-Vorschau bestätigt.
+- ~~**App-Design an neues Web-„Ledger" angleichen**~~ ✅ **erledigt + auf Gerät verifiziert (2026-06-16)**
+  — Theme (grün/ink) + Outline-Logo gespiegelt aus dem Web; Home + Bericht-Screen auf dem
+  Pixel_7 (`expo run:android`, frischer Bundle) im neuen grünen Design bestätigt.
 - **Spätere Meilensteine:** echte Bezahlung in der App (Google Play Billing ~15 %),
   echte Analyse (MOCK aus), Push, iOS, Play-Store-Release.
 
