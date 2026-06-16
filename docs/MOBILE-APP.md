@@ -1,7 +1,7 @@
 # Native Android-App — Dokumentation
 
-**Stand:** 2026-06-08 · Meilenstein 1 abgeschlossen & auf Emulator verifiziert — **Bild- UND PDF-Pfad** (PDF im echten Dev-Build)
-**Code:** Unterordner [`mobile/`](../mobile) · auf `monetarisierung` gemergt + zu GitHub gepusht
+**Stand:** 2026-06-16 · **Meilenstein 2 abgeschlossen & auf Emulator end-to-end verifiziert** (Bericht-Screen + Brief-Flow + natives PDF-Teilen). Meilenstein 1 (Upload→Teaser) seit 2026-06-08 fertig.
+**Code:** Unterordner [`mobile/`](../mobile) · auf `monetarisierung` (zu GitHub gepusht)
 
 ---
 
@@ -9,8 +9,10 @@
 
 Die Nebenkostencheck-Web-App bekommt eine **echte native Android-App**. Sie ist
 ein eigenständiges **React-Native-Projekt (Expo)** im Ordner `mobile/` und spricht
-als reiner Client das **bestehende Vercel-Backend** an — es gibt **keine**
-Backend-Änderungen.
+als reiner Client das **bestehende Vercel-Backend** an. Einzige Backend-Anpassung (M2):
+die Bezahlschranke wird **nur im MOCK-Modus** geöffnet (`isUnlocked(record) = record.paid
+|| MOCK_ANALYSIS` in `src/lib/kv.ts`, genutzt in `/api/result`, `/api/generate-letter`,
+`/api/generate-report`) — **Produktion bleibt voll gesperrt**, kein Bezahl-Bypass.
 
 **Warum React Native + Expo (statt PWA oder Kotlin)?**
 - Rendert echte native Komponenten (native Kamera, Push, Play-Store-Binary) — für
@@ -33,7 +35,7 @@ Entscheidung und Begründung im Detail:
 | Navigation | Expo Router (datei-basiert, `typedRoutes`) |
 | Laufzeit | React 19.2, React Native 0.85 |
 | Tests | Jest (`jest-expo`) |
-| Native Module | `expo-document-picker`, `expo-image-picker`, `expo-file-system`, `expo-linear-gradient`, `react-native-svg` |
+| Native Module | `expo-document-picker`, `expo-image-picker`, `expo-file-system`, `expo-linear-gradient`, `react-native-svg`, `expo-sharing` (M2) |
 
 > ⚠️ **SDK 56 ist neu.** Vor Codeänderungen die versionierten Docs prüfen:
 > https://docs.expo.dev/versions/v56.0.0/ (siehe auch `mobile/AGENTS.md`).
@@ -67,23 +69,31 @@ Entscheidung und Begründung im Detail:
 ```
 src/
   app/                 # Expo-Router-Routen = Screens
-    _layout.tsx        # Stack-Navigator + globales Dark-Theme
+    _layout.tsx        # Stack-Navigator + globales Dark-Theme (index/upload/result/report/letter)
     index.tsx          # Home/Landing (Logo, Nutzenversprechen, CTA)
     upload.tsx         # Upload (PDF/Foto-Picker, Auswahl entfernbar, Größen-Guard, Analyse-Aufruf)
-    result.tsx         # Ergebnis-Teaser (Fehleranzahl, €-Potenzial, Paywall-Platzhalter)
+    result.tsx         # Ergebnis-Teaser; Karte „Vollständigen Bericht anzeigen" → /report (M2)
+    report.tsx         # M2: Bericht-Screen (Summary, Fehler-Sektionen A/B, Brief-Buttons, PDF teilen)
+    letter.tsx         # M2: Brief-Screen (Kontaktformular → PDF erzeugen → Vorschau → teilen)
   api/
     analyze.ts         # analyzeDocument() — Request/Antwort/Fehler typisiert
     analyze.test.ts    # Unit-Tests (gemocktes fetch)
+    report.ts          # M2: fetchReport / generateLetter / reportPdfUrl (ApiResult<T>)
+    report.test.ts     # M2: Unit-Tests (6, gemocktes fetch)
   components/
     Logo.tsx           # Schutzschild + Häkchen (SVG, aus Web übernommen)
     Icon.tsx           # Line-Icons (Dokument/Bild/Kamera/×) im Logo-Stil, react-native-svg — statt System-Emojis
     LoadingIndicator.tsx # native Lade-Animation mit wechselnden Texten
+    ErrorCard.tsx      # M2: eine Fehlerkarte (Confidence-Ampel, €-Potenzial, Rechtsgrundlage)
+    ContactForm.tsx    # M2: editierbares Kontaktformular (6 Felder)
   lib/
     fileGuard.ts       # 3-MB-Größen-Guard (pure Funktion)
     fileGuard.test.ts  # Unit-Tests
-  theme.ts             # Farben/Spacing/Radius (1:1 aus dem Web-Design)
+    pdf.ts             # M2: savePdfAndShare (base64) / downloadAndShare (URL) via expo-file-system/legacy + expo-sharing
+    pdf.test.ts        # M2: Unit-Tests (2, gemockte Native-Module)
+  theme.ts             # Farben/Spacing/Radius + confidence-Farbsätze (M2)
   config.ts            # API_BASE_URL
-  types.ts             # PreviewData (gespiegelt aus dem Web-Typ)
+  types.ts             # PreviewData + AnalysisResult/ErrorItem/ContactData/LetterType/LetterPdfResponse (M2)
 ```
 
 Design-System-Farben (aus dem Web): BG `#0F172A`, Cards `#1E293B`, Border `#334155`,
@@ -155,7 +165,7 @@ wird bei Bedarf aus `app.json` regeneriert, nicht eingecheckt).
 Im Ordner `mobile/`:
 ```bash
 npx tsc --noEmit   # Typprüfung (muss fehlerfrei sein)
-npx jest           # Unit-Tests (aktuell 7/7 grün)
+npx jest           # Unit-Tests (aktuell 15/15 grün)
 ```
 Getestet werden die puren Logikmodule (`fileGuard`, `analyzeDocument` inkl.
 Netzwerk-/Server-Fehlerpfade). Die Screens werden auf dem Gerät/Emulator visuell
@@ -178,6 +188,29 @@ verifiziert.
 **Bewusst NICHT in Meilenstein 1** (spätere Meilensteine): Bezahlung in der App
 (Google Play Billing ~15 %), voller Bericht nach Zahlung, Brief-PDFs/Mailversand,
 Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung.
+
+---
+
+## 7b. Stand Meilenstein 2 — Bericht + Briefe (auf Emulator E2E verifiziert)
+
+Am 2026-06-16 auf dem Pixel_7 (Dev-Build) end-to-end durchgespielt (MOCK, 0 Cent):
+
+| Funktion | Status |
+|---|---|
+| Teaser → „Vollständigen Bericht anzeigen" → **Bericht-Screen** lädt (`fetchReport`→`/api/result`) | ✅ |
+| Summary 132,50 € (Split sofort/Belegeinsicht), Sektionen A/B, `ErrorCard` mit Confidence-Ampel | ✅ |
+| „Widerspruch erstellen" → **Brief-Screen** → Kontaktformular → „PDF erstellen" (`generateLetter`) → Vorschau | ✅ |
+| „Als PDF teilen / speichern" → **natives Teilen-Sheet** (`savePdfAndShare`, *Widerspruch.pdf*) | ✅ |
+| „Bericht als PDF teilen" → natives Teilen-Sheet (`downloadAndShare`, *Pruefbericht.pdf*) | ✅ |
+| `tsc` sauber, `jest` 15/15 | ✅ |
+
+Backend-MOCK-Freigabe (siehe Abschnitt 3) liegt auf der Preview, daher liefert die App
+im MOCK den vollen `AnalysisResult` + Beispiel-Briefe ohne Bezahlung. Kombiniertes
+Schreiben nutzt denselben `generateLetter`-Pfad wie der Widerspruch.
+
+> Hinweis: Die App nutzt noch die **alte lila/slate-Palette** (M1), nicht das neue grüne
+> „Ledger"-Web-Design. Ein Angleichen der App ans neue Web-Design ist ein eigener,
+> noch offener Schritt.
 
 ---
 
@@ -223,14 +256,12 @@ Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung.
   `de.nebenkostencheck24.app` (in `app.json`). Vor dem Play-Store-Release einmal final
   bestätigen — der Name ist nach Veröffentlichung **permanent** und hängt am noch
   offenen Betreiber-/Play-Store-Konto (vgl. LLC-Blocker im Hauptprojekt).
-- **Meilenstein 2 (designt & geplant, Umsetzung offen):** Bericht-Screen (voller
-  `AnalysisResult`) + Brief-Flow (Widerspruch/Belegeinsicht/kombiniert) als teilbares
-  PDF (natives Teilen-Sheet), editierbares Kontaktformular. Datenquelle = echter Pfad
-  (`/api/result?id`), Bezahlschranke nur im MOCK/Demo offen (Produktion bleibt
-  gesperrt). Neue Dependency: `expo-sharing`.
-  - Spec: `docs/superpowers/specs/2026-06-08-native-app-meilenstein-2-design.md`
-  - Plan (11 TDD-Tasks): `docs/superpowers/plans/2026-06-08-native-app-meilenstein-2.md`
-  - **Nächster Schritt:** Ausführungsmodus wählen (Subagent-Driven empfohlen) und Plan abarbeiten.
+- ~~**Meilenstein 2** (Bericht + Brief-Flow + natives PDF-Teilen)~~ ✅ **erledigt (2026-06-16)**
+  — Plan komplett abgearbeitet, auf Emulator E2E verifiziert (siehe Abschnitt 7b).
+  Spec/Plan: `docs/superpowers/{specs/2026-06-08-native-app-meilenstein-2-design.md,
+  plans/2026-06-08-native-app-meilenstein-2.md}`.
+- **App-Design an neues Web-„Ledger" angleichen:** App läuft noch auf der alten
+  lila/slate-Palette; Web wurde auf grün/ink (Prüfbericht-Charakter) umgestellt. Eigener Schritt.
 - **Spätere Meilensteine:** echte Bezahlung in der App (Google Play Billing ~15 %),
   echte Analyse (MOCK aus), Push, iOS, Play-Store-Release.
 
