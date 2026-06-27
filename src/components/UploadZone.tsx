@@ -2,6 +2,7 @@
 
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
+import { MAX_FILE_MB } from "@/lib/limits";
 
 interface Props {
   onUpload: (file: File) => void;
@@ -10,7 +11,6 @@ interface Props {
 }
 
 const ACCEPTED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
-const MAX_SIZE_MB = 10;
 
 export default function UploadZone({ onUpload, loading, error }: Props) {
   const [dragging, setDragging] = useState(false);
@@ -19,7 +19,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
 
   const validate = (file: File): string | null => {
     if (!ACCEPTED_TYPES.includes(file.type)) return "Nur PDF, JPG, PNG oder WebP erlaubt.";
-    if (file.size > MAX_SIZE_MB * 1024 * 1024) return `Datei zu groß (max. ${MAX_SIZE_MB} MB).`;
+    if (file.size > MAX_FILE_MB * 1024 * 1024) return `Datei zu groß (max. ${MAX_FILE_MB} MB).`;
     return null;
   };
 
@@ -100,7 +100,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
             </p>
             <p className="text-sm text-muted mb-4">PDF oder Foto ablegen oder klicken zum Auswählen</p>
             <span className="text-xs bg-surface border border-line text-muted px-3 py-1 rounded-full">
-              PDF, JPG, PNG · max. 10 MB
+              PDF, JPG, PNG · max. {MAX_FILE_MB} MB
             </span>
           </>
         )}

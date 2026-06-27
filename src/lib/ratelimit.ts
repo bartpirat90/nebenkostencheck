@@ -1,19 +1,8 @@
 import { NextRequest } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { redis } from "./kv";
 import { RATE_LIMIT_PER_HOUR, RATE_LIMIT_PER_DAY } from "./limits";
 
-// Lazy-Init wie in kv.ts: Build ohne Env-Vars darf nicht werfen.
-let _redis: Redis | null = null;
-function redis(): Redis {
-  if (!_redis) {
-    _redis = new Redis({
-      url: process.env.KV_REST_API_URL!,
-      token: process.env.KV_REST_API_TOKEN!,
-    });
-  }
-  return _redis;
-}
 
 let _hourly: Ratelimit | null = null;
 function hourly(): Ratelimit {

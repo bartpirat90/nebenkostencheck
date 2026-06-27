@@ -9,6 +9,22 @@ import { ContactData, LetterType } from "@/types";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
+/** Sanitizes client-provided contact data: only known fields, max 200 chars each. */
+function sanitizeContact(raw: any, serverDefault?: ContactData): ContactData {
+  const ALLOWED_KEYS: (keyof ContactData)[] = [
+    "tenantName", "tenantAddress", "landlordName", "landlordAddress", "contractNumber", "billingPeriod",
+  ];
+  const MAX_LEN = 200;
+  const result: ContactData = { ...serverDefault };
+  for (const key of ALLOWED_KEYS) {
+    const val = raw?.[key];
+    if (typeof val === "string" && val.trim()) {
+      result[key] = val.trim().slice(0, MAX_LEN);
+    }
+  }
+  return result;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as { id: string; type: LetterType; contact: ContactData };
@@ -18,6 +34,10 @@ export async function POST(req: NextRequest) {
     const record = await getAnalysis(body.id);
     if (!record) return NextResponse.json({ error: "Analyse abgelaufen." }, { status: 404 });
     if (!isUnlocked(record)) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
+
+    // Sanitize client contact data: only known fields, max length, merged with server defaults.
+    const contact = sanitizeContact(body.contact || {}, record.full.contactData);
+
 
     // Fehler serverseitig aus dem bezahlten Ergebnis beziehen (nicht aus Client-Input).
     const errors =
@@ -42,7 +62,7 @@ export async function POST(req: NextRequest) {
         ? "Widerspruch"
         : "Belegeinsicht";
 
-    const letter = await generateLetter({ type: body.type, contact: body.contact, errors });
+    const letter = await generateLetter({ type: body.type, contact, errors });
     const pdf = await renderToBuffer(<LetterDoc letter={letter} />);
 
     return NextResponse.json({

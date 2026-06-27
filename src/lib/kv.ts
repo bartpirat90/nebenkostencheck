@@ -3,8 +3,9 @@ import { AnalysisResult, StoredAnalysis } from "@/types";
 
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzte Env-Variablen) das Modul importieren kann, ohne zu werfen.
+// Exportiert, damit ratelimit.ts denselben Client wiederverwendet.
 let _redis: Redis | null = null;
-function redis(): Redis {
+export function redis(): Redis {
   if (!_redis) {
     _redis = new Redis({
       url: process.env.KV_REST_API_URL!,

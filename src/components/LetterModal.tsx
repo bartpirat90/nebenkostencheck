@@ -96,7 +96,7 @@ export default function LetterModal({
       const res = await fetch("/api/generate-letter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, contact, errors, id }),
+        body: JSON.stringify({ type, contact, id }),
       });
       if (!res.ok) {
         const e = await res.json();

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnalysis } from "@/lib/kv";
+import { getAnalysis, isUnlocked } from "@/lib/kv";
 import { sendLetterPdf } from "@/lib/mailer";
 import { classifyError } from "@/lib/errors";
 
@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
     }
     const record = await getAnalysis(id);
     if (!record) return NextResponse.json({ error: "Analyse abgelaufen." }, { status: 404 });
-    if (!record.paid) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
+    if (!isUnlocked(record)) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
+
 
     await sendLetterPdf(email, pdfBase64, filename || "Schreiben.pdf", "Dein Nebenkostencheck-Schreiben");
     return NextResponse.json({ ok: true });

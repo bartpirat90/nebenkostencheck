@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ResultView from "@/components/ResultView";
+import Logo from "@/components/Logo";
 import { AnalysisResult } from "@/types";
 
 function ErgebnisInner() {
@@ -57,6 +58,13 @@ function ErgebnisInner() {
 export default function ErgebnisPage() {
   return (
     <main className="min-h-[100dvh] bg-ink">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
+        <a href="/" aria-label="Zur Startseite">
+          <Logo />
+        </a>
+      </nav>
+
       <div className="max-w-4xl mx-auto px-6 py-10">
         <Suspense fallback={<p className="text-center text-muted py-20">Laden…</p>}>
           <ErgebnisInner />
@@ -65,3 +73,4 @@ export default function ErgebnisPage() {
     </main>
   );
 }
+

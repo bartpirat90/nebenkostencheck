@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] });
 
-const SITE_URL = "https://nebenkostencheck24.de";
 const TITLE = "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen";
 const DESCRIPTION =
   "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos.";
