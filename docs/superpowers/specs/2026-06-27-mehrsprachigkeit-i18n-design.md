@@ -51,12 +51,15 @@ Die Nebenkostencheck-**Website** in mehreren Sprachen anbieten – primär für 
 - **OG-Bild:** `app/[locale]/opengraph-image.tsx` mit lokalisierter Headline. **Achtung Schriftrisiko:** Satori-Default-Font deckt **kein Arabisch/Kyrillisch** ab → für `ar`/`ru`/`uk` eine passende Schrift laden (Noto Sans Arabic / Noto Sans). Fallback wenn zu aufwändig: für nicht-lateinische Locales das OG-Bild auf Markenzeichen + lateinische Domain reduzieren. Im Plan als eigener Schritt.
 
 ### Sprachumschalter
-- Dezente Komponente (`LocaleSwitcher`) im Footer: listet die Sprachen, wechselt via next-intl-`usePathname`/`Link` zur selben Route in der Zielsprache (Pfad bleibt erhalten). Setzt `NEXT_LOCALE`-Cookie.
+- Dezente Komponente (`LocaleSwitcher`) **oben rechts in der Nav** der Startseite (konventionell + sofort sichtbar beim Einstieg). Wechselt via next-intl-`usePathname`/`Link` zur selben Route in der Zielsprache (Pfad bleibt erhalten), setzt `NEXT_LOCALE`-Cookie. Kompakte Darstellung (Sprachkürzel/Globus-Icon, Dropdown). Rechtstexte laufen über die `[locale]`-URL ohnehin in der aktiven Sprache; ein zusätzlicher Switcher dort ist optional (später).
 
-## Phasen
+## Umsetzungsreihenfolge (alle 6 Sprachen in einem Durchgang)
 
-- **Phase 1 (Architektur + DE + EN):** next-intl-Setup, Routing/Middleware, Struktur-Umzug nach `[locale]`, String-Extraktion durch alle Komponenten, `messages/de.json` + `messages/en.json`, `LocaleSwitcher`, hreflang + Sitemap-Alternates, RTL-fähige logische Utilities. Ergebnis: DE + EN voll funktionsfähig + grün.
-- **Phase 2 (KI-Sprachen):** `messages/{tr,ar,ru,uk}.json` als KI-Entwurf, Arabisch-RTL-Feinschliff, OG-Schriften für AR/RU/UK, Review-Markierung. Jede Sprache = im Wesentlichen eine JSON-Datei.
+In einem zusammenhängenden Durchgang, sinnvoll geordnet (kein separater Phasen-Abschluss):
+1. **Architektur:** next-intl-Setup, Routing/Middleware, Struktur-Umzug nach `[locale]`, `LocaleSwitcher`, hreflang + Sitemap-Alternates, RTL-fähige logische Utilities.
+2. **String-Extraktion + Quellsprachen:** alle Komponenten auf `useTranslations` umstellen, `messages/de.json` (Quelle) + `messages/en.json` (hochwertig).
+3. **KI-Sprachen:** `messages/{tr,ar,ru,uk}.json` als KI-Entwurf (Review-Markierung), Arabisch-RTL-Feinschliff, OG-Schriften für AR/RU/UK.
+4. **Abnahme:** Verifikation über alle 6 Locales (s. u.).
 
 ## Verifikation
 - `npx tsc --noEmit` grün; `npm run build` grün (statische Generierung aller Locales).
