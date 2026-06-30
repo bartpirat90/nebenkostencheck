@@ -1,0 +1,109 @@
+import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+import { notFound } from "next/navigation";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { routing, RTL_LOCALES, type Locale } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/constants";
+import "../globals.css";
+
+const geist = Geist({ subsets: ["latin"] });
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+
+  // hreflang: alle Sprachen + x-default (= de auf "/")
+  const languages: Record<string, string> = { "x-default": SITE_URL };
+  for (const l of routing.locales) {
+    languages[l] = l === routing.defaultLocale ? SITE_URL : `${SITE_URL}/${l}`;
+  }
+
+  const canonical = locale === routing.defaultLocale ? "/" : `/${locale}`;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: { default: t("title"), template: "%s · Nebenkostencheck" },
+    description: t("description"),
+    keywords: [
+      "Nebenkostenabrechnung prüfen",
+      "Betriebskostenabrechnung Fehler",
+      "Nebenkosten Widerspruch",
+      "Heizkostenabrechnung prüfen",
+      "Mieter Erstattung",
+      "BetrKV",
+      "HeizkV",
+    ],
+    applicationName: "Nebenkostencheck",
+    alternates: { canonical, languages },
+    openGraph: {
+      type: "website",
+      locale,
+      url: canonical,
+      siteName: "Nebenkostencheck",
+      title: t("title"),
+      description: t("description"),
+    },
+    twitter: { card: "summary_large_image", title: t("title"), description: t("description") },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+  };
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Nebenkostencheck",
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.svg`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Nebenkostencheck",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
+};
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+
+  const messages = await getMessages();
+  const dir = RTL_LOCALES.includes(locale as Locale) ? "rtl" : "ltr";
+
+  return (
+    <html lang={locale} dir={dir}>
+      <body className={geist.className}>
+        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </body>
+    </html>
+  );
+}
