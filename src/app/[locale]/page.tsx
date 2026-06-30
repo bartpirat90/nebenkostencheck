@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import UploadZone from "@/components/UploadZone";
 import PreviewView from "@/components/PreviewView";
 import LandingHero from "@/components/LandingHero";
@@ -12,60 +13,81 @@ import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Faq from "@/components/Faq";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
+import { SITE_URL } from "@/lib/constants";
 import { reviews } from "@/lib/reviews";
 
 export default function Home() {
+  const t = useTranslations();
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleFileUpload = useCallback(async (file: File) => {
-    if (file.size > MAX_FILE_BYTES) {
-      setError(`Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.`);
-      setPreview(null);
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    setPreview(null);
-
-    try {
-      const base64 = await fileToBase64(file);
-      const mediaType = file.type || "application/pdf";
-
-      const response = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ base64, mediaType, fileName: file.name }),
-      });
-
-      if (!response.ok) {
-        let errorMessage = "Analyse fehlgeschlagen. Bitte erneut versuchen.";
-        try {
-          const err = await response.json();
-          errorMessage = err.error || errorMessage;
-        } catch {
-          if (response.status === 413) {
-            errorMessage = `Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.`;
-          } else if (response.status === 504 || response.status === 503) {
-            errorMessage = "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
-          }
-        }
-        throw new Error(errorMessage);
+  const handleFileUpload = useCallback(
+    async (file: File) => {
+      if (file.size > MAX_FILE_BYTES) {
+        setError(t("errors.fileTooLarge", { mb: MAX_FILE_MB }));
+        setPreview(null);
+        return;
       }
+      setLoading(true);
+      setError(null);
+      setPreview(null);
 
-      const data: PreviewData = await response.json();
-      setPreview(data);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Unbekannter Fehler");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      try {
+        const base64 = await fileToBase64(file);
+        const mediaType = file.type || "application/pdf";
+
+        const response = await fetch("/api/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ base64, mediaType, fileName: file.name }),
+        });
+
+        if (!response.ok) {
+          let errorMessage = t("errors.analyzeFailed");
+          try {
+            const err = await response.json();
+            errorMessage = err.error || errorMessage;
+          } catch {
+            if (response.status === 413) {
+              errorMessage = t("errors.fileTooLarge", { mb: MAX_FILE_MB });
+            } else if (response.status === 504 || response.status === 503) {
+              errorMessage = t("errors.busy");
+            }
+          }
+          throw new Error(errorMessage);
+        }
+
+        const data: PreviewData = await response.json();
+        setPreview(data);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : t("errors.unknown"));
+      } finally {
+        setLoading(false);
+      }
+    },
+    [t]
+  );
 
   const handleReset = () => {
     setPreview(null);
     setError(null);
+  };
+
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Nebenkostencheck",
+    serviceType: "Prüfung von Nebenkostenabrechnungen",
+    provider: { "@id": `${SITE_URL}/#organization` },
+    areaServed: { "@type": "Country", name: "Deutschland" },
+    description: t("meta.description"),
+    offers: {
+      "@type": "Offer",
+      price: "9.90",
+      priceCurrency: "EUR",
+    },
   };
 
   return (
@@ -73,9 +95,12 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
         <Logo />
-        <span className="hidden sm:inline-block text-[11px] font-medium tracking-[0.14em] text-faint">
-          PRÜFBERICHT · GRATIS
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="hidden sm:inline-block text-[11px] font-medium tracking-[0.14em] text-faint">
+            {t("nav.badge")}
+          </span>
+          <LocaleSwitcher />
+        </div>
       </nav>
 
       {!preview && !loading ? (
@@ -85,33 +110,33 @@ export default function Home() {
 
             {/* Linke Randspalte: belegte Editorial-Stimmen (nur Desktop) */}
             <aside className="hidden lg:block">
-              <div className="sticky top-24 border-r border-line pr-6 space-y-5">
+              <div className="sticky top-24 border-e border-line pe-6 space-y-5">
                 <figure className="m-0">
                   <div aria-hidden className="text-accent-soft text-4xl leading-none mb-1">&ldquo;</div>
                   <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.
+                    {t("evidence.mieterbundQuote")}
                   </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">Deutscher Mieterbund</figcaption>
+                  <figcaption className="mt-2 text-xs text-faint">{t("evidence.mieterbundSource")}</figcaption>
                 </figure>
 
                 <figure className="m-0 border-t border-line pt-5">
                   <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    37 % von 1.046 geprüften Heizkostenabrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.
+                    {t("evidence.vzQuote")}
                   </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">Verbraucherzentrale Rheinland-Pfalz</figcaption>
+                  <figcaption className="mt-2 text-xs text-faint">{t("evidence.vzSource")}</figcaption>
                 </figure>
 
                 <figure className="m-0 border-t border-line pt-5">
                   <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    Zwölf Monate Zeit für den Widerspruch, auch nach bereits erfolgter Zahlung.
+                    {t("evidence.fristQuote")}
                   </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">§ 556 Abs. 3 BGB</figcaption>
+                  <figcaption className="mt-2 text-xs text-faint">{t("evidence.fristSource")}</figcaption>
                 </figure>
 
                 {/* Echte Kundenstimmen – erscheint nur, wenn welche eingetragen sind (src/lib/reviews.ts) */}
                 {reviews.length > 0 && (
                   <div className="border-t border-line pt-5 space-y-5">
-                    <p className="text-[11px] font-medium tracking-[0.12em] text-faint">ERFAHRUNGEN</p>
+                    <p className="text-[11px] font-medium tracking-[0.12em] text-faint">{t("reviews.heading")}</p>
                     {reviews.map((r, i) => (
                       <figure key={i} className="m-0">
                         <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
@@ -123,7 +148,7 @@ export default function Home() {
                         </figcaption>
                         {r.savedEur != null && (
                           <p className="mt-1 text-xs font-semibold text-accent-soft tabular-nums">
-                            {r.savedEur} € zurückgeholt
+                            {t("reviews.saved", { amount: r.savedEur })}
                           </p>
                         )}
                       </figure>
@@ -152,9 +177,9 @@ export default function Home() {
 
             {/* Rechte Akten-Randleiste (nur Desktop) */}
             <aside className="hidden lg:block">
-              <div className="sticky top-24 border-l border-line pl-6 space-y-7">
+              <div className="sticky top-24 border-s border-line ps-6 space-y-7">
                 <div>
-                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">GEPRÜFT, NICHT GESCHÄTZT</p>
+                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">{t("assurance.checkedTitle")}</p>
                   <ul className="space-y-1.5 text-sm text-muted">
                     <li>BetrKV</li>
                     <li>HeizkV</li>
@@ -162,11 +187,11 @@ export default function Home() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">DEINE SICHERHEIT</p>
+                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">{t("assurance.securityTitle")}</p>
                   <ul className="space-y-2 text-sm text-muted">
-                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> DSGVO-konform</li>
-                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> Löschung nach 24 h</li>
-                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> Kein Account nötig</li>
+                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> {t("trust.dsgvo")}</li>
+                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> {t("trust.deletion")}</li>
+                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> {t("trust.noAccount")}</li>
                   </ul>
                 </div>
               </div>
@@ -187,11 +212,16 @@ export default function Home() {
       )}
 
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
     </main>
   );
 }
 
 function NotAStatementBox({ onReset }: { onReset: () => void }) {
+  const t = useTranslations("notAStatement");
   return (
     <div className="bg-[#1C1A0E] border border-[#92400E] rounded-2xl p-8 text-center">
       <div className="w-12 h-12 bg-[#451a03] rounded-full flex items-center justify-center mx-auto mb-4">
@@ -200,16 +230,13 @@ function NotAStatementBox({ onReset }: { onReset: () => void }) {
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
       </div>
-      <p className="font-bold text-[#FCD34D] text-lg mb-2">Kein passendes Dokument erkannt</p>
-      <p className="text-sm text-[#D97706] leading-relaxed mb-6">
-        Das sieht nicht wie eine Nebenkostenabrechnung aus.<br />
-        Bitte lade deine Abrechnung als PDF oder Foto hoch.
-      </p>
+      <p className="font-bold text-[#FCD34D] text-lg mb-2">{t("title")}</p>
+      <p className="text-sm text-[#D97706] leading-relaxed mb-6">{t("body")}</p>
       <button
         onClick={onReset}
         className="rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3 px-6 text-sm transition-colors"
       >
-        Andere Datei hochladen
+        {t("cta")}
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
+import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 import { MAX_FILE_MB } from "@/lib/limits";
 
@@ -13,13 +14,14 @@ interface Props {
 const ACCEPTED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
 
 export default function UploadZone({ onUpload, loading, error }: Props) {
+  const t = useTranslations("upload");
   const [dragging, setDragging] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const validate = (file: File): string | null => {
-    if (!ACCEPTED_TYPES.includes(file.type)) return "Nur PDF, JPG, PNG oder WebP erlaubt.";
-    if (file.size > MAX_FILE_MB * 1024 * 1024) return `Datei zu groß (max. ${MAX_FILE_MB} MB).`;
+    if (!ACCEPTED_TYPES.includes(file.type)) return t("errInvalidType");
+    if (file.size > MAX_FILE_MB * 1024 * 1024) return t("errTooLarge", { mb: MAX_FILE_MB });
     return null;
   };
 
@@ -50,7 +52,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
       <div
         role="button"
         tabIndex={loading ? -1 : 0}
-        aria-label="Abrechnung hochladen"
+        aria-label={t("ariaLabel")}
         onClick={() => !loading && inputRef.current?.click()}
         onKeyDown={(e) => {
           if (!loading && (e.key === "Enter" || e.key === " ")) {
@@ -96,11 +98,11 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
               </svg>
             </div>
             <p className="font-semibold text-fg text-base mb-1">
-              Abrechnung hier einreichen
+              {t("heading")}
             </p>
-            <p className="text-sm text-muted mb-4">PDF oder Foto ablegen oder klicken zum Auswählen</p>
+            <p className="text-sm text-muted mb-4">{t("hint")}</p>
             <span className="text-xs bg-surface border border-line text-muted px-3 py-1 rounded-full">
-              PDF, JPG, PNG · max. {MAX_FILE_MB} MB
+              {t("formats", { mb: MAX_FILE_MB })}
             </span>
           </>
         )}
@@ -119,6 +121,8 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
 }
 
 function LoadingState() {
+  const t = useTranslations("upload");
+  const phases = t.raw("phases") as string[];
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-xs">
       <div className="w-full">
@@ -126,18 +130,10 @@ function LoadingState() {
       </div>
       <div className="w-12 h-12 rounded-full border-2 border-line border-t-accent animate-spin" />
       <div className="space-y-1 text-center">
-        <p className="font-semibold text-fg">Deine Abrechnung wird geprüft…</p>
-        <p className="text-sm text-muted">Das dauert meist 10–20 Sekunden</p>
+        <p className="font-semibold text-fg">{t("loadingTitle")}</p>
+        <p className="text-sm text-muted">{t("loadingSubtitle")}</p>
       </div>
-      <PhaseList
-        phases={[
-          "Dokument wird gelesen",
-          "Positionen werden erfasst",
-          "Rechtsgrundlagen werden geprüft",
-          "Erstattungspotenzial wird berechnet",
-          "Bericht wird zusammengestellt",
-        ]}
-      />
+      <PhaseList phases={phases} />
     </div>
   );
 }
