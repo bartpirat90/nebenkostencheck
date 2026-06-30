@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Link } from "@/i18n/navigation";
 
 export const metadata: Metadata = {
   title: "Impressum",
@@ -39,7 +40,7 @@ export default function ImpressumPage() {
           [Straße & Hausnummer], [PLZ Ort]
         </p>
 
-        <a href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</a>
+        <Link href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</Link>
       </div>
     </main>
   );

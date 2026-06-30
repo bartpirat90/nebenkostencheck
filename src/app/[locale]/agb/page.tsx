@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Link } from "@/i18n/navigation";
 
 export const metadata: Metadata = {
   title: "AGB",
@@ -61,10 +62,10 @@ export default function AgbPage() {
         <h2 className="text-lg font-bold text-fg mt-6 mb-2">6. Anbieter</h2>
         <p className="mb-3 leading-relaxed text-sm">
           [Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im{" "}
-          <a href="/impressum" className="text-accent-bright hover:text-accent-soft transition-colors">Impressum</a>.
+          <Link href="/impressum" className="text-accent-bright hover:text-accent-soft transition-colors">Impressum</Link>.
         </p>
 
-        <a href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</a>
+        <Link href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</Link>
       </div>
     </main>
   );

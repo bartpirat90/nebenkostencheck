@@ -1,4 +1,5 @@
 import Logo from "./Logo";
+import { Link } from "@/i18n/navigation";
 
 export default function Footer() {
   return (
@@ -6,9 +7,9 @@ export default function Footer() {
       <div className="max-w-2xl mx-auto px-6 flex flex-col items-center gap-4 text-center">
         <Logo />
         <nav className="flex gap-5 text-sm text-muted">
-          <a href="/impressum" className="hover:text-fg transition-colors">Impressum</a>
-          <a href="/datenschutz" className="hover:text-fg transition-colors">Datenschutz</a>
-          <a href="/agb" className="hover:text-fg transition-colors">AGB</a>
+          <Link href="/impressum" className="hover:text-fg transition-colors">Impressum</Link>
+          <Link href="/datenschutz" className="hover:text-fg transition-colors">Datenschutz</Link>
+          <Link href="/agb" className="hover:text-fg transition-colors">AGB</Link>
         </nav>
         <p className="text-xs text-muted leading-relaxed">
           © 2026 Nebenkostencheck<br />

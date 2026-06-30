@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Link } from "@/i18n/navigation";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung",
@@ -75,7 +76,7 @@ export default function DatenschutzPage() {
           Bei Fragen wenden Sie sich an: kontakt@nebenkostencheck24.de
         </p>
 
-        <a href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</a>
+        <Link href="/" className="inline-block mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors">← Zurück</Link>
       </div>
     </main>
   );
