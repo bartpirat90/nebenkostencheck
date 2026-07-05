@@ -1,257 +1,257 @@
 {
   "meta": {
-    "title": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen",
-    "description": "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos."
+    "title": "Nebenkostencheck – Check your German utility bill & get money back",
+    "description": "Upload your German utility-cost statement (Nebenkostenabrechnung) and find common errors in seconds – checked against current German tenancy law (BetrKV, HeizkV) and Federal Court (BGH) case law. First check is free."
   },
   "nav": {
-    "badge": "PRÜFBERICHT · GRATIS"
+    "badge": "AUDIT REPORT · FREE"
   },
   "trust": {
-    "dsgvo": "DSGVO-konform",
-    "deletion": "Löschung nach 24 h",
-    "noAccount": "Kein Account nötig"
+    "dsgvo": "GDPR-compliant",
+    "deletion": "Deleted after 24 h",
+    "noAccount": "No account needed"
   },
   "hero": {
-    "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
-    "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
-    "cta": "Abrechnung prüfen"
+    "eyebrow": "§ checked against BetrKV / HeizkV / BGH",
+    "headline": "Is there money hidden in your utility bill?",
+    "subline": "Upload your statement. It is checked for typical errors in seconds and your potential refund is calculated.",
+    "cta": "Check my bill"
   },
   "stats": {
-    "source": "Quelle: Deutscher Mieterbund",
+    "source": "Source: German Tenants' Association (Deutscher Mieterbund)",
     "items": [
-      { "label": "Abrechnungen mit Fehlern", "value": "~50 %" },
-      { "label": "Analyse-Dauer", "value": "15 Sek." },
-      { "label": "Erst-Prüfung", "value": "0 €" }
+      { "label": "Statements with errors", "value": "~50%" },
+      { "label": "Analysis time", "value": "15 sec." },
+      { "label": "First check", "value": "€0" }
     ]
   },
   "howItWorks": {
-    "eyebrow": "So funktioniert's",
-    "heading": "In 3 Schritten zu deiner Erstattung",
+    "eyebrow": "How it works",
+    "heading": "Your refund in 3 steps",
     "steps": [
-      { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen." },
-      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft auf HeizkV-Verstöße, falsche Umlagen, Fristfehler und mehr." },
-      { "title": "Widerspruch mit einem Klick", "description": "Fertiger Widerspruchsbrief als PDF zum Download." }
+      { "title": "Upload your bill", "description": "PDF or photo of your utility-cost statement – just drop it in or select it." },
+      { "title": "Automatic check in seconds", "description": "Checks for HeizkV violations, incorrect cost allocations, deadline errors and more." },
+      { "title": "Objection in one click", "description": "A ready-made objection letter as a PDF to download." }
     ]
   },
   "upload": {
-    "ariaLabel": "Abrechnung hochladen",
-    "heading": "Abrechnung hier einreichen",
-    "hint": "PDF oder Foto ablegen oder klicken zum Auswählen",
+    "ariaLabel": "Upload bill",
+    "heading": "Submit your bill here",
+    "hint": "Drop a PDF or photo, or click to select",
     "formats": "PDF, JPG, PNG · max. {mb} MB",
-    "errInvalidType": "Nur PDF, JPG, PNG oder WebP erlaubt.",
-    "errTooLarge": "Datei zu groß (max. {mb} MB).",
-    "loadingTitle": "Deine Abrechnung wird geprüft…",
-    "loadingSubtitle": "Das dauert meist 10–20 Sekunden",
+    "errInvalidType": "Only PDF, JPG, PNG or WebP are allowed.",
+    "errTooLarge": "File too large (max. {mb} MB).",
+    "loadingTitle": "Your bill is being checked…",
+    "loadingSubtitle": "This usually takes 10–20 seconds",
     "phases": [
-      "Dokument wird gelesen",
-      "Positionen werden erfasst",
-      "Rechtsgrundlagen werden geprüft",
-      "Erstattungspotenzial wird berechnet",
-      "Bericht wird zusammengestellt"
+      "Reading the document",
+      "Capturing line items",
+      "Checking legal grounds",
+      "Calculating refund potential",
+      "Compiling the report"
     ]
   },
   "evidence": {
-    "mieterbundQuote": "Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.",
-    "mieterbundSource": "Deutscher Mieterbund",
-    "vzQuote": "37 % von 1.046 geprüften Heizkostenabrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.",
-    "vzSource": "Verbraucherzentrale Rheinland-Pfalz",
-    "fristQuote": "Zwölf Monate Zeit für den Widerspruch, auch nach bereits erfolgter Zahlung.",
-    "fristSource": "§ 556 Abs. 3 BGB"
+    "mieterbundQuote": "About half of all operating-cost statements are incorrect.",
+    "mieterbundSource": "German Tenants' Association",
+    "vzQuote": "37% of 1,046 heating-cost statements examined were clearly incorrect, another 32% unclear.",
+    "vzSource": "Consumer Advice Centre Rhineland-Palatinate",
+    "fristQuote": "Twelve months to object – even after you have already paid.",
+    "fristSource": "§ 556 (3) German Civil Code (BGB)"
   },
   "assurance": {
-    "checkedTitle": "GEPRÜFT, NICHT GESCHÄTZT",
-    "securityTitle": "DEINE SICHERHEIT"
+    "checkedTitle": "CHECKED, NOT GUESSED",
+    "securityTitle": "YOUR SECURITY"
   },
   "reviews": {
-    "heading": "ERFAHRUNGEN",
-    "saved": "{amount} € zurückgeholt"
+    "heading": "EXPERIENCES",
+    "saved": "€{amount} recovered"
   },
   "faq": {
-    "eyebrow": "HÄUFIGE FRAGEN",
-    "heading": "Was du vor der Prüfung wissen solltest",
+    "eyebrow": "FREQUENTLY ASKED",
+    "heading": "What to know before the check",
     "items": [
       {
-        "q": "Wie funktioniert die Prüfung?",
-        "a": "Du lädst deine Nebenkostenabrechnung als PDF oder Foto hoch. Sie wird automatisiert anhand der Betriebskostenverordnung (BetrKV), der Heizkostenverordnung (HeizkV) und höchstrichterlicher BGH-Rechtsprechung geprüft. Du erhältst eine Übersicht der Auffälligkeiten mit geschätztem Erstattungspotenzial – und auf Wunsch fertige Musterschreiben (Widerspruch oder Aufforderung zur Belegeinsicht)."
+        "q": "How does the check work?",
+        "a": "You upload your utility-cost statement as a PDF or photo. It is checked automatically against the German Operating Costs Ordinance (BetrKV), the Heating Costs Ordinance (HeizkV) and Federal Court (BGH) case law. You get an overview of the issues found with an estimated refund potential – and, if you like, ready-made template letters (objection or request to inspect the supporting documents)."
       },
       {
-        "q": "Was kostet der Nebenkostencheck?",
-        "a": "Die erste Prüfung mit Vorschau – Anzahl der Auffälligkeiten und geschätztes Potenzial – ist kostenlos. Der vollständige Bericht inklusive Begründung je Punkt und der fertigen Musterschreiben kostet einmalig 9,90 €. Kein Abo, keine versteckten Kosten."
+        "q": "How much does Nebenkostencheck cost?",
+        "a": "The first check with a preview – number of issues and estimated potential – is free. The full report including the reasoning for each point and the ready-made template letters costs a one-off €9.90. No subscription, no hidden fees."
       },
       {
-        "q": "Welche Fehler werden gefunden?",
-        "a": "Typische Beispiele sind nicht umlagefähige Kosten wie Verwaltungs- oder Reparaturkosten (§ 1 BetrKV), eine fehlerhafte Verteilung der Heizkosten (§ 7 HeizkV), Leerstandskosten zulasten der Mieter, überschrittene Abrechnungsfristen oder nicht nachvollziehbare Positionen."
+        "q": "Which errors are found?",
+        "a": "Typical examples are non-allocable costs such as administration or repair costs (§ 1 BetrKV), incorrect distribution of heating costs (§ 7 HeizkV), vacancy costs charged to tenants, missed billing deadlines or items that cannot be traced."
       },
       {
-        "q": "Ist das eine Rechtsberatung?",
-        "a": "Nein. Der Nebenkostencheck ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung."
+        "q": "Is this legal advice?",
+        "a": "No. Nebenkostencheck is an automated tool and does not constitute legal advice within the meaning of the German Legal Services Act (RDG). The results are non-binding assessments without guarantee and do not replace advice from a lawyer."
       },
       {
-        "q": "Wie lange kann ich der Abrechnung widersprechen?",
-        "a": "Einwendungen gegen die Nebenkostenabrechnung kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung geltend machen (§ 556 Abs. 3 BGB) – auch dann noch, wenn du die geforderte Nachzahlung bereits geleistet hast."
+        "q": "How long can I object to the statement?",
+        "a": "You can raise objections to the utility-cost statement up to the end of the twelfth month after you receive it (§ 556 (3) BGB) – even if you have already paid the amount demanded."
       },
       {
-        "q": "Was passiert mit meiner hochgeladenen Abrechnung?",
-        "a": "Deine Abrechnung wird ausschließlich zur Prüfung verarbeitet und nach 24 Stunden automatisch gelöscht. Ein Nutzerkonto ist nicht nötig. Einzelheiten stehen in der Datenschutzerklärung."
+        "q": "What happens to my uploaded bill?",
+        "a": "Your bill is processed solely for the check and is deleted automatically after 24 hours. No user account is required. Details are in the privacy policy."
       },
       {
-        "q": "Welche Dateien kann ich hochladen?",
-        "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
+        "q": "Which files can I upload?",
+        "a": "PDF files or photos (e.g. JPG or PNG) of your bill, up to 3 MB. It is best to upload only the actual utility-cost statement, not the entire correspondence."
       }
     ]
   },
   "footer": {
-    "impressum": "Impressum",
-    "datenschutz": "Datenschutz",
-    "agb": "AGB",
+    "impressum": "Imprint",
+    "datenschutz": "Privacy",
+    "agb": "Terms",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "Automatische Löschung nach 24 Stunden · Keine Rechtsberatung"
+    "note": "Automatic deletion after 24 hours · Not legal advice"
   },
   "notAStatement": {
-    "title": "Kein passendes Dokument erkannt",
-    "body": "Das sieht nicht wie eine Nebenkostenabrechnung aus. Bitte lade deine Abrechnung als PDF oder Foto hoch.",
-    "cta": "Andere Datei hochladen"
+    "title": "No matching document recognised",
+    "body": "This does not look like a utility-cost statement. Please upload your bill as a PDF or photo.",
+    "cta": "Upload a different file"
   },
   "errors": {
-    "fileTooLarge": "Die Datei ist zu groß (max. {mb} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.",
-    "analyzeFailed": "Analyse fehlgeschlagen. Bitte erneut versuchen.",
-    "busy": "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.",
-    "unknown": "Unbekannter Fehler"
+    "fileTooLarge": "The file is too large (max. {mb} MB). Please upload only the utility-cost statement as a PDF or photo — compress large scans first.",
+    "analyzeFailed": "Analysis failed. Please try again.",
+    "busy": "The checking service is very busy right now. Please try again in a moment.",
+    "unknown": "Unknown error"
   },
   "teaser": {
-    "firstCheckDone": "Erste Prüfung abgeschlossen",
-    "findings": "{count, plural, one {# Auffälligkeit} other {# Auffälligkeiten}}",
-    "potentialLabel": "Mögliches Erstattungspotenzial",
-    "potentialFallback": "Potenzial erkannt",
-    "kindBoth": "Widerspruch und Belegeinsicht",
-    "kindReview": "Belegeinsicht-Schreiben",
-    "kindObjection": "Widerspruchsschreiben",
-    "locked": "gesperrt",
-    "howItGoes": "SO GEHT'S WEITER",
-    "stepUnlockTitle": "Bericht freischalten",
-    "stepUnlockDesc": "Alle Befunde im Detail: Begründung, Beleg im Dokument und Rechtsgrundlage.",
-    "stepLetterTitle": "Schreiben erstellen",
-    "stepLetterDesc": "{kind} als fertiges PDF, mit deinen Daten vorausgefüllt.",
-    "stepSendTitle": "An Vermieter senden",
-    "stepSendDesc": "PDF herunterladen und per E-Mail oder Post einreichen.",
-    "unlockTitle": "Vollständigen Bericht freischalten",
-    "featureAll": "Alle Fehler mit Begründung, Beleg & Rechtsgrundlage",
-    "featureObjection": "Fertiger Widerspruchsbrief als PDF",
-    "featureReview": "Belegeinsicht-Schreiben (§ 259 BGB) als PDF",
-    "featureRecommendations": "Konkrete Handlungsempfehlungen",
-    "consent": "Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht mit vollständiger Bereitstellung erlischt.",
-    "unlockCta": "Für 9,90 € freischalten",
-    "redirecting": "Weiterleitung…",
-    "checkoutError": "Zahlung konnte nicht gestartet werden.",
-    "demo": "Demo-Modus: Bericht ohne Bezahlung öffnen →",
-    "checkAnother": "Andere Datei prüfen"
+    "firstCheckDone": "First check complete",
+    "findings": "{count, plural, one {# issue} other {# issues}}",
+    "potentialLabel": "Possible refund potential",
+    "potentialFallback": "Potential detected",
+    "kindBoth": "objection and document inspection",
+    "kindReview": "document-inspection letter",
+    "kindObjection": "objection letter",
+    "locked": "locked",
+    "howItGoes": "WHAT HAPPENS NEXT",
+    "stepUnlockTitle": "Unlock the report",
+    "stepUnlockDesc": "Every finding in detail: reasoning, evidence in the document and legal basis.",
+    "stepLetterTitle": "Create the letter",
+    "stepLetterDesc": "A {kind} as a ready-made PDF, pre-filled with your details.",
+    "stepSendTitle": "Send to your landlord",
+    "stepSendDesc": "Download the PDF and submit it by email or post.",
+    "unlockTitle": "Unlock the full report",
+    "featureAll": "All errors with reasoning, evidence & legal basis",
+    "featureObjection": "Ready-made objection letter as a PDF",
+    "featureReview": "Document-inspection letter (§ 259 BGB) as a PDF",
+    "featureRecommendations": "Concrete recommended actions",
+    "consent": "I request immediate provision and confirm that my right of withdrawal ends upon full provision.",
+    "unlockCta": "Unlock for €9.90",
+    "redirecting": "Redirecting…",
+    "checkoutError": "Payment could not be started.",
+    "demo": "Demo mode: open the report without payment →",
+    "checkAnother": "Check another file"
   },
   "report": {
-    "potentialLabel": "Geschätztes Erstattungspotenzial",
-    "directLabel": "Sofort angreifbar",
-    "reviewLabel": "Nach Belegeinsicht",
-    "points": "{count, plural, one {# Punkt} other {# Punkte}}",
-    "downloadPdf": "Bericht als PDF herunterladen",
-    "sectionAtitle": "Sofort angreifbar",
-    "sectionAsubtitle": "Eindeutige Rechtsverstöße – direkter Widerspruch möglich",
-    "sectionBtitle": "Belegeinsicht erforderlich",
-    "sectionBsubtitle": "Verdacht auf Fehler – Belege beim Vermieter anfordern",
-    "createObjection": "Widerspruch erstellen",
-    "requestReview": "Belegeinsicht anfordern",
-    "combinedText": "Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung zur Belegeinsicht in einem PDF.",
-    "createCombined": "Kombiniertes Schreiben erstellen",
-    "noErrorsTitle": "Keine offensichtlichen Fehler gefunden",
-    "noErrorsBody": "Das bedeutet nicht, dass die Abrechnung fehlerfrei ist – bei Zweifeln lohnt sich eine rechtliche Prüfung.",
-    "disclaimerLabel": "Hinweis:",
-    "disclaimer": "Diese Analyse ist eine automatisierte Einschätzung ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen und sollten vor dem Versand geprüft und ggf. angepasst werden.",
-    "reset": "Neue Abrechnung prüfen",
-    "legendTitle": "ERFOLGSAUSSICHTEN",
-    "cardLegalBasis": "Rechtsgrundlage:",
-    "cardEvidence": "Beleg im Dokument:",
-    "cardRecommendation": "Empfehlung:",
+    "potentialLabel": "Estimated refund potential",
+    "directLabel": "Immediately challengeable",
+    "reviewLabel": "After document inspection",
+    "points": "{count, plural, one {# point} other {# points}}",
+    "downloadPdf": "Download report as PDF",
+    "sectionAtitle": "Immediately challengeable",
+    "sectionAsubtitle": "Clear legal violations – direct objection possible",
+    "sectionBtitle": "Document inspection required",
+    "sectionBsubtitle": "Suspected errors – request supporting documents from the landlord",
+    "createObjection": "Create objection",
+    "requestReview": "Request document inspection",
+    "combinedText": "Combine both matters in one letter – objection and request to inspect documents in a single PDF.",
+    "createCombined": "Create combined letter",
+    "noErrorsTitle": "No obvious errors found",
+    "noErrorsBody": "This does not mean the statement is error-free – if in doubt, a legal review is worthwhile.",
+    "disclaimerLabel": "Note:",
+    "disclaimer": "This analysis is an automated, non-binding assessment. It does not replace advice from a lawyer. Amounts are estimates and may differ from refunds actually obtainable. Generated letters are templates and should be reviewed and adjusted before sending.",
+    "reset": "Check a new bill",
+    "legendTitle": "CHANCES OF SUCCESS",
+    "cardLegalBasis": "Legal basis:",
+    "cardEvidence": "Evidence in the document:",
+    "cardRecommendation": "Recommendation:",
     "confidence": {
-      "sicher": { "label": "Sicher", "desc": "klare Rechtsverletzung, hohe Erstattungsaussicht" },
-      "wahrscheinlich": { "label": "Wahrscheinlich", "desc": "überwiegende Erfolgsaussicht, Auslegung möglich" },
-      "unsicher": { "label": "Unsicher", "desc": "Verdacht, nur mit Belegen klärbar" }
+      "sicher": { "label": "Certain", "desc": "clear legal violation, high chance of refund" },
+      "wahrscheinlich": { "label": "Likely", "desc": "predominant chance of success, interpretation possible" },
+      "unsicher": { "label": "Uncertain", "desc": "suspicion, only verifiable with documents" }
     }
   },
   "letter": {
-    "titleObjection": "Widerspruch erstellen",
-    "titleReview": "Belegeinsicht anfordern",
-    "titleCombined": "Kombiniertes Schreiben erstellen",
-    "descObjection": "Wir erstellen einen Widerspruch gegen die sofort angreifbaren Punkte.",
-    "descReview": "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen.",
-    "descCombined": "Wir fassen Widerspruch und Aufforderung zur Belegeinsicht in einem Schreiben zusammen.",
-    "readyDesc": "Dein Schreiben ist fertig. So geht es weiter:",
-    "close": "Schließen",
-    "loadingTitle": "Dein Schreiben wird erstellt…",
-    "loadingSubtitle": "Das dauert meist 5–15 Sekunden.",
-    "phaseFormulating": "Schreiben wird formuliert",
-    "phasePdf": "PDF wird erzeugt",
-    "downloadPdf": "PDF herunterladen",
-    "mailToLandlord": "Per Mail an Vermieter",
-    "landlordEmailLabel": "E-Mail des Vermieters (optional)",
-    "mailHint": "Bitte das heruntergeladene PDF in deinem Mailprogramm anhängen.",
-    "sendToMe": "PDF an meine E-Mail senden",
-    "sendToMeHint": "Wir senden dir das PDF als Anhang zu – so kannst du es bequem weiterleiten.",
-    "yourEmail": "Deine E-Mail",
-    "sending": "Wird gesendet…",
-    "sent": "✓ Gesendet! Schau in dein Postfach.",
-    "emailRequired": "Bitte eine E-Mail-Adresse eingeben.",
-    "cancel": "Abbrechen",
-    "createPdf": "PDF erstellen",
-    "done": "Fertig",
-    "errCreate": "Brief konnte nicht erstellt werden",
-    "errSend": "PDF konnte nicht gesendet werden"
+    "titleObjection": "Create objection",
+    "titleReview": "Request document inspection",
+    "titleCombined": "Create combined letter",
+    "descObjection": "We create an objection against the immediately challengeable points.",
+    "descReview": "We create a letter requesting inspection of the documents for the unclear items.",
+    "descCombined": "We combine the objection and the request to inspect documents in one letter.",
+    "readyDesc": "Your letter is ready. Here is what to do next:",
+    "close": "Close",
+    "loadingTitle": "Your letter is being created…",
+    "loadingSubtitle": "This usually takes 5–15 seconds.",
+    "phaseFormulating": "Drafting the letter",
+    "phasePdf": "Generating the PDF",
+    "downloadPdf": "Download PDF",
+    "mailToLandlord": "Email to landlord",
+    "landlordEmailLabel": "Landlord's email (optional)",
+    "mailHint": "Please attach the downloaded PDF in your email program.",
+    "sendToMe": "Send the PDF to my email",
+    "sendToMeHint": "We'll send you the PDF as an attachment – so you can forward it easily.",
+    "yourEmail": "Your email",
+    "sending": "Sending…",
+    "sent": "✓ Sent! Check your inbox.",
+    "emailRequired": "Please enter an email address.",
+    "cancel": "Cancel",
+    "createPdf": "Create PDF",
+    "done": "Done",
+    "errCreate": "The letter could not be created",
+    "errSend": "The PDF could not be sent"
   },
   "contact": {
-    "intro": "Bitte prüfe die automatisch erkannten Daten und korrigiere sie bei Bedarf. Sie werden für den Brief verwendet.",
-    "tenantName": "Dein Name",
-    "landlordName": "Vermieter / Verwalter",
-    "tenantAddress": "Deine Adresse",
-    "landlordAddress": "Adresse Vermieter / Verwalter",
-    "contractNumber": "Vertragsnummer",
-    "billingPeriod": "Abrechnungszeitraum"
+    "intro": "Please check the automatically detected details and correct them if needed. They are used for the letter.",
+    "tenantName": "Your name",
+    "landlordName": "Landlord / property manager",
+    "tenantAddress": "Your address",
+    "landlordAddress": "Landlord / property manager address",
+    "contractNumber": "Contract number",
+    "billingPeriod": "Billing period"
   },
   "legal": {
-    "draftNotice": "Entwurf/Roh-Vorlage – vor dem Live-Betrieb rechtlich prüfen lassen. Keine Rechtsberatung.",
-    "disclaimerNonDe": "Diese Übersetzung dient nur der Verständlichkeit. Rechtlich maßgeblich ist ausschließlich die deutsche Fassung.",
-    "back": "← Zurück",
+    "draftNotice": "Draft / raw template – have it reviewed by a lawyer before going live. Not legal advice.",
+    "disclaimerNonDe": "This translation is provided for convenience only. Legally, only the German version is authoritative.",
+    "back": "← Back",
     "impressum": {
-      "title": "Impressum",
+      "title": "Imprint",
       "sections": [
-        { "heading": "Angaben gemäß § 5 DDG", "body": "[Name des Betreibers]\n[Straße & Hausnummer]\n[PLZ Ort]" },
-        { "heading": "Kontakt", "body": "E-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Umsatzsteuer", "body": "Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen." },
-        { "heading": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]" }
+        { "heading": "Information pursuant to § 5 DDG", "body": "[Operator name]\n[Street & number]\n[Postcode & city]" },
+        { "heading": "Contact", "body": "Email: kontakt@nebenkostencheck24.de" },
+        { "heading": "VAT", "body": "As a small business within the meaning of § 19 UStG, no VAT is shown." },
+        { "heading": "Responsible for content under § 18 (2) MStV", "body": "[Operator name]\n[Street & number], [Postcode & city]" }
       ]
     },
     "datenschutz": {
-      "title": "Datenschutzerklärung",
+      "title": "Privacy Policy",
       "sections": [
-        { "heading": "Verantwortlicher", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]\nE-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Welche Daten wir verarbeiten", "body": "Wir verarbeiten die von Ihnen hochgeladene Nebenkostenabrechnung (als PDF oder Bilddatei) sowie die daraus extrahierten Angaben (z. B. Abrechnungspositionen, Beträge, Zeiträume). Bei Kauf des vollständigen Berichts werden zusätzlich die für die Zahlungsabwicklung erforderlichen Zahlungsdaten verarbeitet." },
-        { "heading": "Verarbeitung durch Anthropic (Claude)", "body": "Die von Ihnen hochgeladene Datei wird zur automatisierten Prüfung an Anthropic (Claude API) übermittelt. Der Serverstandort liegt u. a. in den USA; es handelt sich daher um eine Drittlandübermittlung nach Art. 44 ff. DSGVO. Anthropic verpflichtet sich gemäß seinen Nutzungsbedingungen, Daten nicht für das Training von Modellen zu verwenden (API-Nutzung). Weitere Informationen: https://www.anthropic.com/privacy." },
-        { "heading": "Speicherung & Löschung", "body": "Prüfergebnisse werden vorübergehend auf unseren Servern gespeichert und automatisch nach 24 Stunden gelöscht. Eine dauerhafte Speicherung Ihrer Abrechnung findet nicht statt." },
-        { "heading": "Zahlungsabwicklung (Stripe)", "body": "Zahlungen werden über den Zahlungsdienstleister Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA) abgewickelt. Dabei werden die für die Transaktion erforderlichen Zahlungsdaten an Stripe übermittelt. Stripe ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Weitere Informationen: https://stripe.com/de/privacy." },
-        { "heading": "Rechtsgrundlage", "body": "Die Verarbeitung Ihrer Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen). Soweit Sie die Dateiverarbeitung durch Anthropic initiieren, gilt Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO." },
-        { "heading": "Ihre Rechte", "body": "Sie haben das Recht auf Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) sowie Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Darüber hinaus steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.\n\nBei Fragen wenden Sie sich an: kontakt@nebenkostencheck24.de" }
+        { "heading": "Controller", "body": "[Operator name]\n[Street & number], [Postcode & city]\nEmail: kontakt@nebenkostencheck24.de" },
+        { "heading": "What data we process", "body": "We process the utility-cost statement you upload (as a PDF or image file) as well as the details extracted from it (e.g. line items, amounts, periods). When you purchase the full report, the payment data required to process the transaction is additionally processed." },
+        { "heading": "Processing by Anthropic (Claude)", "body": "The file you upload is transmitted to Anthropic (Claude API) for the automated check. The server location is, among others, in the USA; this therefore constitutes a transfer to a third country under Art. 44 et seq. GDPR. Under its terms of use, Anthropic undertakes not to use data to train models (API usage). Further information: https://www.anthropic.com/privacy." },
+        { "heading": "Storage & deletion", "body": "Check results are stored temporarily on our servers and deleted automatically after 24 hours. Your bill is not stored permanently." },
+        { "heading": "Payment processing (Stripe)", "body": "Payments are processed by the payment service provider Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA). The payment data required for the transaction is transmitted to Stripe. Stripe is certified under the EU-U.S. Data Privacy Framework. Further information: https://stripe.com/de/privacy." },
+        { "heading": "Legal basis", "body": "Your data is processed on the basis of Art. 6 (1) (b) GDPR (performance of a contract or pre-contractual measures). Where you initiate processing of the file by Anthropic, your consent applies pursuant to Art. 6 (1) (a) GDPR." },
+        { "heading": "Your rights", "body": "You have the right to access the data stored about you (Art. 15 GDPR), to rectification of inaccurate data (Art. 16 GDPR), to erasure (Art. 17 GDPR) and to object to processing (Art. 21 GDPR). You also have the right to lodge a complaint with the competent data protection supervisory authority.\n\nIf you have any questions, please contact: kontakt@nebenkostencheck24.de" }
       ]
     },
     "agb": {
-      "title": "Allgemeine Geschäftsbedingungen (AGB)",
+      "title": "Terms and Conditions",
       "sections": [
-        { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
-        { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
-        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
-        { "heading": "4. Widerrufsrecht und vorzeitiges Erlöschen", "body": "Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Bei digitalen Inhalten und Dienstleistungen erlischt das Widerrufsrecht jedoch, wenn der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und seine Kenntnis davon bestätigt hat, dass er durch die Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB). Diese Zustimmung wird vor der Zahlung ausdrücklich eingeholt." },
-        { "heading": "5. Haftung", "body": "Wir übernehmen keine Gewähr für die inhaltliche Richtigkeit, Vollständigkeit und Aktualität der Prüfergebnisse und erstellten Schreiben. Angegebene Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Eine Haftung für Schäden, die aus der Verwendung der Ergebnisse entstehen, ist im gesetzlich zulässigen Rahmen ausgeschlossen." },
-        { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
+        { "heading": "1. Description of service", "body": "Nebenkostencheck provides an automated check of utility-cost statements as well as the creation of template letters (objection, request to inspect documents). The check is based on the relevant legal provisions (including BetrKV, HeizkV) and the case law of the highest courts." },
+        { "heading": "2. Not legal advice", "body": "The service is an automated tool and does not constitute legal advice within the meaning of the German Legal Services Act (RDG). The results are non-binding assessments without guarantee and do not replace advice from a lawyer." },
+        { "heading": "3. Price", "body": "Unlocking the full check report including the template letters costs a one-off €9.90. Pursuant to § 19 UStG (small-business rule), no VAT is shown. The first check with a preview is free." },
+        { "heading": "4. Right of withdrawal and early expiry", "body": "Consumers generally have a 14-day right of withdrawal. However, for digital content and services the right of withdrawal expires if the customer has expressly agreed to immediate performance and confirmed knowledge that, by agreeing, they lose their right of withdrawal once performance begins (§ 356 (5) BGB). This consent is obtained expressly before payment." },
+        { "heading": "5. Liability", "body": "We accept no warranty for the accuracy, completeness and timeliness of the check results and generated letters. Stated amounts are estimates and may differ from refunds actually obtainable. Liability for damages arising from the use of the results is excluded to the extent permitted by law." },
+        { "heading": "6. Provider", "body": "[Operator name], [Street & number], [Postcode & city]. Further details in the Imprint." }
       ]
     }
   },
   "localeSwitcher": {
-    "label": "Sprache wählen"
+    "label": "Choose language"
   }
 }
