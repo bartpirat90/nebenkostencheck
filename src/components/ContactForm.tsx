@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ContactData } from "@/types";
 
 interface Props {
@@ -8,26 +9,24 @@ interface Props {
 }
 
 export default function ContactForm({ contact, onChange }: Props) {
+  const t = useTranslations("contact");
   const update = (field: keyof ContactData, value: string) => {
     onChange({ ...contact, [field]: value || null });
   };
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-muted">
-        Bitte prüfe die automatisch erkannten Daten und korrigiere sie bei Bedarf.
-        Sie werden für den Brief verwendet.
-      </p>
+      <p className="text-sm text-muted">{t("intro")}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field
-          label="Dein Name"
+          label={t("tenantName")}
           value={contact.tenantName || ""}
           onChange={(v) => update("tenantName", v)}
           placeholder="Max Mustermann"
         />
         <Field
-          label="Vermieter / Verwalter"
+          label={t("landlordName")}
           value={contact.landlordName || ""}
           onChange={(v) => update("landlordName", v)}
           placeholder="Vonovia Kundenservice GmbH"
@@ -35,7 +34,7 @@ export default function ContactForm({ contact, onChange }: Props) {
       </div>
 
       <Field
-        label="Deine Adresse"
+        label={t("tenantAddress")}
         value={contact.tenantAddress || ""}
         onChange={(v) => update("tenantAddress", v)}
         placeholder="Musterstraße 1, 12345 Stadt"
@@ -43,7 +42,7 @@ export default function ContactForm({ contact, onChange }: Props) {
       />
 
       <Field
-        label="Adresse Vermieter / Verwalter"
+        label={t("landlordAddress")}
         value={contact.landlordAddress || ""}
         onChange={(v) => update("landlordAddress", v)}
         placeholder="Universitätsstr. 133, 44803 Bochum"
@@ -52,13 +51,13 @@ export default function ContactForm({ contact, onChange }: Props) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field
-          label="Vertragsnummer"
+          label={t("contractNumber")}
           value={contact.contractNumber || ""}
           onChange={(v) => update("contractNumber", v)}
           placeholder="1234567890"
         />
         <Field
-          label="Abrechnungszeitraum"
+          label={t("billingPeriod")}
           value={contact.billingPeriod || ""}
           onChange={(v) => update("billingPeriod", v)}
           placeholder="01.01.2024 - 31.12.2024"

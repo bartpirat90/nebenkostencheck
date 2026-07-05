@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { PreviewData } from "@/types";
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export default function PreviewView({ preview, onReset }: Props) {
+  const t = useTranslations("teaser");
+  const te = useTranslations("errors");
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,12 +27,12 @@ export default function PreviewView({ preview, onReset }: Props) {
       });
       if (!res.ok) {
         const e = await res.json();
-        throw new Error(e.error || "Zahlung konnte nicht gestartet werden.");
+        throw new Error(e.error || t("checkoutError"));
       }
       const { url } = await res.json();
       window.location.href = url;
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Unbekannter Fehler");
+      setError(err instanceof Error ? err.message : te("unknown"));
       setLoading(false);
     }
   };
@@ -37,20 +40,20 @@ export default function PreviewView({ preview, onReset }: Props) {
   const potential =
     preview.totalPotentialEur != null
       ? `~${preview.totalPotentialEur.toFixed(0)} €`
-      : preview.totalPotentialLabel ?? "Potenzial erkannt";
+      : preview.totalPotentialLabel ?? t("potentialFallback");
 
   // Schreiben-Typ aus der Befundlage (Fall-Bezug, ohne Inhalt zu verraten).
   const letterKind =
     preview.hasDirect && preview.hasReview
-      ? "Widerspruch und Belegeinsicht"
+      ? t("kindBoth")
       : preview.hasReview
-      ? "Belegeinsicht-Schreiben"
-      : "Widerspruchsschreiben";
+      ? t("kindReview")
+      : t("kindObjection");
 
   const nextSteps = [
-    { title: "Bericht freischalten", desc: "Alle Befunde im Detail: Begründung, Beleg im Dokument und Rechtsgrundlage." },
-    { title: "Schreiben erstellen", desc: `${letterKind} als fertiges PDF, mit deinen Daten vorausgefüllt.` },
-    { title: "An Vermieter senden", desc: "PDF herunterladen und per E-Mail oder Post einreichen." },
+    { title: t("stepUnlockTitle"), desc: t("stepUnlockDesc") },
+    { title: t("stepLetterTitle"), desc: t("stepLetterDesc", { kind: letterKind }) },
+    { title: t("stepSendTitle"), desc: t("stepSendDesc") },
   ];
 
   return (
@@ -58,14 +61,13 @@ export default function PreviewView({ preview, onReset }: Props) {
       {/* Bericht-Kopf */}
       <div className="border border-line rounded-xl p-6">
         <p className="text-xs font-semibold tracking-wide text-accent-bright mb-2">
-          Erste Prüfung abgeschlossen
+          {t("firstCheckDone")}
         </p>
         <p className="text-3xl font-black text-fg tabular-nums">
-          {preview.errorCount}{" "}
-          {preview.errorCount === 1 ? "Auffälligkeit" : "Auffälligkeiten"}
+          {t("findings", { count: preview.errorCount })}
         </p>
         <div className="flex items-baseline justify-between gap-3 border-t border-line mt-4 pt-4">
-          <span className="text-sm text-muted">Mögliches Erstattungspotenzial</span>
+          <span className="text-sm text-muted">{t("potentialLabel")}</span>
           <span className="text-lg font-bold text-accent-soft tabular-nums">{potential}</span>
         </div>
       </div>
@@ -78,8 +80,8 @@ export default function PreviewView({ preview, onReset }: Props) {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="text-sm font-medium text-fg">{title}</span>
-              <span className="ml-auto flex items-center gap-1.5 text-xs text-faint shrink-0">
-                <LockIcon /> gesperrt
+              <span className="ms-auto flex items-center gap-1.5 text-xs text-faint shrink-0">
+                <LockIcon /> {t("locked")}
               </span>
             </div>
           ))}
@@ -89,7 +91,7 @@ export default function PreviewView({ preview, onReset }: Props) {
       {/* So geht's weiter (kein Befund-Inhalt, Fall-Bezug über Schreiben-Typ) */}
       <div className="rounded-xl border border-line overflow-hidden">
         <div className="px-4 py-2.5 border-b border-line">
-          <span className="text-[11px] font-medium tracking-[0.12em] text-faint">SO GEHT&apos;S WEITER</span>
+          <span className="text-[11px] font-medium tracking-[0.12em] text-faint">{t("howItGoes")}</span>
         </div>
         <div className="divide-y divide-line">
           {nextSteps.map((step, i) => (
@@ -107,12 +109,12 @@ export default function PreviewView({ preview, onReset }: Props) {
       </div>
 
       <div className="border border-accent-border bg-accent-bg/40 rounded-xl p-6">
-        <p className="font-bold text-fg mb-3">Vollständigen Bericht freischalten</p>
+        <p className="font-bold text-fg mb-3">{t("unlockTitle")}</p>
         <ul className="text-sm text-muted space-y-1.5 mb-4">
-          <li className="flex gap-2"><span className="text-accent-soft">✓</span> Alle Fehler mit Begründung, Beleg &amp; Rechtsgrundlage</li>
-          {preview.hasDirect && <li className="flex gap-2"><span className="text-accent-soft">✓</span> Fertiger Widerspruchsbrief als PDF</li>}
-          {preview.hasReview && <li className="flex gap-2"><span className="text-accent-soft">✓</span> Belegeinsicht-Schreiben (§ 259 BGB) als PDF</li>}
-          <li className="flex gap-2"><span className="text-accent-soft">✓</span> Konkrete Handlungsempfehlungen</li>
+          <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureAll")}</li>
+          {preview.hasDirect && <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureObjection")}</li>}
+          {preview.hasReview && <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureReview")}</li>}
+          <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureRecommendations")}</li>
         </ul>
 
         <label className="flex items-start gap-2 text-xs text-muted mb-4 cursor-pointer">
@@ -122,10 +124,7 @@ export default function PreviewView({ preview, onReset }: Props) {
             onChange={(e) => setConsent(e.target.checked)}
             className="mt-0.5 accent-accent"
           />
-          <span>
-            Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht
-            mit vollständiger Bereitstellung erlischt.
-          </span>
+          <span>{t("consent")}</span>
         </label>
 
         <button
@@ -133,7 +132,7 @@ export default function PreviewView({ preview, onReset }: Props) {
           disabled={!consent || loading}
           className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-bold py-3.5 text-base tabular-nums transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
         >
-          {loading ? "Weiterleitung…" : "Für 9,90 € freischalten"}
+          {loading ? t("redirecting") : t("unlockCta")}
         </button>
         {error && <p className="mt-3 text-sm text-[#FCA5A5]">{error}</p>}
       </div>
@@ -143,12 +142,12 @@ export default function PreviewView({ preview, onReset }: Props) {
           href={`/ergebnis?id=${preview.id}`}
           className="block text-center rounded-xl border border-dashed border-[#92400E] bg-[#1C1A0E] text-[#FCD34D] text-sm font-semibold py-3 px-4 hover:bg-[#231f12] transition-colors"
         >
-          Demo-Modus: Bericht ohne Bezahlung öffnen →
+          {t("demo")}
         </a>
       )}
 
       <button onClick={onReset} className="w-full text-sm text-muted hover:text-fg py-2 transition-colors">
-        Andere Datei prüfen
+        {t("checkAnother")}
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { AnalysisResult, ErrorItem, LetterType, Confidence } from "@/types";
 import LetterModal from "./LetterModal";
 
@@ -10,36 +11,16 @@ interface Props {
   onReset: () => void;
 }
 
-// Semantische Konfidenz-Skala (grün/gelb/rot) – bewusst NICHT das Marken-Grün,
-// sondern eine eigenständige Ampel für die Erfolgsaussicht.
-const CONFIDENCE_CONFIG: Record<Confidence, { label: string; bg: string; border: string; text: string; dot: string; desc: string }> = {
-  sicher: {
-    label: "Sicher",
-    bg: "bg-[#0F2B1F]",
-    border: "border-[#166534]",
-    text: "text-[#4ADE80]",
-    dot: "bg-[#22C55E]",
-    desc: "klare Rechtsverletzung, hohe Erstattungsaussicht",
-  },
-  wahrscheinlich: {
-    label: "Wahrscheinlich",
-    bg: "bg-[#1C1A0E]",
-    border: "border-[#92400E]",
-    text: "text-[#FCD34D]",
-    dot: "bg-[#F59E0B]",
-    desc: "überwiegende Erfolgsaussicht, Auslegung möglich",
-  },
-  unsicher: {
-    label: "Unsicher",
-    bg: "bg-[#1C0F0F]",
-    border: "border-[#991B1B]",
-    text: "text-[#FCA5A5]",
-    dot: "bg-[#EF4444]",
-    desc: "Verdacht, nur mit Belegen klärbar",
-  },
+// Nur die Farben der Konfidenz-Ampel (grün/gelb/rot). Label + Beschreibung
+// kommen übersetzt aus messages (Namespace "report.confidence").
+const CONFIDENCE_COLORS: Record<Confidence, { bg: string; border: string; text: string; dot: string }> = {
+  sicher: { bg: "bg-[#0F2B1F]", border: "border-[#166534]", text: "text-[#4ADE80]", dot: "bg-[#22C55E]" },
+  wahrscheinlich: { bg: "bg-[#1C1A0E]", border: "border-[#92400E]", text: "text-[#FCD34D]", dot: "bg-[#F59E0B]" },
+  unsicher: { bg: "bg-[#1C0F0F]", border: "border-[#991B1B]", text: "text-[#FCA5A5]", dot: "bg-[#EF4444]" },
 };
 
 export default function ResultView({ result, id, onReset }: Props) {
+  const t = useTranslations("report");
   const [letterModal, setLetterModal] = useState<LetterType | null>(null);
 
   const directErrors = result.errors.filter((e) => e.category === "direct");
@@ -57,7 +38,7 @@ export default function ResultView({ result, id, onReset }: Props) {
         <div className="space-y-6 min-w-0">
           {/* Bericht-Kopf */}
           <div className="bg-surface rounded-2xl p-6 border border-line">
-            <p className="text-sm text-muted mb-1">Geschätztes Erstattungspotenzial</p>
+            <p className="text-sm text-muted mb-1">{t("potentialLabel")}</p>
             <p className="text-4xl font-bold tracking-tight mb-4 text-accent-soft tabular-nums">
               {hasErrors ? formatEur(total) : "0 €"}
             </p>
@@ -65,14 +46,14 @@ export default function ResultView({ result, id, onReset }: Props) {
             {hasErrors && (
               <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-line">
                 <div>
-                  <p className="text-xs text-muted">Sofort angreifbar</p>
+                  <p className="text-xs text-muted">{t("directLabel")}</p>
                   <p className="text-lg font-bold text-[#4ADE80] tabular-nums">{formatEur(directTotal)}</p>
-                  <p className="text-xs text-faint tabular-nums">{directErrors.length} Punkt{directErrors.length !== 1 ? "e" : ""}</p>
+                  <p className="text-xs text-faint tabular-nums">{t("points", { count: directErrors.length })}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted">Nach Belegeinsicht</p>
+                  <p className="text-xs text-muted">{t("reviewLabel")}</p>
                   <p className="text-lg font-bold text-[#FCD34D] tabular-nums">{formatEur(reviewTotal)}</p>
-                  <p className="text-xs text-faint tabular-nums">{reviewErrors.length} Punkt{reviewErrors.length !== 1 ? "e" : ""}</p>
+                  <p className="text-xs text-faint tabular-nums">{t("points", { count: reviewErrors.length })}</p>
                 </div>
               </div>
             )}
@@ -94,17 +75,13 @@ export default function ResultView({ result, id, onReset }: Props) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            Bericht als PDF herunterladen
+            {t("downloadPdf")}
           </button>
 
           {/* Direct errors section */}
           {directErrors.length > 0 && (
             <section className="space-y-3">
-              <SectionHeader
-                badge="A"
-                title="Sofort angreifbar"
-                subtitle="Eindeutige Rechtsverstöße – direkter Widerspruch möglich"
-              />
+              <SectionHeader badge="A" title={t("sectionAtitle")} subtitle={t("sectionAsubtitle")} />
               {directErrors.map((err) => (
                 <ErrorCard key={`direct-${err.title}`} error={err} />
               ))}
@@ -117,7 +94,7 @@ export default function ResultView({ result, id, onReset }: Props) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
-                Widerspruch erstellen
+                {t("createObjection")}
               </button>
             </section>
           )}
@@ -125,11 +102,7 @@ export default function ResultView({ result, id, onReset }: Props) {
           {/* Review errors section */}
           {reviewErrors.length > 0 && (
             <section className="space-y-3">
-              <SectionHeader
-                badge="B"
-                title="Belegeinsicht erforderlich"
-                subtitle="Verdacht auf Fehler – Belege beim Vermieter anfordern"
-              />
+              <SectionHeader badge="B" title={t("sectionBtitle")} subtitle={t("sectionBsubtitle")} />
               {reviewErrors.map((err) => (
                 <ErrorCard key={`review-${err.title}`} error={err} />
               ))}
@@ -142,7 +115,7 @@ export default function ResultView({ result, id, onReset }: Props) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Belegeinsicht anfordern
+                {t("requestReview")}
               </button>
             </section>
           )}
@@ -150,10 +123,7 @@ export default function ResultView({ result, id, onReset }: Props) {
           {/* Combined letter */}
           {directErrors.length > 0 && reviewErrors.length > 0 && (
             <section className="space-y-2 bg-surface border border-line rounded-2xl p-4">
-              <p className="text-sm text-muted">
-                Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung
-                zur Belegeinsicht in einem PDF.
-              </p>
+              <p className="text-sm text-muted">{t("combinedText")}</p>
               <button
                 onClick={() => setLetterModal("combined")}
                 className="w-full rounded-xl border border-accent-border text-accent-bright font-semibold py-3.5 text-sm
@@ -163,7 +133,7 @@ export default function ResultView({ result, id, onReset }: Props) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z M9 13h6m-6 4h6" />
                 </svg>
-                Kombiniertes Schreiben erstellen
+                {t("createCombined")}
               </button>
             </section>
           )}
@@ -176,10 +146,8 @@ export default function ResultView({ result, id, onReset }: Props) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <p className="font-semibold text-[#4ADE80]">Keine offensichtlichen Fehler gefunden</p>
-              <p className="text-sm text-[#86EFAC] mt-1">
-                Das bedeutet nicht, dass die Abrechnung fehlerfrei ist – bei Zweifeln lohnt sich eine rechtliche Prüfung.
-              </p>
+              <p className="font-semibold text-[#4ADE80]">{t("noErrorsTitle")}</p>
+              <p className="text-sm text-[#86EFAC] mt-1">{t("noErrorsBody")}</p>
             </div>
           )}
 
@@ -192,10 +160,7 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* Legal disclaimer */}
           <div className="bg-surface border border-line rounded-xl p-4 text-xs text-faint leading-relaxed">
-            <strong className="text-muted">Hinweis:</strong> Diese Analyse ist eine automatisierte Einschätzung
-            ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen
-            und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen
-            und sollten vor dem Versand geprüft und ggf. angepasst werden.
+            <strong className="text-muted">{t("disclaimerLabel")}</strong> {t("disclaimer")}
           </div>
 
           {/* Reset CTA */}
@@ -204,14 +169,14 @@ export default function ResultView({ result, id, onReset }: Props) {
             className="w-full rounded-xl border border-line text-muted font-semibold py-3.5 text-sm
               hover:border-accent hover:text-accent-bright transition-colors"
           >
-            Neue Abrechnung prüfen
+            {t("reset")}
           </button>
         </div>
 
         {/* Farblegende – Desktop-Randleiste, klebend */}
         {hasErrors && (
           <aside className="hidden lg:block">
-            <div className="sticky top-24 border-l border-line pl-6">
+            <div className="sticky top-24 border-s border-line ps-6">
               <ConfidenceLegend />
             </div>
           </aside>
@@ -241,20 +206,21 @@ export default function ResultView({ result, id, onReset }: Props) {
 }
 
 function ConfidenceLegend() {
+  const t = useTranslations("report");
   const order: Confidence[] = ["sicher", "wahrscheinlich", "unsicher"];
   return (
     <div>
-      <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-4">ERFOLGSAUSSICHTEN</p>
+      <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-4">{t("legendTitle")}</p>
       <ul className="space-y-4">
         {order.map((key) => {
-          const c = CONFIDENCE_CONFIG[key];
+          const c = CONFIDENCE_COLORS[key];
           return (
             <li key={key}>
               <div className="flex items-center gap-2 mb-1">
                 <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${c.dot}`} />
-                <span className={`text-sm font-semibold ${c.text}`}>{c.label}</span>
+                <span className={`text-sm font-semibold ${c.text}`}>{t(`confidence.${key}.label`)}</span>
               </div>
-              <p className="text-xs text-muted leading-snug pl-[18px]">{c.desc}</p>
+              <p className="text-xs text-muted leading-snug ps-[18px]">{t(`confidence.${key}.desc`)}</p>
             </li>
           );
         })}
@@ -282,7 +248,8 @@ function SectionHeader({ badge, title, subtitle }: {
 }
 
 function ErrorCard({ error }: { error: ErrorItem }) {
-  const conf = CONFIDENCE_CONFIG[error.confidence];
+  const t = useTranslations("report");
+  const conf = CONFIDENCE_COLORS[error.confidence];
 
   return (
     <div className={`rounded-xl border p-4 ${conf.bg} ${conf.border}`}>
@@ -293,7 +260,7 @@ function ErrorCard({ error }: { error: ErrorItem }) {
             <div>
               <p className={`font-semibold text-sm ${conf.text}`}>{error.title}</p>
               <span className={`inline-block text-[10px] uppercase tracking-wider font-bold mt-0.5 ${conf.text} opacity-70`}>
-                {conf.label}
+                {t(`confidence.${error.confidence}.label`)}
               </span>
             </div>
             {error.potentialEur != null && (
@@ -305,17 +272,17 @@ function ErrorCard({ error }: { error: ErrorItem }) {
           <p className="text-sm text-muted mt-2 leading-relaxed">{error.description}</p>
           {error.legalBasis && (
             <p className="text-xs text-faint mt-2">
-              Rechtsgrundlage: {error.legalBasis}
+              {t("cardLegalBasis")} {error.legalBasis}
             </p>
           )}
           {error.evidence && (
             <p className="text-xs text-faint mt-1 italic">
-              Beleg im Dokument: „{error.evidence}"
+              {t("cardEvidence")} „{error.evidence}"
             </p>
           )}
           {error.actionText && (
             <p className="text-xs text-muted mt-2 bg-ink/60 rounded-md px-2 py-1.5">
-              <strong className="text-fg">Empfehlung:</strong> {error.actionText}
+              <strong className="text-fg">{t("cardRecommendation")}</strong> {error.actionText}
             </p>
           )}
         </div>

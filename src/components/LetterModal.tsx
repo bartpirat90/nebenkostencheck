@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { ContactData, ErrorItem, LetterType, LetterPdfResponse } from "@/types";
 import ContactForm from "./ContactForm";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
@@ -15,6 +16,7 @@ interface Props {
   customerEmail?: string;
 }
 
+// Betreffzeilen gehen an den (deutschen) Vermieter → bewusst Deutsch.
 const MAIL_SUBJECTS: Record<LetterType, string> = {
   objection: "Widerspruch gegen die Nebenkostenabrechnung",
   document_review: "Aufforderung zur Belegeinsicht",
@@ -38,6 +40,8 @@ export default function LetterModal({
   id,
   customerEmail,
 }: Props) {
+  const t = useTranslations("letter");
+  const te = useTranslations("errors");
   const [contact, setContact] = useState<ContactData>(initialContact);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -78,16 +82,16 @@ export default function LetterModal({
 
   const title =
     type === "objection"
-      ? "Widerspruch erstellen"
+      ? t("titleObjection")
       : type === "document_review"
-      ? "Belegeinsicht anfordern"
-      : "Kombiniertes Schreiben erstellen";
+      ? t("titleReview")
+      : t("titleCombined");
   const description =
     type === "objection"
-      ? "Wir erstellen einen Widerspruch gegen die sofort angreifbaren Punkte."
+      ? t("descObjection")
       : type === "document_review"
-      ? "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen."
-      : "Wir fassen Widerspruch und Aufforderung zur Belegeinsicht in einem Schreiben zusammen.";
+      ? t("descReview")
+      : t("descCombined");
 
   const generateLetter = async () => {
     setLoading(true);
@@ -100,12 +104,12 @@ export default function LetterModal({
       });
       if (!res.ok) {
         const e = await res.json();
-        throw new Error(e.error || "Brief konnte nicht erstellt werden");
+        throw new Error(e.error || t("errCreate"));
       }
       const data = (await res.json()) as LetterPdfResponse;
       setResult(data);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Unbekannter Fehler");
+      setError(err instanceof Error ? err.message : te("unknown"));
     } finally {
       setLoading(false);
     }
@@ -138,7 +142,7 @@ export default function LetterModal({
     if (!result) return;
     const email = myEmail.trim();
     if (!email) {
-      setSendError("Bitte eine E-Mail-Adresse eingeben.");
+      setSendError(t("emailRequired"));
       return;
     }
     setSending(true);
@@ -152,11 +156,11 @@ export default function LetterModal({
       });
       if (!res.ok) {
         const e = await res.json();
-        throw new Error(e.error || "PDF konnte nicht gesendet werden");
+        throw new Error(e.error || t("errSend"));
       }
       setSent(true);
     } catch (err: unknown) {
-      setSendError(err instanceof Error ? err.message : "Unbekannter Fehler");
+      setSendError(err instanceof Error ? err.message : te("unknown"));
     } finally {
       setSending(false);
     }
@@ -191,13 +195,13 @@ export default function LetterModal({
           <div>
             <h2 id="letter-modal-title" className="text-xl font-bold text-fg">{title}</h2>
             <p className="text-sm text-muted mt-1">
-              {result ? "Dein Schreiben ist fertig. So geht es weiter:" : description}
+              {result ? t("readyDesc") : description}
             </p>
           </div>
           <button
             onClick={onClose}
             className="text-faint hover:text-fg p-1 transition-colors"
-            aria-label="Schließen"
+            aria-label={t("close")}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -214,11 +218,11 @@ export default function LetterModal({
               </div>
               <div className="w-12 h-12 rounded-full border-2 border-line border-t-accent animate-spin" />
               <div className="space-y-1 text-center">
-                <p className="font-semibold text-fg">Dein Schreiben wird erstellt…</p>
-                <p className="text-sm text-muted">Das dauert meist 5–15 Sekunden.</p>
+                <p className="font-semibold text-fg">{t("loadingTitle")}</p>
+                <p className="text-sm text-muted">{t("loadingSubtitle")}</p>
               </div>
               <PhaseList
-                phases={["Schreiben wird formuliert", "PDF wird erzeugt"]}
+                phases={[t("phaseFormulating"), t("phasePdf")]}
                 intervalMs={5000}
               />
             </div>
@@ -235,15 +239,15 @@ export default function LetterModal({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                PDF herunterladen
+                {t("downloadPdf")}
               </button>
 
               {/* Per Mail an Vermieter */}
               <div className="space-y-2 border-t border-line pt-5">
-                <p className="text-sm font-semibold text-fg">Per Mail an Vermieter</p>
+                <p className="text-sm font-semibold text-fg">{t("mailToLandlord")}</p>
                 <label className="block">
                   <span className="text-xs font-semibold text-muted block mb-1">
-                    E-Mail des Vermieters (optional)
+                    {t("landlordEmailLabel")}
                   </span>
                   <input
                     type="email"
@@ -258,21 +262,17 @@ export default function LetterModal({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  Per Mail an Vermieter
+                  {t("mailToLandlord")}
                 </button>
-                <p className="text-xs text-muted">
-                  Bitte das heruntergeladene PDF in deinem Mailprogramm anhängen.
-                </p>
+                <p className="text-xs text-muted">{t("mailHint")}</p>
               </div>
 
               {/* PDF an meine E-Mail senden */}
               <div className="space-y-2 border-t border-line pt-5">
-                <p className="text-sm font-semibold text-fg">PDF an meine E-Mail senden</p>
-                <p className="text-xs text-muted">
-                  Wir senden dir das PDF als Anhang zu – so kannst du es bequem weiterleiten.
-                </p>
+                <p className="text-sm font-semibold text-fg">{t("sendToMe")}</p>
+                <p className="text-xs text-muted">{t("sendToMeHint")}</p>
                 <label className="block">
-                  <span className="text-xs font-semibold text-muted block mb-1">Deine E-Mail</span>
+                  <span className="text-xs font-semibold text-muted block mb-1">{t("yourEmail")}</span>
                   <input
                     type="email"
                     value={myEmail}
@@ -286,11 +286,11 @@ export default function LetterModal({
                   disabled={sending}
                   className={`${secondaryBtn} py-2.5 px-4 disabled:opacity-60`}
                 >
-                  {sending ? "Wird gesendet…" : "PDF an meine E-Mail senden"}
+                  {sending ? t("sending") : t("sendToMe")}
                 </button>
                 {sent && (
                   <p className="text-xs text-[#4ADE80] font-semibold">
-                    ✓ Gesendet! Schau in dein Postfach.
+                    {t("sent")}
                   </p>
                 )}
                 {sendError && (
@@ -320,13 +320,13 @@ export default function LetterModal({
               onClick={onClose}
               className="flex-1 sm:flex-none rounded-xl border border-line text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
             >
-              Abbrechen
+              {t("cancel")}
             </button>
             <button
               onClick={generateLetter}
               className="flex-1 rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3 px-4 text-sm transition-colors"
             >
-              PDF erstellen
+              {t("createPdf")}
             </button>
           </div>
         )}
@@ -336,7 +336,7 @@ export default function LetterModal({
               onClick={onClose}
               className="w-full rounded-xl border border-line text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
             >
-              Fertig
+              {t("done")}
             </button>
           </div>
         )}
