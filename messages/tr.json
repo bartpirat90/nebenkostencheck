@@ -58,7 +58,7 @@
     "vzQuote": "İncelenen 1.046 ısıtma gideri faturasının %37'si açıkça hatalı, %32'si ise belirsizdi.",
     "vzSource": "Tüketici Danışma Merkezi Rheinland-Pfalz",
     "fristQuote": "İtiraz için on iki ay – ödeme yapılmış olsa bile.",
-    "fristSource": "§ 556 f. 3 Alman Medeni Kanunu (BGB)"
+    "fristSource": "§ 556/3 Alman Medeni Kanunu (BGB)"
   },
   "assurance": {
     "checkedTitle": "TAHMİN DEĞİL, KONTROL",
@@ -90,7 +90,7 @@
       },
       {
         "q": "Faturaya ne kadar süre itiraz edebilirim?",
-        "a": "Yan gider faturasına, faturanın size ulaşmasından sonraki on ikinci ayın sonuna kadar itiraz edebilirsiniz (§ 556 f. 3 BGB) – talep edilen ek ödemeyi zaten yapmış olsanız bile."
+        "a": "Yan gider faturasına, faturanın size ulaşmasından sonraki on ikinci ayın sonuna kadar itiraz edebilirsiniz (§ 556/3 BGB) – talep edilen ek ödemeyi zaten yapmış olsanız bile."
       },
       {
         "q": "Yüklediğim faturaya ne olur?",
@@ -225,7 +225,7 @@
         { "heading": "§ 5 DDG uyarınca bilgiler", "body": "[İşletmeci adı]\n[Sokak ve numara]\n[Posta kodu ve şehir]" },
         { "heading": "İletişim", "body": "E-posta: kontakt@nebenkostencheck24.de" },
         { "heading": "Katma değer vergisi", "body": "§ 19 UStG anlamında küçük işletme olarak KDV gösterilmez." },
-        { "heading": "§ 18 f. 2 MStV uyarınca içerikten sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]" }
+        { "heading": "§ 18/2 MStV uyarınca içerikten sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]" }
       ]
     },
     "datenschutz": {
@@ -246,7 +246,7 @@
         { "heading": "1. Hizmet tanımı", "body": "Nebenkostencheck, yan gider faturalarının otomatik kontrolünü ve örnek mektupların (itiraz, belge inceleme talebi) oluşturulmasını sunar. Kontrol, ilgili yasal dayanaklara (BetrKV, HeizkV dahil) ve yüksek mahkeme içtihatlarına göre yapılır." },
         { "heading": "2. Hukuki danışmanlık değildir", "body": "Hizmet otomatik bir araçtır ve Alman Hukuki Hizmetler Kanunu (RDG) anlamında hukuki danışmanlık teşkil etmez. Sonuçlar, garanti içermeyen bağlayıcı olmayan değerlendirmelerdir ve avukat danışmanlığının yerini tutmaz." },
         { "heading": "3. Fiyat", "body": "Örnek mektuplar dahil tam kontrol raporunun açılması tek seferlik 9,90 € tutarındadır. § 19 UStG (küçük işletme düzenlemesi) uyarınca KDV gösterilmez. Önizlemeli ilk kontrol ücretsizdir." },
-        { "heading": "4. Cayma hakkı ve erken sona erme", "body": "Tüketicilerin kural olarak 14 günlük cayma hakkı vardır. Ancak dijital içerik ve hizmetlerde, müşteri derhal ifaya açıkça onay verip ifanın başlamasıyla cayma hakkını kaybedeceğini bildiğini teyit ederse cayma hakkı sona erer (§ 356 f. 5 BGB). Bu onay, ödemeden önce açıkça alınır." },
+        { "heading": "4. Cayma hakkı ve erken sona erme", "body": "Tüketicilerin kural olarak 14 günlük cayma hakkı vardır. Ancak dijital içerik ve hizmetlerde, müşteri derhal ifaya açıkça onay verip ifanın başlamasıyla cayma hakkını kaybedeceğini bildiğini teyit ederse cayma hakkı sona erer (§ 356/5 BGB). Bu onay, ödemeden önce açıkça alınır." },
         { "heading": "5. Sorumluluk", "body": "Kontrol sonuçlarının ve oluşturulan mektupların içerik doğruluğu, eksiksizliği ve güncelliği için garanti vermeyiz. Belirtilen tutarlar tahminidir ve gerçekte elde edilebilecek iadelerden farklı olabilir. Sonuçların kullanımından doğan zararlara ilişkin sorumluluk, yasal olarak izin verilen ölçüde hariç tutulmuştur." },
         { "heading": "6. Sağlayıcı", "body": "[İşletmeci adı], [Sokak ve numara], [Posta kodu ve şehir]. Ayrıntılar Künye'de." }
       ]
