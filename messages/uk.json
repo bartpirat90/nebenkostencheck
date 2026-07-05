@@ -214,6 +214,43 @@
     "contractNumber": "Vertragsnummer",
     "billingPeriod": "Abrechnungszeitraum"
   },
+  "legal": {
+    "draftNotice": "Entwurf/Roh-Vorlage – vor dem Live-Betrieb rechtlich prüfen lassen. Keine Rechtsberatung.",
+    "disclaimerNonDe": "Diese Übersetzung dient nur der Verständlichkeit. Rechtlich maßgeblich ist ausschließlich die deutsche Fassung.",
+    "back": "← Zurück",
+    "impressum": {
+      "title": "Impressum",
+      "sections": [
+        { "heading": "Angaben gemäß § 5 DDG", "body": "[Name des Betreibers]\n[Straße & Hausnummer]\n[PLZ Ort]" },
+        { "heading": "Kontakt", "body": "E-Mail: kontakt@nebenkostencheck24.de" },
+        { "heading": "Umsatzsteuer", "body": "Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen." },
+        { "heading": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]" }
+      ]
+    },
+    "datenschutz": {
+      "title": "Datenschutzerklärung",
+      "sections": [
+        { "heading": "Verantwortlicher", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]\nE-Mail: kontakt@nebenkostencheck24.de" },
+        { "heading": "Welche Daten wir verarbeiten", "body": "Wir verarbeiten die von Ihnen hochgeladene Nebenkostenabrechnung (als PDF oder Bilddatei) sowie die daraus extrahierten Angaben (z. B. Abrechnungspositionen, Beträge, Zeiträume). Bei Kauf des vollständigen Berichts werden zusätzlich die für die Zahlungsabwicklung erforderlichen Zahlungsdaten verarbeitet." },
+        { "heading": "Verarbeitung durch Anthropic (Claude)", "body": "Die von Ihnen hochgeladene Datei wird zur automatisierten Prüfung an Anthropic (Claude API) übermittelt. Der Serverstandort liegt u. a. in den USA; es handelt sich daher um eine Drittlandübermittlung nach Art. 44 ff. DSGVO. Anthropic verpflichtet sich gemäß seinen Nutzungsbedingungen, Daten nicht für das Training von Modellen zu verwenden (API-Nutzung). Weitere Informationen: https://www.anthropic.com/privacy." },
+        { "heading": "Speicherung & Löschung", "body": "Prüfergebnisse werden vorübergehend auf unseren Servern gespeichert und automatisch nach 24 Stunden gelöscht. Eine dauerhafte Speicherung Ihrer Abrechnung findet nicht statt." },
+        { "heading": "Zahlungsabwicklung (Stripe)", "body": "Zahlungen werden über den Zahlungsdienstleister Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA) abgewickelt. Dabei werden die für die Transaktion erforderlichen Zahlungsdaten an Stripe übermittelt. Stripe ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Weitere Informationen: https://stripe.com/de/privacy." },
+        { "heading": "Rechtsgrundlage", "body": "Die Verarbeitung Ihrer Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen). Soweit Sie die Dateiverarbeitung durch Anthropic initiieren, gilt Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO." },
+        { "heading": "Ihre Rechte", "body": "Sie haben das Recht auf Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) sowie Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Darüber hinaus steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.\n\nBei Fragen wenden Sie sich an: kontakt@nebenkostencheck24.de" }
+      ]
+    },
+    "agb": {
+      "title": "Allgemeine Geschäftsbedingungen (AGB)",
+      "sections": [
+        { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
+        { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
+        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
+        { "heading": "4. Widerrufsrecht und vorzeitiges Erlöschen", "body": "Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Bei digitalen Inhalten und Dienstleistungen erlischt das Widerrufsrecht jedoch, wenn der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und seine Kenntnis davon bestätigt hat, dass er durch die Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB). Diese Zustimmung wird vor der Zahlung ausdrücklich eingeholt." },
+        { "heading": "5. Haftung", "body": "Wir übernehmen keine Gewähr für die inhaltliche Richtigkeit, Vollständigkeit und Aktualität der Prüfergebnisse und erstellten Schreiben. Angegebene Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Eine Haftung für Schäden, die aus der Verwendung der Ergebnisse entstehen, ist im gesetzlich zulässigen Rahmen ausgeschlossen." },
+        { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
+      ]
+    }
+  },
   "localeSwitcher": {
     "label": "Sprache wählen"
   }
