@@ -1,257 +1,258 @@
 {
+  "_meta": { "status": "ai-draft", "review": "Перед запуском должен проверить носитель русского языка." },
   "meta": {
-    "title": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen",
-    "description": "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos."
+    "title": "Nebenkostencheck – проверьте немецкий счёт за коммунальные расходы и верните деньги",
+    "description": "Загрузите немецкий счёт за дополнительные расходы (Nebenkostenabrechnung) и найдите типичные ошибки за секунды – проверка по действующему немецкому жилищному праву (BetrKV, HeizkV) и практике Федерального суда (BGH). Первая проверка бесплатна."
   },
   "nav": {
-    "badge": "PRÜFBERICHT · GRATIS"
+    "badge": "ОТЧЁТ ПРОВЕРКИ · БЕСПЛАТНО"
   },
   "trust": {
-    "dsgvo": "DSGVO-konform",
-    "deletion": "Löschung nach 24 h",
-    "noAccount": "Kein Account nötig"
+    "dsgvo": "Соответствует GDPR",
+    "deletion": "Удаляется через 24 ч",
+    "noAccount": "Аккаунт не нужен"
   },
   "hero": {
-    "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
-    "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
-    "cta": "Abrechnung prüfen"
+    "eyebrow": "§ проверено по BetrKV / HeizkV / BGH",
+    "headline": "В вашем счёте спрятаны деньги?",
+    "subline": "Загрузите счёт. За секунды он проверяется на типичные ошибки, и рассчитывается сумма возможного возврата.",
+    "cta": "Проверить счёт"
   },
   "stats": {
-    "source": "Quelle: Deutscher Mieterbund",
+    "source": "Источник: Немецкий союз квартиросъёмщиков (Deutscher Mieterbund)",
     "items": [
-      { "label": "Abrechnungen mit Fehlern", "value": "~50 %" },
-      { "label": "Analyse-Dauer", "value": "15 Sek." },
-      { "label": "Erst-Prüfung", "value": "0 €" }
+      { "label": "Счета с ошибками", "value": "~50%" },
+      { "label": "Время анализа", "value": "15 сек." },
+      { "label": "Первая проверка", "value": "0 €" }
     ]
   },
   "howItWorks": {
-    "eyebrow": "So funktioniert's",
-    "heading": "In 3 Schritten zu deiner Erstattung",
+    "eyebrow": "Как это работает",
+    "heading": "Возврат за 3 шага",
     "steps": [
-      { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen." },
-      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft auf HeizkV-Verstöße, falsche Umlagen, Fristfehler und mehr." },
-      { "title": "Widerspruch mit einem Klick", "description": "Fertiger Widerspruchsbrief als PDF zum Download." }
+      { "title": "Загрузите счёт", "description": "PDF или фото счёта за дополнительные расходы – просто перетащите или выберите." },
+      { "title": "Автоматическая проверка за секунды", "description": "Проверяет нарушения HeizkV, неверное распределение расходов, ошибки в сроках и другое." },
+      { "title": "Возражение в один клик", "description": "Готовое письмо-возражение в формате PDF для скачивания." }
     ]
   },
   "upload": {
-    "ariaLabel": "Abrechnung hochladen",
-    "heading": "Abrechnung hier einreichen",
-    "hint": "PDF oder Foto ablegen oder klicken zum Auswählen",
-    "formats": "PDF, JPG, PNG · max. {mb} MB",
-    "errInvalidType": "Nur PDF, JPG, PNG oder WebP erlaubt.",
-    "errTooLarge": "Datei zu groß (max. {mb} MB).",
-    "loadingTitle": "Deine Abrechnung wird geprüft…",
-    "loadingSubtitle": "Das dauert meist 10–20 Sekunden",
+    "ariaLabel": "Загрузить счёт",
+    "heading": "Отправьте счёт сюда",
+    "hint": "Перетащите PDF или фото либо нажмите для выбора",
+    "formats": "PDF, JPG, PNG · до {mb} МБ",
+    "errInvalidType": "Разрешены только PDF, JPG, PNG или WebP.",
+    "errTooLarge": "Файл слишком большой (до {mb} МБ).",
+    "loadingTitle": "Ваш счёт проверяется…",
+    "loadingSubtitle": "Обычно это занимает 10–20 секунд",
     "phases": [
-      "Dokument wird gelesen",
-      "Positionen werden erfasst",
-      "Rechtsgrundlagen werden geprüft",
-      "Erstattungspotenzial wird berechnet",
-      "Bericht wird zusammengestellt"
+      "Чтение документа",
+      "Извлечение позиций",
+      "Проверка правовых оснований",
+      "Расчёт возможного возврата",
+      "Формирование отчёта"
     ]
   },
   "evidence": {
-    "mieterbundQuote": "Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.",
-    "mieterbundSource": "Deutscher Mieterbund",
-    "vzQuote": "37 % von 1.046 geprüften Heizkostenabrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.",
-    "vzSource": "Verbraucherzentrale Rheinland-Pfalz",
-    "fristQuote": "Zwölf Monate Zeit für den Widerspruch, auch nach bereits erfolgter Zahlung.",
-    "fristSource": "§ 556 Abs. 3 BGB"
+    "mieterbundQuote": "Около половины всех счетов за эксплуатационные расходы содержат ошибки.",
+    "mieterbundSource": "Немецкий союз квартиросъёмщиков",
+    "vzQuote": "37% из 1046 проверенных счетов за отопление были явно ошибочными, ещё 32% — неясными.",
+    "vzSource": "Центр защиты прав потребителей Рейнланд-Пфальц",
+    "fristQuote": "Двенадцать месяцев на возражение — даже после уже произведённой оплаты.",
+    "fristSource": "§ 556 абз. 3 Гражданского кодекса Германии (BGB)"
   },
   "assurance": {
-    "checkedTitle": "GEPRÜFT, NICHT GESCHÄTZT",
-    "securityTitle": "DEINE SICHERHEIT"
+    "checkedTitle": "ПРОВЕРЕНО, А НЕ УГАДАНО",
+    "securityTitle": "ВАША БЕЗОПАСНОСТЬ"
   },
   "reviews": {
-    "heading": "ERFAHRUNGEN",
-    "saved": "{amount} € zurückgeholt"
+    "heading": "ОТЗЫВЫ",
+    "saved": "Возвращено {amount} €"
   },
   "faq": {
-    "eyebrow": "HÄUFIGE FRAGEN",
-    "heading": "Was du vor der Prüfung wissen solltest",
+    "eyebrow": "ЧАСТЫЕ ВОПРОСЫ",
+    "heading": "Что нужно знать перед проверкой",
     "items": [
       {
-        "q": "Wie funktioniert die Prüfung?",
-        "a": "Du lädst deine Nebenkostenabrechnung als PDF oder Foto hoch. Sie wird automatisiert anhand der Betriebskostenverordnung (BetrKV), der Heizkostenverordnung (HeizkV) und höchstrichterlicher BGH-Rechtsprechung geprüft. Du erhältst eine Übersicht der Auffälligkeiten mit geschätztem Erstattungspotenzial – und auf Wunsch fertige Musterschreiben (Widerspruch oder Aufforderung zur Belegeinsicht)."
+        "q": "Как проходит проверка?",
+        "a": "Вы загружаете счёт за дополнительные расходы в виде PDF или фото. Он автоматически проверяется по немецкому Положению об эксплуатационных расходах (BetrKV), Положению о расходах на отопление (HeizkV) и практике Федерального суда (BGH). Вы получаете обзор найденных замечаний с оценкой возможного возврата — и при желании готовые шаблонные письма (возражение или требование ознакомления с документами)."
       },
       {
-        "q": "Was kostet der Nebenkostencheck?",
-        "a": "Die erste Prüfung mit Vorschau – Anzahl der Auffälligkeiten und geschätztes Potenzial – ist kostenlos. Der vollständige Bericht inklusive Begründung je Punkt und der fertigen Musterschreiben kostet einmalig 9,90 €. Kein Abo, keine versteckten Kosten."
+        "q": "Сколько стоит Nebenkostencheck?",
+        "a": "Первая проверка с предпросмотром — число замечаний и оценка потенциала — бесплатна. Полный отчёт с обоснованием по каждому пункту и готовыми шаблонными письмами стоит единоразово 9,90 €. Без подписки и скрытых платежей."
       },
       {
-        "q": "Welche Fehler werden gefunden?",
-        "a": "Typische Beispiele sind nicht umlagefähige Kosten wie Verwaltungs- oder Reparaturkosten (§ 1 BetrKV), eine fehlerhafte Verteilung der Heizkosten (§ 7 HeizkV), Leerstandskosten zulasten der Mieter, überschrittene Abrechnungsfristen oder nicht nachvollziehbare Positionen."
+        "q": "Какие ошибки находятся?",
+        "a": "Типичные примеры: не подлежащие распределению расходы, такие как административные или ремонтные (§ 1 BetrKV), неверное распределение расходов на отопление (§ 7 HeizkV), расходы за простой, отнесённые на арендаторов, превышение сроков расчёта или непонятные позиции."
       },
       {
-        "q": "Ist das eine Rechtsberatung?",
-        "a": "Nein. Der Nebenkostencheck ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung."
+        "q": "Это юридическая консультация?",
+        "a": "Нет. Nebenkostencheck — это автоматический инструмент, он не является юридической консультацией в смысле Закона об оказании юридических услуг Германии (RDG). Результаты — необязывающие оценки без гарантии, они не заменяют консультацию юриста."
       },
       {
-        "q": "Wie lange kann ich der Abrechnung widersprechen?",
-        "a": "Einwendungen gegen die Nebenkostenabrechnung kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung geltend machen (§ 556 Abs. 3 BGB) – auch dann noch, wenn du die geforderte Nachzahlung bereits geleistet hast."
+        "q": "Как долго я могу возражать против счёта?",
+        "a": "Возражения против счёта за дополнительные расходы можно заявить до конца двенадцатого месяца после его получения (§ 556 абз. 3 BGB) — даже если вы уже оплатили требуемую сумму."
       },
       {
-        "q": "Was passiert mit meiner hochgeladenen Abrechnung?",
-        "a": "Deine Abrechnung wird ausschließlich zur Prüfung verarbeitet und nach 24 Stunden automatisch gelöscht. Ein Nutzerkonto ist nicht nötig. Einzelheiten stehen in der Datenschutzerklärung."
+        "q": "Что происходит с загруженным счётом?",
+        "a": "Ваш счёт обрабатывается исключительно для проверки и автоматически удаляется через 24 часа. Учётная запись не требуется. Подробности — в политике конфиденциальности."
       },
       {
-        "q": "Welche Dateien kann ich hochladen?",
-        "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
+        "q": "Какие файлы можно загрузить?",
+        "a": "Файлы PDF или фотографии (например, JPG или PNG) вашего счёта до 3 МБ. Лучше загружать только сам счёт за дополнительные расходы, а не всю переписку."
       }
     ]
   },
   "footer": {
-    "impressum": "Impressum",
-    "datenschutz": "Datenschutz",
-    "agb": "AGB",
+    "impressum": "Выходные данные",
+    "datenschutz": "Конфиденциальность",
+    "agb": "Условия",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "Automatische Löschung nach 24 Stunden · Keine Rechtsberatung"
+    "note": "Автоматическое удаление через 24 часа · Не является юридической консультацией"
   },
   "notAStatement": {
-    "title": "Kein passendes Dokument erkannt",
-    "body": "Das sieht nicht wie eine Nebenkostenabrechnung aus. Bitte lade deine Abrechnung als PDF oder Foto hoch.",
-    "cta": "Andere Datei hochladen"
+    "title": "Подходящий документ не распознан",
+    "body": "Это не похоже на счёт за дополнительные расходы. Пожалуйста, загрузите счёт в виде PDF или фото.",
+    "cta": "Загрузить другой файл"
   },
   "errors": {
-    "fileTooLarge": "Die Datei ist zu groß (max. {mb} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.",
-    "analyzeFailed": "Analyse fehlgeschlagen. Bitte erneut versuchen.",
-    "busy": "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.",
-    "unknown": "Unbekannter Fehler"
+    "fileTooLarge": "Файл слишком большой (до {mb} МБ). Пожалуйста, загрузите только счёт за дополнительные расходы в виде PDF или фото — большие сканы сначала сожмите.",
+    "analyzeFailed": "Анализ не удался. Пожалуйста, попробуйте ещё раз.",
+    "busy": "Сервис проверки сейчас сильно загружен. Пожалуйста, повторите попытку через мгновение.",
+    "unknown": "Неизвестная ошибка"
   },
   "teaser": {
-    "firstCheckDone": "Erste Prüfung abgeschlossen",
-    "findings": "{count, plural, one {# Auffälligkeit} other {# Auffälligkeiten}}",
-    "potentialLabel": "Mögliches Erstattungspotenzial",
-    "potentialFallback": "Potenzial erkannt",
-    "kindBoth": "Widerspruch und Belegeinsicht",
-    "kindReview": "Belegeinsicht-Schreiben",
-    "kindObjection": "Widerspruchsschreiben",
-    "locked": "gesperrt",
-    "howItGoes": "SO GEHT'S WEITER",
-    "stepUnlockTitle": "Bericht freischalten",
-    "stepUnlockDesc": "Alle Befunde im Detail: Begründung, Beleg im Dokument und Rechtsgrundlage.",
-    "stepLetterTitle": "Schreiben erstellen",
-    "stepLetterDesc": "{kind} als fertiges PDF, mit deinen Daten vorausgefüllt.",
-    "stepSendTitle": "An Vermieter senden",
-    "stepSendDesc": "PDF herunterladen und per E-Mail oder Post einreichen.",
-    "unlockTitle": "Vollständigen Bericht freischalten",
-    "featureAll": "Alle Fehler mit Begründung, Beleg & Rechtsgrundlage",
-    "featureObjection": "Fertiger Widerspruchsbrief als PDF",
-    "featureReview": "Belegeinsicht-Schreiben (§ 259 BGB) als PDF",
-    "featureRecommendations": "Konkrete Handlungsempfehlungen",
-    "consent": "Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht mit vollständiger Bereitstellung erlischt.",
-    "unlockCta": "Für 9,90 € freischalten",
-    "redirecting": "Weiterleitung…",
-    "checkoutError": "Zahlung konnte nicht gestartet werden.",
-    "demo": "Demo-Modus: Bericht ohne Bezahlung öffnen →",
-    "checkAnother": "Andere Datei prüfen"
+    "firstCheckDone": "Первая проверка завершена",
+    "findings": "{count, plural, one {# замечание} few {# замечания} many {# замечаний} other {# замечания}}",
+    "potentialLabel": "Возможный потенциал возврата",
+    "potentialFallback": "Потенциал обнаружен",
+    "kindBoth": "возражение и ознакомление с документами",
+    "kindReview": "письмо об ознакомлении с документами",
+    "kindObjection": "письмо-возражение",
+    "locked": "заблокировано",
+    "howItGoes": "ЧТО ДАЛЬШЕ",
+    "stepUnlockTitle": "Открыть отчёт",
+    "stepUnlockDesc": "Каждое замечание подробно: обоснование, доказательство в документе и правовое основание.",
+    "stepLetterTitle": "Создать письмо",
+    "stepLetterDesc": "{kind} в виде готового PDF, предварительно заполненного вашими данными.",
+    "stepSendTitle": "Отправить арендодателю",
+    "stepSendDesc": "Скачайте PDF и отправьте по электронной или обычной почте.",
+    "unlockTitle": "Открыть полный отчёт",
+    "featureAll": "Все ошибки с обоснованием, доказательством и правовым основанием",
+    "featureObjection": "Готовое письмо-возражение в формате PDF",
+    "featureReview": "Письмо об ознакомлении с документами (§ 259 BGB) в формате PDF",
+    "featureRecommendations": "Конкретные рекомендации к действию",
+    "consent": "Я требую немедленного предоставления и подтверждаю, что моё право на отзыв прекращается при полном предоставлении.",
+    "unlockCta": "Открыть за 9,90 €",
+    "redirecting": "Перенаправление…",
+    "checkoutError": "Не удалось начать оплату.",
+    "demo": "Демо-режим: открыть отчёт без оплаты →",
+    "checkAnother": "Проверить другой файл"
   },
   "report": {
-    "potentialLabel": "Geschätztes Erstattungspotenzial",
-    "directLabel": "Sofort angreifbar",
-    "reviewLabel": "Nach Belegeinsicht",
-    "points": "{count, plural, one {# Punkt} other {# Punkte}}",
-    "downloadPdf": "Bericht als PDF herunterladen",
-    "sectionAtitle": "Sofort angreifbar",
-    "sectionAsubtitle": "Eindeutige Rechtsverstöße – direkter Widerspruch möglich",
-    "sectionBtitle": "Belegeinsicht erforderlich",
-    "sectionBsubtitle": "Verdacht auf Fehler – Belege beim Vermieter anfordern",
-    "createObjection": "Widerspruch erstellen",
-    "requestReview": "Belegeinsicht anfordern",
-    "combinedText": "Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung zur Belegeinsicht in einem PDF.",
-    "createCombined": "Kombiniertes Schreiben erstellen",
-    "noErrorsTitle": "Keine offensichtlichen Fehler gefunden",
-    "noErrorsBody": "Das bedeutet nicht, dass die Abrechnung fehlerfrei ist – bei Zweifeln lohnt sich eine rechtliche Prüfung.",
-    "disclaimerLabel": "Hinweis:",
-    "disclaimer": "Diese Analyse ist eine automatisierte Einschätzung ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen und sollten vor dem Versand geprüft und ggf. angepasst werden.",
-    "reset": "Neue Abrechnung prüfen",
-    "legendTitle": "ERFOLGSAUSSICHTEN",
-    "cardLegalBasis": "Rechtsgrundlage:",
-    "cardEvidence": "Beleg im Dokument:",
-    "cardRecommendation": "Empfehlung:",
+    "potentialLabel": "Оценочный потенциал возврата",
+    "directLabel": "Можно оспорить сразу",
+    "reviewLabel": "После ознакомления с документами",
+    "points": "{count, plural, one {# пункт} few {# пункта} many {# пунктов} other {# пункта}}",
+    "downloadPdf": "Скачать отчёт в PDF",
+    "sectionAtitle": "Можно оспорить сразу",
+    "sectionAsubtitle": "Явные нарушения права — возможно прямое возражение",
+    "sectionBtitle": "Требуется ознакомление с документами",
+    "sectionBsubtitle": "Подозрение на ошибки — запросите документы у арендодателя",
+    "createObjection": "Создать возражение",
+    "requestReview": "Запросить ознакомление с документами",
+    "combinedText": "Объедините оба вопроса в одном письме — возражение и требование ознакомления с документами в одном PDF.",
+    "createCombined": "Создать объединённое письмо",
+    "noErrorsTitle": "Явных ошибок не найдено",
+    "noErrorsBody": "Это не значит, что счёт без ошибок — при сомнениях стоит провести юридическую проверку.",
+    "disclaimerLabel": "Примечание:",
+    "disclaimer": "Этот анализ — автоматическая необязывающая оценка. Он не заменяет консультацию юриста. Суммы являются оценками и могут отличаться от фактически достижимого возврата. Сформированные письма являются шаблонами и перед отправкой должны быть проверены и при необходимости скорректированы.",
+    "reset": "Проверить новый счёт",
+    "legendTitle": "ШАНСЫ НА УСПЕХ",
+    "cardLegalBasis": "Правовое основание:",
+    "cardEvidence": "Доказательство в документе:",
+    "cardRecommendation": "Рекомендация:",
     "confidence": {
-      "sicher": { "label": "Sicher", "desc": "klare Rechtsverletzung, hohe Erstattungsaussicht" },
-      "wahrscheinlich": { "label": "Wahrscheinlich", "desc": "überwiegende Erfolgsaussicht, Auslegung möglich" },
-      "unsicher": { "label": "Unsicher", "desc": "Verdacht, nur mit Belegen klärbar" }
+      "sicher": { "label": "Точно", "desc": "явное нарушение права, высокий шанс возврата" },
+      "wahrscheinlich": { "label": "Вероятно", "desc": "преимущественный шанс на успех, возможно толкование" },
+      "unsicher": { "label": "Неопределённо", "desc": "подозрение, проверяется только по документам" }
     }
   },
   "letter": {
-    "titleObjection": "Widerspruch erstellen",
-    "titleReview": "Belegeinsicht anfordern",
-    "titleCombined": "Kombiniertes Schreiben erstellen",
-    "descObjection": "Wir erstellen einen Widerspruch gegen die sofort angreifbaren Punkte.",
-    "descReview": "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen.",
-    "descCombined": "Wir fassen Widerspruch und Aufforderung zur Belegeinsicht in einem Schreiben zusammen.",
-    "readyDesc": "Dein Schreiben ist fertig. So geht es weiter:",
-    "close": "Schließen",
-    "loadingTitle": "Dein Schreiben wird erstellt…",
-    "loadingSubtitle": "Das dauert meist 5–15 Sekunden.",
-    "phaseFormulating": "Schreiben wird formuliert",
-    "phasePdf": "PDF wird erzeugt",
-    "downloadPdf": "PDF herunterladen",
-    "mailToLandlord": "Per Mail an Vermieter",
-    "landlordEmailLabel": "E-Mail des Vermieters (optional)",
-    "mailHint": "Bitte das heruntergeladene PDF in deinem Mailprogramm anhängen.",
-    "sendToMe": "PDF an meine E-Mail senden",
-    "sendToMeHint": "Wir senden dir das PDF als Anhang zu – so kannst du es bequem weiterleiten.",
-    "yourEmail": "Deine E-Mail",
-    "sending": "Wird gesendet…",
-    "sent": "✓ Gesendet! Schau in dein Postfach.",
-    "emailRequired": "Bitte eine E-Mail-Adresse eingeben.",
-    "cancel": "Abbrechen",
-    "createPdf": "PDF erstellen",
-    "done": "Fertig",
-    "errCreate": "Brief konnte nicht erstellt werden",
-    "errSend": "PDF konnte nicht gesendet werden"
+    "titleObjection": "Создать возражение",
+    "titleReview": "Запросить ознакомление с документами",
+    "titleCombined": "Создать объединённое письмо",
+    "descObjection": "Мы создаём возражение по пунктам, которые можно оспорить сразу.",
+    "descReview": "Мы создаём письмо с требованием ознакомления с документами по неясным позициям.",
+    "descCombined": "Мы объединяем возражение и требование ознакомления с документами в одном письме.",
+    "readyDesc": "Ваше письмо готово. Что делать дальше:",
+    "close": "Закрыть",
+    "loadingTitle": "Ваше письмо создаётся…",
+    "loadingSubtitle": "Обычно это занимает 5–15 секунд.",
+    "phaseFormulating": "Формулирование письма",
+    "phasePdf": "Создание PDF",
+    "downloadPdf": "Скачать PDF",
+    "mailToLandlord": "Письмо арендодателю",
+    "landlordEmailLabel": "Электронная почта арендодателя (необязательно)",
+    "mailHint": "Пожалуйста, прикрепите скачанный PDF в вашей почтовой программе.",
+    "sendToMe": "Отправить PDF на мою почту",
+    "sendToMeHint": "Мы отправим вам PDF во вложении — чтобы вы могли легко его переслать.",
+    "yourEmail": "Ваша электронная почта",
+    "sending": "Отправка…",
+    "sent": "✓ Отправлено! Проверьте почтовый ящик.",
+    "emailRequired": "Пожалуйста, введите адрес электронной почты.",
+    "cancel": "Отмена",
+    "createPdf": "Создать PDF",
+    "done": "Готово",
+    "errCreate": "Не удалось создать письмо",
+    "errSend": "Не удалось отправить PDF"
   },
   "contact": {
-    "intro": "Bitte prüfe die automatisch erkannten Daten und korrigiere sie bei Bedarf. Sie werden für den Brief verwendet.",
-    "tenantName": "Dein Name",
-    "landlordName": "Vermieter / Verwalter",
-    "tenantAddress": "Deine Adresse",
-    "landlordAddress": "Adresse Vermieter / Verwalter",
-    "contractNumber": "Vertragsnummer",
-    "billingPeriod": "Abrechnungszeitraum"
+    "intro": "Пожалуйста, проверьте автоматически распознанные данные и при необходимости исправьте их. Они используются для письма.",
+    "tenantName": "Ваше имя",
+    "landlordName": "Арендодатель / управляющий",
+    "tenantAddress": "Ваш адрес",
+    "landlordAddress": "Адрес арендодателя / управляющего",
+    "contractNumber": "Номер договора",
+    "billingPeriod": "Расчётный период"
   },
   "legal": {
-    "draftNotice": "Entwurf/Roh-Vorlage – vor dem Live-Betrieb rechtlich prüfen lassen. Keine Rechtsberatung.",
-    "disclaimerNonDe": "Diese Übersetzung dient nur der Verständlichkeit. Rechtlich maßgeblich ist ausschließlich die deutsche Fassung.",
-    "back": "← Zurück",
+    "draftNotice": "Черновик / базовый шаблон — перед запуском проверьте у юриста. Не является юридической консультацией.",
+    "disclaimerNonDe": "Этот перевод предоставлен только для понимания. Юридически обязательной является исключительно немецкая версия.",
+    "back": "← Назад",
     "impressum": {
-      "title": "Impressum",
+      "title": "Выходные данные",
       "sections": [
-        { "heading": "Angaben gemäß § 5 DDG", "body": "[Name des Betreibers]\n[Straße & Hausnummer]\n[PLZ Ort]" },
-        { "heading": "Kontakt", "body": "E-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Umsatzsteuer", "body": "Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen." },
-        { "heading": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]" }
+        { "heading": "Сведения согласно § 5 DDG", "body": "[Имя оператора]\n[Улица и номер]\n[Индекс и город]" },
+        { "heading": "Контакт", "body": "Эл. почта: kontakt@nebenkostencheck24.de" },
+        { "heading": "НДС", "body": "Как малое предприятие в смысле § 19 UStG, НДС не выделяется." },
+        { "heading": "Ответственный за содержание согласно § 18 абз. 2 MStV", "body": "[Имя оператора]\n[Улица и номер], [Индекс и город]" }
       ]
     },
     "datenschutz": {
-      "title": "Datenschutzerklärung",
+      "title": "Политика конфиденциальности",
       "sections": [
-        { "heading": "Verantwortlicher", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]\nE-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Welche Daten wir verarbeiten", "body": "Wir verarbeiten die von Ihnen hochgeladene Nebenkostenabrechnung (als PDF oder Bilddatei) sowie die daraus extrahierten Angaben (z. B. Abrechnungspositionen, Beträge, Zeiträume). Bei Kauf des vollständigen Berichts werden zusätzlich die für die Zahlungsabwicklung erforderlichen Zahlungsdaten verarbeitet." },
-        { "heading": "Verarbeitung durch Anthropic (Claude)", "body": "Die von Ihnen hochgeladene Datei wird zur automatisierten Prüfung an Anthropic (Claude API) übermittelt. Der Serverstandort liegt u. a. in den USA; es handelt sich daher um eine Drittlandübermittlung nach Art. 44 ff. DSGVO. Anthropic verpflichtet sich gemäß seinen Nutzungsbedingungen, Daten nicht für das Training von Modellen zu verwenden (API-Nutzung). Weitere Informationen: https://www.anthropic.com/privacy." },
-        { "heading": "Speicherung & Löschung", "body": "Prüfergebnisse werden vorübergehend auf unseren Servern gespeichert und automatisch nach 24 Stunden gelöscht. Eine dauerhafte Speicherung Ihrer Abrechnung findet nicht statt." },
-        { "heading": "Zahlungsabwicklung (Stripe)", "body": "Zahlungen werden über den Zahlungsdienstleister Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA) abgewickelt. Dabei werden die für die Transaktion erforderlichen Zahlungsdaten an Stripe übermittelt. Stripe ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Weitere Informationen: https://stripe.com/de/privacy." },
-        { "heading": "Rechtsgrundlage", "body": "Die Verarbeitung Ihrer Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen). Soweit Sie die Dateiverarbeitung durch Anthropic initiieren, gilt Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO." },
-        { "heading": "Ihre Rechte", "body": "Sie haben das Recht auf Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) sowie Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Darüber hinaus steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.\n\nBei Fragen wenden Sie sich an: kontakt@nebenkostencheck24.de" }
+        { "heading": "Ответственное лицо", "body": "[Имя оператора]\n[Улица и номер], [Индекс и город]\nЭл. почта: kontakt@nebenkostencheck24.de" },
+        { "heading": "Какие данные мы обрабатываем", "body": "Мы обрабатываем загруженный вами счёт за дополнительные расходы (в виде PDF или изображения), а также извлечённые из него сведения (например, позиции расчёта, суммы, периоды). При покупке полного отчёта дополнительно обрабатываются платёжные данные, необходимые для проведения оплаты." },
+        { "heading": "Обработка компанией Anthropic (Claude)", "body": "Загруженный вами файл передаётся для автоматической проверки в Anthropic (Claude API). Местоположение сервера — в том числе в США; поэтому речь идёт о передаче в третью страну согласно ст. 44 и след. GDPR. Согласно своим условиям использования Anthropic обязуется не использовать данные для обучения моделей (использование API). Дополнительная информация: https://www.anthropic.com/privacy." },
+        { "heading": "Хранение и удаление", "body": "Результаты проверки временно хранятся на наших серверах и автоматически удаляются через 24 часа. Постоянное хранение вашего счёта не осуществляется." },
+        { "heading": "Обработка платежей (Stripe)", "body": "Платежи обрабатываются платёжным провайдером Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA). При этом необходимые для транзакции платёжные данные передаются в Stripe. Stripe сертифицирована по EU-U.S. Data Privacy Framework. Дополнительная информация: https://stripe.com/de/privacy." },
+        { "heading": "Правовое основание", "body": "Обработка ваших данных осуществляется на основании ст. 6 абз. 1 п. b GDPR (исполнение договора или преддоговорные меры). Поскольку вы инициируете обработку файла компанией Anthropic, применяется ваше согласие согласно ст. 6 абз. 1 п. a GDPR." },
+        { "heading": "Ваши права", "body": "Вы имеете право на доступ к хранимым о вас данным (ст. 15 GDPR), на исправление неверных данных (ст. 16 GDPR), на удаление (ст. 17 GDPR) и на возражение против обработки (ст. 21 GDPR). Кроме того, вы вправе подать жалобу в компетентный надзорный орган по защите данных.\n\nПо вопросам обращайтесь: kontakt@nebenkostencheck24.de" }
       ]
     },
     "agb": {
-      "title": "Allgemeine Geschäftsbedingungen (AGB)",
+      "title": "Общие условия",
       "sections": [
-        { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
-        { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
-        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
-        { "heading": "4. Widerrufsrecht und vorzeitiges Erlöschen", "body": "Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Bei digitalen Inhalten und Dienstleistungen erlischt das Widerrufsrecht jedoch, wenn der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und seine Kenntnis davon bestätigt hat, dass er durch die Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB). Diese Zustimmung wird vor der Zahlung ausdrücklich eingeholt." },
-        { "heading": "5. Haftung", "body": "Wir übernehmen keine Gewähr für die inhaltliche Richtigkeit, Vollständigkeit und Aktualität der Prüfergebnisse und erstellten Schreiben. Angegebene Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Eine Haftung für Schäden, die aus der Verwendung der Ergebnisse entstehen, ist im gesetzlich zulässigen Rahmen ausgeschlossen." },
-        { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
+        { "heading": "1. Описание услуги", "body": "Nebenkostencheck предлагает автоматическую проверку счетов за дополнительные расходы, а также создание шаблонных писем (возражение, требование ознакомления с документами). Проверка осуществляется на основании соответствующих правовых норм (в том числе BetrKV, HeizkV) и практики высших судов." },
+        { "heading": "2. Не является юридической консультацией", "body": "Услуга — это автоматический инструмент, она не является юридической консультацией в смысле Закона об оказании юридических услуг Германии (RDG). Результаты — необязывающие оценки без гарантии, они не заменяют консультацию юриста." },
+        { "heading": "3. Цена", "body": "Открытие полного отчёта о проверке, включая шаблонные письма, стоит единоразово 9,90 €. Согласно § 19 UStG (режим малого предприятия) НДС не выделяется. Первая проверка с предпросмотром бесплатна." },
+        { "heading": "4. Право на отзыв и досрочное прекращение", "body": "Потребители, как правило, имеют 14-дневное право на отзыв. Однако при цифровом контенте и услугах право на отзыв прекращается, если клиент прямо согласился на немедленное исполнение и подтвердил осведомлённость о том, что таким согласием он теряет право на отзыв с началом исполнения (§ 356 абз. 5 BGB). Это согласие получается прямо перед оплатой." },
+        { "heading": "5. Ответственность", "body": "Мы не гарантируем содержательную правильность, полноту и актуальность результатов проверки и созданных писем. Указанные суммы являются оценками и могут отличаться от фактически достижимого возврата. Ответственность за ущерб, возникший в результате использования результатов, исключается в допустимых законом пределах." },
+        { "heading": "6. Поставщик", "body": "[Имя оператора], [Улица и номер], [Индекс и город]. Дополнительные сведения — в выходных данных." }
       ]
     }
   },
   "localeSwitcher": {
-    "label": "Sprache wählen"
+    "label": "Выбрать язык"
   }
 }

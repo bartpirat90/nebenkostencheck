@@ -1,257 +1,258 @@
 {
+  "_meta": { "status": "ai-draft", "review": "يجب أن يراجعها متحدث أصلي بالعربية قبل الإطلاق." },
   "meta": {
-    "title": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen",
-    "description": "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos."
+    "title": "Nebenkostencheck – افحص فاتورة التكاليف الإضافية الألمانية واسترد أموالك",
+    "description": "ارفع كشف التكاليف الإضافية الألماني (Nebenkostenabrechnung) واعثر على الأخطاء الشائعة في ثوانٍ – يُفحص وفق قانون الإيجار الألماني الحالي (BetrKV، HeizkV) واجتهادات المحكمة الاتحادية (BGH). الفحص الأول مجاني."
   },
   "nav": {
-    "badge": "PRÜFBERICHT · GRATIS"
+    "badge": "تقرير الفحص · مجاناً"
   },
   "trust": {
-    "dsgvo": "DSGVO-konform",
-    "deletion": "Löschung nach 24 h",
-    "noAccount": "Kein Account nötig"
+    "dsgvo": "متوافق مع اللائحة العامة لحماية البيانات",
+    "deletion": "يُحذف بعد 24 ساعة",
+    "noAccount": "لا حاجة لحساب"
   },
   "hero": {
-    "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
-    "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
-    "cta": "Abrechnung prüfen"
+    "eyebrow": "§ مفحوص وفق BetrKV / HeizkV / BGH",
+    "headline": "هل هناك أموال مخبأة في فاتورتك؟",
+    "subline": "ارفع فاتورتك. تُفحص بحثاً عن الأخطاء الشائعة في ثوانٍ ويُحتسب مبلغ الاسترداد المحتمل.",
+    "cta": "افحص فاتورتي"
   },
   "stats": {
-    "source": "Quelle: Deutscher Mieterbund",
+    "source": "المصدر: اتحاد المستأجرين الألماني (Deutscher Mieterbund)",
     "items": [
-      { "label": "Abrechnungen mit Fehlern", "value": "~50 %" },
-      { "label": "Analyse-Dauer", "value": "15 Sek." },
-      { "label": "Erst-Prüfung", "value": "0 €" }
+      { "label": "فواتير بها أخطاء", "value": "~50%" },
+      { "label": "مدة التحليل", "value": "15 ثانية" },
+      { "label": "الفحص الأول", "value": "0 €" }
     ]
   },
   "howItWorks": {
-    "eyebrow": "So funktioniert's",
-    "heading": "In 3 Schritten zu deiner Erstattung",
+    "eyebrow": "كيف يعمل",
+    "heading": "استردادك في 3 خطوات",
     "steps": [
-      { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen." },
-      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft auf HeizkV-Verstöße, falsche Umlagen, Fristfehler und mehr." },
-      { "title": "Widerspruch mit einem Klick", "description": "Fertiger Widerspruchsbrief als PDF zum Download." }
+      { "title": "ارفع فاتورتك", "description": "ملف PDF أو صورة لكشف التكاليف الإضافية – فقط أفلته أو اخترّه." },
+      { "title": "فحص تلقائي في ثوانٍ", "description": "يفحص مخالفات HeizkV، والتوزيعات الخاطئة، وأخطاء المواعيد وغير ذلك." },
+      { "title": "اعتراض بنقرة واحدة", "description": "خطاب اعتراض جاهز بصيغة PDF للتنزيل." }
     ]
   },
   "upload": {
-    "ariaLabel": "Abrechnung hochladen",
-    "heading": "Abrechnung hier einreichen",
-    "hint": "PDF oder Foto ablegen oder klicken zum Auswählen",
-    "formats": "PDF, JPG, PNG · max. {mb} MB",
-    "errInvalidType": "Nur PDF, JPG, PNG oder WebP erlaubt.",
-    "errTooLarge": "Datei zu groß (max. {mb} MB).",
-    "loadingTitle": "Deine Abrechnung wird geprüft…",
-    "loadingSubtitle": "Das dauert meist 10–20 Sekunden",
+    "ariaLabel": "رفع الفاتورة",
+    "heading": "أرسل فاتورتك هنا",
+    "hint": "أفلت ملف PDF أو صورة، أو انقر للاختيار",
+    "formats": "PDF، JPG، PNG · بحد أقصى {mb} ميغابايت",
+    "errInvalidType": "يُسمح فقط بـ PDF أو JPG أو PNG أو WebP.",
+    "errTooLarge": "الملف كبير جداً (بحد أقصى {mb} ميغابايت).",
+    "loadingTitle": "جارٍ فحص فاتورتك…",
+    "loadingSubtitle": "يستغرق ذلك عادةً 10–20 ثانية",
     "phases": [
-      "Dokument wird gelesen",
-      "Positionen werden erfasst",
-      "Rechtsgrundlagen werden geprüft",
-      "Erstattungspotenzial wird berechnet",
-      "Bericht wird zusammengestellt"
+      "قراءة المستند",
+      "استخراج البنود",
+      "فحص الأسس القانونية",
+      "احتساب إمكانية الاسترداد",
+      "تجميع التقرير"
     ]
   },
   "evidence": {
-    "mieterbundQuote": "Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.",
-    "mieterbundSource": "Deutscher Mieterbund",
-    "vzQuote": "37 % von 1.046 geprüften Heizkostenabrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.",
-    "vzSource": "Verbraucherzentrale Rheinland-Pfalz",
-    "fristQuote": "Zwölf Monate Zeit für den Widerspruch, auch nach bereits erfolgter Zahlung.",
-    "fristSource": "§ 556 Abs. 3 BGB"
+    "mieterbundQuote": "نحو نصف كشوف تكاليف التشغيل بها أخطاء.",
+    "mieterbundSource": "اتحاد المستأجرين الألماني",
+    "vzQuote": "37% من 1046 كشف تكاليف تدفئة تم فحصها كانت خاطئة بوضوح، و32% أخرى غير واضحة.",
+    "vzSource": "مركز إرشاد المستهلك في راينلاند-بفالتس",
+    "fristQuote": "اثنا عشر شهراً للاعتراض – حتى بعد السداد.",
+    "fristSource": "§ 556 الفقرة 3 من القانون المدني الألماني (BGB)"
   },
   "assurance": {
-    "checkedTitle": "GEPRÜFT, NICHT GESCHÄTZT",
-    "securityTitle": "DEINE SICHERHEIT"
+    "checkedTitle": "مفحوص، وليس مُقدّراً",
+    "securityTitle": "أمانك"
   },
   "reviews": {
-    "heading": "ERFAHRUNGEN",
-    "saved": "{amount} € zurückgeholt"
+    "heading": "تجارب",
+    "saved": "تم استرداد {amount} €"
   },
   "faq": {
-    "eyebrow": "HÄUFIGE FRAGEN",
-    "heading": "Was du vor der Prüfung wissen solltest",
+    "eyebrow": "أسئلة شائعة",
+    "heading": "ما يجب معرفته قبل الفحص",
     "items": [
       {
-        "q": "Wie funktioniert die Prüfung?",
-        "a": "Du lädst deine Nebenkostenabrechnung als PDF oder Foto hoch. Sie wird automatisiert anhand der Betriebskostenverordnung (BetrKV), der Heizkostenverordnung (HeizkV) und höchstrichterlicher BGH-Rechtsprechung geprüft. Du erhältst eine Übersicht der Auffälligkeiten mit geschätztem Erstattungspotenzial – und auf Wunsch fertige Musterschreiben (Widerspruch oder Aufforderung zur Belegeinsicht)."
+        "q": "كيف يتم الفحص؟",
+        "a": "ترفع كشف التكاليف الإضافية بصيغة PDF أو صورة. يُفحص تلقائياً وفق لائحة تكاليف التشغيل الألمانية (BetrKV) ولائحة تكاليف التدفئة (HeizkV) واجتهادات المحكمة الاتحادية (BGH). تحصل على نظرة عامة للملاحظات مع إمكانية استرداد تقديرية – وإن رغبت، خطابات نموذجية جاهزة (اعتراض أو طلب الاطلاع على المستندات)."
       },
       {
-        "q": "Was kostet der Nebenkostencheck?",
-        "a": "Die erste Prüfung mit Vorschau – Anzahl der Auffälligkeiten und geschätztes Potenzial – ist kostenlos. Der vollständige Bericht inklusive Begründung je Punkt und der fertigen Musterschreiben kostet einmalig 9,90 €. Kein Abo, keine versteckten Kosten."
+        "q": "كم تكلفة Nebenkostencheck؟",
+        "a": "الفحص الأول مع المعاينة – عدد الملاحظات والإمكانية التقديرية – مجاني. التقرير الكامل بما في ذلك التبرير لكل نقطة والخطابات النموذجية الجاهزة يكلف مرة واحدة 9,90 €. لا اشتراك ولا رسوم خفية."
       },
       {
-        "q": "Welche Fehler werden gefunden?",
-        "a": "Typische Beispiele sind nicht umlagefähige Kosten wie Verwaltungs- oder Reparaturkosten (§ 1 BetrKV), eine fehlerhafte Verteilung der Heizkosten (§ 7 HeizkV), Leerstandskosten zulasten der Mieter, überschrittene Abrechnungsfristen oder nicht nachvollziehbare Positionen."
+        "q": "ما الأخطاء التي يتم العثور عليها؟",
+        "a": "أمثلة نموذجية: تكاليف غير قابلة للتحميل مثل تكاليف الإدارة أو الإصلاح (§ 1 BetrKV)، توزيع خاطئ لتكاليف التدفئة (§ 7 HeizkV)، تكاليف الشغور المحمّلة على المستأجرين، تجاوز مواعيد المحاسبة، أو بنود غير مفهومة."
       },
       {
-        "q": "Ist das eine Rechtsberatung?",
-        "a": "Nein. Der Nebenkostencheck ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung."
+        "q": "هل هذه استشارة قانونية؟",
+        "a": "لا. Nebenkostencheck أداة آلية ولا تُعد استشارة قانونية بمفهوم قانون الخدمات القانونية الألماني (RDG). النتائج تقييمات غير مُلزمة وبدون ضمان ولا تحل محل استشارة محامٍ."
       },
       {
-        "q": "Wie lange kann ich der Abrechnung widersprechen?",
-        "a": "Einwendungen gegen die Nebenkostenabrechnung kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung geltend machen (§ 556 Abs. 3 BGB) – auch dann noch, wenn du die geforderte Nachzahlung bereits geleistet hast."
+        "q": "كم من الوقت يمكنني الاعتراض على الكشف؟",
+        "a": "يمكنك تقديم اعتراضات على كشف التكاليف الإضافية حتى نهاية الشهر الثاني عشر بعد استلامه (§ 556 الفقرة 3 BGB) – حتى إذا كنت قد دفعت المبلغ المطلوب بالفعل."
       },
       {
-        "q": "Was passiert mit meiner hochgeladenen Abrechnung?",
-        "a": "Deine Abrechnung wird ausschließlich zur Prüfung verarbeitet und nach 24 Stunden automatisch gelöscht. Ein Nutzerkonto ist nicht nötig. Einzelheiten stehen in der Datenschutzerklärung."
+        "q": "ماذا يحدث لفاتورتي المرفوعة؟",
+        "a": "تُعالج فاتورتك حصراً للفحص وتُحذف تلقائياً بعد 24 ساعة. لا حاجة لحساب مستخدم. التفاصيل في سياسة الخصوصية."
       },
       {
-        "q": "Welche Dateien kann ich hochladen?",
-        "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
+        "q": "ما الملفات التي يمكنني رفعها؟",
+        "a": "ملفات PDF أو صور (مثل JPG أو PNG) لفاتورتك حتى 3 ميغابايت. يُفضّل رفع كشف التكاليف الإضافية الفعلي فقط، وليس كامل المراسلات."
       }
     ]
   },
   "footer": {
-    "impressum": "Impressum",
-    "datenschutz": "Datenschutz",
-    "agb": "AGB",
+    "impressum": "بيانات الناشر",
+    "datenschutz": "الخصوصية",
+    "agb": "الشروط",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "Automatische Löschung nach 24 Stunden · Keine Rechtsberatung"
+    "note": "حذف تلقائي بعد 24 ساعة · ليست استشارة قانونية"
   },
   "notAStatement": {
-    "title": "Kein passendes Dokument erkannt",
-    "body": "Das sieht nicht wie eine Nebenkostenabrechnung aus. Bitte lade deine Abrechnung als PDF oder Foto hoch.",
-    "cta": "Andere Datei hochladen"
+    "title": "لم يتم التعرف على مستند مناسب",
+    "body": "هذا لا يبدو ككشف تكاليف إضافية. يرجى رفع فاتورتك بصيغة PDF أو صورة.",
+    "cta": "ارفع ملفاً آخر"
   },
   "errors": {
-    "fileTooLarge": "Die Datei ist zu groß (max. {mb} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.",
-    "analyzeFailed": "Analyse fehlgeschlagen. Bitte erneut versuchen.",
-    "busy": "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.",
-    "unknown": "Unbekannter Fehler"
+    "fileTooLarge": "الملف كبير جداً (بحد أقصى {mb} ميغابايت). يرجى رفع كشف التكاليف الإضافية فقط بصيغة PDF أو صورة — اضغط المسح الضوئي الكبير أولاً.",
+    "analyzeFailed": "فشل التحليل. يرجى المحاولة مرة أخرى.",
+    "busy": "خدمة الفحص مزدحمة جداً حالياً. يرجى المحاولة بعد قليل.",
+    "unknown": "خطأ غير معروف"
   },
   "teaser": {
-    "firstCheckDone": "Erste Prüfung abgeschlossen",
-    "findings": "{count, plural, one {# Auffälligkeit} other {# Auffälligkeiten}}",
-    "potentialLabel": "Mögliches Erstattungspotenzial",
-    "potentialFallback": "Potenzial erkannt",
-    "kindBoth": "Widerspruch und Belegeinsicht",
-    "kindReview": "Belegeinsicht-Schreiben",
-    "kindObjection": "Widerspruchsschreiben",
-    "locked": "gesperrt",
-    "howItGoes": "SO GEHT'S WEITER",
-    "stepUnlockTitle": "Bericht freischalten",
-    "stepUnlockDesc": "Alle Befunde im Detail: Begründung, Beleg im Dokument und Rechtsgrundlage.",
-    "stepLetterTitle": "Schreiben erstellen",
-    "stepLetterDesc": "{kind} als fertiges PDF, mit deinen Daten vorausgefüllt.",
-    "stepSendTitle": "An Vermieter senden",
-    "stepSendDesc": "PDF herunterladen und per E-Mail oder Post einreichen.",
-    "unlockTitle": "Vollständigen Bericht freischalten",
-    "featureAll": "Alle Fehler mit Begründung, Beleg & Rechtsgrundlage",
-    "featureObjection": "Fertiger Widerspruchsbrief als PDF",
-    "featureReview": "Belegeinsicht-Schreiben (§ 259 BGB) als PDF",
-    "featureRecommendations": "Konkrete Handlungsempfehlungen",
-    "consent": "Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht mit vollständiger Bereitstellung erlischt.",
-    "unlockCta": "Für 9,90 € freischalten",
-    "redirecting": "Weiterleitung…",
-    "checkoutError": "Zahlung konnte nicht gestartet werden.",
-    "demo": "Demo-Modus: Bericht ohne Bezahlung öffnen →",
-    "checkAnother": "Andere Datei prüfen"
+    "firstCheckDone": "اكتمل الفحص الأول",
+    "findings": "{count, plural, one {# ملاحظة} other {# ملاحظات}}",
+    "potentialLabel": "إمكانية الاسترداد المحتملة",
+    "potentialFallback": "تم اكتشاف إمكانية",
+    "kindBoth": "اعتراض واطلاع على المستندات",
+    "kindReview": "خطاب الاطلاع على المستندات",
+    "kindObjection": "خطاب اعتراض",
+    "locked": "مقفل",
+    "howItGoes": "الخطوات التالية",
+    "stepUnlockTitle": "افتح التقرير",
+    "stepUnlockDesc": "كل ملاحظة بالتفصيل: التبرير، الدليل في المستند، والأساس القانوني.",
+    "stepLetterTitle": "أنشئ الخطاب",
+    "stepLetterDesc": "{kind} كملف PDF جاهز، مُعبّأ مسبقاً ببياناتك.",
+    "stepSendTitle": "أرسله إلى المالك",
+    "stepSendDesc": "نزّل ملف PDF وأرسله عبر البريد الإلكتروني أو البريد.",
+    "unlockTitle": "افتح التقرير الكامل",
+    "featureAll": "جميع الأخطاء مع التبرير والدليل والأساس القانوني",
+    "featureObjection": "خطاب اعتراض جاهز بصيغة PDF",
+    "featureReview": "خطاب الاطلاع على المستندات (§ 259 BGB) بصيغة PDF",
+    "featureRecommendations": "توصيات ملموسة للإجراءات",
+    "consent": "أطلب التقديم الفوري وأؤكد أن حقي في الإلغاء ينتهي عند التقديم الكامل.",
+    "unlockCta": "افتح مقابل 9,90 €",
+    "redirecting": "جارٍ إعادة التوجيه…",
+    "checkoutError": "تعذّر بدء الدفع.",
+    "demo": "وضع العرض: افتح التقرير دون دفع ←",
+    "checkAnother": "افحص ملفاً آخر"
   },
   "report": {
-    "potentialLabel": "Geschätztes Erstattungspotenzial",
-    "directLabel": "Sofort angreifbar",
-    "reviewLabel": "Nach Belegeinsicht",
-    "points": "{count, plural, one {# Punkt} other {# Punkte}}",
-    "downloadPdf": "Bericht als PDF herunterladen",
-    "sectionAtitle": "Sofort angreifbar",
-    "sectionAsubtitle": "Eindeutige Rechtsverstöße – direkter Widerspruch möglich",
-    "sectionBtitle": "Belegeinsicht erforderlich",
-    "sectionBsubtitle": "Verdacht auf Fehler – Belege beim Vermieter anfordern",
-    "createObjection": "Widerspruch erstellen",
-    "requestReview": "Belegeinsicht anfordern",
-    "combinedText": "Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung zur Belegeinsicht in einem PDF.",
-    "createCombined": "Kombiniertes Schreiben erstellen",
-    "noErrorsTitle": "Keine offensichtlichen Fehler gefunden",
-    "noErrorsBody": "Das bedeutet nicht, dass die Abrechnung fehlerfrei ist – bei Zweifeln lohnt sich eine rechtliche Prüfung.",
-    "disclaimerLabel": "Hinweis:",
-    "disclaimer": "Diese Analyse ist eine automatisierte Einschätzung ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen und sollten vor dem Versand geprüft und ggf. angepasst werden.",
-    "reset": "Neue Abrechnung prüfen",
-    "legendTitle": "ERFOLGSAUSSICHTEN",
-    "cardLegalBasis": "Rechtsgrundlage:",
-    "cardEvidence": "Beleg im Dokument:",
-    "cardRecommendation": "Empfehlung:",
+    "potentialLabel": "إمكانية الاسترداد التقديرية",
+    "directLabel": "قابل للطعن فوراً",
+    "reviewLabel": "بعد الاطلاع على المستندات",
+    "points": "{count, plural, one {# نقطة} other {# نقاط}}",
+    "downloadPdf": "نزّل التقرير كملف PDF",
+    "sectionAtitle": "قابل للطعن فوراً",
+    "sectionAsubtitle": "مخالفات قانونية واضحة – اعتراض مباشر ممكن",
+    "sectionBtitle": "يلزم الاطلاع على المستندات",
+    "sectionBsubtitle": "اشتباه بأخطاء – اطلب المستندات من المالك",
+    "createObjection": "أنشئ اعتراضاً",
+    "requestReview": "اطلب الاطلاع على المستندات",
+    "combinedText": "اجمع الأمرين في خطاب واحد – اعتراض وطلب الاطلاع على المستندات في ملف PDF واحد.",
+    "createCombined": "أنشئ خطاباً مجمّعاً",
+    "noErrorsTitle": "لم يتم العثور على أخطاء واضحة",
+    "noErrorsBody": "هذا لا يعني أن الكشف خالٍ من الأخطاء – عند الشك يُنصح بمراجعة قانونية.",
+    "disclaimerLabel": "ملاحظة:",
+    "disclaimer": "هذا التحليل تقييم آلي غير مُلزم. لا يحل محل استشارة محامٍ. المبالغ تقديرية وقد تختلف عن الاستردادات القابلة للتحقيق فعلاً. الخطابات المُنشأة هي نماذج ويجب مراجعتها وتعديلها قبل الإرسال.",
+    "reset": "افحص فاتورة جديدة",
+    "legendTitle": "فرص النجاح",
+    "cardLegalBasis": "الأساس القانوني:",
+    "cardEvidence": "الدليل في المستند:",
+    "cardRecommendation": "التوصية:",
     "confidence": {
-      "sicher": { "label": "Sicher", "desc": "klare Rechtsverletzung, hohe Erstattungsaussicht" },
-      "wahrscheinlich": { "label": "Wahrscheinlich", "desc": "überwiegende Erfolgsaussicht, Auslegung möglich" },
-      "unsicher": { "label": "Unsicher", "desc": "Verdacht, nur mit Belegen klärbar" }
+      "sicher": { "label": "مؤكد", "desc": "مخالفة قانونية واضحة، فرصة استرداد عالية" },
+      "wahrscheinlich": { "label": "محتمل", "desc": "فرصة نجاح راجحة، التأويل ممكن" },
+      "unsicher": { "label": "غير مؤكد", "desc": "اشتباه، يمكن التحقق منه بالمستندات فقط" }
     }
   },
   "letter": {
-    "titleObjection": "Widerspruch erstellen",
-    "titleReview": "Belegeinsicht anfordern",
-    "titleCombined": "Kombiniertes Schreiben erstellen",
-    "descObjection": "Wir erstellen einen Widerspruch gegen die sofort angreifbaren Punkte.",
-    "descReview": "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen.",
-    "descCombined": "Wir fassen Widerspruch und Aufforderung zur Belegeinsicht in einem Schreiben zusammen.",
-    "readyDesc": "Dein Schreiben ist fertig. So geht es weiter:",
-    "close": "Schließen",
-    "loadingTitle": "Dein Schreiben wird erstellt…",
-    "loadingSubtitle": "Das dauert meist 5–15 Sekunden.",
-    "phaseFormulating": "Schreiben wird formuliert",
-    "phasePdf": "PDF wird erzeugt",
-    "downloadPdf": "PDF herunterladen",
-    "mailToLandlord": "Per Mail an Vermieter",
-    "landlordEmailLabel": "E-Mail des Vermieters (optional)",
-    "mailHint": "Bitte das heruntergeladene PDF in deinem Mailprogramm anhängen.",
-    "sendToMe": "PDF an meine E-Mail senden",
-    "sendToMeHint": "Wir senden dir das PDF als Anhang zu – so kannst du es bequem weiterleiten.",
-    "yourEmail": "Deine E-Mail",
-    "sending": "Wird gesendet…",
-    "sent": "✓ Gesendet! Schau in dein Postfach.",
-    "emailRequired": "Bitte eine E-Mail-Adresse eingeben.",
-    "cancel": "Abbrechen",
-    "createPdf": "PDF erstellen",
-    "done": "Fertig",
-    "errCreate": "Brief konnte nicht erstellt werden",
-    "errSend": "PDF konnte nicht gesendet werden"
+    "titleObjection": "أنشئ اعتراضاً",
+    "titleReview": "اطلب الاطلاع على المستندات",
+    "titleCombined": "أنشئ خطاباً مجمّعاً",
+    "descObjection": "ننشئ اعتراضاً على النقاط القابلة للطعن فوراً.",
+    "descReview": "ننشئ خطاباً لطلب الاطلاع على المستندات بشأن البنود غير الواضحة.",
+    "descCombined": "نجمع الاعتراض وطلب الاطلاع على المستندات في خطاب واحد.",
+    "readyDesc": "خطابك جاهز. إليك الخطوات التالية:",
+    "close": "إغلاق",
+    "loadingTitle": "جارٍ إنشاء خطابك…",
+    "loadingSubtitle": "يستغرق ذلك عادةً 5–15 ثانية.",
+    "phaseFormulating": "صياغة الخطاب",
+    "phasePdf": "إنشاء ملف PDF",
+    "downloadPdf": "نزّل PDF",
+    "mailToLandlord": "بريد إلكتروني إلى المالك",
+    "landlordEmailLabel": "البريد الإلكتروني للمالك (اختياري)",
+    "mailHint": "يرجى إرفاق ملف PDF الذي تم تنزيله في برنامج بريدك.",
+    "sendToMe": "أرسل PDF إلى بريدي الإلكتروني",
+    "sendToMeHint": "نرسل لك ملف PDF كمرفق – حتى يمكنك إعادة توجيهه بسهولة.",
+    "yourEmail": "بريدك الإلكتروني",
+    "sending": "جارٍ الإرسال…",
+    "sent": "✓ تم الإرسال! تحقق من صندوق الوارد.",
+    "emailRequired": "يرجى إدخال عنوان بريد إلكتروني.",
+    "cancel": "إلغاء",
+    "createPdf": "أنشئ PDF",
+    "done": "تم",
+    "errCreate": "تعذّر إنشاء الخطاب",
+    "errSend": "تعذّر إرسال ملف PDF"
   },
   "contact": {
-    "intro": "Bitte prüfe die automatisch erkannten Daten und korrigiere sie bei Bedarf. Sie werden für den Brief verwendet.",
-    "tenantName": "Dein Name",
-    "landlordName": "Vermieter / Verwalter",
-    "tenantAddress": "Deine Adresse",
-    "landlordAddress": "Adresse Vermieter / Verwalter",
-    "contractNumber": "Vertragsnummer",
-    "billingPeriod": "Abrechnungszeitraum"
+    "intro": "يرجى مراجعة البيانات المكتشفة تلقائياً وتصحيحها عند الحاجة. تُستخدم للخطاب.",
+    "tenantName": "اسمك",
+    "landlordName": "المالك / المدير",
+    "tenantAddress": "عنوانك",
+    "landlordAddress": "عنوان المالك / المدير",
+    "contractNumber": "رقم العقد",
+    "billingPeriod": "فترة المحاسبة"
   },
   "legal": {
-    "draftNotice": "Entwurf/Roh-Vorlage – vor dem Live-Betrieb rechtlich prüfen lassen. Keine Rechtsberatung.",
-    "disclaimerNonDe": "Diese Übersetzung dient nur der Verständlichkeit. Rechtlich maßgeblich ist ausschließlich die deutsche Fassung.",
-    "back": "← Zurück",
+    "draftNotice": "مسودة / قالب أولي – راجعه مع محامٍ قبل التشغيل الفعلي. ليست استشارة قانونية.",
+    "disclaimerNonDe": "هذه الترجمة لأغراض الفهم فقط. النسخة الألمانية وحدها هي المُلزمة قانوناً.",
+    "back": "← رجوع",
     "impressum": {
-      "title": "Impressum",
+      "title": "بيانات الناشر",
       "sections": [
-        { "heading": "Angaben gemäß § 5 DDG", "body": "[Name des Betreibers]\n[Straße & Hausnummer]\n[PLZ Ort]" },
-        { "heading": "Kontakt", "body": "E-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Umsatzsteuer", "body": "Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen." },
-        { "heading": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]" }
+        { "heading": "بيانات وفقاً لـ § 5 DDG", "body": "[اسم المشغّل]\n[الشارع والرقم]\n[الرمز البريدي والمدينة]" },
+        { "heading": "التواصل", "body": "البريد الإلكتروني: kontakt@nebenkostencheck24.de" },
+        { "heading": "ضريبة القيمة المضافة", "body": "بصفتنا منشأة صغيرة بمفهوم § 19 UStG، لا تُحتسب ضريبة القيمة المضافة." },
+        { "heading": "المسؤول عن المحتوى وفقاً لـ § 18 الفقرة 2 MStV", "body": "[اسم المشغّل]\n[الشارع والرقم]، [الرمز البريدي والمدينة]" }
       ]
     },
     "datenschutz": {
-      "title": "Datenschutzerklärung",
+      "title": "سياسة الخصوصية",
       "sections": [
-        { "heading": "Verantwortlicher", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]\nE-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Welche Daten wir verarbeiten", "body": "Wir verarbeiten die von Ihnen hochgeladene Nebenkostenabrechnung (als PDF oder Bilddatei) sowie die daraus extrahierten Angaben (z. B. Abrechnungspositionen, Beträge, Zeiträume). Bei Kauf des vollständigen Berichts werden zusätzlich die für die Zahlungsabwicklung erforderlichen Zahlungsdaten verarbeitet." },
-        { "heading": "Verarbeitung durch Anthropic (Claude)", "body": "Die von Ihnen hochgeladene Datei wird zur automatisierten Prüfung an Anthropic (Claude API) übermittelt. Der Serverstandort liegt u. a. in den USA; es handelt sich daher um eine Drittlandübermittlung nach Art. 44 ff. DSGVO. Anthropic verpflichtet sich gemäß seinen Nutzungsbedingungen, Daten nicht für das Training von Modellen zu verwenden (API-Nutzung). Weitere Informationen: https://www.anthropic.com/privacy." },
-        { "heading": "Speicherung & Löschung", "body": "Prüfergebnisse werden vorübergehend auf unseren Servern gespeichert und automatisch nach 24 Stunden gelöscht. Eine dauerhafte Speicherung Ihrer Abrechnung findet nicht statt." },
-        { "heading": "Zahlungsabwicklung (Stripe)", "body": "Zahlungen werden über den Zahlungsdienstleister Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA) abgewickelt. Dabei werden die für die Transaktion erforderlichen Zahlungsdaten an Stripe übermittelt. Stripe ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Weitere Informationen: https://stripe.com/de/privacy." },
-        { "heading": "Rechtsgrundlage", "body": "Die Verarbeitung Ihrer Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen). Soweit Sie die Dateiverarbeitung durch Anthropic initiieren, gilt Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO." },
-        { "heading": "Ihre Rechte", "body": "Sie haben das Recht auf Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) sowie Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Darüber hinaus steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.\n\nBei Fragen wenden Sie sich an: kontakt@nebenkostencheck24.de" }
+        { "heading": "المسؤول", "body": "[اسم المشغّل]\n[الشارع والرقم]، [الرمز البريدي والمدينة]\nالبريد الإلكتروني: kontakt@nebenkostencheck24.de" },
+        { "heading": "ما البيانات التي نعالجها", "body": "نعالج كشف التكاليف الإضافية الذي ترفعه (بصيغة PDF أو ملف صورة) والبيانات المستخرجة منه (مثل بنود المحاسبة والمبالغ والفترات). عند شراء التقرير الكامل، تُعالج إضافةً إلى ذلك بيانات الدفع اللازمة لإتمام المعاملة." },
+        { "heading": "المعالجة عبر Anthropic (Claude)", "body": "يُرسَل الملف الذي ترفعه إلى Anthropic (Claude API) لإجراء الفحص التلقائي. يقع موقع الخادم، من بين أماكن أخرى، في الولايات المتحدة؛ ولذلك يتعلق الأمر بنقل إلى دولة ثالثة وفقاً للمادة 44 وما يليها من اللائحة العامة لحماية البيانات. تتعهد Anthropic بموجب شروط استخدامها بعدم استخدام البيانات لتدريب النماذج (استخدام API). لمزيد من المعلومات: https://www.anthropic.com/privacy." },
+        { "heading": "التخزين والحذف", "body": "تُخزَّن نتائج الفحص مؤقتاً على خوادمنا وتُحذف تلقائياً بعد 24 ساعة. لا يتم تخزين فاتورتك بشكل دائم." },
+        { "heading": "معالجة الدفع (Stripe)", "body": "تُعالَج المدفوعات عبر مزود خدمة الدفع Stripe, Inc. ‏(185 Berry Street, Suite 550, San Francisco, CA 94107, USA). تُرسَل بيانات الدفع اللازمة للمعاملة إلى Stripe. Stripe مُعتمدة بموجب إطار خصوصية البيانات بين الاتحاد الأوروبي والولايات المتحدة. لمزيد من المعلومات: https://stripe.com/de/privacy." },
+        { "heading": "الأساس القانوني", "body": "تُعالَج بياناتك على أساس المادة 6 الفقرة 1 (ب) من اللائحة العامة لحماية البيانات (تنفيذ العقد أو التدابير السابقة للتعاقد). وبقدر ما تبدأ معالجة الملف عبر Anthropic، تنطبق موافقتك وفقاً للمادة 6 الفقرة 1 (أ)." },
+        { "heading": "حقوقك", "body": "لك الحق في الاطلاع على البيانات المخزّنة عنك (المادة 15)، وتصحيح البيانات غير الصحيحة (المادة 16)، والحذف (المادة 17)، والاعتراض على المعالجة (المادة 21). كما يحق لك تقديم شكوى إلى سلطة الرقابة على حماية البيانات المختصة.\n\nللأسئلة يرجى التواصل: kontakt@nebenkostencheck24.de" }
       ]
     },
     "agb": {
-      "title": "Allgemeine Geschäftsbedingungen (AGB)",
+      "title": "الشروط والأحكام العامة",
       "sections": [
-        { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
-        { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
-        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
-        { "heading": "4. Widerrufsrecht und vorzeitiges Erlöschen", "body": "Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Bei digitalen Inhalten und Dienstleistungen erlischt das Widerrufsrecht jedoch, wenn der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und seine Kenntnis davon bestätigt hat, dass er durch die Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB). Diese Zustimmung wird vor der Zahlung ausdrücklich eingeholt." },
-        { "heading": "5. Haftung", "body": "Wir übernehmen keine Gewähr für die inhaltliche Richtigkeit, Vollständigkeit und Aktualität der Prüfergebnisse und erstellten Schreiben. Angegebene Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Eine Haftung für Schäden, die aus der Verwendung der Ergebnisse entstehen, ist im gesetzlich zulässigen Rahmen ausgeschlossen." },
-        { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
+        { "heading": "1. وصف الخدمة", "body": "يقدّم Nebenkostencheck فحصاً تلقائياً لكشوف التكاليف الإضافية وإنشاء خطابات نموذجية (اعتراض، طلب الاطلاع على المستندات). يتم الفحص وفق الأسس القانونية ذات الصلة (بما في ذلك BetrKV، HeizkV) واجتهادات المحاكم العليا." },
+        { "heading": "2. ليست استشارة قانونية", "body": "الخدمة أداة آلية ولا تُعد استشارة قانونية بمفهوم قانون الخدمات القانونية الألماني (RDG). النتائج تقييمات غير مُلزمة وبدون ضمان ولا تحل محل استشارة محامٍ." },
+        { "heading": "3. السعر", "body": "فتح تقرير الفحص الكامل بما في ذلك الخطابات النموذجية يكلف مرة واحدة 9,90 €. وفقاً لـ § 19 UStG (نظام المنشآت الصغيرة) لا تُحتسب ضريبة القيمة المضافة. الفحص الأول مع المعاينة مجاني." },
+        { "heading": "4. حق الإلغاء والانتهاء المبكر", "body": "للمستهلكين مبدئياً حق إلغاء لمدة 14 يوماً. إلا أنه في المحتوى والخدمات الرقمية ينتهي حق الإلغاء إذا وافق العميل صراحةً على التنفيذ الفوري وأكّد علمه بأنه بموافقته يفقد حق الإلغاء عند بدء التنفيذ (§ 356 الفقرة 5 BGB). تُؤخذ هذه الموافقة صراحةً قبل الدفع." },
+        { "heading": "5. المسؤولية", "body": "لا نضمن صحة نتائج الفحص والخطابات المُنشأة واكتمالها وحداثتها. المبالغ المذكورة تقديرية وقد تختلف عن الاستردادات القابلة للتحقيق فعلاً. المسؤولية عن الأضرار الناتجة عن استخدام النتائج مستبعدة في الحدود المسموح بها قانوناً." },
+        { "heading": "6. المزوّد", "body": "[اسم المشغّل]، [الشارع والرقم]، [الرمز البريدي والمدينة]. مزيد من البيانات في بيانات الناشر." }
       ]
     }
   },
   "localeSwitcher": {
-    "label": "Sprache wählen"
+    "label": "اختر اللغة"
   }
 }

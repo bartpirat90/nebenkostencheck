@@ -1,257 +1,258 @@
 {
+  "_meta": { "status": "ai-draft", "review": "Yayına almadan önce anadili Türkçe olan biri kontrol etmeli." },
   "meta": {
-    "title": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen",
-    "description": "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos."
+    "title": "Nebenkostencheck – Alman yan gider faturanızı kontrol edin ve paranızı geri alın",
+    "description": "Alman yan gider faturanızı (Nebenkostenabrechnung) yükleyin ve saniyeler içinde tipik hataları bulun – güncel Alman kira hukukuna (BetrKV, HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre kontrol edilir. İlk kontrol ücretsiz."
   },
   "nav": {
-    "badge": "PRÜFBERICHT · GRATIS"
+    "badge": "DENETİM RAPORU · ÜCRETSİZ"
   },
   "trust": {
-    "dsgvo": "DSGVO-konform",
-    "deletion": "Löschung nach 24 h",
-    "noAccount": "Kein Account nötig"
+    "dsgvo": "KVKK/DSGVO uyumlu",
+    "deletion": "24 saat sonra silinir",
+    "noAccount": "Hesap gerekmez"
   },
   "hero": {
-    "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
-    "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
-    "cta": "Abrechnung prüfen"
+    "eyebrow": "§ BetrKV / HeizkV / BGH'ye göre kontrol edildi",
+    "headline": "Yan gider faturanızda para gizli mi?",
+    "subline": "Faturanızı yükleyin. Saniyeler içinde tipik hatalara karşı kontrol edilir ve olası iade tutarınız hesaplanır.",
+    "cta": "Faturamı kontrol et"
   },
   "stats": {
-    "source": "Quelle: Deutscher Mieterbund",
+    "source": "Kaynak: Alman Kiracılar Birliği (Deutscher Mieterbund)",
     "items": [
-      { "label": "Abrechnungen mit Fehlern", "value": "~50 %" },
-      { "label": "Analyse-Dauer", "value": "15 Sek." },
-      { "label": "Erst-Prüfung", "value": "0 €" }
+      { "label": "Hatalı faturalar", "value": "~%50" },
+      { "label": "Analiz süresi", "value": "15 sn." },
+      { "label": "İlk kontrol", "value": "0 €" }
     ]
   },
   "howItWorks": {
-    "eyebrow": "So funktioniert's",
-    "heading": "In 3 Schritten zu deiner Erstattung",
+    "eyebrow": "Nasıl çalışır",
+    "heading": "3 adımda iadenize",
     "steps": [
-      { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen." },
-      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft auf HeizkV-Verstöße, falsche Umlagen, Fristfehler und mehr." },
-      { "title": "Widerspruch mit einem Klick", "description": "Fertiger Widerspruchsbrief als PDF zum Download." }
+      { "title": "Faturanızı yükleyin", "description": "Yan gider faturanızın PDF veya fotoğrafı – sürükleyip bırakın ya da seçin." },
+      { "title": "Saniyeler içinde otomatik kontrol", "description": "HeizkV ihlalleri, hatalı dağıtımlar, süre hataları ve daha fazlası kontrol edilir." },
+      { "title": "Tek tıkla itiraz", "description": "İndirmeye hazır itiraz mektubu PDF olarak." }
     ]
   },
   "upload": {
-    "ariaLabel": "Abrechnung hochladen",
-    "heading": "Abrechnung hier einreichen",
-    "hint": "PDF oder Foto ablegen oder klicken zum Auswählen",
-    "formats": "PDF, JPG, PNG · max. {mb} MB",
-    "errInvalidType": "Nur PDF, JPG, PNG oder WebP erlaubt.",
-    "errTooLarge": "Datei zu groß (max. {mb} MB).",
-    "loadingTitle": "Deine Abrechnung wird geprüft…",
-    "loadingSubtitle": "Das dauert meist 10–20 Sekunden",
+    "ariaLabel": "Fatura yükle",
+    "heading": "Faturanızı buraya gönderin",
+    "hint": "PDF veya fotoğraf bırakın ya da seçmek için tıklayın",
+    "formats": "PDF, JPG, PNG · en fazla {mb} MB",
+    "errInvalidType": "Yalnızca PDF, JPG, PNG veya WebP kabul edilir.",
+    "errTooLarge": "Dosya çok büyük (en fazla {mb} MB).",
+    "loadingTitle": "Faturanız kontrol ediliyor…",
+    "loadingSubtitle": "Bu genellikle 10–20 saniye sürer",
     "phases": [
-      "Dokument wird gelesen",
-      "Positionen werden erfasst",
-      "Rechtsgrundlagen werden geprüft",
-      "Erstattungspotenzial wird berechnet",
-      "Bericht wird zusammengestellt"
+      "Belge okunuyor",
+      "Kalemler alınıyor",
+      "Yasal dayanaklar kontrol ediliyor",
+      "İade potansiyeli hesaplanıyor",
+      "Rapor derleniyor"
     ]
   },
   "evidence": {
-    "mieterbundQuote": "Rund die Hälfte aller Betriebskostenabrechnungen ist fehlerhaft.",
-    "mieterbundSource": "Deutscher Mieterbund",
-    "vzQuote": "37 % von 1.046 geprüften Heizkostenabrechnungen waren eindeutig fehlerhaft, weitere 32 % unklar.",
-    "vzSource": "Verbraucherzentrale Rheinland-Pfalz",
-    "fristQuote": "Zwölf Monate Zeit für den Widerspruch, auch nach bereits erfolgter Zahlung.",
-    "fristSource": "§ 556 Abs. 3 BGB"
+    "mieterbundQuote": "Tüm işletme gideri faturalarının yaklaşık yarısı hatalıdır.",
+    "mieterbundSource": "Alman Kiracılar Birliği",
+    "vzQuote": "İncelenen 1.046 ısıtma gideri faturasının %37'si açıkça hatalı, %32'si ise belirsizdi.",
+    "vzSource": "Tüketici Danışma Merkezi Rheinland-Pfalz",
+    "fristQuote": "İtiraz için on iki ay – ödeme yapılmış olsa bile.",
+    "fristSource": "§ 556 f. 3 Alman Medeni Kanunu (BGB)"
   },
   "assurance": {
-    "checkedTitle": "GEPRÜFT, NICHT GESCHÄTZT",
-    "securityTitle": "DEINE SICHERHEIT"
+    "checkedTitle": "TAHMİN DEĞİL, KONTROL",
+    "securityTitle": "GÜVENLİĞİNİZ"
   },
   "reviews": {
-    "heading": "ERFAHRUNGEN",
-    "saved": "{amount} € zurückgeholt"
+    "heading": "DENEYİMLER",
+    "saved": "{amount} € geri alındı"
   },
   "faq": {
-    "eyebrow": "HÄUFIGE FRAGEN",
-    "heading": "Was du vor der Prüfung wissen solltest",
+    "eyebrow": "SIKÇA SORULAN",
+    "heading": "Kontrolden önce bilmeniz gerekenler",
     "items": [
       {
-        "q": "Wie funktioniert die Prüfung?",
-        "a": "Du lädst deine Nebenkostenabrechnung als PDF oder Foto hoch. Sie wird automatisiert anhand der Betriebskostenverordnung (BetrKV), der Heizkostenverordnung (HeizkV) und höchstrichterlicher BGH-Rechtsprechung geprüft. Du erhältst eine Übersicht der Auffälligkeiten mit geschätztem Erstattungspotenzial – und auf Wunsch fertige Musterschreiben (Widerspruch oder Aufforderung zur Belegeinsicht)."
+        "q": "Kontrol nasıl işler?",
+        "a": "Yan gider faturanızı PDF veya fotoğraf olarak yüklersiniz. Alman İşletme Giderleri Yönetmeliği (BetrKV), Isıtma Giderleri Yönetmeliği (HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre otomatik olarak kontrol edilir. Bulunan sorunların, tahmini iade potansiyeliyle birlikte bir özetini alırsınız – dilerseniz hazır örnek mektuplar da (itiraz veya belge inceleme talebi)."
       },
       {
-        "q": "Was kostet der Nebenkostencheck?",
-        "a": "Die erste Prüfung mit Vorschau – Anzahl der Auffälligkeiten und geschätztes Potenzial – ist kostenlos. Der vollständige Bericht inklusive Begründung je Punkt und der fertigen Musterschreiben kostet einmalig 9,90 €. Kein Abo, keine versteckten Kosten."
+        "q": "Nebenkostencheck ne kadar?",
+        "a": "Önizlemeli ilk kontrol – sorun sayısı ve tahmini potansiyel – ücretsizdir. Her madde için gerekçe ve hazır örnek mektupları içeren tam rapor, tek seferlik 9,90 € tutarındadır. Abonelik yok, gizli ücret yok."
       },
       {
-        "q": "Welche Fehler werden gefunden?",
-        "a": "Typische Beispiele sind nicht umlagefähige Kosten wie Verwaltungs- oder Reparaturkosten (§ 1 BetrKV), eine fehlerhafte Verteilung der Heizkosten (§ 7 HeizkV), Leerstandskosten zulasten der Mieter, überschrittene Abrechnungsfristen oder nicht nachvollziehbare Positionen."
+        "q": "Hangi hatalar bulunur?",
+        "a": "Tipik örnekler: yansıtılamayan yönetim veya onarım giderleri (§ 1 BetrKV), ısıtma giderlerinin hatalı dağıtımı (§ 7 HeizkV), kiracıya yüklenen boşluk giderleri, aşılan fatura süreleri veya anlaşılamayan kalemlerdir."
       },
       {
-        "q": "Ist das eine Rechtsberatung?",
-        "a": "Nein. Der Nebenkostencheck ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung."
+        "q": "Bu bir hukuki danışmanlık mı?",
+        "a": "Hayır. Nebenkostencheck otomatik bir araçtır ve Alman Hukuki Hizmetler Kanunu (RDG) anlamında hukuki danışmanlık teşkil etmez. Sonuçlar, garanti içermeyen bağlayıcı olmayan değerlendirmelerdir ve avukat danışmanlığının yerini tutmaz."
       },
       {
-        "q": "Wie lange kann ich der Abrechnung widersprechen?",
-        "a": "Einwendungen gegen die Nebenkostenabrechnung kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung geltend machen (§ 556 Abs. 3 BGB) – auch dann noch, wenn du die geforderte Nachzahlung bereits geleistet hast."
+        "q": "Faturaya ne kadar süre itiraz edebilirim?",
+        "a": "Yan gider faturasına, faturanın size ulaşmasından sonraki on ikinci ayın sonuna kadar itiraz edebilirsiniz (§ 556 f. 3 BGB) – talep edilen ek ödemeyi zaten yapmış olsanız bile."
       },
       {
-        "q": "Was passiert mit meiner hochgeladenen Abrechnung?",
-        "a": "Deine Abrechnung wird ausschließlich zur Prüfung verarbeitet und nach 24 Stunden automatisch gelöscht. Ein Nutzerkonto ist nicht nötig. Einzelheiten stehen in der Datenschutzerklärung."
+        "q": "Yüklediğim faturaya ne olur?",
+        "a": "Faturanız yalnızca kontrol için işlenir ve 24 saat sonra otomatik olarak silinir. Kullanıcı hesabı gerekmez. Ayrıntılar gizlilik politikasındadır."
       },
       {
-        "q": "Welche Dateien kann ich hochladen?",
-        "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
+        "q": "Hangi dosyaları yükleyebilirim?",
+        "a": "Faturanızın PDF dosyaları veya fotoğrafları (örn. JPG veya PNG), en fazla 3 MB. En iyisi yalnızca asıl yan gider faturasını yüklemektir, tüm yazışmayı değil."
       }
     ]
   },
   "footer": {
-    "impressum": "Impressum",
-    "datenschutz": "Datenschutz",
-    "agb": "AGB",
+    "impressum": "Künye",
+    "datenschutz": "Gizlilik",
+    "agb": "Şartlar",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "Automatische Löschung nach 24 Stunden · Keine Rechtsberatung"
+    "note": "24 saat sonra otomatik silme · Hukuki danışmanlık değildir"
   },
   "notAStatement": {
-    "title": "Kein passendes Dokument erkannt",
-    "body": "Das sieht nicht wie eine Nebenkostenabrechnung aus. Bitte lade deine Abrechnung als PDF oder Foto hoch.",
-    "cta": "Andere Datei hochladen"
+    "title": "Uygun belge tanınmadı",
+    "body": "Bu bir yan gider faturasına benzemiyor. Lütfen faturanızı PDF veya fotoğraf olarak yükleyin.",
+    "cta": "Başka bir dosya yükle"
   },
   "errors": {
-    "fileTooLarge": "Die Datei ist zu groß (max. {mb} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.",
-    "analyzeFailed": "Analyse fehlgeschlagen. Bitte erneut versuchen.",
-    "busy": "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.",
-    "unknown": "Unbekannter Fehler"
+    "fileTooLarge": "Dosya çok büyük (en fazla {mb} MB). Lütfen yalnızca yan gider faturasını PDF veya fotoğraf olarak yükleyin — büyük taramaları önce sıkıştırın.",
+    "analyzeFailed": "Analiz başarısız oldu. Lütfen tekrar deneyin.",
+    "busy": "Kontrol hizmeti şu anda çok yoğun. Lütfen birazdan tekrar deneyin.",
+    "unknown": "Bilinmeyen hata"
   },
   "teaser": {
-    "firstCheckDone": "Erste Prüfung abgeschlossen",
-    "findings": "{count, plural, one {# Auffälligkeit} other {# Auffälligkeiten}}",
-    "potentialLabel": "Mögliches Erstattungspotenzial",
-    "potentialFallback": "Potenzial erkannt",
-    "kindBoth": "Widerspruch und Belegeinsicht",
-    "kindReview": "Belegeinsicht-Schreiben",
-    "kindObjection": "Widerspruchsschreiben",
-    "locked": "gesperrt",
-    "howItGoes": "SO GEHT'S WEITER",
-    "stepUnlockTitle": "Bericht freischalten",
-    "stepUnlockDesc": "Alle Befunde im Detail: Begründung, Beleg im Dokument und Rechtsgrundlage.",
-    "stepLetterTitle": "Schreiben erstellen",
-    "stepLetterDesc": "{kind} als fertiges PDF, mit deinen Daten vorausgefüllt.",
-    "stepSendTitle": "An Vermieter senden",
-    "stepSendDesc": "PDF herunterladen und per E-Mail oder Post einreichen.",
-    "unlockTitle": "Vollständigen Bericht freischalten",
-    "featureAll": "Alle Fehler mit Begründung, Beleg & Rechtsgrundlage",
-    "featureObjection": "Fertiger Widerspruchsbrief als PDF",
-    "featureReview": "Belegeinsicht-Schreiben (§ 259 BGB) als PDF",
-    "featureRecommendations": "Konkrete Handlungsempfehlungen",
-    "consent": "Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht mit vollständiger Bereitstellung erlischt.",
-    "unlockCta": "Für 9,90 € freischalten",
-    "redirecting": "Weiterleitung…",
-    "checkoutError": "Zahlung konnte nicht gestartet werden.",
-    "demo": "Demo-Modus: Bericht ohne Bezahlung öffnen →",
-    "checkAnother": "Andere Datei prüfen"
+    "firstCheckDone": "İlk kontrol tamamlandı",
+    "findings": "{count, plural, one {# bulgu} other {# bulgu}}",
+    "potentialLabel": "Olası iade potansiyeli",
+    "potentialFallback": "Potansiyel tespit edildi",
+    "kindBoth": "itiraz ve belge inceleme",
+    "kindReview": "belge inceleme mektubu",
+    "kindObjection": "itiraz mektubu",
+    "locked": "kilitli",
+    "howItGoes": "SONRAKİ ADIMLAR",
+    "stepUnlockTitle": "Raporu aç",
+    "stepUnlockDesc": "Her bulgu ayrıntılı olarak: gerekçe, belgedeki kanıt ve yasal dayanak.",
+    "stepLetterTitle": "Mektubu oluştur",
+    "stepLetterDesc": "Verilerinizle önceden doldurulmuş, hazır PDF olarak bir {kind}.",
+    "stepSendTitle": "Ev sahibine gönder",
+    "stepSendDesc": "PDF'yi indirin ve e-posta veya posta ile gönderin.",
+    "unlockTitle": "Tam raporu aç",
+    "featureAll": "Gerekçe, kanıt ve yasal dayanakla tüm hatalar",
+    "featureObjection": "Hazır itiraz mektubu PDF olarak",
+    "featureReview": "Belge inceleme mektubu (§ 259 BGB) PDF olarak",
+    "featureRecommendations": "Somut eylem önerileri",
+    "consent": "Derhal ifayı talep ediyorum ve tam ifa ile cayma hakkımın sona erdiğini onaylıyorum.",
+    "unlockCta": "9,90 € karşılığında aç",
+    "redirecting": "Yönlendiriliyor…",
+    "checkoutError": "Ödeme başlatılamadı.",
+    "demo": "Demo modu: raporu ödeme yapmadan aç →",
+    "checkAnother": "Başka bir dosya kontrol et"
   },
   "report": {
-    "potentialLabel": "Geschätztes Erstattungspotenzial",
-    "directLabel": "Sofort angreifbar",
-    "reviewLabel": "Nach Belegeinsicht",
-    "points": "{count, plural, one {# Punkt} other {# Punkte}}",
-    "downloadPdf": "Bericht als PDF herunterladen",
-    "sectionAtitle": "Sofort angreifbar",
-    "sectionAsubtitle": "Eindeutige Rechtsverstöße – direkter Widerspruch möglich",
-    "sectionBtitle": "Belegeinsicht erforderlich",
-    "sectionBsubtitle": "Verdacht auf Fehler – Belege beim Vermieter anfordern",
-    "createObjection": "Widerspruch erstellen",
-    "requestReview": "Belegeinsicht anfordern",
-    "combinedText": "Beide Anliegen in einem Schreiben zusammenfassen – Widerspruch und Aufforderung zur Belegeinsicht in einem PDF.",
-    "createCombined": "Kombiniertes Schreiben erstellen",
-    "noErrorsTitle": "Keine offensichtlichen Fehler gefunden",
-    "noErrorsBody": "Das bedeutet nicht, dass die Abrechnung fehlerfrei ist – bei Zweifeln lohnt sich eine rechtliche Prüfung.",
-    "disclaimerLabel": "Hinweis:",
-    "disclaimer": "Diese Analyse ist eine automatisierte Einschätzung ohne Rechtsverbindlichkeit. Sie ersetzt keine anwaltliche Beratung. Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Generierte Briefe sind Vorlagen und sollten vor dem Versand geprüft und ggf. angepasst werden.",
-    "reset": "Neue Abrechnung prüfen",
-    "legendTitle": "ERFOLGSAUSSICHTEN",
-    "cardLegalBasis": "Rechtsgrundlage:",
-    "cardEvidence": "Beleg im Dokument:",
-    "cardRecommendation": "Empfehlung:",
+    "potentialLabel": "Tahmini iade potansiyeli",
+    "directLabel": "Hemen itiraz edilebilir",
+    "reviewLabel": "Belge incelemesinden sonra",
+    "points": "{count, plural, one {# madde} other {# madde}}",
+    "downloadPdf": "Raporu PDF olarak indir",
+    "sectionAtitle": "Hemen itiraz edilebilir",
+    "sectionAsubtitle": "Açık hukuk ihlalleri – doğrudan itiraz mümkün",
+    "sectionBtitle": "Belge incelemesi gerekli",
+    "sectionBsubtitle": "Hata şüphesi – ev sahibinden belgeleri isteyin",
+    "createObjection": "İtiraz oluştur",
+    "requestReview": "Belge incelemesi iste",
+    "combinedText": "Her iki konuyu tek mektupta birleştirin – itiraz ve belge inceleme talebi tek bir PDF'de.",
+    "createCombined": "Birleşik mektup oluştur",
+    "noErrorsTitle": "Belirgin bir hata bulunamadı",
+    "noErrorsBody": "Bu, faturanın hatasız olduğu anlamına gelmez – şüphe halinde hukuki bir inceleme değerlidir.",
+    "disclaimerLabel": "Not:",
+    "disclaimer": "Bu analiz, bağlayıcı olmayan otomatik bir değerlendirmedir. Avukat danışmanlığının yerini tutmaz. Tutarlar tahminidir ve gerçekte elde edilebilecek iadelerden farklı olabilir. Oluşturulan mektuplar birer şablondur ve gönderilmeden önce kontrol edilip uyarlanmalıdır.",
+    "reset": "Yeni bir fatura kontrol et",
+    "legendTitle": "BAŞARI ŞANSI",
+    "cardLegalBasis": "Yasal dayanak:",
+    "cardEvidence": "Belgedeki kanıt:",
+    "cardRecommendation": "Öneri:",
     "confidence": {
-      "sicher": { "label": "Sicher", "desc": "klare Rechtsverletzung, hohe Erstattungsaussicht" },
-      "wahrscheinlich": { "label": "Wahrscheinlich", "desc": "überwiegende Erfolgsaussicht, Auslegung möglich" },
-      "unsicher": { "label": "Unsicher", "desc": "Verdacht, nur mit Belegen klärbar" }
+      "sicher": { "label": "Kesin", "desc": "açık hukuk ihlali, yüksek iade şansı" },
+      "wahrscheinlich": { "label": "Muhtemel", "desc": "ağırlıklı başarı şansı, yorum mümkün" },
+      "unsicher": { "label": "Belirsiz", "desc": "şüphe, yalnızca belgelerle doğrulanabilir" }
     }
   },
   "letter": {
-    "titleObjection": "Widerspruch erstellen",
-    "titleReview": "Belegeinsicht anfordern",
-    "titleCombined": "Kombiniertes Schreiben erstellen",
-    "descObjection": "Wir erstellen einen Widerspruch gegen die sofort angreifbaren Punkte.",
-    "descReview": "Wir erstellen ein Schreiben zur Forderung der Belegeinsicht zu den unklaren Positionen.",
-    "descCombined": "Wir fassen Widerspruch und Aufforderung zur Belegeinsicht in einem Schreiben zusammen.",
-    "readyDesc": "Dein Schreiben ist fertig. So geht es weiter:",
-    "close": "Schließen",
-    "loadingTitle": "Dein Schreiben wird erstellt…",
-    "loadingSubtitle": "Das dauert meist 5–15 Sekunden.",
-    "phaseFormulating": "Schreiben wird formuliert",
-    "phasePdf": "PDF wird erzeugt",
-    "downloadPdf": "PDF herunterladen",
-    "mailToLandlord": "Per Mail an Vermieter",
-    "landlordEmailLabel": "E-Mail des Vermieters (optional)",
-    "mailHint": "Bitte das heruntergeladene PDF in deinem Mailprogramm anhängen.",
-    "sendToMe": "PDF an meine E-Mail senden",
-    "sendToMeHint": "Wir senden dir das PDF als Anhang zu – so kannst du es bequem weiterleiten.",
-    "yourEmail": "Deine E-Mail",
-    "sending": "Wird gesendet…",
-    "sent": "✓ Gesendet! Schau in dein Postfach.",
-    "emailRequired": "Bitte eine E-Mail-Adresse eingeben.",
-    "cancel": "Abbrechen",
-    "createPdf": "PDF erstellen",
-    "done": "Fertig",
-    "errCreate": "Brief konnte nicht erstellt werden",
-    "errSend": "PDF konnte nicht gesendet werden"
+    "titleObjection": "İtiraz oluştur",
+    "titleReview": "Belge incelemesi iste",
+    "titleCombined": "Birleşik mektup oluştur",
+    "descObjection": "Hemen itiraz edilebilir maddelere karşı bir itiraz oluşturuyoruz.",
+    "descReview": "Belirsiz kalemler için belge inceleme talebi içeren bir mektup oluşturuyoruz.",
+    "descCombined": "İtiraz ile belge inceleme talebini tek bir mektupta birleştiriyoruz.",
+    "readyDesc": "Mektubunuz hazır. Sonraki adımlar:",
+    "close": "Kapat",
+    "loadingTitle": "Mektubunuz oluşturuluyor…",
+    "loadingSubtitle": "Bu genellikle 5–15 saniye sürer.",
+    "phaseFormulating": "Mektup yazılıyor",
+    "phasePdf": "PDF oluşturuluyor",
+    "downloadPdf": "PDF indir",
+    "mailToLandlord": "Ev sahibine e-posta",
+    "landlordEmailLabel": "Ev sahibinin e-postası (isteğe bağlı)",
+    "mailHint": "Lütfen indirilen PDF'yi e-posta programınızda ekleyin.",
+    "sendToMe": "PDF'yi e-postama gönder",
+    "sendToMeHint": "PDF'yi ek olarak size gönderiyoruz – böylece kolayca iletebilirsiniz.",
+    "yourEmail": "E-postanız",
+    "sending": "Gönderiliyor…",
+    "sent": "✓ Gönderildi! Gelen kutunuza bakın.",
+    "emailRequired": "Lütfen bir e-posta adresi girin.",
+    "cancel": "İptal",
+    "createPdf": "PDF oluştur",
+    "done": "Tamam",
+    "errCreate": "Mektup oluşturulamadı",
+    "errSend": "PDF gönderilemedi"
   },
   "contact": {
-    "intro": "Bitte prüfe die automatisch erkannten Daten und korrigiere sie bei Bedarf. Sie werden für den Brief verwendet.",
-    "tenantName": "Dein Name",
-    "landlordName": "Vermieter / Verwalter",
-    "tenantAddress": "Deine Adresse",
-    "landlordAddress": "Adresse Vermieter / Verwalter",
-    "contractNumber": "Vertragsnummer",
-    "billingPeriod": "Abrechnungszeitraum"
+    "intro": "Lütfen otomatik olarak algılanan bilgileri kontrol edin ve gerekirse düzeltin. Bunlar mektup için kullanılır.",
+    "tenantName": "Adınız",
+    "landlordName": "Ev sahibi / yönetici",
+    "tenantAddress": "Adresiniz",
+    "landlordAddress": "Ev sahibi / yönetici adresi",
+    "contractNumber": "Sözleşme numarası",
+    "billingPeriod": "Fatura dönemi"
   },
   "legal": {
-    "draftNotice": "Entwurf/Roh-Vorlage – vor dem Live-Betrieb rechtlich prüfen lassen. Keine Rechtsberatung.",
-    "disclaimerNonDe": "Diese Übersetzung dient nur der Verständlichkeit. Rechtlich maßgeblich ist ausschließlich die deutsche Fassung.",
-    "back": "← Zurück",
+    "draftNotice": "Taslak / ham şablon – yayına almadan önce bir avukata inceletin. Hukuki danışmanlık değildir.",
+    "disclaimerNonDe": "Bu çeviri yalnızca anlaşılırlık amacıyla sunulmuştur. Hukuken yalnızca Almanca metin geçerlidir.",
+    "back": "← Geri",
     "impressum": {
-      "title": "Impressum",
+      "title": "Künye",
       "sections": [
-        { "heading": "Angaben gemäß § 5 DDG", "body": "[Name des Betreibers]\n[Straße & Hausnummer]\n[PLZ Ort]" },
-        { "heading": "Kontakt", "body": "E-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Umsatzsteuer", "body": "Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen." },
-        { "heading": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]" }
+        { "heading": "§ 5 DDG uyarınca bilgiler", "body": "[İşletmeci adı]\n[Sokak ve numara]\n[Posta kodu ve şehir]" },
+        { "heading": "İletişim", "body": "E-posta: kontakt@nebenkostencheck24.de" },
+        { "heading": "Katma değer vergisi", "body": "§ 19 UStG anlamında küçük işletme olarak KDV gösterilmez." },
+        { "heading": "§ 18 f. 2 MStV uyarınca içerikten sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]" }
       ]
     },
     "datenschutz": {
-      "title": "Datenschutzerklärung",
+      "title": "Gizlilik Politikası",
       "sections": [
-        { "heading": "Verantwortlicher", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]\nE-Mail: kontakt@nebenkostencheck24.de" },
-        { "heading": "Welche Daten wir verarbeiten", "body": "Wir verarbeiten die von Ihnen hochgeladene Nebenkostenabrechnung (als PDF oder Bilddatei) sowie die daraus extrahierten Angaben (z. B. Abrechnungspositionen, Beträge, Zeiträume). Bei Kauf des vollständigen Berichts werden zusätzlich die für die Zahlungsabwicklung erforderlichen Zahlungsdaten verarbeitet." },
-        { "heading": "Verarbeitung durch Anthropic (Claude)", "body": "Die von Ihnen hochgeladene Datei wird zur automatisierten Prüfung an Anthropic (Claude API) übermittelt. Der Serverstandort liegt u. a. in den USA; es handelt sich daher um eine Drittlandübermittlung nach Art. 44 ff. DSGVO. Anthropic verpflichtet sich gemäß seinen Nutzungsbedingungen, Daten nicht für das Training von Modellen zu verwenden (API-Nutzung). Weitere Informationen: https://www.anthropic.com/privacy." },
-        { "heading": "Speicherung & Löschung", "body": "Prüfergebnisse werden vorübergehend auf unseren Servern gespeichert und automatisch nach 24 Stunden gelöscht. Eine dauerhafte Speicherung Ihrer Abrechnung findet nicht statt." },
-        { "heading": "Zahlungsabwicklung (Stripe)", "body": "Zahlungen werden über den Zahlungsdienstleister Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA) abgewickelt. Dabei werden die für die Transaktion erforderlichen Zahlungsdaten an Stripe übermittelt. Stripe ist nach dem EU-U.S. Data Privacy Framework zertifiziert. Weitere Informationen: https://stripe.com/de/privacy." },
-        { "heading": "Rechtsgrundlage", "body": "Die Verarbeitung Ihrer Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen). Soweit Sie die Dateiverarbeitung durch Anthropic initiieren, gilt Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO." },
-        { "heading": "Ihre Rechte", "body": "Sie haben das Recht auf Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) sowie Widerspruch gegen die Verarbeitung (Art. 21 DSGVO). Darüber hinaus steht Ihnen ein Beschwerderecht bei der zuständigen Datenschutz-Aufsichtsbehörde zu.\n\nBei Fragen wenden Sie sich an: kontakt@nebenkostencheck24.de" }
+        { "heading": "Sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]\nE-posta: kontakt@nebenkostencheck24.de" },
+        { "heading": "Hangi verileri işliyoruz", "body": "Yüklediğiniz yan gider faturasını (PDF veya görüntü dosyası olarak) ve ondan çıkarılan bilgileri (örn. fatura kalemleri, tutarlar, dönemler) işliyoruz. Tam raporu satın aldığınızda, işlemi gerçekleştirmek için gerekli ödeme verileri de işlenir." },
+        { "heading": "Anthropic (Claude) tarafından işleme", "body": "Yüklediğiniz dosya otomatik kontrol için Anthropic'e (Claude API) iletilir. Sunucu konumu diğerlerinin yanı sıra ABD'dedir; bu nedenle DSGVO Md. 44 vd. uyarınca üçüncü ülkeye aktarım söz konusudur. Anthropic, kullanım koşulları uyarınca verileri model eğitiminde kullanmamayı taahhüt eder (API kullanımı). Ayrıntılı bilgi: https://www.anthropic.com/privacy." },
+        { "heading": "Saklama ve silme", "body": "Kontrol sonuçları sunucularımızda geçici olarak saklanır ve 24 saat sonra otomatik olarak silinir. Faturanız kalıcı olarak saklanmaz." },
+        { "heading": "Ödeme işlemi (Stripe)", "body": "Ödemeler, ödeme hizmeti sağlayıcısı Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, ABD) üzerinden gerçekleştirilir. İşlem için gerekli ödeme verileri Stripe'a iletilir. Stripe, EU-U.S. Data Privacy Framework kapsamında sertifikalıdır. Ayrıntılı bilgi: https://stripe.com/de/privacy." },
+        { "heading": "Yasal dayanak", "body": "Verileriniz DSGVO Md. 6 f. 1 b bendi (sözleşmenin ifası veya sözleşme öncesi tedbirler) temelinde işlenir. Dosyanın Anthropic tarafından işlenmesini başlattığınız ölçüde, DSGVO Md. 6 f. 1 a bendi uyarınca rızanız geçerlidir." },
+        { "heading": "Haklarınız", "body": "Hakkınızda saklanan verilere erişim (DSGVO Md. 15), yanlış verilerin düzeltilmesi (DSGVO Md. 16), silme (DSGVO Md. 17) ve işlemeye itiraz (DSGVO Md. 21) haklarına sahipsiniz. Ayrıca yetkili veri koruma denetim makamına şikâyette bulunma hakkınız vardır.\n\nSorularınız için: kontakt@nebenkostencheck24.de" }
       ]
     },
     "agb": {
-      "title": "Allgemeine Geschäftsbedingungen (AGB)",
+      "title": "Genel İşlem Koşulları",
       "sections": [
-        { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
-        { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
-        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
-        { "heading": "4. Widerrufsrecht und vorzeitiges Erlöschen", "body": "Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Bei digitalen Inhalten und Dienstleistungen erlischt das Widerrufsrecht jedoch, wenn der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und seine Kenntnis davon bestätigt hat, dass er durch die Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB). Diese Zustimmung wird vor der Zahlung ausdrücklich eingeholt." },
-        { "heading": "5. Haftung", "body": "Wir übernehmen keine Gewähr für die inhaltliche Richtigkeit, Vollständigkeit und Aktualität der Prüfergebnisse und erstellten Schreiben. Angegebene Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Eine Haftung für Schäden, die aus der Verwendung der Ergebnisse entstehen, ist im gesetzlich zulässigen Rahmen ausgeschlossen." },
-        { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
+        { "heading": "1. Hizmet tanımı", "body": "Nebenkostencheck, yan gider faturalarının otomatik kontrolünü ve örnek mektupların (itiraz, belge inceleme talebi) oluşturulmasını sunar. Kontrol, ilgili yasal dayanaklara (BetrKV, HeizkV dahil) ve yüksek mahkeme içtihatlarına göre yapılır." },
+        { "heading": "2. Hukuki danışmanlık değildir", "body": "Hizmet otomatik bir araçtır ve Alman Hukuki Hizmetler Kanunu (RDG) anlamında hukuki danışmanlık teşkil etmez. Sonuçlar, garanti içermeyen bağlayıcı olmayan değerlendirmelerdir ve avukat danışmanlığının yerini tutmaz." },
+        { "heading": "3. Fiyat", "body": "Örnek mektuplar dahil tam kontrol raporunun açılması tek seferlik 9,90 € tutarındadır. § 19 UStG (küçük işletme düzenlemesi) uyarınca KDV gösterilmez. Önizlemeli ilk kontrol ücretsizdir." },
+        { "heading": "4. Cayma hakkı ve erken sona erme", "body": "Tüketicilerin kural olarak 14 günlük cayma hakkı vardır. Ancak dijital içerik ve hizmetlerde, müşteri derhal ifaya açıkça onay verip ifanın başlamasıyla cayma hakkını kaybedeceğini bildiğini teyit ederse cayma hakkı sona erer (§ 356 f. 5 BGB). Bu onay, ödemeden önce açıkça alınır." },
+        { "heading": "5. Sorumluluk", "body": "Kontrol sonuçlarının ve oluşturulan mektupların içerik doğruluğu, eksiksizliği ve güncelliği için garanti vermeyiz. Belirtilen tutarlar tahminidir ve gerçekte elde edilebilecek iadelerden farklı olabilir. Sonuçların kullanımından doğan zararlara ilişkin sorumluluk, yasal olarak izin verilen ölçüde hariç tutulmuştur." },
+        { "heading": "6. Sağlayıcı", "body": "[İşletmeci adı], [Sokak ve numara], [Posta kodu ve şehir]. Ayrıntılar Künye'de." }
       ]
     }
   },
   "localeSwitcher": {
-    "label": "Sprache wählen"
+    "label": "Dil seçin"
   }
 }
