@@ -9,8 +9,15 @@ import { InvalidAnalysisError, normalizeAnalysis } from "./validateAnalysis";
 // (ohne gesetzten API-Key) das Modul importieren kann, ohne zu werfen.
 let _client: Anthropic | null = null;
 
-const REQUEST_TIMEOUT_MS = 45_000; // unter maxDuration = 60 s der API-Routen
-const RETRY_BUDGET_MS = 15_000; // nur „schnelle" Fehler (429/529) lohnen einen zweiten Versuch
+/**
+ * Zeitbudget je API-Route (maxDuration = 60 s):
+ *   Token-Zählung ≤ 10 s  +  Analyse-Versuch(e) ≤ RETRY_BUDGET_MS  <  60 s.
+ * Ein zweiter Versuch startet nur, wenn er samt vollem Timeout noch ins Budget
+ * passt – also praktisch nur nach einem sofortigen 429/529.
+ */
+const REQUEST_TIMEOUT_MS = 45_000;
+const COUNT_TOKENS_TIMEOUT_MS = 10_000;
+const RETRY_BUDGET_MS = 47_000;
 
 function client(): Anthropic {
   if (!_client) {
@@ -31,11 +38,19 @@ const RETRYABLE_STATUSES = new Set([429, 503, 529]);
 export interface RetryOptions {
   attempts?: number;
   baseDelayMs?: number;
+  /** Gesamtbudget für alle Versuche inkl. Wartezeiten. */
   budgetMs?: number;
+  /** Wie lange ein einzelner Versuch maximal dauern darf (= Client-Timeout). */
+  timeoutMs?: number;
 }
 
 export async function withRetry<T>(fn: () => Promise<T>, opts: RetryOptions = {}): Promise<T> {
-  const { attempts = 3, baseDelayMs = 500, budgetMs = RETRY_BUDGET_MS } = opts;
+  const {
+    attempts = 3,
+    baseDelayMs = 500,
+    budgetMs = RETRY_BUDGET_MS,
+    timeoutMs = REQUEST_TIMEOUT_MS,
+  } = opts;
   const start = Date.now();
   let lastErr: unknown;
   for (let i = 0; i < attempts; i++) {
@@ -45,10 +60,11 @@ export async function withRetry<T>(fn: () => Promise<T>, opts: RetryOptions = {}
       lastErr = err;
       const status = (err as { status?: number })?.status;
       if (status === undefined || !RETRYABLE_STATUSES.has(status)) throw err;
-      // Last attempt or Zeitbudget aufgebraucht: don't sleep, fall through to rethrow.
-      if (i === attempts - 1 || Date.now() - start > budgetMs) break;
-      // Exponential backoff: 500ms, 1s, 2s, ...
-      await new Promise((r) => setTimeout(r, baseDelayMs * 2 ** i));
+      const delay = baseDelayMs * 2 ** i; // exponentiell: 1×, 2×, 4× baseDelayMs
+      // Letzter Versuch, oder der nächste passt samt Timeout nicht mehr ins Budget:
+      // nicht warten, direkt weiterwerfen.
+      if (i === attempts - 1 || Date.now() - start + delay + timeoutMs > budgetMs) break;
+      await new Promise((r) => setTimeout(r, delay));
     }
   }
   throw lastErr;
@@ -144,19 +160,23 @@ export async function countDocumentTokens(
 ): Promise<number> {
   if (MOCK) return 1000;
 
-  const res = await client().messages.countTokens({
-    model: MODEL,
-    system: ANALYSIS_SYSTEM_PROMPT,
-    messages: [
-      {
-        role: "user",
-        content: [
-          buildDocBlock(base64, mediaType),
-          { type: "text", text: ANALYSIS_USER_TEXT(fileName) },
-        ],
-      },
-    ],
-  });
+  const res = await client().messages.countTokens(
+    {
+      model: MODEL,
+      system: ANALYSIS_SYSTEM_PROMPT,
+      messages: [
+        {
+          role: "user",
+          content: [
+            buildDocBlock(base64, mediaType),
+            { type: "text", text: ANALYSIS_USER_TEXT(fileName) },
+          ],
+        },
+      ],
+    },
+    // Kurzer Timeout: Zählung ist schnell und darf das Analyse-Budget nicht anknabbern.
+    { timeout: COUNT_TOKENS_TIMEOUT_MS },
+  );
   return res.input_tokens;
 }
 
