@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 // Warum FlatCompat statt einer nativen Flat-Config: eslint-config-next@15.5
 // exportiert (Stand jetzt) noch keine eigene Flat-Config, sondern nur die
 // klassischen .eslintrc-Presets ("next/core-web-vitals", "next/typescript").
-// FlatCompat uebersetzt diese Presets fuer ESLint 9. Sobald eslint-config-next
+// FlatCompat übersetzt diese Presets für ESLint 9. Sobald eslint-config-next
 // eine native Flat-Config anbietet, kann FlatCompat entfernt werden.
 const compat = new FlatCompat({
   baseDirectory: __dirname,

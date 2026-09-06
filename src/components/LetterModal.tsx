@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { ContactData, ErrorItem, LetterType, LetterPdfResponse } from "@/types";
+import { ContactData, LetterType, LetterPdfResponse } from "@/types";
 import { MAIL_SUBJECTS } from "@/lib/letters";
 import { useApiErrorMessage } from "@/lib/clientErrors";
 import ContactForm from "./ContactForm";
@@ -14,7 +14,6 @@ interface Props {
   onClose: () => void;
   type: LetterType;
   initialContact: ContactData;
-  errors: ErrorItem[];
   id: string;
   customerEmail?: string;
 }
@@ -46,9 +45,6 @@ export default function LetterModal({
   onClose,
   type,
   initialContact,
-  // errors wird bewusst nicht verwendet: der Brieftext wird serverseitig aus
-  // dem bezahlten Analyseergebnis erzeugt, nicht aus Client-Input (siehe
-  // generate-letter/route.tsx). Prop bleibt Teil der Schnittstelle fuer den Aufrufer.
   id,
   customerEmail,
 }: Props) {

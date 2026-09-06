@@ -191,7 +191,7 @@ docs/
 
 ```bash
 npx tsc --noEmit     # Typprüfung (0 Fehler erwartet; auf frischem Clone vorher einmal `npm run build`, das erzeugt .next/types)
-npm test             # Vitest (aktuell 15 Dateien / 80 Tests)
+npm test             # Vitest (aktuell 18 Dateien / 102 Tests)
 npm run lint         # ESLint (eslint-config-next, 0 Fehler erwartet)
 npm run build        # Production-Build (✓ Compiled successfully)
 ```

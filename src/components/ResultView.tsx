@@ -177,13 +177,6 @@ export default function ResultView({ result, id, onReset }: Props) {
           onClose={() => setLetterModal(null)}
           type={letterModal}
           initialContact={result.contactData || {}}
-          errors={
-            letterModal === "objection"
-              ? directErrors
-              : letterModal === "document_review"
-              ? reviewErrors
-              : result.errors
-          }
           id={id}
           customerEmail={(result as AnalysisResult & { _customerEmail?: string })._customerEmail ?? undefined}
         />
