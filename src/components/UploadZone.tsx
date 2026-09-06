@@ -74,7 +74,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           min-h-[240px] p-8 text-center
           ${dragging
             ? "border-accent bg-accent-bg/40"
-            : "border-line bg-surface hover:border-accent hover:bg-accent-bg/30"
+            : "border-line-strong bg-surface hover:border-accent hover:bg-accent-bg/30"
           }
           ${loading ? "pointer-events-none opacity-60" : ""}
         `}

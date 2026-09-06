@@ -26,6 +26,20 @@ function base64ToPdfBlob(base64: string): Blob {
   return new Blob([bytes], { type: "application/pdf" });
 }
 
+/**
+ * Ermittelt alle fokussierbaren Elemente innerhalb eines Containers.
+ * Wird sowohl fuer den initialen Fokus als auch fuer die Fokus-Falle
+ * (Tab/Shift+Tab) gebraucht, deshalb als eigene Funktion ausgelagert.
+ * offsetParent === null filtert unsichtbare Elemente (z.B. display:none) heraus.
+ */
+function getFocusableElements(container: HTMLElement | null): HTMLElement[] {
+  if (!container) return [];
+  const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  return Array.from(container.querySelectorAll<HTMLElement>(selector)).filter(
+    (el) => !el.hasAttribute("disabled") && el.offsetParent !== null
+  );
+}
+
 export default function LetterModal({
   open,
   onClose,
@@ -54,6 +68,10 @@ export default function LetterModal({
 
   const initialContactRef = useRef<ContactData>(initialContact);
   const modalRef = useRef<HTMLDivElement>(null);
+  // Merkt sich das Element, das vor dem Oeffnen fokussiert war, damit der
+  // Fokus beim Schliessen dorthin zurueckkehrt (sonst faellt er auf <body>
+  // zurueck und Tastatur-/Screenreader-Nutzer verlieren ihre Position).
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   // Update ref only when modal is closed so open-modal edits are never overwritten
   useEffect(() => {
@@ -70,9 +88,55 @@ export default function LetterModal({
       setSending(false);
       setSendError(null);
       setSent(false);
-      setTimeout(() => modalRef.current?.focus(), 0);
+      setTimeout(() => {
+        const focusables = getFocusableElements(modalRef.current);
+        (focusables[0] ?? modalRef.current)?.focus();
+      }, 0);
     }
   }, [open, customerEmail]);
+
+  // Fokus-Uebergabe: aktuelles Element merken, solange das Modal offen ist;
+  // beim Schliessen (Cleanup greift sowohl bei open=false als auch bei Unmount)
+  // den Fokus zurueckgeben, damit die Seite dahinter bedienbar bleibt.
+  useEffect(() => {
+    if (!open) return;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    return () => {
+      previouslyFocusedRef.current?.focus?.();
+    };
+  }, [open]);
+
+  // Escape schliesst das Modal (ausser waehrend des Ladens, damit eine laufende
+  // PDF-Generierung nicht versehentlich abgebrochen wird), und Tab/Shift+Tab
+  // wird innerhalb des Modals gefangen (Focus-Trap), damit der Tastaturfokus
+  // die Seite dahinter nicht verlassen kann, solange der Dialog offen ist.
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (!loading) onClose();
+        return;
+      }
+      if (e.key === "Tab") {
+        const focusables = getFocusableElements(modalRef.current);
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+        if (e.shiftKey) {
+          if (active === first || !modalRef.current?.contains(active)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else if (active === last || !modalRef.current?.contains(active)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, loading, onClose]);
 
   if (!open) return null;
 
@@ -163,7 +227,7 @@ export default function LetterModal({
   };
 
   const inputClass = `
-    w-full px-3 py-2 rounded-lg border border-line bg-ink
+    w-full px-3 py-2 rounded-lg border border-line-strong bg-ink
     text-sm text-fg placeholder:text-faint
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
@@ -175,7 +239,10 @@ export default function LetterModal({
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
-      onClick={(e) => { if (e.button === 0 && !loading) onClose(); }}
+      // Schliessen per Backdrop-Klick nur im Formular-Schritt: ist der Brief
+      // bereits fertig (result) oder wird gerade geladen, wuerde ein Fehlklick
+      // das Ergebnis unwiederbringlich verwerfen – dann nur ueber "Fertig"/X.
+      onClick={(e) => { if (e.button === 0 && !loading && !result) onClose(); }}
     >
       <div
         ref={modalRef}

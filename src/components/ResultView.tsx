@@ -16,7 +16,9 @@ interface Props {
 const CONFIDENCE_COLORS: Record<Confidence, { bg: string; border: string; text: string; dot: string }> = {
   sicher: { bg: "bg-[#0F2B1F]", border: "border-[#166534]", text: "text-[#4ADE80]", dot: "bg-[#22C55E]" },
   wahrscheinlich: { bg: "bg-[#1C1A0E]", border: "border-[#92400E]", text: "text-[#FCD34D]", dot: "bg-[#F59E0B]" },
-  unsicher: { bg: "bg-[#1C0F0F]", border: "border-[#991B1B]", text: "text-[#FCA5A5]", dot: "bg-[#EF4444]" },
+  // Neutral statt Rot: "unsicher" ist keine Fehlermeldung, sondern eine offene
+  // Pruefkategorie. Rot bleibt echten Fehlerzustaenden (API-/Sendefehler) vorbehalten.
+  unsicher: { bg: "bg-[#161B23]", border: "border-[#3A4556]", text: "text-[#B8C2CF]", dot: "bg-[#8A96A6]" },
 };
 
 export default function ResultView({ result, id, onReset }: Props) {

@@ -22,3 +22,9 @@ html[lang="uk"] body { font-family: var(--font-geist), "Segoe UI", Roboto, "Helv
 html[lang="ar"] body { font-family: "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif; }
 /* Negatives/positives Tracking zerreisst arabische Ligaturen. */
 html[dir="rtl"] [class*="tracking-"] { letter-spacing: 0 !important; }
+
+/* Sichtbarer Fokusring projektweit fuer Tastaturbedienung (WCAG 2.4.7). */
+:focus-visible {
+  outline: 2px solid #34D399;
+  outline-offset: 2px;
+}

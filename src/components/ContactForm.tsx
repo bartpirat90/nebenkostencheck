@@ -29,7 +29,7 @@ export default function ContactForm({ contact, onChange }: Props) {
           label={t("landlordName")}
           value={contact.landlordName || ""}
           onChange={(v) => update("landlordName", v)}
-          placeholder="Vonovia Kundenservice GmbH"
+          placeholder="Muster Hausverwaltung GmbH"
         />
       </div>
 
@@ -45,7 +45,7 @@ export default function ContactForm({ contact, onChange }: Props) {
         label={t("landlordAddress")}
         value={contact.landlordAddress || ""}
         onChange={(v) => update("landlordAddress", v)}
-        placeholder="Universitätsstr. 133, 44803 Bochum"
+        placeholder="Verwaltungsweg 5, 12345 Musterstadt"
         multiline
       />
 
@@ -81,7 +81,7 @@ function Field({
   multiline?: boolean;
 }) {
   const baseClass = `
-    w-full px-3 py-2 rounded-lg border border-line bg-ink
+    w-full px-3 py-2 rounded-lg border border-line-strong bg-ink
     text-sm text-fg placeholder:text-faint
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
