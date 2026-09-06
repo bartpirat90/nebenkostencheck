@@ -106,15 +106,17 @@ export default function LetterModal({
     };
   }, [open]);
 
-  // Escape schliesst das Modal (ausser waehrend des Ladens, damit eine laufende
-  // PDF-Generierung nicht versehentlich abgebrochen wird), und Tab/Shift+Tab
+  // Escape schliesst das Modal – mit denselben Ausnahmen wie der Backdrop-Klick:
+  // nicht waehrend des Ladens (laufende PDF-Generierung nicht abbrechen) und
+  // nicht mit fertigem Brief (ein Reflex-Escape wuerde das Ergebnis genauso
+  // verwerfen wie ein Fehlklick; dann nur ueber "Fertig"/X). Tab/Shift+Tab
   // wird innerhalb des Modals gefangen (Focus-Trap), damit der Tastaturfokus
   // die Seite dahinter nicht verlassen kann, solange der Dialog offen ist.
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (!loading) onClose();
+        if (!loading && !result) onClose();
         return;
       }
       if (e.key === "Tab") {
@@ -136,7 +138,7 @@ export default function LetterModal({
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, loading, onClose]);
+  }, [open, loading, result, onClose]);
 
   if (!open) return null;
 
@@ -233,7 +235,7 @@ export default function LetterModal({
   `;
 
   const secondaryBtn =
-    "w-full rounded-xl border border-line bg-surface text-fg font-semibold text-sm " +
+    "w-full rounded-xl border border-line-strong bg-surface text-fg font-semibold text-sm " +
     "hover:border-accent hover:text-accent-bright transition-colors flex items-center justify-center gap-2";
 
   return (
@@ -381,7 +383,7 @@ export default function LetterModal({
           <div className="border-t border-line p-4 flex flex-col sm:flex-row gap-2">
             <button
               onClick={onClose}
-              className="flex-1 sm:flex-none rounded-xl border border-line text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
+              className="flex-1 sm:flex-none rounded-xl border border-line-strong text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
             >
               {t("cancel")}
             </button>
@@ -397,7 +399,7 @@ export default function LetterModal({
           <div className="border-t border-line p-4">
             <button
               onClick={onClose}
-              className="w-full rounded-xl border border-line text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
+              className="w-full rounded-xl border border-line-strong text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
             >
               {t("done")}
             </button>

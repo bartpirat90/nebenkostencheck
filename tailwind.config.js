@@ -9,7 +9,9 @@ module.exports = {
         ink: "#0C1016", // Seiten-Hintergrund (tiefes, neutrales Ink)
         surface: "#11161D", // dezent gehobene Flächen
         line: "#243040", // Haarlinien fürs Ledger-Raster / Trenner
-        "line-strong": "#34415A", // kräftigerer Rahmen für interaktive Elemente (Dropzone/Inputs)
+        // Rahmen interaktiver Elemente (Dropzone/Inputs): 3,06:1 auf ink – WCAG 1.4.11
+        // verlangt für UI-Komponenten mindestens 3:1 (#34415A hätte nur 1,86:1 erreicht).
+        "line-strong": "#4F6184",
         fg: "#E7ECF2", // Primärtext (off-white)
         muted: "#9AA6B4", // Sekundärtext – WCAG AA auf base
         faint: "#828C9A", // Meta/Fußnoten – WCAG AA (~5,5:1 auf ink)
