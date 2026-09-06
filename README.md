@@ -2,7 +2,7 @@
 
 Automatisierte Prüfung deutscher Nebenkostenabrechnungen: Abrechnung hochladen, Rechtsverstöße erkennen, Widerspruch- und Belegeinsicht-Schreiben als PDF erhalten.
 
-> **Stand dieser Doku:** 2026-05-29 · Branch `monetarisierung` (lokal end-to-end getestet, noch nicht auf `main` gemergt/deployed). Go-Live-Vorbereitung läuft: Rechtstexte mit Betreiberdaten gefüllt; offen sind geschäftliche E-Mail + eigene Domain.
+> **Stand dieser Doku:** 2026-09-06 · Branch `monetarisierung` (noch nicht auf `main` gemergt). Go-Live-Vorbereitung läuft; offene Punkte siehe `docs/ROADMAP.md` (Betreiberdaten, Upstash-Produktiv-DB, Muttersprachler-Review).
 > Die produktive Live-Version unter [nebenkostencheck-six.vercel.app](https://nebenkostencheck-six.vercel.app) entspricht noch dem **vorherigen, kostenlosen** Stand (Gemini, ohne Bezahlung).
 
 ---
@@ -172,7 +172,7 @@ src/
     claude.ts                   # Anthropic-Client: analyzeStatement, generateLetter (+Mock)
     prompts.ts                  # System-Prompt (Analyse) + buildLetterPrompt
     kv.ts                       # KV-Store: storeAnalysis, getAnalysis, markPaid (24h TTL unbezahlt, 7d nach Kauf, 14d bei offener SEPA-Zahlung)
-    errors.ts                   # classifyError: technische Fehler → deutsche Meldungen
+    errors.ts                   # classifyErrorCode: technische Fehler → ApiErrorCode (Text via apiErrors.ts)
     mockData.ts                 # Beispieldaten für MOCK_ANALYSIS
     pdf/LetterDoc.tsx           # PDF-Layout: Brief
     pdf/ReportDoc.tsx           # PDF-Layout: Detailbericht

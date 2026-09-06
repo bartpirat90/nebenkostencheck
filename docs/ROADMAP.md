@@ -36,11 +36,11 @@
 - `MOCK_ANALYSIS` in Vercel-Production hart abgeschaltet (`VERCEL_ENV=production`) — kein Paywall-Bypass durch versehentlich gesetztes Flag
 - KI-Antwort wird vor dem Speichern validiert/normalisiert (`normalizeAnalysis`), sonst `ANALYSIS_UNUSABLE`
 - Vitest-Setup für Unit-Tests unter `src/lib`
-- Zahlungs-Nachbesserungen: bezahlte Ergebnisse 7 Tage TTL, offene SEPA-Zahlungen 14 Tage TTL, Stripe-Session-Fallback limitiert pro Analyse-ID (nicht pro IP), 100-%-Gutscheine schalten korrekt frei, Checkout liefert `410` bei verschwundenem Record
+- Zahlungs-Nachbesserungen: bezahlte Ergebnisse 7 Tage TTL, offene SEPA-Zahlungen 14 Tage TTL, Stripe-Session-Fallback limitiert pro Analyse-ID (nicht pro IP), 100-%-Gutscheine schalten korrekt frei, Checkout liefert `404` bei verschwundenem und `410` bei knapp ablaufendem Record
 - `send-pdf` rendert das PDF serverseitig aus dem gespeicherten Brieftext (kein Mail-Relay für Fremdanhänge), E-Mail-Eingabe ohne Steuerzeichen
 - Ergebnisseite: Netzwerkfehler beim Polling führt zu Retry statt Endlos-Laden
 
-**Release-Paket Hoch** (2026-09-06, Commits `e7a281e`…`4efd5a6`)
+**Release-Paket Hoch** (2026-09-06, Commits ab `e7a281e`)
 - Security-Header (CSP, HSTS, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy) über `next.config.mjs`
 - Dependency-Updates: Next.js 15.5, nodemailer 10, next-intl/upstash/react Patches (`npm audit` 0 High)
 - Rate-Limits für Brief-Versand, Checkout und Bericht-PDF (zusätzlich zum bestehenden Analyse-Limit)
@@ -55,11 +55,11 @@
 
 ## ⚠️ Offene Punkte vor dem Launch
 
-- **Betreiberdaten/Impressum:** `[Name des Betreibers]` ist in Impressum, Datenschutz und AGB noch ein Platzhalter (Geschäftsform bereits als Einzelunternehmer/Kleinunternehmer § 19 UStG hinterlegt) — Name/Anschrift müssen manuell durch Franz eingetragen werden.
+- **⛔ Betreiber/Impressum:** Der bisherige Entwickler arbeitet bei Vonovia (Großvermieter) → Interessenkonflikt mit einem Mieter-Tool, kann nicht selbst ins Impressum (Compliance). Anonymes Impressum ist in DE unzulässig. Lösung in Arbeit: Gründung einer LLC als Betreiber; bis dahin nur private Demo, kein öffentlicher kommerzieller Launch. Technisch: `[Name des Betreibers]` ist in Impressum, Datenschutz und AGB noch ein Platzhalter (Texte aktuell als Einzelunternehmer/Kleinunternehmer § 19 UStG formuliert — bei LLC-Betrieb anzupassen); Name/Anschrift werden manuell eingetragen.
 - **Upstash-Produktiv-Datenbank:** muss neu angelegt werden (aktueller Host ist nicht erreichbar); danach `KV_REST_API_URL`/`KV_REST_API_TOKEN` in Vercel setzen.
 - **Stripe-Test mit 100-%-Gutschein** vor Live-Schaltung einmal end-to-end durchspielen.
 - **Muttersprachler-Review** für Türkisch, Arabisch, Russisch, Ukrainisch — aktuell KI-Erstübersetzungen (`_meta.status: "ai-draft"` in `messages/{tr,ar,ru,uk}.json`).
-- **404-Seite:** Pfade außerhalb einer gültigen Locale rendern die deutsche Root-404 ohne next-intl (das Root-Layout hat kein `<html>`, das steckt im `[locale]`-Layout). Next.js 16 bringt mit `global-not-found` vermutlich die sauberere Lösung dafür.
+- **404-Seite:** Statuscode und Inhalt stimmen (lokalisiert unter `/<locale>/…`, deutsch außerhalb gültiger Locales), aber das HTML wird erst im Browser gerendert — Next liefert für not-found nur seine Fehler-Shell, weil das Root-Layout kein `<html>` rendert (das steckt im `[locale]`-Layout). Ohne JS bleibt die Seite leer; für Suchmaschinen (Status 404 + noindex) unkritisch. Next.js 16 bringt mit `global-not-found` vermutlich die sauberere Lösung.
 - **Arabisch im PDF:** Noto Sans (Latin-Ext + Kyrillisch) deckt kein Arabisch ab — Briefe/Berichte auf Arabisch fehlen im PDF-Export bislang.
 
 ---
@@ -82,7 +82,7 @@
 
 ---
 
-## 🚀 Roll-Out-Restschritte
+## 🚀 Roll-Out-Restschritte (nach Klärung des Betreibers)
 
 1. Betreiberdaten (Name/Anschrift) in Rechtstexte eintragen (Platzhalter ersetzen) · Rechtstexte final prüfen lassen → Entwurf-Banner entfernen
 2. **Stripe Live** aktivieren · **Vercel Pro** · Anthropic-Guthaben

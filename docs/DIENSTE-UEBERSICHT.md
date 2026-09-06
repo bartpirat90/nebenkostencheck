@@ -1,6 +1,6 @@
 # Dienste-Übersicht — Nebenkostencheck
 
-**Stand:** 2026-05-30 · Wer macht was, damit die App läuft. (Enthält **keine** Passwörter/Keys — die liegen nur in `.env.local` bzw. in Vercel.)
+**Stand:** 2026-09-06 · Wer macht was, damit die App läuft. (Enthält **keine** Passwörter/Keys — die liegen nur in `.env.local` bzw. in Vercel.)
 
 ---
 

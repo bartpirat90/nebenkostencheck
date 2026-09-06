@@ -127,7 +127,7 @@ Alle Fenster sind Sliding-Windows: ein Schlüssel kann durch die Fenster-Interpo
 
 ## Mehrsprachigkeit (i18n) & Seitenstruktur
 
-Next-intl mit sechs Locales (`src/i18n/routing.ts`): `de` (Standard, ohne URL-Präfix), `en`, `tr`, `ar`, `ru`, `uk`. Seiten liegen unter `src/app/[locale]/...`; **API-Routen bleiben unpräfixiert** unter `src/app/api/*`, ebenso `src/app/og.png/route.tsx`. Übersetzungsstatus steht je Sprachdatei in `messages/<locale>.json` unter `_meta.status` — `tr`, `ar`, `ru`, `uk` sind aktuell `"ai-draft"` (KI-Erstübersetzung, Review durch Muttersprachler vor Launch ausstehend), `de`/`en` sind manuell gepflegt.
+Next-intl mit sechs Locales (`src/i18n/routing.ts`): `de` (Standard, ohne URL-Präfix), `en`, `tr`, `ar`, `ru`, `uk`. Seiten liegen unter `src/app/[locale]/...`; **API-Routen bleiben unpräfixiert** unter `src/app/api/*`, ebenso `src/app/og.png/route.tsx`. Übersetzungsstatus: `messages/{tr,ar,ru,uk}.json` tragen `_meta.status: "ai-draft"` (KI-Erstübersetzung, Review durch Muttersprachler vor Launch ausstehend), `de`/`en` sind manuell gepflegt.
 
 **404-Handling:** Ein unbekannter Pfad *innerhalb* einer gültigen Locale (z. B. `/en/gibtsnicht`) läuft über den Catch-all `src/app/[locale]/[...rest]/page.tsx` in `notFound()` und rendert die lokalisierte `src/app/[locale]/not-found.tsx`. Ein Pfad *außerhalb* jeder gültigen Locale (z. B. `/xx/foo`) trifft dagegen `src/app/not-found.tsx` — das Root-Layout (`src/app/layout.tsx`) rendert kein `<html>` (das liegt im `[locale]`-Layout), weshalb diese Root-404 ihr eigenes `<html>`/`<body>`-Grundgerüst mitbringt und ohne next-intl auskommt (fest auf Deutsch).
 
@@ -264,7 +264,7 @@ interface StoredAnalysis {
 
 ## Fehlercode-Konvention
 
-Jede API-Route antwortet im Fehlerfall über `apiError(code, status?)` (`lib/apiErrors.ts`) mit `{ error: "<deutscher Fallback-Text>", code }`. Die Codes (`ApiErrorCode`, aktuell 27 Stück — u. a. `RATE_LIMITED`, `NOT_UNLOCKED`, `ANALYSIS_EXPIRED`, `ANALYSIS_EXPIRING`, `LETTER_RATE_LIMITED`, `SEND_RATE_LIMITED`, `CHECKOUT_RATE_LIMITED`, `OVERLOADED`, `TIMEOUT`, `NETWORK`, `UNKNOWN`) sind zentral in `API_ERRORS` definiert; jeder Eintrag legt Default-Status und deutschen Text fest.
+Jede API-Route antwortet im Fehlerfall über `apiError(code, status?)` (`lib/apiErrors.ts`) mit `{ error: "<deutscher Fallback-Text>", code }`. Die Codes (`ApiErrorCode`, aktuell 22 Stück — u. a. `RATE_LIMITED`, `NOT_UNLOCKED`, `ANALYSIS_EXPIRED`, `ANALYSIS_EXPIRING`, `LETTER_RATE_LIMITED`, `SEND_RATE_LIMITED`, `CHECKOUT_RATE_LIMITED`, `OVERLOADED`, `TIMEOUT`, `NETWORK`, `UNKNOWN`) sind zentral in `API_ERRORS` definiert; jeder Eintrag legt Default-Status und deutschen Text fest.
 
 Der Client übersetzt anhand des `code` über `apiErrors.*` in `messages/*.json` (6 Sprachen); der vom Server mitgeschickte deutsche Text ist nur der Fallback, falls ein Client einen (neuen) Code noch nicht kennt — er muss deshalb für sich allein verständlich sein (`lib/clientErrors.ts` übernimmt das Mapping im Frontend).
 
