@@ -153,7 +153,7 @@ export default function PreviewView({ preview, onReset }: Props) {
         </a>
       )}
 
-      <button onClick={onReset} className="w-full text-sm text-muted hover:text-fg py-2 transition-colors">
+      <button onClick={onReset} className="w-full min-h-11 flex items-center justify-center text-sm text-muted hover:text-fg transition-colors">
         {t("checkAnother")}
       </button>
     </div>

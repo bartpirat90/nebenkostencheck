@@ -265,7 +265,7 @@ export default function LetterModal({
           </div>
           <button
             onClick={onClose}
-            className="text-faint hover:text-fg p-1 transition-colors"
+            className="text-faint hover:text-fg w-11 h-11 -m-2 flex items-center justify-center transition-colors"
             aria-label={t("close")}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -322,7 +322,7 @@ export default function LetterModal({
                     className={inputClass}
                   />
                 </label>
-                <button onClick={openMailto} className={`${secondaryBtn} py-2.5 px-4`}>
+                <button onClick={openMailto} className={`${secondaryBtn} py-3 px-4`}>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -349,7 +349,7 @@ export default function LetterModal({
                 <button
                   onClick={sendToMyEmail}
                   disabled={sending}
-                  className={`${secondaryBtn} py-2.5 px-4 disabled:opacity-60`}
+                  className={`${secondaryBtn} py-3 px-4 disabled:opacity-60`}
                 >
                   {sending ? t("sending") : t("sendToMe")}
                 </button>
