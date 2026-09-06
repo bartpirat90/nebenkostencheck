@@ -11,14 +11,15 @@ export default function StatsBar() {
       <div className="border border-line rounded-xl divide-y divide-line">
         {items.map((stat, i) => (
           <div key={stat.label} className="flex items-center justify-between px-4 py-3.5">
-            <span className="flex flex-col">
+            <span className="flex flex-col min-w-0 flex-1">
               <span className="text-sm text-muted">{stat.label}</span>
+              {/* Quelle nur an der Mieterbund-Zahl, damit nicht alle Kennzahlen dem Mieterbund zugeschrieben wirken */}
               {stat.source && (
-                <span className="block text-[11px] text-faint mt-0.5">{stat.source}</span>
+                <span className="text-[11px] text-faint mt-0.5">{stat.source}</span>
               )}
             </span>
             <span
-              className={`text-base font-medium tabular-nums ${
+              className={`text-base font-medium tabular-nums shrink-0 ps-3 ${
                 accentRows.includes(i) ? "text-accent-soft" : "text-fg"
               }`}
             >
