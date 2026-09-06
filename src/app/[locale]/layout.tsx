@@ -101,13 +101,20 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  // "legal" enthaelt die langen Rechtstexte und wird nur von den drei
+  // Rechtsseiten gebraucht, die inzwischen serverseitig uebersetzen
+  // (getTranslations statt useTranslations) – deshalb hier bewusst aus dem
+  // Client-Payload ausschliessen, spart mehrere KB pro HTML-Seite.
+  const clientMessages = Object.fromEntries(
+    Object.entries(messages).filter(([namespace]) => namespace !== "legal"),
+  );
   // hasLocale oben verengt `locale` bereits auf Locale – kein Cast noetig.
   const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={dir}>
       <body className={`${geist.variable} ${geist.className}`}>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={clientMessages}>{children}</NextIntlClientProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

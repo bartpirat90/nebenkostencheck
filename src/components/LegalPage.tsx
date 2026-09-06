@@ -1,4 +1,4 @@
-import { useTranslations, useLocale } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
 type LegalKey = "impressum" | "datenschutz" | "agb";
@@ -6,9 +6,12 @@ type LegalKey = "impressum" | "datenschutz" | "agb";
 // Generische Rechtstext-Seite: rendert Überschrift + Abschnitte aus dem
 // "legal"-Namespace. Betreiber-Platzhalter, E-Mail und URLs stehen als Literale
 // in den Body-Strings. Für Nicht-Deutsch erscheint der Unverbindlichkeits-Hinweis.
-export default function LegalPage({ page }: { page: LegalKey }) {
-  const t = useTranslations("legal");
-  const locale = useLocale();
+// Server Component (getTranslations statt useTranslations): "legal" wird
+// bewusst nicht mehr an den Client-Provider gegeben (siehe [locale]/layout.tsx),
+// deshalb muss diese Seite ihre Uebersetzungen serverseitig auflösen.
+export default async function LegalPage({ page }: { page: LegalKey }) {
+  const t = await getTranslations("legal");
+  const locale = await getLocale();
   const sections = t.raw(`${page}.sections`) as { heading: string; body: string }[];
 
   return (
