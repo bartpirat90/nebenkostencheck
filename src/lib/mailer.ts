@@ -1,8 +1,8 @@
-import nodemailer from "nodemailer";
+import nodemailer, { type Transporter } from "nodemailer";
 
 // Lazy-Init: Transport erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzte SMTP-Env-Variablen) das Modul importieren kann, ohne zu werfen.
-let _transport: nodemailer.Transporter | null = null;
+let _transport: Transporter | null = null;
 function transport() {
   if (!_transport) {
     _transport = nodemailer.createTransport({
