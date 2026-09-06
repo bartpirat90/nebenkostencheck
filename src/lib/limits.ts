@@ -37,3 +37,15 @@ export const SEND_PDF_PER_IP_PER_DAY = 20;
  * aussperren. Neue IDs sind ohnehin über das Analyse-Limit gedeckelt.
  */
 export const RESULT_FALLBACK_PER_ID_PER_HOUR = 20;
+
+/** Brief-Generierung (je ein Claude-Call): pro Analyse-ID und Tag – 3 Typen × Korrekturen. */
+export const LETTER_PER_ID_PER_DAY = 12;
+
+/** Brief-Generierung pro IP und Tag. */
+export const LETTER_PER_IP_PER_DAY = 40;
+
+/** Checkout-Sessions (je ein Stripe-Call) pro IP und Stunde. */
+export const CHECKOUT_PER_IP_PER_HOUR = 20;
+
+/** Bericht-PDF-Render pro IP und Stunde (CPU-lastig). */
+export const REPORT_PER_IP_PER_HOUR = 30;

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAnalysis, getAnalysisTtl } from "@/lib/kv";
 import { stripe } from "@/lib/stripe";
+import { checkLimit, getClientIp } from "@/lib/ratelimit";
+import { CHECKOUT_PER_IP_PER_HOUR } from "@/lib/limits";
 
 /** Lebensdauer der Checkout-Session: Stripe-Minimum 30 min + Puffer. */
 const SESSION_LIFETIME_S = 30 * 60 + 60;
@@ -26,6 +28,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Analyse läuft gleich ab. Bitte lade die Abrechnung erneut hoch." },
         { status: 410 }
+      );
+    }
+
+    // Kostenschutz: jeder Aufruf kostet einen Stripe-API-Call.
+    if (!(await checkLimit("rl:checkout:ip", CHECKOUT_PER_IP_PER_HOUR, "1 h", getClientIp(req)))) {
+      return NextResponse.json(
+        { error: "Zu viele Zahlungsversuche. Bitte in ein paar Minuten erneut versuchen." },
+        { status: 429 }
       );
     }
 

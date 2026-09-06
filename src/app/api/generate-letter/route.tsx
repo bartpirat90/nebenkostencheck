@@ -5,6 +5,8 @@ import { getAnalysis, isUnlocked, storeLetter } from "@/lib/kv";
 import { classifyError } from "@/lib/errors";
 import { isLetterType, LETTER_FILENAMES } from "@/lib/letters";
 import { LetterDoc } from "@/lib/pdf/LetterDoc";
+import { checkLimit, getClientIp } from "@/lib/ratelimit";
+import { LETTER_PER_ID_PER_DAY, LETTER_PER_IP_PER_DAY } from "@/lib/limits";
 import { ContactData } from "@/types";
 
 export const runtime = "nodejs";
@@ -54,6 +56,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Für dieses Schreiben liegen keine passenden Punkte vor." },
         { status: 400 }
+      );
+    }
+
+    // Kostenschutz: jeder Aufruf kostet einen Claude-Call.
+    const ip = getClientIp(req);
+    const [okId, okIp] = await Promise.all([
+      checkLimit("rl:letter:id", LETTER_PER_ID_PER_DAY, "24 h", id),
+      checkLimit("rl:letter:ip", LETTER_PER_IP_PER_DAY, "24 h", ip),
+    ]);
+    if (!okId || !okIp) {
+      return NextResponse.json(
+        { error: "Zu viele Schreiben erstellt. Bitte lade das vorhandene PDF herunter oder versuche es morgen erneut." },
+        { status: 429 }
       );
     }
 
