@@ -16,7 +16,7 @@
   "hero": {
     "eyebrow": "§ BetrKV / HeizkV / BGH'ye göre kontrol edildi",
     "headline": "Yan gider faturanızda para gizli mi?",
-    "subline": "Faturanızı yükleyin. Saniyeler içinde tipik hatalara karşı kontrol edilir ve olası iade tutarınız hesaplanır.",
+    "subline": "Yan gider faturanızı (Nebenkostenabrechnung) veya işletme gideri faturanızı (Betriebskostenabrechnung) yükleyin. Saniyeler içinde tipik hatalara karşı kontrol edilir ve olası iade tutarınız hesaplanır.",
     "cta": "Faturamı kontrol et",
     "priceNote": "İlk kontrol ücretsiz · tam rapor tek seferlik 9,90 €, abonelik yok"
   },
@@ -32,7 +32,7 @@
     "heading": "3 adımda iadenize",
     "steps": [
       { "title": "Faturanızı yükleyin", "description": "Yan gider faturanızın PDF veya fotoğrafı – sürükleyip bırakın ya da seçin." },
-      { "title": "Saniyeler içinde otomatik kontrol", "description": "HeizkV ihlalleri, hatalı dağıtımlar, süre hataları ve daha fazlası kontrol edilir." },
+      { "title": "Saniyeler içinde otomatik kontrol", "description": "Yan gider faturanızı ve ısıtma gideri faturasını (Heizkostenabrechnung, HeizkV) ihlaller, hatalı dağıtım anahtarları, süre hataları ve daha fazlası için kontrol eder." },
       { "title": "Tek tıkla itiraz", "description": "İndirmeye hazır itiraz mektubu PDF olarak." }
     ]
   },
@@ -101,6 +101,14 @@
       {
         "q": "Hangi dosyaları yükleyebilirim?",
         "a": "Faturanızın PDF dosyaları veya fotoğrafları (örn. JPG veya PNG), en fazla 3 MB. En iyisi yalnızca asıl yan gider faturasını yüklemektir, tüm yazışmayı değil."
+      },
+      {
+        "q": "Nebenkostenabrechnung ile Betriebskostenabrechnung arasındaki fark nedir?",
+        "a": "İçerik olarak aynı belgedir: \"Nebenkostenabrechnung\" günlük dildeki terimdir, \"Betriebskostenabrechnung\" ise İşletme Giderleri Yönetmeliği'nden (BetrKV) gelen hukuki olarak doğru terimdir. Nebenkostencheck her iki terimi de aynı şekilde kontrol eder – faturanızı başlığından bağımsız olarak yükleyebilirsiniz."
+      },
+      {
+        "q": "Isıtma gideri faturası (Heizkostenabrechnung) da kontrol ediliyor mu?",
+        "a": "Evet, ısıtma giderleri yüklediğiniz faturanın bir parçasıysa Isıtma Giderleri Yönetmeliği'ne (HeizkV) göre kontrol edilir – örneğin giderlerin en az %50'sinin tüketime göre dağıtılıp dağıtılmadığı ve formülle hesaplama yerine bir ısı sayacı kullanılıp kullanılmadığı. Ölçüm hizmeti sağlayıcınızın ısıtma gideri faturasını ayrı bir belge olarak veriyorsa, bunu ikinci ve ayrı bir kontrol olarak yükleyebilirsiniz – her kontrolde bir dosya değerlendirilir."
       }
     ]
   },

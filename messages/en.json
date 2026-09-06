@@ -15,7 +15,7 @@
   "hero": {
     "eyebrow": "§ checked against BetrKV / HeizkV / BGH",
     "headline": "Is there money hidden in your utility bill?",
-    "subline": "Upload your statement. It is checked for typical errors in seconds and your potential refund is calculated.",
+    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung (German utility-cost statement). It is checked for typical errors in seconds and your potential refund is calculated.",
     "cta": "Check my bill",
     "priceNote": "First check free · full report once for €9.90, no subscription"
   },
@@ -31,7 +31,7 @@
     "heading": "Your refund in 3 steps",
     "steps": [
       { "title": "Upload your bill", "description": "PDF or photo of your utility-cost statement – just drop it in or select it." },
-      { "title": "Automatic check in seconds", "description": "Checks for HeizkV violations, incorrect cost allocations, deadline errors and more." },
+      { "title": "Automatic check in seconds", "description": "Checks your Nebenkostenabrechnung and Heizkostenabrechnung (heating-cost statement, HeizkV) for violations, incorrect allocation keys, deadline errors and more." },
       { "title": "Objection in one click", "description": "A ready-made objection letter as a PDF to download." }
     ]
   },
@@ -100,6 +100,14 @@
       {
         "q": "Which files can I upload?",
         "a": "PDF files or photos (e.g. JPG or PNG) of your bill, up to 3 MB. It is best to upload only the actual utility-cost statement, not the entire correspondence."
+      },
+      {
+        "q": "What's the difference between Nebenkostenabrechnung and Betriebskostenabrechnung?",
+        "a": "They are the same document: \"Nebenkostenabrechnung\" is the everyday term, \"Betriebskostenabrechnung\" is the legally correct term from the German Operating Costs Ordinance (BetrKV). Nebenkostencheck checks both terms the same way – you can upload your statement no matter which heading it uses."
+      },
+      {
+        "q": "Is the Heizkostenabrechnung (heating-cost statement) checked too?",
+        "a": "Yes – if heating costs are part of your uploaded statement, they are checked against the Heating Costs Ordinance (HeizkV), for example whether at least 50% of the costs are allocated by consumption and whether a heat meter is used instead of a formula-based calculation. If your metering service provider issues the heating-cost statement as a separate document, you can upload it as a second, separate check – each check evaluates one file."
       }
     ]
   },

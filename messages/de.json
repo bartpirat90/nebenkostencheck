@@ -15,7 +15,7 @@
   "hero": {
     "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
     "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
+    "subline": "Lade deine Nebenkosten- oder Betriebskostenabrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
     "cta": "Abrechnung prüfen",
     "priceNote": "Erst-Prüfung kostenlos · vollständiger Bericht einmalig 9,90 €, kein Abo"
   },
@@ -31,7 +31,7 @@
     "heading": "In 3 Schritten zu deiner Erstattung",
     "steps": [
       { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen." },
-      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft auf HeizkV-Verstöße, falsche Umlagen, Fristfehler und mehr." },
+      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft Nebenkosten- und Heizkostenabrechnung (HeizkV) auf Verstöße, falsche Umlageschlüssel, Fristfehler und mehr." },
       { "title": "Widerspruch mit einem Klick", "description": "Fertiger Widerspruchsbrief als PDF zum Download." }
     ]
   },
@@ -100,6 +100,14 @@
       {
         "q": "Welche Dateien kann ich hochladen?",
         "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
+      },
+      {
+        "q": "Was ist der Unterschied zwischen Nebenkosten- und Betriebskostenabrechnung?",
+        "a": "Inhaltlich ist es dasselbe Dokument: „Nebenkostenabrechnung“ ist der umgangssprachliche Begriff, „Betriebskostenabrechnung“ der juristisch korrekte Begriff aus der Betriebskostenverordnung (BetrKV). Der Nebenkostencheck prüft beide Bezeichnungen gleich – du kannst deine Abrechnung unabhängig von der Überschrift hochladen."
+      },
+      {
+        "q": "Wird auch die Heizkostenabrechnung geprüft?",
+        "a": "Ja, sofern die Heizkosten Teil deiner hochgeladenen Abrechnung sind, werden sie nach der Heizkostenverordnung (HeizkV) mitgeprüft – etwa ob mindestens 50 % nach Verbrauch abgerechnet werden und ob ein Wärmemengenzähler statt einer Formel-Berechnung verwendet wurde. Kommt die Heizkostenabrechnung deines Messdienstleisters als eigenes Dokument, kannst du sie als zweite, separate Prüfung hochladen – pro Prüfung wird jeweils eine Datei ausgewertet."
       }
     ]
   },
