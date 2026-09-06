@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { PreviewData } from "@/types";
 import { useApiErrorMessage } from "@/lib/clientErrors";
+import { savePreview } from "@/lib/previewStorage";
 
 interface Props {
   preview: PreviewData;
@@ -35,9 +36,7 @@ export default function PreviewView({ preview, onReset }: Props) {
       const { url } = await res.json();
       // Vorschau vor der Weiterleitung sichern: bricht der Nutzer bei Stripe ab,
       // holen wir sie zurueck statt eine zweite KI-Analyse zu erzwingen.
-      try {
-        sessionStorage.setItem("nkc:preview", JSON.stringify(preview));
-      } catch {}
+      savePreview(preview);
       window.location.href = url;
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : te("unknown"));

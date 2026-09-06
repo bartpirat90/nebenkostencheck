@@ -11,6 +11,7 @@ import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import { useApiErrorMessage } from "@/lib/clientErrors";
+import { clearPreview, loadPreview } from "@/lib/previewStorage";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -88,6 +89,8 @@ export default function Home() {
     setPreview(null);
     setError(null);
     setNotice(null);
+    // Wer bewusst neu startet, will die alte Vorschau nicht später zurückbekommen.
+    clearPreview();
   };
 
   const serviceJsonLd = {
@@ -287,14 +290,8 @@ function CancelRestore({ onRestore }: { onRestore: (preview: PreviewData) => voi
 
   useEffect(() => {
     if (searchParams.get("canceled") !== "1") return;
-    const id = searchParams.get("id");
-    try {
-      const raw = sessionStorage.getItem("nkc:preview");
-      if (raw) {
-        const parsed: PreviewData = JSON.parse(raw);
-        if (parsed.id === id) onRestore(parsed);
-      }
-    } catch {}
+    const restored = loadPreview(searchParams.get("id"));
+    if (restored) onRestore(restored);
     // Nur die URL-Leiste bereinigen (kein next-intl-Router-Push): jede Aenderung
     // an history.pushState/replaceState wird vom App Router abgefangen und laesst
     // diese Suspense-Grenze neu aufloesen. Da `onRestore` den State im Elternteil

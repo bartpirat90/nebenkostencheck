@@ -1,7 +1,14 @@
+import type Stripe from "stripe";
 import { routing, type Locale } from "@/i18n/routing";
 
-/** Stripe-Checkout-Sprachen (Stripe kennt kein Ukrainisch → "auto"). */
-const STRIPE_LOCALES: Partial<Record<Locale, string>> = { de: "de", en: "en", tr: "tr", ar: "ar", ru: "ru" };
+type StripeLocale = Stripe.Checkout.SessionCreateParams.Locale;
+
+/**
+ * Stripe-Checkout-Sprachen. Stripe kennt weder Ukrainisch noch Arabisch
+ * (Stand SDK-Enum) → "auto" lässt Stripe nach Browser-Sprache entscheiden,
+ * statt mit einem ungültigen Wert die Session-Erstellung scheitern zu lassen.
+ */
+const STRIPE_LOCALES: Partial<Record<Locale, StripeLocale>> = { de: "de", en: "en", tr: "tr", ru: "ru" };
 
 export function toLocale(v: unknown): Locale {
   return typeof v === "string" && (routing.locales as readonly string[]).includes(v)
@@ -14,6 +21,6 @@ export function localePrefix(locale: Locale): string {
   return locale === routing.defaultLocale ? "" : `/${locale}`;
 }
 
-export function stripeLocale(locale: Locale): string {
+export function stripeLocale(locale: Locale): StripeLocale {
   return STRIPE_LOCALES[locale] ?? "auto";
 }

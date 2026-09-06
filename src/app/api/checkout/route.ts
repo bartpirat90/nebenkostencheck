@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import type Stripe from "stripe";
 import { getAnalysis, getAnalysisTtl } from "@/lib/kv";
 import { stripe } from "@/lib/stripe";
 import { checkLimit, getClientIp } from "@/lib/ratelimit";
@@ -58,7 +57,7 @@ export async function POST(req: NextRequest) {
       allow_promotion_codes: true,
       metadata: { analysisId: id },
       client_reference_id: id,
-      locale: stripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale,
+      locale: stripeLocale(locale),
       success_url: `${base}${prefix}/ergebnis?id=${id}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${base}${prefix}/?canceled=1&id=${id}`,
     });
