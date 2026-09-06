@@ -3,6 +3,7 @@
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
+import { Link } from "@/i18n/navigation";
 import { MAX_FILE_MB } from "@/lib/limits";
 
 interface Props {
@@ -107,6 +108,14 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           </>
         )}
       </div>
+
+      <p className="text-xs text-faint text-center leading-relaxed">
+        {t.rich("privacyHint", {
+          link: (chunks) => (
+            <Link href="/datenschutz" className="underline hover:text-fg">{chunks}</Link>
+          ),
+        })}
+      </p>
 
       {displayError && (
         <div id="upload-error" role="alert" className="flex items-start gap-2 bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-4 text-sm text-[#FCA5A5]">
