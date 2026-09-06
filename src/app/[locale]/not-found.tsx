@@ -12,7 +12,7 @@ export default async function NotFound() {
   return (
     <main className="min-h-[100dvh] bg-ink">
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-        <Link href="/" aria-label={t("home")}>
+        <Link href="/" aria-label={t("home")} className="inline-flex items-center min-h-11">
           <Logo />
         </Link>
       </nav>

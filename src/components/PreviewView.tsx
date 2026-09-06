@@ -124,12 +124,13 @@ export default function PreviewView({ preview, onReset }: Props) {
           <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureRecommendations")}</li>
         </ul>
 
-        <label className="flex items-start gap-2 text-xs text-muted mb-4 cursor-pointer">
+        {/* min-h-11 + größere Box: Checkbox ist Teil des Bezahl-Flows, Touch-Ziel ≥ 44 px */}
+        <label className="flex items-center gap-3 min-h-11 text-xs text-muted mb-4 cursor-pointer">
           <input
             type="checkbox"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 accent-accent"
+            className="w-5 h-5 shrink-0 accent-accent"
           />
           <span>{t("consent")}</span>
         </label>

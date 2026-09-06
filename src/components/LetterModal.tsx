@@ -229,7 +229,7 @@ export default function LetterModal({
   };
 
   const inputClass = `
-    w-full px-3 py-2 rounded-lg border border-line-strong bg-ink
+    w-full min-h-11 px-3 py-2.5 rounded-lg border border-line-strong bg-ink
     text-sm text-fg placeholder:text-faint
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;

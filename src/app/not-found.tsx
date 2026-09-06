@@ -15,7 +15,7 @@ export default function RootNotFound() {
       <body className={`${geist.variable} ${geist.className}`}>
         <main className="min-h-[100dvh] bg-ink">
           <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-            <a href="/" aria-label="Zur Startseite">
+            <a href="/" aria-label="Zur Startseite" className="inline-flex items-center min-h-11">
               <Logo />
             </a>
           </nav>
