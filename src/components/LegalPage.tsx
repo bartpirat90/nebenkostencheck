@@ -17,7 +17,7 @@ export default async function LegalPage({ page }: { page: LegalKey }) {
   return (
     <main className="min-h-[100dvh] bg-ink text-muted">
       <div className="max-w-2xl mx-auto px-6 py-12">
-        <p className="text-xs text-[#FCD34D] mb-6">{t("draftNotice")}</p>
+        <p className="text-xs text-status-warn mb-6">{t("draftNotice")}</p>
 
         {locale !== "de" && (
           <p className="text-xs text-muted border border-line rounded-lg p-3 mb-6 leading-relaxed">
