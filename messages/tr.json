@@ -16,7 +16,7 @@
   "hero": {
     "eyebrow": "§ BetrKV / HeizkV / BGH'ye göre kontrol edildi",
     "headline": "Yan gider faturanızda para gizli mi?",
-    "subline": "Yan gider faturanızı (Nebenkostenabrechnung) veya işletme gideri faturanızı (Betriebskostenabrechnung) yükleyin. Saniyeler içinde tipik hatalara karşı kontrol edilir ve olası iade tutarınız hesaplanır.",
+    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin – saniyeler içinde tipik hatalar kontrol edilir, iadeniz tahmin edilir.",
     "cta": "Faturamı kontrol et",
     "priceNote": "İlk kontrol ücretsiz · tam rapor tek seferlik 9,90 €, abonelik yok"
   },
@@ -103,12 +103,12 @@
         "a": "Faturanızın PDF dosyaları veya fotoğrafları (örn. JPG veya PNG), en fazla 3 MB. En iyisi yalnızca asıl yan gider faturasını yüklemektir, tüm yazışmayı değil."
       },
       {
-        "q": "Nebenkostenabrechnung ile Betriebskostenabrechnung arasındaki fark nedir?",
+        "q": "Nebenkostenabrechnung veya Betriebskostenabrechnung – aradaki fark nedir?",
         "a": "İçerik olarak aynı belgedir: \"Nebenkostenabrechnung\" günlük dildeki terimdir, \"Betriebskostenabrechnung\" ise İşletme Giderleri Yönetmeliği'nden (BetrKV) gelen hukuki olarak doğru terimdir. Nebenkostencheck her iki terimi de aynı şekilde kontrol eder – faturanızı başlığından bağımsız olarak yükleyebilirsiniz."
       },
       {
         "q": "Isıtma gideri faturası (Heizkostenabrechnung) da kontrol ediliyor mu?",
-        "a": "Evet, ısıtma giderleri yüklediğiniz faturanın bir parçasıysa Isıtma Giderleri Yönetmeliği'ne (HeizkV) göre kontrol edilir – örneğin giderlerin en az %50'sinin tüketime göre dağıtılıp dağıtılmadığı ve formülle hesaplama yerine bir ısı sayacı kullanılıp kullanılmadığı. Ölçüm hizmeti sağlayıcınızın ısıtma gideri faturasını ayrı bir belge olarak veriyorsa, bunu ikinci ve ayrı bir kontrol olarak yükleyebilirsiniz – her kontrolde bir dosya değerlendirilir."
+        "a": "Evet, ısıtma giderleri yüklediğiniz faturanın bir parçasıysa Isıtma Giderleri Yönetmeliği'ne (HeizkV) göre de kontrol edilir – örneğin ısıtma giderlerinin genel olarak tüketime göre dağıtılıp dağıtılmadığı (§ 7 HeizkV en az %50 şartını arar) ve sıcak su için ısı miktarının formülle hesaplanması yerine bir ısı sayacıyla ölçülüp ölçülmediği (§ 9 HeizkV). Bu kontrol, ev sahibinizin faturası için tasarlanmıştır; ölçüm hizmeti sağlayıcısının ayrı bir belge olarak sunduğu Heizkostenabrechnung bunun için öngörülmemiştir."
       }
     ]
   },

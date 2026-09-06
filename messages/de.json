@@ -15,7 +15,7 @@
   "hero": {
     "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
     "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Nebenkosten- oder Betriebskostenabrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
+    "subline": "Lade deine Nebenkosten- oder Betriebskostenabrechnung hoch – in Sekunden auf typische Fehler geprüft, mit geschätztem Erstattungspotenzial.",
     "cta": "Abrechnung prüfen",
     "priceNote": "Erst-Prüfung kostenlos · vollständiger Bericht einmalig 9,90 €, kein Abo"
   },
@@ -102,12 +102,12 @@
         "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
       },
       {
-        "q": "Was ist der Unterschied zwischen Nebenkosten- und Betriebskostenabrechnung?",
+        "q": "Nebenkosten- oder Betriebskostenabrechnung – was ist der Unterschied?",
         "a": "Inhaltlich ist es dasselbe Dokument: „Nebenkostenabrechnung“ ist der umgangssprachliche Begriff, „Betriebskostenabrechnung“ der juristisch korrekte Begriff aus der Betriebskostenverordnung (BetrKV). Der Nebenkostencheck prüft beide Bezeichnungen gleich – du kannst deine Abrechnung unabhängig von der Überschrift hochladen."
       },
       {
         "q": "Wird auch die Heizkostenabrechnung geprüft?",
-        "a": "Ja, sofern die Heizkosten Teil deiner hochgeladenen Abrechnung sind, werden sie nach der Heizkostenverordnung (HeizkV) mitgeprüft – etwa ob mindestens 50 % nach Verbrauch abgerechnet werden und ob ein Wärmemengenzähler statt einer Formel-Berechnung verwendet wurde. Kommt die Heizkostenabrechnung deines Messdienstleisters als eigenes Dokument, kannst du sie als zweite, separate Prüfung hochladen – pro Prüfung wird jeweils eine Datei ausgewertet."
+        "a": "Ja, sofern die Heizkosten Teil deiner hochgeladenen Abrechnung sind, werden sie nach der Heizkostenverordnung (HeizkV) mitgeprüft – etwa ob die Heizkosten überhaupt nach Verbrauch verteilt werden (§ 7 HeizkV verlangt mindestens 50 %) und ob die Wärmemenge für das Warmwasser mit einem Wärmemengenzähler gemessen statt per Formel berechnet wird (§ 9 HeizkV). Die Prüfung ist auf die Abrechnung deines Vermieters ausgelegt; eine separate Heizkostenabrechnung des Messdienstleisters als eigenes Dokument ist dafür nicht vorgesehen."
       }
     ]
   },

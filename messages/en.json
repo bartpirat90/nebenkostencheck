@@ -15,7 +15,7 @@
   "hero": {
     "eyebrow": "§ checked against BetrKV / HeizkV / BGH",
     "headline": "Is there money hidden in your utility bill?",
-    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung (German utility-cost statement). It is checked for typical errors in seconds and your potential refund is calculated.",
+    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung – checked for typical errors in seconds, with your estimated refund.",
     "cta": "Check my bill",
     "priceNote": "First check free · full report once for €9.90, no subscription"
   },
@@ -102,12 +102,12 @@
         "a": "PDF files or photos (e.g. JPG or PNG) of your bill, up to 3 MB. It is best to upload only the actual utility-cost statement, not the entire correspondence."
       },
       {
-        "q": "What's the difference between Nebenkostenabrechnung and Betriebskostenabrechnung?",
+        "q": "Nebenkostenabrechnung or Betriebskostenabrechnung – what's the difference?",
         "a": "They are the same document: \"Nebenkostenabrechnung\" is the everyday term, \"Betriebskostenabrechnung\" is the legally correct term from the German Operating Costs Ordinance (BetrKV). Nebenkostencheck checks both terms the same way – you can upload your statement no matter which heading it uses."
       },
       {
         "q": "Is the Heizkostenabrechnung (heating-cost statement) checked too?",
-        "a": "Yes – if heating costs are part of your uploaded statement, they are checked against the Heating Costs Ordinance (HeizkV), for example whether at least 50% of the costs are allocated by consumption and whether a heat meter is used instead of a formula-based calculation. If your metering service provider issues the heating-cost statement as a separate document, you can upload it as a second, separate check – each check evaluates one file."
+        "a": "Yes – if heating costs are part of your uploaded statement, they're checked against the Heating Costs Ordinance (HeizkV) too, for example whether heating costs are allocated by consumption at all (§ 7 HeizkV requires at least 50%) and whether the heat quantity for hot water is measured with a heat meter instead of calculated by formula (§ 9 HeizkV). The check is built for your landlord's statement; a separate Heizkostenabrechnung from the metering service provider as its own document isn't supported for this."
       }
     ]
   },
