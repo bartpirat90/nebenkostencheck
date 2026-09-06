@@ -18,8 +18,8 @@ const s = StyleSheet.create({
     fontFamily: PDF_FONT,
     color: "#1A1A1A",
   },
+  // fontFamily wird von `page` vererbt – hier nur das Gewicht.
   betreff: {
-    fontFamily: PDF_FONT,
     fontWeight: "bold",
     marginTop: 6,
     marginBottom: 6,

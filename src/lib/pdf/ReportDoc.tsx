@@ -14,13 +14,13 @@ const s = StyleSheet.create({
   page: { paddingHorizontal: 48, paddingTop: 40, paddingBottom: 56, fontSize: 9.5, lineHeight: 1.4, fontFamily: PDF_FONT, color: "#111" },
   // Briefkopf
   header: { flexDirection: "row", alignItems: "center", marginBottom: 4 },
-  wordmark: { fontSize: 14, fontFamily: PDF_FONT, fontWeight: "bold", color: "#0C1016", marginLeft: 7, letterSpacing: -0.3 },
+  wordmark: { fontSize: 14, fontWeight: "bold", color: "#0C1016", marginLeft: 7, letterSpacing: -0.3 },
   eyebrow: { marginLeft: "auto", fontSize: 8, color: "#6B7280", letterSpacing: 0.5 },
   rule: { borderBottomWidth: 1, borderBottomColor: "#E5E7EB", marginTop: 8, marginBottom: 18 },
-  h1: { fontSize: 17, marginBottom: 8, fontFamily: PDF_FONT, fontWeight: "bold", color: "#0C1016" },
+  h1: { fontSize: 17, marginBottom: 8, fontWeight: "bold", color: "#0C1016" },
   summary: { marginBottom: 16, color: "#333" },
   item: { marginBottom: 12, paddingBottom: 12, borderBottom: "1pt solid #ddd" },
-  title: { fontSize: 12, fontFamily: PDF_FONT, fontWeight: "bold", marginBottom: 3 },
+  title: { fontSize: 12, fontWeight: "bold", marginBottom: 3 },
   meta: { color: "#555", marginBottom: 2 },
   footer: { position: "absolute", bottom: 28, left: 48, right: 48, fontSize: 8, color: "#9CA3AF", textAlign: "center" },
 });
