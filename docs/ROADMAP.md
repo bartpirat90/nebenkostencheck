@@ -78,6 +78,8 @@
 
 ## 💡 Offene Verbesserungen (nicht blockierend)
 
+- **Client-Payload weiter verkleinern:** `legal`/`notFound` sind seit 2026-09-06 aus dem `NextIntlClientProvider` raus (`src/i18n/serverOnly.ts`, ~8 KB pro Seite). Der größere Hebel ist noch offen: `src/app/[locale]/page.tsx` trägt `"use client"` für die ganze Startseite, dadurch wandern auch `faq`, `howItWorks`, `hero`, `meta` usw. (~6 KB) in jedes HTML. Lösung: Upload/Preview-State in eine Client-Insel ziehen und die Startseite als Server-Komponente rendern; zusätzlich den Provider pro Route-Segment scopen, damit die Rechtsseiten (die keine Client-Übersetzungen brauchen) gar keinen Message-Block mehr bekommen (~15 KB je Rechtsseite).
+- **Mobile-App und HEIC:** Die Web-API prüft Uploads seit 2026-09-06 per Magic Bytes und lässt nur PDF/JPEG/PNG/WebP durch. Der iOS-ImagePicker der Expo-App kann `image/heic` liefern (`mobile/src/app/upload.tsx` filtert nicht) → 400 `UNSUPPORTED_TYPE`. Vor einem iOS-Build: in der App nach JPEG konvertieren oder einen Hinweistext einbauen.
 - **Große Uploads (>3 MB) unterstützen:** Vercel kappt Serverless-Function-Bodies bei ~4,5 MB → echte Datei-Obergrenze aktuell ~3 MB. Für Nutzer mit großen mehrseitigen Scans/Fotos: **Direkt-Upload zu Vercel Blob** im Browser (umgeht die Body-Grenze), API bekommt nur die URL und lädt serverseitig. Eigenes Feature (brainstorming → plan), noch nicht gebaut. Bis dahin zeigt das Frontend bei zu großen Dateien eine freundliche deutsche Meldung.
 
 ---
