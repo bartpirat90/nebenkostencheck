@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { API_ERRORS, apiError, ApiErrorCode } from "@/lib/apiErrors";
+import { MAX_FILE_MB } from "@/lib/limits";
 import de from "../../messages/de.json";
 
 describe("API_ERRORS", () => {
@@ -28,8 +29,13 @@ describe("apiError", () => {
   });
 
   it("Status-Override ueberschreibt den Default", () => {
-    const res = apiError("UNKNOWN", 500);
+    expect(API_ERRORS.MISSING_ID[0]).toBe(400);
+    const res = apiError("MISSING_ID", 500);
     expect(res.status).toBe(500);
+  });
+
+  it("FILE_TOO_LARGE nennt das Limit in MB im Fallback-Text", () => {
+    expect(API_ERRORS.FILE_TOO_LARGE[1]).toContain(`${MAX_FILE_MB} MB`);
   });
 
   it("verwendet ansonsten den Default-Status des Codes", () => {

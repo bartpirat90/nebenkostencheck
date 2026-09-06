@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
+import { MAX_FILE_MB } from "@/lib/limits";
 
-/** Fehlercode + deutscher Fallback-Text + Default-Status. Der Client übersetzt anhand des Codes (apiErrors.*). */
+/**
+ * Fehlercode + deutscher Fallback-Text + Default-Status. Der Client übersetzt
+ * anhand des Codes (apiErrors.*); der Text greift nur, wenn ein Client den Code
+ * (noch) nicht kennt – daher muss er für sich allein verständlich sein.
+ */
 export const API_ERRORS = {
   MISSING_ID: [400, "Fehlende ID."],
   INVALID_REQUEST: [400, "Ungültige Anfrage."],
   NO_FILE: [400, "Keine Datei übermittelt."],
   UNSUPPORTED_TYPE: [400, "Nur PDF und Bilder werden unterstützt. Bitte lade deine Abrechnung als PDF oder Foto hoch."],
-  FILE_TOO_LARGE: [413, "Die Datei ist zu groß. Bitte lade nur die Nebenkostenabrechnung hoch."],
+  FILE_TOO_LARGE: [413, `Die Datei ist zu groß (max. ${MAX_FILE_MB} MB). Bitte lade nur die Nebenkostenabrechnung hoch.`],
   RATE_LIMITED: [429, "Zu viele Anfragen. Bitte versuche es später noch einmal."],
   DOCUMENT_TOO_LONG: [422, "Das Dokument ist zu umfangreich für die Prüfung. Bitte lade nur die Nebenkostenabrechnung hoch."],
   ANALYSIS_UNUSABLE: [502, "Die Analyse konnte nicht verarbeitet werden. Bitte erneut versuchen."],

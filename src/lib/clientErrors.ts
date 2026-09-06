@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { MAX_FILE_MB } from "@/lib/limits";
 
@@ -28,6 +29,10 @@ export function resolveApiError(
 /** Übersetzt eine API-Fehlerantwort; unbekannte Codes fallen auf den Server-Text zurück. */
 export function useApiErrorMessage() {
   const t = useTranslations("apiErrors");
-  return (body: { error?: string; code?: string } | null | undefined, fallback: string): string =>
-    resolveApiError(t, body, fallback);
+  // Stabile Referenz: die Funktion landet in useCallback-Dependency-Listen der Aufrufer.
+  return useCallback(
+    (body: { error?: string; code?: string } | null | undefined, fallback: string): string =>
+      resolveApiError(t, body, fallback),
+    [t]
+  );
 }

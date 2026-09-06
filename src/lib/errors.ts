@@ -1,9 +1,10 @@
-import { API_ERRORS, ApiErrorCode } from "@/lib/apiErrors";
+import { ApiErrorCode } from "@/lib/apiErrors";
 
 /**
  * Ordnet technische Fehlermeldungen (z.B. vom KI-Prüfdienst) einem der
- * generischen API-Fehlercodes zu. Einzige Quelle für die Match-Logik –
- * `classifyError` liest den deutschen Text darüber aus `API_ERRORS`.
+ * generischen API-Fehlercodes zu. Den Nutzertext liefert `apiError(code)`.
+ * Reihenfolge ist Absicht: "timed out" enthält kein "network", aber ein
+ * Timeout-Text kann "fetch" enthalten – Timeout also vor Netzwerk prüfen.
  */
 export function classifyErrorCode(message: string): ApiErrorCode {
   const msg = message.toLowerCase();
@@ -17,12 +18,4 @@ export function classifyErrorCode(message: string): ApiErrorCode {
     return "NETWORK";
   }
   return "UNKNOWN";
-}
-
-/**
- * Übersetzt technische Fehlermeldungen (z.B. vom KI-Prüfdienst) in
- * nutzerfreundliche deutsche Texte. Wird von allen API-Routen geteilt.
- */
-export function classifyError(message: string): string {
-  return API_ERRORS[classifyErrorCode(message)][1];
 }
