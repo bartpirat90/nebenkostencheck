@@ -2,9 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { ANALYSIS_SYSTEM_PROMPT, buildLetterPrompt } from "./prompts";
 import { AnalysisResult, LetterRequest } from "@/types";
 import { MOCK_ANALYSIS_RESULT, MOCK_LETTER } from "./mockData";
-
-// Testmodus: liefert Beispieldaten ohne (kostenpflichtigen) Claude-Aufruf.
-const MOCK = process.env.MOCK_ANALYSIS === "true";
+import { MOCK } from "./mock";
 
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzten API-Key) das Modul importieren kann, ohne zu werfen.

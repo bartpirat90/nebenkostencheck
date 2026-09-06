@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { AnalysisResult, StoredAnalysis } from "@/types";
+import { MOCK } from "./mock";
 
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzte Env-Variablen) das Modul importieren kann, ohne zu werfen.
@@ -31,13 +32,11 @@ export async function getAnalysis(id: string): Promise<StoredAnalysis | null> {
 }
 
 /**
- * Ob das volle Ergebnis ausgeliefert werden darf. In Produktion ausschließlich
- * nach Zahlung (`paid`). Im MOCK-Modus (`MOCK_ANALYSIS=true`, nur Preview/Demo)
- * immer offen, damit der komplette Flow ohne Bezahlung getestet werden kann.
- * Produktion (MOCK aus) bleibt damit voll gesperrt – kein Bezahl-Bypass.
+ * Ob das volle Ergebnis ausgeliefert werden darf: nach Zahlung (`paid`) oder
+ * im Testmodus (siehe mock.ts – in Production immer aus).
  */
 export function isUnlocked(record: StoredAnalysis): boolean {
-  return record.paid || process.env.MOCK_ANALYSIS === "true";
+  return record.paid || MOCK;
 }
 
 /** Setzt das paid-Flag (behält die Rest-TTL bei). Speichert optional die Kunden-E-Mail. */

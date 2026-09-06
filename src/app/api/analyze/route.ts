@@ -5,6 +5,7 @@ import { MAX_FILE_BYTES, MAX_FILE_MB, MAX_INPUT_TOKENS } from "@/lib/limits";
 import { storeAnalysis } from "@/lib/kv";
 import { classifyError } from "@/lib/errors";
 import { AnalysisResult, PreviewData } from "@/types";
+import { MOCK } from "@/lib/mock";
 
 export const maxDuration = 60;
 
@@ -19,7 +20,7 @@ function toPreview(id: string, r: AnalysisResult): PreviewData {
     errorTitles: errors.map((e) => e.title),
     hasDirect: errors.some((e) => e.category === "direct"),
     hasReview: errors.some((e) => e.category === "needs_review"),
-    mock: process.env.MOCK_ANALYSIS === "true",
+    mock: MOCK,
   };
 }
 
