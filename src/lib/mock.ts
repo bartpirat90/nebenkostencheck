@@ -4,9 +4,9 @@
  * Production hart abgeschaltet: Ein versehentlich kopiertes Env darf die
  * Bezahlschranke nicht aushebeln.
  */
-type MockEnv = Partial<Record<"MOCK_ANALYSIS" | "VERCEL_ENV", string>> & {
-  [key: string]: string | undefined;
-};
+// Bewusst nicht NodeJS.ProcessEnv: Next.js macht dort NODE_ENV zur Pflicht,
+// dann wären Test-Aufrufe wie isMockEnabled({}) nicht typisierbar.
+type MockEnv = Record<string, string | undefined>;
 
 export function isMockEnabled(env: MockEnv = process.env): boolean {
   return env.MOCK_ANALYSIS === "true" && env.VERCEL_ENV !== "production";
