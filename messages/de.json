@@ -176,6 +176,14 @@
       "unsicher": { "label": "Unsicher", "desc": "Verdacht, nur mit Belegen klärbar" }
     }
   },
+  "ergebnis": {
+    "loading": "Dein Bericht wird geladen…",
+    "noId": "Keine Ergebnis-ID gefunden.",
+    "notFound": "Ergebnis nicht gefunden oder abgelaufen.",
+    "pending": "Deine Zahlung wird noch verarbeitet. Das dauert normalerweise nur wenige Sekunden.",
+    "retry": "Erneut prüfen",
+    "home": "Zur Startseite"
+  },
   "letter": {
     "titleObjection": "Widerspruch erstellen",
     "titleReview": "Belegeinsicht anfordern",

@@ -176,6 +176,14 @@
       "unsicher": { "label": "Uncertain", "desc": "suspicion, only verifiable with documents" }
     }
   },
+  "ergebnis": {
+    "loading": "Loading your report…",
+    "noId": "No result ID found.",
+    "notFound": "Result not found or expired.",
+    "pending": "Your payment is still being processed. This usually takes only a few seconds.",
+    "retry": "Check again",
+    "home": "Back to home"
+  },
   "letter": {
     "titleObjection": "Create objection",
     "titleReview": "Request document inspection",

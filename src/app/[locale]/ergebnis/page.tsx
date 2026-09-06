@@ -2,76 +2,115 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import ResultView from "@/components/ResultView";
 import Logo from "@/components/Logo";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { AnalysisResult } from "@/types";
 
+const POLL_ATTEMPTS = 5;
+const POLL_DELAY_MS = 1500;
+
 function ErgebnisInner() {
+  const t = useTranslations("ergebnis");
+  const router = useRouter();
   const params = useSearchParams();
   const id = params.get("id");
+  const sessionId = params.get("session_id");
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [attempt, setAttempt] = useState(0); // Retry-Button erhöht → Effekt läuft erneut
 
   useEffect(() => {
     if (!id) {
-      setError("Keine Ergebnis-ID gefunden.");
+      setError(t("noId"));
       setLoading(false);
       return;
     }
     let cancelled = false;
-    // Webhook kann minimal verzögert sein → bis zu 5x mit kurzer Pause versuchen
+    setLoading(true);
+    setError(null);
+    setPending(false);
+    const query = new URLSearchParams({ id });
+    if (sessionId) query.set("session_id", sessionId);
+
+    // Webhook kann minimal verzögert sein → mehrfach mit kurzer Pause versuchen.
+    // Die result-Route fragt bei session_id zusätzlich Stripe direkt (Fallback).
     (async () => {
-      for (let i = 0; i < 5; i++) {
-        const res = await fetch(`/api/result?id=${id}`);
+      for (let i = 0; i < POLL_ATTEMPTS; i++) {
+        const res = await fetch(`/api/result?${query}`);
+        if (cancelled) return;
         if (res.ok) {
-          if (!cancelled) {
-            setResult(await res.json());
-            setLoading(false);
-          }
+          setResult(await res.json());
+          setLoading(false);
           return;
         }
         if (res.status !== 402) {
-          if (!cancelled) {
-            setError("Ergebnis nicht gefunden oder abgelaufen.");
-            setLoading(false);
-          }
+          setError(t("notFound"));
+          setLoading(false);
           return;
         }
-        await new Promise((r) => setTimeout(r, 1500));
+        await new Promise((r) => setTimeout(r, POLL_DELAY_MS));
       }
       if (!cancelled) {
-        setError("Freischaltung wird noch verarbeitet. Bitte Seite in einem Moment neu laden.");
+        setPending(true);
         setLoading(false);
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, [id]);
+    // t ist stabil pro Locale; attempt triggert bewusst einen erneuten Lauf.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, sessionId, attempt]);
 
-  if (loading) return <p className="text-center text-muted py-20">Dein Bericht wird geladen…</p>;
-  if (error || !result) return <p className="text-center text-[#FCA5A5] py-20">{error}</p>;
-  return <ResultView result={result} id={id!} onReset={() => (window.location.href = "/")} />;
+  if (loading) return <p className="text-center text-muted py-20">{t("loading")}</p>;
+
+  if (pending) {
+    return (
+      <div className="text-center py-20 space-y-6">
+        <p className="text-muted">{t("pending")}</p>
+        <button
+          onClick={() => setAttempt((a) => a + 1)}
+          className="rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-6 text-sm transition-colors"
+        >
+          {t("retry")}
+        </button>
+      </div>
+    );
+  }
+
+  if (error || !result) {
+    return (
+      <div className="text-center py-20 space-y-6">
+        <p className="text-[#FCA5A5]">{error ?? t("notFound")}</p>
+        <Link href="/" className="inline-block text-sm text-muted underline hover:text-fg">
+          {t("home")}
+        </Link>
+      </div>
+    );
+  }
+
+  return <ResultView result={result} id={id!} onReset={() => router.push("/")} />;
 }
 
 export default function ErgebnisPage() {
+  const t = useTranslations("ergebnis");
   return (
     <main className="min-h-[100dvh] bg-ink">
-      {/* Navigation */}
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-        <Link href="/" aria-label="Zur Startseite">
+        <Link href="/" aria-label={t("home")}>
           <Logo />
         </Link>
       </nav>
 
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <Suspense fallback={<p className="text-center text-muted py-20">Laden…</p>}>
+        <Suspense fallback={<p className="text-center text-muted py-20">{t("loading")}</p>}>
           <ErgebnisInner />
         </Suspense>
       </div>
     </main>
   );
 }
-

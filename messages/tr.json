@@ -177,6 +177,14 @@
       "unsicher": { "label": "Belirsiz", "desc": "şüphe, yalnızca belgelerle doğrulanabilir" }
     }
   },
+  "ergebnis": {
+    "loading": "Raporunuz yükleniyor…",
+    "noId": "Sonuç kimliği bulunamadı.",
+    "notFound": "Sonuç bulunamadı veya süresi doldu.",
+    "pending": "Ödemeniz hâlâ işleniyor. Bu genellikle yalnızca birkaç saniye sürer.",
+    "retry": "Yeniden kontrol et",
+    "home": "Ana sayfaya dön"
+  },
   "letter": {
     "titleObjection": "İtiraz oluştur",
     "titleReview": "Belge incelemesi iste",
