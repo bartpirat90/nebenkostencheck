@@ -5,7 +5,6 @@ import { localeUrl } from "@/lib/seo";
 const PAGES = ["", "/impressum", "/datenschutz", "/agb"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
   return PAGES.flatMap((page) => {
     // hreflang-Alternates für diese Seite über alle Sprachen.
     const languages: Record<string, string> = {};
@@ -13,7 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     return routing.locales.map((l) => ({
       url: localeUrl(l, page),
-      lastModified: now,
+      // Kein lastModified: ein Build-Zeitstempel waere ein falsches Frische-Signal,
+      // da sich der Seiteninhalt beim Build nicht zwangslaeufig geaendert hat.
       changeFrequency: (page === "" ? "monthly" : "yearly") as "monthly" | "yearly",
       priority: page === "" ? 1 : 0.3,
       alternates: { languages },

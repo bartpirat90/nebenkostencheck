@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -13,6 +13,14 @@ const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+// themeColor gehoert seit Next 15 in ein eigenes viewport-Export, nicht ins
+// metadata-Objekt – sonst warnt Next beim Build.
+export const viewport: Viewport = {
+  themeColor: "#0C1016",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export async function generateMetadata({
   params,
