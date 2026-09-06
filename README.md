@@ -40,7 +40,7 @@ Die Bezahlinhalte werden **serverseitig** zurückgehalten, bis die Zahlung per S
 | Styling | Tailwind CSS v3 |
 | KI | Anthropic Claude (`claude-sonnet-4-6`) via `@anthropic-ai/sdk`, mit Prompt-Caching + Retry/Backoff |
 | Speicher | Vercel KV / Upstash Redis (`@upstash/redis`), 24 h TTL unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener SEPA-Zahlung |
-| Zahlung | Stripe Checkout + Webhook (`stripe`, `@stripe/stripe-js`) |
+| Zahlung | Stripe Checkout + Webhook (`stripe`, serverseitig; kein Client-SDK nötig) |
 | PDF | `@react-pdf/renderer` (serverseitig) |
 | Deployment | Vercel (Pro für kommerziellen Betrieb erforderlich) |
 
@@ -190,7 +190,7 @@ docs/
 ## Verifikation
 
 ```bash
-npx tsc --noEmit     # Typprüfung (0 Fehler erwartet)
+npx tsc --noEmit     # Typprüfung (0 Fehler erwartet; auf frischem Clone vorher einmal `npm run build`, das erzeugt .next/types)
 npm test             # Vitest (aktuell 15 Dateien / 80 Tests)
 npm run build        # Production-Build (✓ Compiled successfully)
 ```

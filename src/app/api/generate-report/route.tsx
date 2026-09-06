@@ -34,6 +34,6 @@ export async function GET(req: NextRequest) {
   } catch (err: unknown) {
     console.error("Report error:", err instanceof Error ? err.stack ?? err.message : String(err));
     const message = err instanceof Error ? err.message : "";
-    return apiError(classifyErrorCode(message), 500);
+    return apiError(classifyErrorCode(message));
   }
 }

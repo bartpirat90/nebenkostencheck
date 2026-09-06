@@ -56,6 +56,6 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : "";
     // Stack statt ganzes Objekt: nodemailer-Fehler tragen die Empfängeradresse.
     console.error("send-pdf error:", err instanceof Error ? err.stack ?? message : String(err));
-    return apiError(classifyErrorCode(message), 500);
+    return apiError(classifyErrorCode(message));
   }
 }

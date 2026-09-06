@@ -136,7 +136,7 @@
     "NOT_UNLOCKED": "Kilidi açılmadı.",
     "NO_MATCHING_ERRORS": "Bu yazı için uygun bulgu yok.",
     "LETTER_NOT_FOUND": "Yazı bulunamadı. Lütfen yeniden oluşturun.",
-    "LETTER_RATE_LIMITED": "Çok fazla yazı oluşturuldu. Lütfen mevcut PDF'yi indirin veya yarın tekrar deneyin.",
+    "LETTER_RATE_LIMITED": "Çok fazla yazı oluşturuldu. Lütfen yarın tekrar deneyin.",
     "SEND_RATE_LIMITED": "Çok fazla gönderim yapıldı. Lütfen bunun yerine PDF'yi indirin.",
     "CHECKOUT_RATE_LIMITED": "Çok fazla ödeme denemesi. Lütfen birkaç dakika sonra tekrar deneyin.",
     "CHECKOUT_FAILED": "Ödeme başlatılamadı.",

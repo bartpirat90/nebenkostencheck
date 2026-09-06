@@ -59,7 +59,8 @@ export async function POST(req: NextRequest) {
       client_reference_id: id,
       locale: stripeLocale(locale),
       success_url: `${base}${prefix}/ergebnis?id=${id}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${base}${prefix}/?canceled=1&id=${id}`,
+      // `/en/?…` würde Next erst auf `/en?…` umleiten – daher ohne Trailing-Slash.
+      cancel_url: `${base}${prefix || "/"}?canceled=1&id=${id}`,
     });
 
     return NextResponse.json({ url: session.url });

@@ -2,6 +2,11 @@ import { describe, expect, it } from "vitest";
 import { API_ERRORS, apiError, ApiErrorCode } from "@/lib/apiErrors";
 import { MAX_FILE_MB } from "@/lib/limits";
 import de from "../../messages/de.json";
+import en from "../../messages/en.json";
+import tr from "../../messages/tr.json";
+import ar from "../../messages/ar.json";
+import ru from "../../messages/ru.json";
+import uk from "../../messages/uk.json";
 
 describe("API_ERRORS", () => {
   it("jeder Eintrag hat einen Status zwischen 400 und 599 und nicht-leeren Text", () => {
@@ -12,10 +17,14 @@ describe("API_ERRORS", () => {
     }
   });
 
-  it("jeder ApiErrorCode ist als Key in messages/de.json apiErrors vorhanden", () => {
-    const apiErrors = (de as { apiErrors?: Record<string, string> }).apiErrors ?? {};
-    for (const code of Object.keys(API_ERRORS)) {
-      expect(apiErrors, `apiErrors.${code} fehlt in de.json`).toHaveProperty(code);
+  it("jeder ApiErrorCode ist in allen sechs Sprachdateien unter apiErrors vorhanden", () => {
+    const files = { de, en, tr, ar, ru, uk } as Record<string, { apiErrors?: Record<string, string> }>;
+    for (const [locale, messages] of Object.entries(files)) {
+      const apiErrors = messages.apiErrors ?? {};
+      for (const code of Object.keys(API_ERRORS)) {
+        expect(apiErrors, `apiErrors.${code} fehlt in ${locale}.json`).toHaveProperty(code);
+        expect(apiErrors[code].trim().length, `apiErrors.${code} leer in ${locale}.json`).toBeGreaterThan(0);
+      }
     }
   });
 });

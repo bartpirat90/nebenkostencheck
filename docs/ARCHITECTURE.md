@@ -109,7 +109,7 @@ Alle Routen liegen unter `src/app/api/*` (nicht unter `[locale]/` — API-Routen
 | `/api/generate-report` | GET | Detailbericht → PDF, paid-gated | `REPORT_PER_IP_PER_HOUR` (30/h) pro IP |
 | `/api/send-pdf` | POST | Gespeichertes Schreiben per Mail versenden, paid-gated | `SEND_PDF_PER_ID_PER_DAY` (5/d) + `SEND_PDF_PER_IP_PER_DAY` (20/d) |
 
-Alle Fenster sind Sliding-Windows: ein Schlüssel kann durch die Fenster-Interpolation in Grenzfällen bis zu knapp dem doppelten Limit im Fenster nachwirken — bewusst in Kauf genommen, da die Limits ohnehin großzügig gegen Kostenmissbrauch (nicht gegen einzelne Nutzer) gesetzt sind.
+Alle Fenster sind Sliding-Windows (Upstash): das vorherige Fenster wird zeitanteilig eingerechnet, das Limit wird also nie überschritten, nur leicht ungenau abgegrenzt. Der Upstash-Schlüssel selbst lebt bis zu zwei Fensterlängen (relevant für die Datenschutzerklärung: IP-Zähler max. 48 h).
 
 ---
 
@@ -121,7 +121,7 @@ Alle Fenster sind Sliding-Windows: ein Schlüssel kann durch die Fenster-Interpo
 - **X-Frame-Options: DENY**, **X-Content-Type-Options: nosniff**
 - **Referrer-Policy: strict-origin-when-cross-origin** — die Ergebnis-URL trägt `?id=<uuid>`, die nie an Dritte durchgereicht werden soll
 - **Permissions-Policy** — sperrt Kamera/Mikrofon/Geolocation/Payment
-- **Strict-Transport-Security** — `max-age=63072000; includeSubDomains`
+- **Strict-Transport-Security** — `max-age=63072000` (ohne `includeSubDomains`, damit IONOS-Subdomains wie Webmail nicht mit erzwungen werden; nachrüstbar)
 
 ---
 

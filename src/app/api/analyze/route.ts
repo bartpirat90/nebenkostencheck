@@ -76,6 +76,6 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : "";
     // Stack statt ganzes Objekt: API-Fehlerobjekte können Request-Inhalte tragen.
     console.error("Analysis error:", err instanceof Error ? err.stack ?? message : String(err));
-    return apiError(classifyErrorCode(message), 500);
+    return apiError(classifyErrorCode(message));
   }
 }

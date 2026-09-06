@@ -135,7 +135,7 @@
     "NOT_UNLOCKED": "Not unlocked.",
     "NO_MATCHING_ERRORS": "There are no matching findings for this letter.",
     "LETTER_NOT_FOUND": "Letter not found. Please create it again.",
-    "LETTER_RATE_LIMITED": "Too many letters created. Please download the existing PDF or try again tomorrow.",
+    "LETTER_RATE_LIMITED": "Too many letters created. Please try again tomorrow.",
     "SEND_RATE_LIMITED": "Too many emails sent. Please download the PDF instead.",
     "CHECKOUT_RATE_LIMITED": "Too many payment attempts. Please try again in a few minutes.",
     "CHECKOUT_FAILED": "Payment could not be started.",

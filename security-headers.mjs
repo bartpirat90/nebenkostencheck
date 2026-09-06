@@ -20,6 +20,6 @@ export function securityHeaders(isDev) {
     // Ergebnis-URL trägt ?id=<uuid> - nie an Dritte durchreichen.
     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
     { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
-    { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+    { key: "Strict-Transport-Security", value: "max-age=63072000" },
   ];
 }

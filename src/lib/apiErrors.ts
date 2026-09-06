@@ -20,7 +20,7 @@ export const API_ERRORS = {
   NOT_UNLOCKED: [402, "Nicht freigeschaltet."],
   NO_MATCHING_ERRORS: [400, "Für dieses Schreiben liegen keine passenden Punkte vor."],
   LETTER_NOT_FOUND: [404, "Schreiben nicht gefunden. Bitte erstelle es erneut."],
-  LETTER_RATE_LIMITED: [429, "Zu viele Schreiben erstellt. Bitte lade das vorhandene PDF herunter oder versuche es morgen erneut."],
+  LETTER_RATE_LIMITED: [429, "Zu viele Schreiben erstellt. Bitte versuche es morgen erneut."],
   SEND_RATE_LIMITED: [429, "Zu viele Sendungen. Bitte lade das PDF stattdessen herunter."],
   CHECKOUT_RATE_LIMITED: [429, "Zu viele Zahlungsversuche. Bitte in ein paar Minuten erneut versuchen."],
   CHECKOUT_FAILED: [500, "Zahlung konnte nicht gestartet werden."],

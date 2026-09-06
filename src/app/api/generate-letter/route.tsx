@@ -80,6 +80,6 @@ export async function POST(req: NextRequest) {
     // Stack statt ganzes Objekt: API-Fehlerobjekte können Request-Inhalte tragen.
     console.error("Letter generation error:", err instanceof Error ? err.stack ?? err.message : String(err));
     const message = err instanceof Error ? err.message : "";
-    return apiError(classifyErrorCode(message), 500);
+    return apiError(classifyErrorCode(message));
   }
 }
