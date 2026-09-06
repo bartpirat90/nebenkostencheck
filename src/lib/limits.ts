@@ -29,3 +29,6 @@ export const SEND_PDF_PER_ID_PER_DAY = 5;
 
 /** PDF-Mailversand: pro IP und Tag. */
 export const SEND_PDF_PER_IP_PER_DAY = 20;
+
+/** Stripe-Session-Fallback in /api/result (je ein Stripe-API-Call): pro IP und Stunde. */
+export const RESULT_FALLBACK_PER_IP_PER_HOUR = 20;

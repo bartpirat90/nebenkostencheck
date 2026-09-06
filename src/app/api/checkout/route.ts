@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnalysis } from "@/lib/kv";
+import { getAnalysis, getAnalysisTtl } from "@/lib/kv";
 import { stripe } from "@/lib/stripe";
+
+/** Lebensdauer der Checkout-Session: Stripe-Minimum 30 min + Puffer. */
+const SESSION_LIFETIME_S = 30 * 60 + 60;
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,12 +18,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Die Session darf den Record nicht überleben: Wer erst nach dem Ablauf
+    // zahlt, bekäme nichts. Also nur starten, wenn genug Rest-TTL da ist.
+    const remaining = await getAnalysisTtl(id);
+    if (remaining >= 0 && remaining < SESSION_LIFETIME_S + 60) {
+      return NextResponse.json(
+        { error: "Analyse läuft gleich ab. Bitte lade die Abrechnung erneut hoch." },
+        { status: 410 }
+      );
+    }
+
     const base = process.env.NEXT_PUBLIC_BASE_URL!;
     const session = await stripe().checkout.sessions.create({
       mode: "payment",
-      // Stripe-Minimum 30 min. Verhindert Zahlungen, nachdem der 24-h-Record
-      // in Redis abgelaufen ist (Session lebt sonst standardmäßig 24 h).
-      expires_at: Math.floor(Date.now() / 1000) + 30 * 60 + 60,
+      // Stripe-Minimum 30 min (+60 s Puffer gegen Uhrenabweichung).
+      expires_at: Math.floor(Date.now() / 1000) + SESSION_LIFETIME_S,
       line_items: [
         {
           price_data: {

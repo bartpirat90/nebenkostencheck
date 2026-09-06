@@ -57,6 +57,22 @@ export async function markPaid(id: string, customerEmail?: string): Promise<bool
   return true;
 }
 
+/** Rest-Lebensdauer in Sekunden; -2 wenn der Record nicht (mehr) existiert. */
+export async function getAnalysisTtl(id: string): Promise<number> {
+  return redis().ttl(key(id));
+}
+
+/**
+ * Hebt die Lebensdauer auf mindestens `seconds`, ohne den Inhalt zu ändern –
+ * z. B. während eine SEPA-/Klarna-Zahlung noch aussteht, damit der Record
+ * nicht vor dem `async_payment_succeeded` verschwindet.
+ */
+export async function extendAnalysisTtl(id: string, seconds: number): Promise<void> {
+  const remaining = await redis().ttl(key(id));
+  if (remaining < 0) return; // kein Ablauf gesetzt oder Record weg
+  if (remaining < seconds) await redis().expire(key(id), seconds);
+}
+
 const letterKey = (id: string, type: LetterType) => `analysis:${id}:letter:${type}`;
 
 /**

@@ -11,6 +11,9 @@ describe("sessionUnlocksAnalysis", () => {
   it("unlocks a paid session for its own analysis id", () => {
     expect(sessionUnlocksAnalysis(base, "abc")).toBe(true);
   });
+  it("unlocks a 100% promo-code session (no_payment_required)", () => {
+    expect(sessionUnlocksAnalysis({ ...base, payment_status: "no_payment_required" }, "abc")).toBe(true);
+  });
   it("refuses unpaid sessions (Klarna/SEPA pending)", () => {
     expect(sessionUnlocksAnalysis({ ...base, payment_status: "unpaid" }, "abc")).toBe(false);
   });

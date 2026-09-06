@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAnalysis, isUnlocked } from "@/lib/kv";
 import { isSessionId, unlockFromStripeSession } from "@/lib/stripe";
+import { checkLimit, getClientIp } from "@/lib/ratelimit";
+import { RESULT_FALLBACK_PER_IP_PER_HOUR } from "@/lib/limits";
+
+/** Stripe meldet unbekannte Session-IDs so – kein Server-Fehler, nur Rauschen. */
+function isResourceMissing(err: unknown): boolean {
+  return (err as { code?: string })?.code === "resource_missing";
+}
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
@@ -14,11 +21,18 @@ export async function GET(req: NextRequest) {
   // Fallback, falls der Webhook (noch) nicht durch ist: Stripe direkt fragen.
   // Die session_id kommt aus der success_url; verifiziert wird server-zu-Stripe.
   const sessionId = req.nextUrl.searchParams.get("session_id");
-  if (!isUnlocked(record) && isSessionId(sessionId)) {
+  // Jeder Fallback ist ein Stripe-API-Call → pro IP begrenzen, sonst kann
+  // jemand mit einer Gratis-Analyse-ID die Stripe-Quota leerlaufen lassen.
+  if (
+    !isUnlocked(record) &&
+    isSessionId(sessionId) &&
+    (await checkLimit("rl:result:session", RESULT_FALLBACK_PER_IP_PER_HOUR, "1 h", getClientIp(req)))
+  ) {
     try {
       if (await unlockFromStripeSession(id, sessionId)) record = await getAnalysis(id);
     } catch (err: unknown) {
-      console.error("Stripe session fallback failed:", err instanceof Error ? err.message : err);
+      if (isResourceMissing(err)) console.warn("Stripe session fallback: unbekannte Session");
+      else console.error("Stripe session fallback failed:", err instanceof Error ? err.message : err);
     }
   }
 

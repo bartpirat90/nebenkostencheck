@@ -48,6 +48,8 @@ function ErgebnisInner() {
             setLoading(false);
             return;
           }
+          // Serverfehler (z. B. Redis-Störung) ist nicht „abgelaufen" → Retry anbieten.
+          if (res.status >= 500) break;
           if (res.status !== 402) {
             setError(t("notFound"));
             setLoading(false);

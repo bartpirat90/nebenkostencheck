@@ -17,13 +17,18 @@ export function isSessionId(v: unknown): v is string {
 /**
  * Reine Regel: Eine Session schaltet eine Analyse nur frei, wenn sie wirklich
  * bezahlt ist (Klarna/SEPA liefern `completed` auch bei `unpaid`) UND zu genau
- * dieser Analyse gehört.
+ * dieser Analyse gehört. `no_payment_required` = 100 %-Gutschein, zählt als bezahlt.
  */
+const SETTLED: ReadonlySet<Stripe.Checkout.Session["payment_status"]> = new Set([
+  "paid",
+  "no_payment_required",
+]);
+
 export function sessionUnlocksAnalysis(
   session: Stripe.Checkout.Session,
   analysisId: string
 ): boolean {
-  if (session.payment_status !== "paid") return false;
+  if (!SETTLED.has(session.payment_status)) return false;
   const owner = session.metadata?.analysisId ?? session.client_reference_id;
   return owner === analysisId;
 }
