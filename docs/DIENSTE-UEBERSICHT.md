@@ -9,7 +9,7 @@
 | # | Dienst | Website (Login/Dashboard) | Wofür | Status |
 |---|--------|---------|-------|--------|
 | 1 | **Anthropic (Claude)** | [console.anthropic.com](https://console.anthropic.com) | Die KI-Analyse der Abrechnung | ✅ Konto + Karte + API-Key |
-| 2 | **Upstash (Redis/KV)** | [console.upstash.com](https://console.upstash.com) | Zwischenspeicher für Ergebnisse (24 h) | ✅ Datenbank angelegt |
+| 2 | **Upstash (Redis/KV)** | [console.upstash.com](https://console.upstash.com) | Zwischenspeicher für Ergebnisse (24 h unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener SEPA-Zahlung) | ✅ Datenbank angelegt |
 | 3 | **Stripe** | [dashboard.stripe.com](https://dashboard.stripe.com) | Zahlungsabwicklung (9,90 €) | ✅ Testmodus · ⏳ Live offen |
 | 4 | **Stripe CLI** | [docs.stripe.com/stripe-cli](https://docs.stripe.com/stripe-cli) | Webhook-Tests auf dem PC | ✅ installiert (nur Entwicklung) |
 | 5 | **IONOS** | [login.ionos.de](https://login.ionos.de) | Domain + geschäftliche E-Mail | ⏳ Domain registriert, Postfach offen |
@@ -27,7 +27,7 @@
 - **Status:** Konto erstellt, Karte hinterlegt, API-Key erzeugt. Für Live ggf. Guthaben aufstocken.
 
 ### 2. Upstash — der Zwischenspeicher
-- **Zweck:** Speichert das volle Analyse-Ergebnis serverseitig unter einer ID (24 h, dann Auto-Löschung). Macht die Paywall sicher.
+- **Zweck:** Speichert das volle Analyse-Ergebnis serverseitig unter einer ID — 24 h Auto-Löschung unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener SEPA-Zahlung. Macht die Paywall sicher.
 - **Liefert:** `KV_REST_API_URL`, `KV_REST_API_TOKEN`
 - **Kosten:** Kostenloser Tarif reicht locker.
 - **Status:** Datenbank „nebenkostencheck" (Region Frankfurt) angelegt.
@@ -76,7 +76,7 @@ Alle Keys stehen lokal in `.env.local` (gitignored) und müssen später **identi
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe | Test ✅ | Live ⏳ |
 | `STRIPE_WEBHOOK_SECRET` | Stripe (Webhook) | Test ✅ | Live ⏳ |
 | `NEXT_PUBLIC_BASE_URL` | deine Domain | localhost ✅ | https://nebenkostencheck24.de ⏳ |
-| `MOCK_ANALYSIS` | — (nur Testschalter) | ✅ true | **weglassen / false** |
+| `MOCK_ANALYSIS` | — (nur Testschalter, in Vercel-Production ohnehin hart abgeschaltet) | ✅ true | **weglassen / false** |
 
 ---
 

@@ -9,7 +9,7 @@ Automatisierte Prüfung deutscher Nebenkostenabrechnungen: Abrechnung hochladen,
 
 ## Geschäftsmodell
 
-- **Kostenlose Vorschau** (Teaser): Anzahl gefundener Auffälligkeiten, geschätztes Erstattungspotenzial in €, Fehler-Titel und eine Wasserzeichen-Briefvorschau.
+- **Kostenlose Vorschau** (Teaser): Anzahl gefundener Auffälligkeiten, geschätztes Erstattungspotenzial in €, Fehler-Titel und die nächsten Schritte (Widerspruch- und/oder Belegeinsicht-Schreiben verfügbar).
 - **Einmalzahlung 9,90 €** schaltet das vollständige Paket frei: Detailbericht (alle Fehler mit Begründung, Beleg, Rechtsgrundlage, Handlungsempfehlung) + Schreiben als PDF.
 - **Kein Abo, kein Login.** Zahlung über Stripe Checkout (Karte, Klarna, Apple/Google Pay u. a.).
 
@@ -26,7 +26,7 @@ Die Bezahlinhalte werden **serverseitig** zurückgehalten, bis die Zahlung per S
 - **Detailbericht** — gefundene Fehler mit Rechtsgrundlage, Erstattungspotenzial, Handlungsempfehlung; als PDF herunterladbar
 - **Briefgenerator (PDF)** — Widerspruch, Belegeinsicht-Aufforderung (§ 259 BGB) oder **beides kombiniert in einem Schreiben**
 - **Lade-Animationen** — sequenzielle Aktivitätsanzeige bei Analyse und PDF-Erstellung
-- **Testmodus** — `MOCK_ANALYSIS=true` liefert Beispieldaten ohne KI-Aufruf (0 Cent), für UI-/Flow-Tests
+- **Testmodus** — `MOCK_ANALYSIS=true` liefert Beispieldaten ohne KI-Aufruf (0 Cent), für UI-/Flow-Tests; in Vercel-Production hart abgeschaltet (`VERCEL_ENV=production`), ein versehentlich gesetztes Flag kann die Paywall dort nicht aushebeln
 - **Rechtsseiten** — Impressum, Datenschutz, AGB (Roh-Vorlagen, vor Live-Betrieb prüfen lassen)
 
 ---
@@ -39,7 +39,7 @@ Die Bezahlinhalte werden **serverseitig** zurückgehalten, bis die Zahlung per S
 | Sprache | TypeScript |
 | Styling | Tailwind CSS v3 |
 | KI | Anthropic Claude (`claude-sonnet-4-6`) via `@anthropic-ai/sdk`, mit Prompt-Caching + Retry/Backoff |
-| Speicher | Vercel KV / Upstash Redis (`@upstash/redis`), 24 h TTL |
+| Speicher | Vercel KV / Upstash Redis (`@upstash/redis`), 24 h TTL unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener SEPA-Zahlung |
 | Zahlung | Stripe Checkout + Webhook (`stripe`, `@stripe/stripe-js`) |
 | PDF | `@react-pdf/renderer` (serverseitig) |
 | Deployment | Vercel (Pro für kommerziellen Betrieb erforderlich) |
@@ -129,7 +129,7 @@ Vor dem echten Launch erforderlich:
 - [x] Betreiberdaten in Impressum/Datenschutz/AGB eingetragen (Einzelunternehmer, Kleinunternehmer § 19 UStG) — **offen:** geschäftliche E-Mail (Platzhalter im Code) + eigene Domain
 - [ ] **Rechtstexte** final prüfen lassen (anwaltlich/Generator), danach ⚠️-Entwurf-Banner auf den Seiten entfernen
 - [ ] **Gewerbe / Umsatzsteuer** klären (Kleinunternehmerregelung etc.)
-- [ ] `MOCK_ANALYSIS` in Produktion **nicht** setzen (bzw. `false`)
+- [ ] `MOCK_ANALYSIS` in Produktion **nicht** setzen (bzw. `false`) — in Vercel-Production (`VERCEL_ENV=production`) ist das Flag ohnehin hart deaktiviert
 
 ---
 
@@ -171,7 +171,7 @@ src/
   lib/
     claude.ts                   # Anthropic-Client: analyzeStatement, generateLetter (+Mock)
     prompts.ts                  # System-Prompt (Analyse) + buildLetterPrompt
-    kv.ts                       # KV-Store: storeAnalysis, getAnalysis, markPaid (24h TTL)
+    kv.ts                       # KV-Store: storeAnalysis, getAnalysis, markPaid (24h TTL unbezahlt, 7d nach Kauf, 14d bei offener SEPA-Zahlung)
     errors.ts                   # classifyError: technische Fehler → deutsche Meldungen
     mockData.ts                 # Beispieldaten für MOCK_ANALYSIS
     pdf/LetterDoc.tsx           # PDF-Layout: Brief
@@ -189,10 +189,9 @@ docs/
 
 ## Verifikation
 
-Kein automatisiertes Test-Framework. Verifikation über:
-
 ```bash
 npx tsc --noEmit     # Typprüfung (0 Fehler erwartet)
+npm test             # Vitest (aktuell 15 Dateien / 80 Tests)
 npm run build        # Production-Build (✓ Compiled successfully)
 ```
 
@@ -200,7 +199,7 @@ npm run build        # Production-Build (✓ Compiled successfully)
 
 ## Unterstützte Dateitypen
 
-PDF (empfohlen, beste Erkennung) · JPG/JPEG · PNG · WebP · max. 10 MB
+PDF (empfohlen, beste Erkennung) · JPG/JPEG · PNG · WebP · max. 3 MB
 
 ---
 

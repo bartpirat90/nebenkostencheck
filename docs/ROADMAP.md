@@ -1,6 +1,6 @@
 # Roadmap & Projektstand
 
-**Stand:** 2026-06-07 · Branch `monetarisierung` (auf GitHub, NICHT nach `main` gemergt). Demo voll funktionsfähig & teilbar:
+**Stand:** 2026-09-06 · Branch `monetarisierung` (auf GitHub, NICHT nach `main` gemergt). Demo voll funktionsfähig & teilbar:
 `https://nebenkostencheck-git-monetarisierung-bartpirat-s-projects.vercel.app`
 
 ---
@@ -9,7 +9,7 @@
 
 **Produkt & Monetarisierung**
 - Komplette App: Upload → Claude-Analyse → Teaser-Paywall → Stripe-Zahlung (9,90 €) → voller Bericht + PDFs
-- Serverseitige Paywall (Vercel KV, 24 h TTL); Stripe Checkout + Webhook (Zahlungs-Wahrheit)
+- Serverseitige Paywall (Vercel KV, 24 h TTL unbezahlt / 7 Tage nach Kauf / 14 Tage bei offener SEPA-Zahlung); Stripe Checkout + Webhook (Zahlungs-Wahrheit)
 - PDF-Generierung (Detailbericht, Widerspruch, Belegeinsicht, kombiniertes Schreiben)
 - **Mail-Versand:** „Per Mail an Vermieter" (mailto) + „PDF an meine E-Mail" (IONOS-SMTP)
 - Lade-Animationen (Analyse + PDF-Erstellung)
@@ -18,7 +18,7 @@
 **Infrastruktur**
 - KI: Anthropic Claude · Speicher: Upstash KV · Zahlung: Stripe (Testmodus) · Hosting: Vercel (Preview) · Mail: IONOS
 - Domain `nebenkostencheck24.de` mit Vercel verbunden (A-Record, SSL aktiv; Mail/MX intakt)
-- Rechtsseiten (Impressum/Datenschutz/AGB) als Entwurf mit Betreiberdaten, Kleinunternehmer-Hinweis
+- Rechtsseiten (Impressum/Datenschutz/AGB) als Entwurf, Geschäftsform Einzelunternehmer/Kleinunternehmer § 19 UStG hinterlegt (Name/Anschrift noch Platzhalter, s. u.)
 
 **Mobile-Optimierung** (2026-05-30)
 - Alle Screens in Handy-Größe geprüft (Landing, Teaser, Ergebnis, Brief-Modal, Impressum) — kein Overflow
@@ -32,12 +32,35 @@
 - **Dateigröße:** max 3 MB (Vercel kappt Function-Body bei ~4,5 MB; base64 ×1,33 ⇒ ~3 MB Nutzdatei). Frontend fängt auch Vercels Roh-413 mit deutscher Meldung ab
 - Grenzwerte zentral in `src/lib/limits.ts`; MOCK-sicher (Demo bleibt 0 Cent). Spec/Plan unter `docs/superpowers/{specs,plans}/2026-06-07-kostenschutz*`
 
+**Blocker-Runde nach Sicherheits-Audit** (2026-09-06, Commits `a0309ae`…`5cb865f`)
+- `MOCK_ANALYSIS` in Vercel-Production hart abgeschaltet (`VERCEL_ENV=production`) — kein Paywall-Bypass durch versehentlich gesetztes Flag
+- KI-Antwort wird vor dem Speichern validiert/normalisiert (`normalizeAnalysis`), sonst `ANALYSIS_UNUSABLE`
+- Vitest-Setup für Unit-Tests unter `src/lib`
+- Zahlungs-Nachbesserungen: bezahlte Ergebnisse 7 Tage TTL, offene SEPA-Zahlungen 14 Tage TTL, Stripe-Session-Fallback limitiert pro Analyse-ID (nicht pro IP), 100-%-Gutscheine schalten korrekt frei, Checkout liefert `410` bei verschwundenem Record
+- `send-pdf` rendert das PDF serverseitig aus dem gespeicherten Brieftext (kein Mail-Relay für Fremdanhänge), E-Mail-Eingabe ohne Steuerzeichen
+- Ergebnisseite: Netzwerkfehler beim Polling führt zu Retry statt Endlos-Laden
+
+**Release-Paket Hoch** (2026-09-06, Commits `e7a281e`…`4efd5a6`)
+- Security-Header (CSP, HSTS, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy) über `next.config.mjs`
+- Dependency-Updates: Next.js 15.5, nodemailer 10, next-intl/upstash/react Patches (`npm audit` 0 High)
+- Rate-Limits für Brief-Versand, Checkout und Bericht-PDF (zusätzlich zum bestehenden Analyse-Limit)
+- Claude-Client: vorausschauendes Retry-Budget + Timeouts, damit ein zweiter Versuch nie über das Vercel-`maxDuration` (60 s) hinausläuft
+- Datenschutzerklärung um Vercel/Upstash/IONOS/IP-Schutz ergänzt (6 Sprachen) + Upload-Datenschutzhinweis
+- API-Fehlercodes (`{ error, code }`) mit im Client übersetzten Meldungen (6 Sprachen), Server-Text als Fallback
+- Stripe-Checkout-Sprache je Locale (Ukrainisch/Arabisch fallen auf Stripes `auto` zurück, da Stripe diese Locales nicht kennt) + Vorschau-Wiederherstellung nach Zahlungsabbruch
+- Noto-Sans-Fonts für Brief-/Bericht-PDFs (Latin-Ext + Kyrillisch); Arabisch wird im PDF weiterhin nicht dargestellt (offener Punkt, s. u.)
+- Canonical/hreflang je Seite, `/og.png` als eigene Route (kein Redirect), lokalisierte 404-Seite
+
 ---
 
-## ⛔ Launch-Blocker
+## ⚠️ Offene Punkte vor dem Launch
 
-**Betreiber/Impressum:** Der bisherige Entwickler arbeitet bei Vonovia (Großvermieter) → Interessenkonflikt mit einem Mieter-Tool. Kann nicht selbst ins Impressum (Compliance). Anonymes Impressum ist in DE unzulässig.
-→ **Lösung in Arbeit: Gründung einer LLC als Betreiber.** Die Seite wird dann dort implementiert/betrieben. Bis dahin nur private Demo, kein öffentlicher kommerzieller Launch.
+- **Betreiberdaten/Impressum:** `[Name des Betreibers]` ist in Impressum, Datenschutz und AGB noch ein Platzhalter (Geschäftsform bereits als Einzelunternehmer/Kleinunternehmer § 19 UStG hinterlegt) — Name/Anschrift müssen manuell durch Franz eingetragen werden.
+- **Upstash-Produktiv-Datenbank:** muss neu angelegt werden (aktueller Host ist nicht erreichbar); danach `KV_REST_API_URL`/`KV_REST_API_TOKEN` in Vercel setzen.
+- **Stripe-Test mit 100-%-Gutschein** vor Live-Schaltung einmal end-to-end durchspielen.
+- **Muttersprachler-Review** für Türkisch, Arabisch, Russisch, Ukrainisch — aktuell KI-Erstübersetzungen (`_meta.status: "ai-draft"` in `messages/{tr,ar,ru,uk}.json`).
+- **404-Seite:** Pfade außerhalb einer gültigen Locale rendern die deutsche Root-404 ohne next-intl (das Root-Layout hat kein `<html>`, das steckt im `[locale]`-Layout). Next.js 16 bringt mit `global-not-found` vermutlich die sauberere Lösung dafür.
+- **Arabisch im PDF:** Noto Sans (Latin-Ext + Kyrillisch) deckt kein Arabisch ab — Briefe/Berichte auf Arabisch fehlen im PDF-Export bislang.
 
 ---
 
@@ -59,9 +82,9 @@
 
 ---
 
-## 🚀 Roll-Out-Restschritte (nach LLC-Gründung)
+## 🚀 Roll-Out-Restschritte
 
-1. Betreiberdaten (LLC) in Rechtstexte · Rechtstexte final prüfen lassen → Entwurf-Banner entfernen
+1. Betreiberdaten (Name/Anschrift) in Rechtstexte eintragen (Platzhalter ersetzen) · Rechtstexte final prüfen lassen → Entwurf-Banner entfernen
 2. **Stripe Live** aktivieren · **Vercel Pro** · Anthropic-Guthaben
 3. Production-Env-Vars (Live-Keys, `MOCK_ANALYSIS` aus, `NEXT_PUBLIC_BASE_URL` = echte Domain)
 4. Stripe-**Live**-Webhook auf `https://nebenkostencheck24.de/api/stripe-webhook`
