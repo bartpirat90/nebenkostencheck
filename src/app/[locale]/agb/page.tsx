@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import LegalPage from "@/components/LegalPage";
-import type { Locale } from "@/i18n/routing";
-import { localeUrl, pageAlternates } from "@/lib/seo";
+import { pageMetadata, toLocale } from "@/lib/seo";
 
 const PATH = "/agb";
 
@@ -13,16 +12,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "legal.agb" });
-  return {
-    title: t("title"),
-    description: t("metaDescription"),
-    alternates: pageAlternates(locale as Locale, PATH),
-    openGraph: {
-      url: localeUrl(locale, PATH),
-      title: t("title"),
-      description: t("metaDescription"),
-    },
-  };
+  const tMeta = await getTranslations({ locale, namespace: "meta" });
+  return pageMetadata(
+    toLocale(locale),
+    PATH,
+    t("title"),
+    t("metaDescription"),
+    tMeta("ogAlt"),
+  );
 }
 
 export default function AgbPage() {

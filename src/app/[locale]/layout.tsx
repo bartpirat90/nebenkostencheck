@@ -3,9 +3,9 @@ import { Geist } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { routing, RTL_LOCALES, type Locale } from "@/i18n/routing";
+import { routing, RTL_LOCALES } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/constants";
-import { localeUrl, pageAlternates, OG_LOCALES } from "@/lib/seo";
+import { localeUrl, pageAlternates, toLocale, OG_LOCALES } from "@/lib/seo";
 import "../globals.css";
 
 const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });
@@ -21,6 +21,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
+  const current = toLocale(locale);
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -36,11 +37,11 @@ export async function generateMetadata({
       "HeizkV",
     ],
     applicationName: "Nebenkostencheck",
-    alternates: pageAlternates(locale as Locale),
+    alternates: pageAlternates(current),
     openGraph: {
       type: "website",
-      locale: OG_LOCALES[locale as Locale] ?? OG_LOCALES[routing.defaultLocale],
-      url: localeUrl(locale),
+      locale: OG_LOCALES[current],
+      url: localeUrl(current),
       siteName: "Nebenkostencheck",
       title: t("title"),
       description: t("description"),
@@ -92,7 +93,8 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const dir = RTL_LOCALES.includes(locale as Locale) ? "rtl" : "ltr";
+  // hasLocale oben verengt `locale` bereits auf Locale – kein Cast noetig.
+  const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={dir}>

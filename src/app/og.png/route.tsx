@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+// ImageResponse laeuft auch unter Node; das Projekt deployt durchgaengig auf der
+// Node-Runtime, deshalb hier kein Edge-Sonderfall.
 export const runtime = "nodejs";
 export const dynamic = "force-static";
 
@@ -8,6 +10,9 @@ const size = { width: 1200, height: 630 };
 // Gebrandetes Teilen-Vorschaubild im gruenen „Pruefbericht"-Design.
 // Bewusst als /og.png-Route (Punkt im Pfad) – so greift der Middleware-Matcher
 // nicht und Social-Crawler bekommen 200 statt eines 307-Redirects.
+// contentType/alt setzt die Route nicht: Der Dateiname liefert bereits image/png,
+// und der Alt-Text kommt lokalisiert aus den Metadaten (layout.tsx bzw.
+// pageMetadata, jeweils meta.ogAlt) – hier waere er nur auf Deutsch moeglich.
 export function GET() {
   return new ImageResponse(
     (

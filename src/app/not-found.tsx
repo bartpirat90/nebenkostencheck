@@ -1,5 +1,7 @@
 import { Geist } from "next/font/google";
 import Logo from "@/components/Logo";
+// globals.css wird hier erneut importiert, weil das Root-Layout kein CSS laedt –
+// die Styles haengen am [locale]-Layout, das fuer diese 404 nie rendert.
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });

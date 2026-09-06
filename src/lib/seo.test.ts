@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { localeUrl, pageAlternates, OG_LOCALES } from "@/lib/seo";
+import { localeUrl, pageAlternates, pageMetadata, toLocale, OG_LOCALES } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/constants";
 
@@ -41,7 +41,63 @@ describe("pageAlternates", () => {
 });
 
 describe("OG_LOCALES", () => {
-  it("maps every routing locale to an og:locale code", () => {
-    for (const l of routing.locales) expect(OG_LOCALES[l]).toMatch(/^[a-z]{2}_[A-Z]{2}$/);
+  it("maps every routing locale to the expected og:locale code", () => {
+    expect(OG_LOCALES).toEqual({
+      de: "de_DE",
+      en: "en_US",
+      tr: "tr_TR",
+      ar: "ar_AR",
+      ru: "ru_RU",
+      uk: "uk_UA",
+    });
+  });
+  it("covers exactly the routing locales", () => {
+    expect(Object.keys(OG_LOCALES).sort()).toEqual([...routing.locales].sort());
+  });
+});
+
+describe("toLocale", () => {
+  it("keeps a supported locale", () => {
+    expect(toLocale("uk")).toBe("uk");
+  });
+  it("falls back to the default locale for anything else", () => {
+    expect(toLocale("xx")).toBe(routing.defaultLocale);
+    expect(toLocale(undefined)).toBe(routing.defaultLocale);
+  });
+});
+
+describe("pageMetadata", () => {
+  const meta = pageMetadata("en", "/agb", "Terms", "Terms description", "OG alt text");
+
+  it("carries the full openGraph object, because Next replaces it instead of merging", () => {
+    expect(meta.openGraph).toMatchObject({
+      type: "website",
+      siteName: "Nebenkostencheck",
+      locale: "en_US",
+      url: `${SITE_URL}/en/agb`,
+      title: "Terms",
+      description: "Terms description",
+    });
+    expect(meta.openGraph?.images).toEqual([
+      { url: "/og.png", width: 1200, height: 630, alt: "OG alt text" },
+    ]);
+  });
+  it("canonicalises to the localised page path", () => {
+    expect(meta.alternates?.canonical).toBe(`${SITE_URL}/en/agb`);
+    expect(String(meta.alternates?.canonical).endsWith("/en/agb")).toBe(true);
+  });
+  it("repeats title, description and image on the twitter card", () => {
+    expect(meta.twitter).toEqual({
+      card: "summary_large_image",
+      title: "Terms",
+      description: "Terms description",
+      images: ["/og.png"],
+    });
+  });
+  it("uses the og:locale of the requested language", () => {
+    expect(pageMetadata("de", "/impressum", "T", "D", "A").openGraph?.locale).toBe("de_DE");
+    expect(pageMetadata("de", "/impressum", "T", "D", "A").alternates?.canonical).toBe(
+      `${SITE_URL}/impressum`,
+    );
   });
 });

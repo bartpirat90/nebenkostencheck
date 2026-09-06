@@ -2,6 +2,10 @@ import { getTranslations } from "next-intl/server";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/navigation";
 
+// Zusaetzlich zur Root-404: greift fuer unbekannte Pfade *innerhalb* einer
+// gueltigen Sprache (z. B. /en/gibtsnicht). Nur hier steht eine Locale fest,
+// deshalb ist das die einzige 404, die uebersetzt und mit Layout/Navigation
+// gerendert werden kann; src/app/not-found.tsx faengt den Rest ohne next-intl ab.
 export default async function NotFound() {
   const t = await getTranslations("notFound");
 
