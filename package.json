@@ -28,7 +28,7 @@
     "stripe": "^22.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^24.13.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.20",
