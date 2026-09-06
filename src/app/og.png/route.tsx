@@ -1,11 +1,14 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const runtime = "nodejs";
+export const dynamic = "force-static";
 
-// Gebrandetes Teilen-Vorschaubild im neuen grünen „Prüfbericht"-Design.
-export default function OpengraphImage() {
+const size = { width: 1200, height: 630 };
+
+// Gebrandetes Teilen-Vorschaubild im gruenen „Pruefbericht"-Design.
+// Bewusst als /og.png-Route (Punkt im Pfad) – so greift der Middleware-Matcher
+// nicht und Social-Crawler bekommen 200 statt eines 307-Redirects.
+export function GET() {
   return new ImageResponse(
     (
       <div

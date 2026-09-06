@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen",
-    "description": "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos."
+    "description": "Lade deine Nebenkostenabrechnung hoch und finde in Sekunden typische Fehler – geprüft nach aktuellem Mietrecht (BetrKV, HeizkV) und höchstrichterlicher BGH-Rechtsprechung. Erst-Prüfung kostenlos.",
+    "ogAlt": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen"
   },
   "nav": {
     "badge": "PRÜFBERICHT · GRATIS"
@@ -254,6 +255,7 @@
     "back": "← Zurück",
     "impressum": {
       "title": "Impressum",
+      "metaDescription": "Impressum von Nebenkostencheck: Anbieterkennzeichnung nach § 5 DDG, Kontakt und Verantwortlichkeit.",
       "sections": [
         { "heading": "Angaben gemäß § 5 DDG", "body": "[Name des Betreibers]\n[Straße & Hausnummer]\n[PLZ Ort]" },
         { "heading": "Kontakt", "body": "E-Mail: kontakt@nebenkostencheck24.de" },
@@ -263,6 +265,7 @@
     },
     "datenschutz": {
       "title": "Datenschutzerklärung",
+      "metaDescription": "Datenschutzerklärung: welche Daten Nebenkostencheck verarbeitet, wie lange sie gespeichert werden und welche Dienstleister beteiligt sind.",
       "sections": [
         { "heading": "Verantwortlicher", "body": "[Name des Betreibers]\n[Straße & Hausnummer], [PLZ Ort]\nE-Mail: kontakt@nebenkostencheck24.de" },
         { "heading": "Welche Daten wir verarbeiten", "body": "Wir verarbeiten die von Ihnen hochgeladene Nebenkostenabrechnung (als PDF oder Bilddatei) sowie die daraus extrahierten Angaben (z. B. Abrechnungspositionen, Beträge, Zeiträume). Bei Kauf des vollständigen Berichts werden zusätzlich die für die Zahlungsabwicklung erforderlichen Zahlungsdaten verarbeitet." },
@@ -279,6 +282,7 @@
     },
     "agb": {
       "title": "Allgemeine Geschäftsbedingungen (AGB)",
+      "metaDescription": "AGB von Nebenkostencheck: Leistungsumfang, Preis von 9,90 €, Widerrufsrecht und Haftung für die automatisierte Prüfung.",
       "sections": [
         { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
         { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
@@ -288,6 +292,11 @@
         { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
       ]
     }
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "body": "Die Adresse existiert nicht oder wurde entfernt.",
+    "home": "Zur Startseite"
   },
   "localeSwitcher": {
     "label": "Sprache wählen"

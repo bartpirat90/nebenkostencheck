@@ -5,6 +5,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing, RTL_LOCALES, type Locale } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/constants";
+import { localeUrl, pageAlternates, OG_LOCALES } from "@/lib/seo";
 import "../globals.css";
 
 const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });
@@ -21,14 +22,6 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
 
-  // hreflang: alle Sprachen + x-default (= de auf "/")
-  const languages: Record<string, string> = { "x-default": SITE_URL };
-  for (const l of routing.locales) {
-    languages[l] = l === routing.defaultLocale ? SITE_URL : `${SITE_URL}/${l}`;
-  }
-
-  const canonical = locale === routing.defaultLocale ? "/" : `/${locale}`;
-
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: t("title"), template: "%s · Nebenkostencheck" },
@@ -43,16 +36,22 @@ export async function generateMetadata({
       "HeizkV",
     ],
     applicationName: "Nebenkostencheck",
-    alternates: { canonical, languages },
+    alternates: pageAlternates(locale as Locale),
     openGraph: {
       type: "website",
-      locale,
-      url: canonical,
+      locale: OG_LOCALES[locale as Locale] ?? OG_LOCALES[routing.defaultLocale],
+      url: localeUrl(locale),
       siteName: "Nebenkostencheck",
       title: t("title"),
       description: t("description"),
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: t("ogAlt") }],
     },
-    twitter: { card: "summary_large_image", title: t("title"), description: t("description") },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: ["/og.png"],
+    },
     robots: {
       index: true,
       follow: true,

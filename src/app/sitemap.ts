@@ -1,13 +1,8 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/constants";
 import { routing } from "@/i18n/routing";
+import { localeUrl } from "@/lib/seo";
 
 const PAGES = ["", "/impressum", "/datenschutz", "/agb"];
-
-/** URL einer Seite je Locale – Default (de) ohne Präfix, andere mit /<locale>. */
-function localeUrl(locale: string, page: string): string {
-  return locale === routing.defaultLocale ? `${SITE_URL}${page}` : `${SITE_URL}/${locale}${page}`;
-}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

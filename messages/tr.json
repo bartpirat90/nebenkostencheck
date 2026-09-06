@@ -2,7 +2,8 @@
   "_meta": { "status": "ai-draft", "review": "Yayına almadan önce anadili Türkçe olan biri kontrol etmeli." },
   "meta": {
     "title": "Nebenkostencheck – Alman yan gider faturanızı kontrol edin ve paranızı geri alın",
-    "description": "Alman yan gider faturanızı (Nebenkostenabrechnung) yükleyin ve saniyeler içinde tipik hataları bulun – güncel Alman kira hukukuna (BetrKV, HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre kontrol edilir. İlk kontrol ücretsiz."
+    "description": "Alman yan gider faturanızı (Nebenkostenabrechnung) yükleyin ve saniyeler içinde tipik hataları bulun – güncel Alman kira hukukuna (BetrKV, HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre kontrol edilir. İlk kontrol ücretsiz.",
+    "ogAlt": "Nebenkostencheck – Alman yan gider faturanızı kontrol edin ve paranızı geri alın"
   },
   "nav": {
     "badge": "DENETİM RAPORU · ÜCRETSİZ"
@@ -255,6 +256,7 @@
     "back": "← Geri",
     "impressum": {
       "title": "Künye",
+      "metaDescription": "Nebenkostencheck künyesi: § 5 DDG uyarınca sağlayıcı bilgileri, iletişim ve sorumluluk.",
       "sections": [
         { "heading": "§ 5 DDG uyarınca bilgiler", "body": "[İşletmeci adı]\n[Sokak ve numara]\n[Posta kodu ve şehir]" },
         { "heading": "İletişim", "body": "E-posta: kontakt@nebenkostencheck24.de" },
@@ -264,6 +266,7 @@
     },
     "datenschutz": {
       "title": "Gizlilik Politikası",
+      "metaDescription": "Gizlilik politikası: Nebenkostencheck hangi verileri işler, ne kadar süre saklar ve hangi hizmet sağlayıcılar dahildir.",
       "sections": [
         { "heading": "Sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]\nE-posta: kontakt@nebenkostencheck24.de" },
         { "heading": "Hangi verileri işliyoruz", "body": "Yüklediğiniz yan gider faturasını (PDF veya görüntü dosyası olarak) ve ondan çıkarılan bilgileri (örn. fatura kalemleri, tutarlar, dönemler) işliyoruz. Tam raporu satın aldığınızda, işlemi gerçekleştirmek için gerekli ödeme verileri de işlenir." },
@@ -280,6 +283,7 @@
     },
     "agb": {
       "title": "Genel İşlem Koşulları",
+      "metaDescription": "Nebenkostencheck genel işlem koşulları: hizmet kapsamı, 9,90 € fiyat, cayma hakkı ve otomatik kontrol sorumluluğu.",
       "sections": [
         { "heading": "1. Hizmet tanımı", "body": "Nebenkostencheck, yan gider faturalarının otomatik kontrolünü ve örnek mektupların (itiraz, belge inceleme talebi) oluşturulmasını sunar. Kontrol, ilgili yasal dayanaklara (BetrKV, HeizkV dahil) ve yüksek mahkeme içtihatlarına göre yapılır." },
         { "heading": "2. Hukuki danışmanlık değildir", "body": "Hizmet otomatik bir araçtır ve Alman Hukuki Hizmetler Kanunu (RDG) anlamında hukuki danışmanlık teşkil etmez. Sonuçlar, garanti içermeyen bağlayıcı olmayan değerlendirmelerdir ve avukat danışmanlığının yerini tutmaz." },
@@ -289,6 +293,11 @@
         { "heading": "6. Sağlayıcı", "body": "[İşletmeci adı], [Sokak ve numara], [Posta kodu ve şehir]. Ayrıntılar Künye'de." }
       ]
     }
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "body": "Bu adres mevcut değil veya kaldırıldı.",
+    "home": "Ana sayfaya dön"
   },
   "localeSwitcher": {
     "label": "Dil seçin"

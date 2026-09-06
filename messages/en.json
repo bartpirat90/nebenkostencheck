@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Nebenkostencheck – Check your German utility bill & get money back",
-    "description": "Upload your German utility-cost statement (Nebenkostenabrechnung) and find common errors in seconds – checked against current German tenancy law (BetrKV, HeizkV) and Federal Court (BGH) case law. First check is free."
+    "description": "Upload your German utility-cost statement (Nebenkostenabrechnung) and find common errors in seconds – checked against current German tenancy law (BetrKV, HeizkV) and Federal Court (BGH) case law. First check is free.",
+    "ogAlt": "Nebenkostencheck – check your German utility bill and get money back"
   },
   "nav": {
     "badge": "AUDIT REPORT · FREE"
@@ -254,6 +255,7 @@
     "back": "← Back",
     "impressum": {
       "title": "Imprint",
+      "metaDescription": "Imprint of Nebenkostencheck: provider identification under section 5 DDG, contact details and responsibility.",
       "sections": [
         { "heading": "Information pursuant to § 5 DDG", "body": "[Operator name]\n[Street & number]\n[Postcode & city]" },
         { "heading": "Contact", "body": "Email: kontakt@nebenkostencheck24.de" },
@@ -263,6 +265,7 @@
     },
     "datenschutz": {
       "title": "Privacy Policy",
+      "metaDescription": "Privacy policy: what data Nebenkostencheck processes, how long it is stored and which service providers are involved.",
       "sections": [
         { "heading": "Controller", "body": "[Operator name]\n[Street & number], [Postcode & city]\nEmail: kontakt@nebenkostencheck24.de" },
         { "heading": "What data we process", "body": "We process the utility-cost statement you upload (as a PDF or image file) as well as the details extracted from it (e.g. line items, amounts, periods). When you purchase the full report, the payment data required to process the transaction is additionally processed." },
@@ -279,6 +282,7 @@
     },
     "agb": {
       "title": "Terms and Conditions",
+      "metaDescription": "Terms and conditions of Nebenkostencheck: scope of service, price of €9.90, right of withdrawal and liability for the automated check.",
       "sections": [
         { "heading": "1. Description of service", "body": "Nebenkostencheck provides an automated check of utility-cost statements as well as the creation of template letters (objection, request to inspect documents). The check is based on the relevant legal provisions (including BetrKV, HeizkV) and the case law of the highest courts." },
         { "heading": "2. Not legal advice", "body": "The service is an automated tool and does not constitute legal advice within the meaning of the German Legal Services Act (RDG). The results are non-binding assessments without guarantee and do not replace advice from a lawyer." },
@@ -288,6 +292,11 @@
         { "heading": "6. Provider", "body": "[Operator name], [Street & number], [Postcode & city]. Further details in the Imprint." }
       ]
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This address does not exist or has been removed.",
+    "home": "Back to home"
   },
   "localeSwitcher": {
     "label": "Choose language"
