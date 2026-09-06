@@ -5,6 +5,7 @@ import { MAX_FILE_BYTES, MAX_INPUT_TOKENS } from "@/lib/limits";
 import { storeAnalysis } from "@/lib/kv";
 import { classifyErrorCode } from "@/lib/errors";
 import { apiError } from "@/lib/apiErrors";
+import { isAllowedUpload, sniffMediaType } from "@/lib/fileType";
 import { AnalysisResult, PreviewData } from "@/types";
 import { MOCK } from "@/lib/mock";
 import { InvalidAnalysisError } from "@/lib/validateAnalysis";
@@ -28,15 +29,21 @@ function toPreview(id: string, r: AnalysisResult): PreviewData {
 
 export async function POST(req: NextRequest) {
   try {
-    const { base64, mediaType, fileName } = await req.json();
-    if (!base64 || !mediaType) {
+    // Body kommt roh vom Client — kein Vertrauen in Form/Typ, bevor wir ihn geprueft haben.
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== "object") {
+      return apiError("INVALID_REQUEST");
+    }
+    const { base64, mediaType, fileName } = body as Record<string, unknown>;
+    if (typeof base64 !== "string" || !base64 || typeof mediaType !== "string") {
       return apiError("NO_FILE");
     }
+    const safeFileName = typeof fileName === "string" ? fileName.slice(0, 200) : "upload";
 
-    // Gate 1: MIME-Typ
-    const isImage = mediaType.startsWith("image/");
-    const isPdf = mediaType === "application/pdf";
-    if (!isImage && !isPdf) {
+    // Gate 1: Magic-Byte-Pruefung — der deklarierte mediaType ist nur noch ein
+    // Plausibilitaets-Check; massgeblich sind die echten Datei-Bytes (sniffed).
+    const sniffed = sniffMediaType(base64);
+    if (!sniffed || !isAllowedUpload(mediaType, sniffed)) {
       return apiError("UNSUPPORTED_TYPE");
     }
 
@@ -55,12 +62,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Gate 4: Token-Zählung (kostenlos) — fängt den „Roman" präzise ab
-    const tokenCount = await countDocumentTokens(base64, mediaType, fileName);
+    const tokenCount = await countDocumentTokens(base64, sniffed, safeFileName);
     if (tokenCount > MAX_INPUT_TOKENS) {
       return apiError("DOCUMENT_TOO_LONG");
     }
 
-    const result = await analyzeStatement(base64, mediaType, fileName);
+    const result = await analyzeStatement(base64, sniffed, safeFileName);
 
     if (result.notAStatement) {
       return NextResponse.json(toPreview("", result));

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 import { Link } from "@/i18n/navigation";
 import { MAX_FILE_MB } from "@/lib/limits";
+import { ALLOWED_MEDIA_TYPES } from "@/lib/fileType";
 
 interface Props {
   onUpload: (file: File) => void;
@@ -12,7 +13,8 @@ interface Props {
   error: string | null;
 }
 
-const ACCEPTED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+// Eine Quelle fuer erlaubte Typen: dieselbe Liste, die die Route serverseitig sniffed.
+const ACCEPTED_TYPES: readonly string[] = ALLOWED_MEDIA_TYPES;
 
 export default function UploadZone({ onUpload, loading, error }: Props) {
   const t = useTranslations("upload");
