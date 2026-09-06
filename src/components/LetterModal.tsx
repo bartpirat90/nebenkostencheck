@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { ContactData, ErrorItem, LetterType, LetterPdfResponse } from "@/types";
 import { MAIL_SUBJECTS } from "@/lib/letters";
+import { useApiErrorMessage } from "@/lib/clientErrors";
 import ContactForm from "./ContactForm";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 
@@ -36,6 +37,7 @@ export default function LetterModal({
 }: Props) {
   const t = useTranslations("letter");
   const te = useTranslations("errors");
+  const apiMessage = useApiErrorMessage();
   const [contact, setContact] = useState<ContactData>(initialContact);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -97,8 +99,8 @@ export default function LetterModal({
         body: JSON.stringify({ type, contact, id }),
       });
       if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e.error || t("errCreate"));
+        const e = await res.json().catch(() => null);
+        throw new Error(apiMessage(e, t("errCreate")));
       }
       const data = (await res.json()) as LetterPdfResponse;
       setResult(data);
@@ -149,8 +151,8 @@ export default function LetterModal({
         body: JSON.stringify({ id, email, type }),
       });
       if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e.error || t("errSend"));
+        const e = await res.json().catch(() => null);
+        throw new Error(apiMessage(e, t("errSend")));
       }
       setSent(true);
     } catch (err: unknown) {

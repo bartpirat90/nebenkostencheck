@@ -5,6 +5,7 @@ import { stripe } from "@/lib/stripe";
 import { checkLimit, getClientIp } from "@/lib/ratelimit";
 import { CHECKOUT_PER_IP_PER_HOUR } from "@/lib/limits";
 import { localePrefix, stripeLocale, toLocale } from "@/lib/checkoutLocale";
+import { apiError } from "@/lib/apiErrors";
 
 /** Lebensdauer der Checkout-Session: Stripe-Minimum 30 min + Puffer. */
 const SESSION_LIFETIME_S = 30 * 60 + 60;
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as { id?: unknown; locale?: unknown };
     const { id } = body;
     if (typeof id !== "string" || !id) {
-      return NextResponse.json({ error: "Fehlende ID." }, { status: 400 });
+      return apiError("MISSING_ID");
     }
 
     // Rücksprung von Stripe soll in der Sprache des Nutzers landen, nicht immer auf Deutsch.
@@ -23,10 +24,7 @@ export async function POST(req: NextRequest) {
 
     const record = await getAnalysis(id);
     if (!record) {
-      return NextResponse.json(
-        { error: "Analyse abgelaufen. Bitte lade die Abrechnung erneut hoch." },
-        { status: 404 }
-      );
+      return apiError("ANALYSIS_EXPIRED");
     }
 
     // Die Session darf den Record nicht überleben: Wer erst nach dem Ablauf
@@ -34,18 +32,12 @@ export async function POST(req: NextRequest) {
     // -1 = kein Ablauf (ok), -2 = Record ist gerade verschwunden (nicht ok).
     const remaining = await getAnalysisTtl(id);
     if (remaining !== -1 && remaining < SESSION_LIFETIME_S + 60) {
-      return NextResponse.json(
-        { error: "Analyse läuft gleich ab. Bitte lade die Abrechnung erneut hoch." },
-        { status: 410 }
-      );
+      return apiError("ANALYSIS_EXPIRING");
     }
 
     // Kostenschutz: jeder Aufruf kostet einen Stripe-API-Call.
     if (!(await checkLimit("rl:checkout:ip", CHECKOUT_PER_IP_PER_HOUR, "1 h", getClientIp(req)))) {
-      return NextResponse.json(
-        { error: "Zu viele Zahlungsversuche. Bitte in ein paar Minuten erneut versuchen." },
-        { status: 429 }
-      );
+      return apiError("CHECKOUT_RATE_LIMITED");
     }
 
     const base = process.env.NEXT_PUBLIC_BASE_URL!;
@@ -74,6 +66,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (err: unknown) {
     console.error("Checkout error:", err instanceof Error ? err.stack ?? err.message : String(err));
-    return NextResponse.json({ error: "Zahlung konnte nicht gestartet werden." }, { status: 500 });
+    return apiError("CHECKOUT_FAILED");
   }
 }

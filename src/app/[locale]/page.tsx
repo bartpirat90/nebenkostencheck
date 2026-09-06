@@ -10,6 +10,7 @@ import StatsBar from "@/components/StatsBar";
 import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
+import { useApiErrorMessage } from "@/lib/clientErrors";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -20,6 +21,7 @@ import { reviews } from "@/lib/reviews";
 
 export default function Home() {
   const t = useTranslations();
+  const apiMessage = useApiErrorMessage();
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +62,7 @@ export default function Home() {
           let errorMessage = t("errors.analyzeFailed");
           try {
             const err = await response.json();
-            errorMessage = err.error || errorMessage;
+            errorMessage = apiMessage(err, errorMessage);
           } catch {
             if (response.status === 413) {
               errorMessage = t("errors.fileTooLarge", { mb: MAX_FILE_MB });
@@ -79,7 +81,7 @@ export default function Home() {
         setLoading(false);
       }
     },
-    [t]
+    [t, apiMessage]
   );
 
   const handleReset = () => {

@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { getAnalysis, getLetter, isUnlocked } from "@/lib/kv";
 import { sendLetterPdf } from "@/lib/mailer";
-import { classifyError } from "@/lib/errors";
+import { classifyErrorCode } from "@/lib/errors";
+import { apiError } from "@/lib/apiErrors";
 import { isValidEmail } from "@/lib/email";
 import { isLetterType, LETTER_FILENAMES, MAIL_SUBJECTS } from "@/lib/letters";
 import { checkLimit, getClientIp } from "@/lib/ratelimit";
@@ -28,30 +29,24 @@ export async function POST(req: NextRequest) {
     const email = body?.email;
     const type = body?.type;
     if (typeof id !== "string" || !UUID_RE.test(id) || !isValidEmail(email) || !isLetterType(type)) {
-      return NextResponse.json({ error: "Ungültige Anfrage." }, { status: 400 });
+      return apiError("INVALID_REQUEST");
     }
 
     const record = await getAnalysis(id);
-    if (!record) return NextResponse.json({ error: "Analyse abgelaufen." }, { status: 404 });
-    if (!isUnlocked(record)) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
+    if (!record) return apiError("ANALYSIS_EXPIRED");
+    if (!isUnlocked(record)) return apiError("NOT_UNLOCKED");
 
     const [okId, okIp] = await Promise.all([
       checkLimit("rl:send:id", SEND_PDF_PER_ID_PER_DAY, "1 d", id),
       checkLimit("rl:send:ip", SEND_PDF_PER_IP_PER_DAY, "1 d", getClientIp(req)),
     ]);
     if (!okId || !okIp) {
-      return NextResponse.json(
-        { error: "Zu viele Sendungen. Bitte lade das PDF stattdessen herunter." },
-        { status: 429 },
-      );
+      return apiError("SEND_RATE_LIMITED");
     }
 
     const letter = await getLetter(id, type);
     if (!letter) {
-      return NextResponse.json(
-        { error: "Schreiben nicht gefunden. Bitte erstelle es erneut." },
-        { status: 404 },
-      );
+      return apiError("LETTER_NOT_FOUND");
     }
 
     const pdf = await renderToBuffer(<LetterDoc letter={letter} />);
@@ -61,6 +56,6 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : "";
     // Stack statt ganzes Objekt: nodemailer-Fehler tragen die Empfängeradresse.
     console.error("send-pdf error:", err instanceof Error ? err.stack ?? message : String(err));
-    return NextResponse.json({ error: classifyError(message) }, { status: 500 });
+    return apiError(classifyErrorCode(message), 500);
   }
 }

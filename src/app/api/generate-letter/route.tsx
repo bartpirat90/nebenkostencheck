@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { generateLetter } from "@/lib/claude";
 import { getAnalysis, isUnlocked, storeLetter } from "@/lib/kv";
-import { classifyError } from "@/lib/errors";
+import { classifyErrorCode } from "@/lib/errors";
+import { apiError } from "@/lib/apiErrors";
 import { isLetterType, LETTER_FILENAMES } from "@/lib/letters";
 import { LetterDoc } from "@/lib/pdf/LetterDoc";
 import { checkLimit, getClientIp } from "@/lib/ratelimit";
@@ -32,12 +33,12 @@ export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as { id?: unknown; type?: unknown; contact?: unknown };
     if (typeof body.id !== "string" || !body.id || !isLetterType(body.type)) {
-      return NextResponse.json({ error: "Ungültige Anfrage." }, { status: 400 });
+      return apiError("INVALID_REQUEST");
     }
     const { id, type } = body;
     const record = await getAnalysis(id);
-    if (!record) return NextResponse.json({ error: "Analyse abgelaufen." }, { status: 404 });
-    if (!isUnlocked(record)) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
+    if (!record) return apiError("ANALYSIS_EXPIRED");
+    if (!isUnlocked(record)) return apiError("NOT_UNLOCKED");
 
     // Sanitize client contact data: only known fields, max length, merged with server defaults.
     const contact = sanitizeContact(body.contact || {}, record.full.contactData);
@@ -53,10 +54,7 @@ export async function POST(req: NextRequest) {
             (e) => e.category === (type === "objection" ? "direct" : "needs_review")
           );
     if (!errors.length) {
-      return NextResponse.json(
-        { error: "Für dieses Schreiben liegen keine passenden Punkte vor." },
-        { status: 400 }
-      );
+      return apiError("NO_MATCHING_ERRORS");
     }
 
     // Kostenschutz: jeder Aufruf kostet einen Claude-Call.
@@ -66,10 +64,7 @@ export async function POST(req: NextRequest) {
       checkLimit("rl:letter:ip", LETTER_PER_IP_PER_DAY, "1 d", ip),
     ]);
     if (!okId || !okIp) {
-      return NextResponse.json(
-        { error: "Zu viele Schreiben erstellt. Bitte lade das vorhandene PDF herunter oder versuche es morgen erneut." },
-        { status: 429 }
-      );
+      return apiError("LETTER_RATE_LIMITED");
     }
 
     const letter = await generateLetter({ type, contact, errors });
@@ -85,6 +80,6 @@ export async function POST(req: NextRequest) {
     // Stack statt ganzes Objekt: API-Fehlerobjekte können Request-Inhalte tragen.
     console.error("Letter generation error:", err instanceof Error ? err.stack ?? err.message : String(err));
     const message = err instanceof Error ? err.message : "";
-    return NextResponse.json({ error: classifyError(message) }, { status: 500 });
+    return apiError(classifyErrorCode(message), 500);
   }
 }

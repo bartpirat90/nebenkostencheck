@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { PreviewData } from "@/types";
+import { useApiErrorMessage } from "@/lib/clientErrors";
 
 interface Props {
   preview: PreviewData;
@@ -12,6 +13,7 @@ interface Props {
 export default function PreviewView({ preview, onReset }: Props) {
   const t = useTranslations("teaser");
   const te = useTranslations("errors");
+  const apiMessage = useApiErrorMessage();
   const locale = useLocale();
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,8 +29,8 @@ export default function PreviewView({ preview, onReset }: Props) {
         body: JSON.stringify({ id: preview.id, locale }),
       });
       if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e.error || t("checkoutError"));
+        const e = await res.json().catch(() => null);
+        throw new Error(apiMessage(e, t("checkoutError")));
       }
       const { url } = await res.json();
       // Vorschau vor der Weiterleitung sichern: bricht der Nutzer bei Stripe ab,

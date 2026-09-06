@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { classifyError } from "@/lib/errors";
+import { classifyError, classifyErrorCode } from "@/lib/errors";
 
 describe("classifyError", () => {
   it("Timeout → eigene Meldung", () => {
@@ -13,5 +13,14 @@ describe("classifyError", () => {
   });
   it("unbekannt → generisch", () => {
     expect(classifyError("irgendwas")).toContain("unbekannter Fehler");
+  });
+});
+
+describe("classifyErrorCode", () => {
+  it("Timeout → TIMEOUT", () => {
+    expect(classifyErrorCode("Request timed out.")).toBe("TIMEOUT");
+  });
+  it("unbekannt → UNKNOWN", () => {
+    expect(classifyErrorCode("irgendwas")).toBe("UNKNOWN");
   });
 });
