@@ -39,20 +39,24 @@ function ErgebnisInner() {
     // Webhook kann minimal verzögert sein → mehrfach mit kurzer Pause versuchen.
     // Die result-Route fragt bei session_id zusätzlich Stripe direkt (Fallback).
     (async () => {
-      for (let i = 0; i < POLL_ATTEMPTS; i++) {
-        const res = await fetch(`/api/result?${query}`);
-        if (cancelled) return;
-        if (res.ok) {
-          setResult(await res.json());
-          setLoading(false);
-          return;
+      try {
+        for (let i = 0; i < POLL_ATTEMPTS; i++) {
+          const res = await fetch(`/api/result?${query}`);
+          if (cancelled) return;
+          if (res.ok) {
+            setResult(await res.json());
+            setLoading(false);
+            return;
+          }
+          if (res.status !== 402) {
+            setError(t("notFound"));
+            setLoading(false);
+            return;
+          }
+          if (i < POLL_ATTEMPTS - 1) await new Promise((r) => setTimeout(r, POLL_DELAY_MS));
         }
-        if (res.status !== 402) {
-          setError(t("notFound"));
-          setLoading(false);
-          return;
-        }
-        await new Promise((r) => setTimeout(r, POLL_DELAY_MS));
+      } catch {
+        // Netzwerkfehler: nicht ewig „laden" zeigen, sondern den Retry anbieten.
       }
       if (!cancelled) {
         setPending(true);
