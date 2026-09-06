@@ -1,4 +1,4 @@
-import { forwardRef, ButtonHTMLAttributes, HTMLAttributes, Ref } from "react";
+import { forwardRef, AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { Link } from "@/i18n/navigation";
 
 /**
@@ -16,7 +16,7 @@ type Variant = "primary" | "secondary" | "ghost" | "accent";
 type Size = "md" | "lg";
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-colors " +
+  "inline-flex items-center justify-center gap-2 rounded-xl transition-colors " +
   "disabled:opacity-60 disabled:cursor-not-allowed";
 
 const VARIANTS: Record<Variant, string> = {
@@ -39,87 +39,132 @@ const SIZES: Record<Size, string> = {
   lg: "min-h-12 py-3.5 px-7 text-base",
 };
 
+// Schriftgewicht kommt aus genau einer Quelle: Tailwind sortiert font-*-Utilities
+// alphabetisch ins Stylesheet, ein `className="font-bold"` von außen würde gegen
+// ein `font-semibold` in BASE verlieren. lg (= die beiden Conversion-CTAs) bleibt
+// fett wie vor dem Refactoring, ghost als zurückgenommene Nebenaktion normal.
+function weightFor(variant: Variant, size: Size): string {
+  if (variant === "ghost") return "font-normal";
+  return size === "lg" ? "font-bold" : "font-semibold";
+}
+
 function cx(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }
 
-export interface ButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
+interface CommonProps {
   variant?: Variant;
   size?: Size;
-  /** Rendert einen Link statt eines Buttons. */
-  href?: string;
+  /** Deaktiviert den Button und zeigt einen Spinner an Stelle des Icons. */
+  loading?: boolean;
+  disabled?: boolean;
+  className?: string;
+  children?: ReactNode;
+}
+
+/** Link-Form: `href` gesetzt, Anchor-Attribute (target, rel, download …) erlaubt. */
+export interface ButtonLinkProps
+  extends CommonProps,
+    Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof CommonProps | "href"> {
+  href: string;
   /**
    * Erzwingt ein rohes <a> statt des next-intl-Link (z. B. auf der Root-404,
    * die außerhalb des [locale]-Segments und damit ohne Locale-Kontext läuft).
    */
   external?: boolean;
-  /** Deaktiviert den Button und zeigt einen Spinner an Stelle des Icons. */
-  loading?: boolean;
+}
+
+/** Button-Form: kein `href`, Button-Attribute (type, form, onClick …) erlaubt. */
+export interface ButtonElementProps
+  extends CommonProps,
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps | "type"> {
+  href?: undefined;
+  external?: undefined;
   type?: "button" | "submit" | "reset";
 }
 
-const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
-  {
-    variant = "primary",
-    size = "md",
-    href,
-    external,
-    loading = false,
-    type = "button",
-    disabled,
-    className,
-    children,
-    ...rest
-  },
+export type ButtonProps = ButtonLinkProps | ButtonElementProps;
+
+// Eigene Props dürfen nicht ins DOM durchgereicht werden (React warnt, ESLint
+// würde bei einer Destrukturierung ungenutzte Variablen anmahnen).
+const OWN_KEYS = [
+  "variant", "size", "loading", "disabled", "className", "children", "href", "external", "type",
+] as const;
+type OwnKey = (typeof OWN_KEYS)[number];
+
+function domProps<T extends object>(props: T): Omit<T, OwnKey> {
+  const copy = { ...props } as Record<string, unknown>;
+  for (const key of OWN_KEYS) delete copy[key];
+  return copy as Omit<T, OwnKey>;
+}
+
+const Spinner = () => (
+  <span
+    aria-hidden
+    className="w-4 h-4 shrink-0 rounded-full border-2 border-current border-t-transparent animate-spin"
+  />
+);
+
+const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>(function Button(
+  props,
   ref
 ) {
-  const classes = cx(BASE, VARIANTS[variant], SIZES[size], className);
+  const { variant = "primary", size = "md", loading = false, disabled, className, children } = props;
+  const inactive = Boolean(disabled || loading);
+  const classes = cx(
+    BASE,
+    VARIANTS[variant],
+    SIZES[size],
+    weightFor(variant, size),
+    // <a> kennt kein disabled: Klicks und Tab-Fokus per Klassen/Attributen sperren.
+    props.href !== undefined && inactive && "opacity-60 cursor-not-allowed pointer-events-none",
+    className
+  );
 
-  if (href) {
+  if (props.href !== undefined) {
+    const { href, external } = props;
+    const anchorRest = domProps(props);
+    const linkProps = {
+      className: classes,
+      "aria-disabled": inactive || undefined,
+      "aria-busy": loading || undefined,
+      tabIndex: inactive ? -1 : anchorRest.tabIndex,
+      ...anchorRest,
+    };
+    const content = (
+      <>
+        {loading && <Spinner />}
+        {children}
+      </>
+    );
     // Anker, mailto:, tel: und absolute URLs dürfen nicht durch das
     // Locale-Routing laufen – sonst würde aus "#upload" ein "/de/#upload".
-    const useAnchor = external || !href.startsWith("/");
-    const anchorProps = rest as HTMLAttributes<HTMLAnchorElement>;
-    if (useAnchor) {
+    if (external || !href.startsWith("/")) {
       return (
-        <a
-          ref={ref as Ref<HTMLAnchorElement>}
-          href={href}
-          className={classes}
-          {...anchorProps}
-        >
-          {children}
+        <a ref={ref as Ref<HTMLAnchorElement>} href={href} {...linkProps}>
+          {content}
         </a>
       );
     }
     return (
-      <Link
-        ref={ref as Ref<HTMLAnchorElement>}
-        href={href}
-        className={classes}
-        {...anchorProps}
-      >
-        {children}
+      <Link ref={ref as Ref<HTMLAnchorElement>} href={href} {...linkProps}>
+        {content}
       </Link>
     );
   }
 
+  const { type = "button" } = props;
+  const buttonRest = domProps(props);
   return (
     <button
       ref={ref as Ref<HTMLButtonElement>}
       type={type}
-      disabled={disabled || loading}
+      disabled={inactive}
       aria-busy={loading || undefined}
       className={classes}
-      {...rest}
+      {...buttonRest}
     >
-      {loading && (
-        <span
-          aria-hidden
-          className="w-4 h-4 shrink-0 rounded-full border-2 border-current border-t-transparent animate-spin"
-        />
-      )}
+      {loading && <Spinner />}
       {children}
     </button>
   );
