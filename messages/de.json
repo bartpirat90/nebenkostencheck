@@ -8,7 +8,7 @@
   },
   "trust": {
     "dsgvo": "DSGVO-konform",
-    "deletion": "Löschung nach 24 h",
+    "deletion": "Automatische Löschung",
     "noAccount": "Kein Account nötig"
   },
   "hero": {
@@ -106,7 +106,7 @@
     "datenschutz": "Datenschutz",
     "agb": "AGB",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "Automatische Löschung nach 24 Stunden · Keine Rechtsberatung"
+    "note": "Automatische Löschung · Keine Rechtsberatung"
   },
   "notAStatement": {
     "title": "Kein passendes Dokument erkannt",

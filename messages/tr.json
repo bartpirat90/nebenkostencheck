@@ -9,7 +9,7 @@
   },
   "trust": {
     "dsgvo": "KVKK/DSGVO uyumlu",
-    "deletion": "24 saat sonra silinir",
+    "deletion": "Otomatik olarak silinir",
     "noAccount": "Hesap gerekmez"
   },
   "hero": {
@@ -107,7 +107,7 @@
     "datenschutz": "Gizlilik",
     "agb": "Şartlar",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "24 saat sonra otomatik silme · Hukuki danışmanlık değildir"
+    "note": "Otomatik silme · Hukuki danışmanlık değildir"
   },
   "notAStatement": {
     "title": "Uygun belge tanınmadı",

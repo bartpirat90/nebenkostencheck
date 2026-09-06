@@ -8,7 +8,7 @@
   },
   "trust": {
     "dsgvo": "GDPR-compliant",
-    "deletion": "Deleted after 24 h",
+    "deletion": "Deleted automatically",
     "noAccount": "No account needed"
   },
   "hero": {
@@ -106,7 +106,7 @@
     "datenschutz": "Privacy",
     "agb": "Terms",
     "copyright": "© 2026 Nebenkostencheck",
-    "note": "Automatic deletion after 24 hours · Not legal advice"
+    "note": "Automatic deletion · Not legal advice"
   },
   "notAStatement": {
     "title": "No matching document recognised",
