@@ -7,7 +7,10 @@ export function classifyError(message: string): string {
   if (msg.includes("503") || msg.includes("529") || msg.includes("overloaded") || msg.includes("service unavailable") || msg.includes("high demand")) {
     return "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.";
   }
-  if (msg.includes("fetch failed") || msg.includes("network") || msg.includes("timeout") || msg.includes("econnrefused")) {
+  if (msg.includes("timed out") || msg.includes("timeout")) {
+    return "Die Prüfung hat zu lange gedauert. Bitte erneut versuchen – bei großen Scans hilft eine kleinere Datei.";
+  }
+  if (msg.includes("fetch failed") || msg.includes("network") || msg.includes("econnrefused")) {
     return "Verbindung unterbrochen. Bitte erneut versuchen.";
   }
   return "Ein unbekannter Fehler ist aufgetreten. Bitte erneut versuchen.";

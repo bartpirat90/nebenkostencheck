@@ -8,8 +8,19 @@ import { InvalidAnalysisError, normalizeAnalysis } from "./validateAnalysis";
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzten API-Key) das Modul importieren kann, ohne zu werfen.
 let _client: Anthropic | null = null;
+
+const REQUEST_TIMEOUT_MS = 45_000; // unter maxDuration = 60 s der API-Routen
+const RETRY_BUDGET_MS = 15_000; // nur „schnelle" Fehler (429/529) lohnen einen zweiten Versuch
+
 function client(): Anthropic {
-  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
+  if (!_client) {
+    // Retries macht withRetry — ein Ort, ein Zeitbudget (SDK-Default: 2 Retries + 10-min-Timeout).
+    _client = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY!,
+      maxRetries: 0,
+      timeout: REQUEST_TIMEOUT_MS,
+    });
+  }
   return _client;
 }
 
@@ -17,7 +28,15 @@ const MODEL = "claude-sonnet-4-6";
 
 const RETRYABLE_STATUSES = new Set([429, 503, 529]);
 
-async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
+export interface RetryOptions {
+  attempts?: number;
+  baseDelayMs?: number;
+  budgetMs?: number;
+}
+
+export async function withRetry<T>(fn: () => Promise<T>, opts: RetryOptions = {}): Promise<T> {
+  const { attempts = 3, baseDelayMs = 500, budgetMs = RETRY_BUDGET_MS } = opts;
+  const start = Date.now();
   let lastErr: unknown;
   for (let i = 0; i < attempts; i++) {
     try {
@@ -26,10 +45,10 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
       lastErr = err;
       const status = (err as { status?: number })?.status;
       if (status === undefined || !RETRYABLE_STATUSES.has(status)) throw err;
-      // Last attempt: don't sleep, fall through to rethrow.
-      if (i === attempts - 1) break;
+      // Last attempt or Zeitbudget aufgebraucht: don't sleep, fall through to rethrow.
+      if (i === attempts - 1 || Date.now() - start > budgetMs) break;
       // Exponential backoff: 500ms, 1s, 2s, ...
-      await new Promise((r) => setTimeout(r, 500 * 2 ** i));
+      await new Promise((r) => setTimeout(r, baseDelayMs * 2 ** i));
     }
   }
   throw lastErr;
