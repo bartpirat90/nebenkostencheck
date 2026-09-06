@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 import { getAnalysis } from "@/lib/kv";
-
-let _stripe: Stripe | null = null;
-function stripe(): Stripe {
-  if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-  return _stripe;
-}
+import { stripe } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,6 +18,9 @@ export async function POST(req: NextRequest) {
     const base = process.env.NEXT_PUBLIC_BASE_URL!;
     const session = await stripe().checkout.sessions.create({
       mode: "payment",
+      // Stripe-Minimum 30 min. Verhindert Zahlungen, nachdem der 24-h-Record
+      // in Redis abgelaufen ist (Session lebt sonst standardmäßig 24 h).
+      expires_at: Math.floor(Date.now() / 1000) + 30 * 60 + 60,
       line_items: [
         {
           price_data: {

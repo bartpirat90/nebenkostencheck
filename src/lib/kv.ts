@@ -16,7 +16,9 @@ export function redis(): Redis {
   return _redis;
 }
 
-const TTL_SECONDS = 60 * 60 * 24; // 24 h Auto-Ablauf
+const TTL_SECONDS = 60 * 60 * 24; // 24 h Auto-Ablauf (unbezahlt)
+/** Nach Zahlung: 7 Tage, damit der Bericht nicht kurz nach dem Kauf verschwindet. */
+export const PAID_TTL_SECONDS = 60 * 60 * 24 * 7;
 const key = (id: string) => `analysis:${id}`;
 
 /** Speichert das volle Ergebnis, gibt die ID zurück. */
@@ -39,12 +41,18 @@ export function isUnlocked(record: StoredAnalysis): boolean {
   return record.paid || MOCK;
 }
 
-/** Setzt das paid-Flag (behält die Rest-TTL bei). Speichert optional die Kunden-E-Mail. */
-export async function markPaid(id: string, customerEmail?: string): Promise<void> {
+/**
+ * Setzt das paid-Flag und verlängert die Lebensdauer auf PAID_TTL_SECONDS
+ * (mindestens – eine längere Rest-TTL bleibt erhalten). Speichert optional die
+ * Kunden-E-Mail. Gibt false zurück, wenn der Record bereits abgelaufen war –
+ * dann hat jemand bezahlt, ohne dass ein Ergebnis existiert (Aufrufer loggt).
+ */
+export async function markPaid(id: string, customerEmail?: string): Promise<boolean> {
   const record = await getAnalysis(id);
-  if (!record) return;
+  if (!record) return false;
   record.paid = true;
   if (customerEmail) record.customerEmail = customerEmail;
-  const ttl = await redis().ttl(key(id));
-  await redis().set(key(id), record, { ex: ttl > 0 ? ttl : TTL_SECONDS });
+  const remaining = await redis().ttl(key(id));
+  await redis().set(key(id), record, { ex: Math.max(remaining, PAID_TTL_SECONDS) });
+  return true;
 }

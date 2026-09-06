@@ -94,7 +94,7 @@
       },
       {
         "q": "Yüklediğim faturaya ne olur?",
-        "a": "Faturanız yalnızca kontrol için işlenir ve 24 saat sonra otomatik olarak silinir. Kullanıcı hesabı gerekmez. Ayrıntılar gizlilik politikasındadır."
+        "a": "Faturanız yalnızca kontrol için işlenir ve yüklemeden en geç 24 saat sonra otomatik olarak silinir. Satın alma sonrasında kontrol raporu 7 güne kadar erişilebilir kalır. Kullanıcı hesabı gerekmez. Ayrıntılar gizlilik politikasındadır."
       },
       {
         "q": "Hangi dosyaları yükleyebilirim?",
@@ -234,7 +234,7 @@
         { "heading": "Sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]\nE-posta: kontakt@nebenkostencheck24.de" },
         { "heading": "Hangi verileri işliyoruz", "body": "Yüklediğiniz yan gider faturasını (PDF veya görüntü dosyası olarak) ve ondan çıkarılan bilgileri (örn. fatura kalemleri, tutarlar, dönemler) işliyoruz. Tam raporu satın aldığınızda, işlemi gerçekleştirmek için gerekli ödeme verileri de işlenir." },
         { "heading": "Anthropic (Claude) tarafından işleme", "body": "Yüklediğiniz dosya otomatik kontrol için Anthropic'e (Claude API) iletilir. Sunucu konumu diğerlerinin yanı sıra ABD'dedir; bu nedenle DSGVO Md. 44 vd. uyarınca üçüncü ülkeye aktarım söz konusudur. Anthropic, kullanım koşulları uyarınca verileri model eğitiminde kullanmamayı taahhüt eder (API kullanımı). Ayrıntılı bilgi: https://www.anthropic.com/privacy." },
-        { "heading": "Saklama ve silme", "body": "Kontrol sonuçları sunucularımızda geçici olarak saklanır ve 24 saat sonra otomatik olarak silinir. Faturanız kalıcı olarak saklanmaz." },
+        { "heading": "Saklama ve silme", "body": "Kontrol sonuçları sunucularımızda geçici olarak saklanır ve yüklemeden en geç 24 saat sonra otomatik olarak silinir. Satın alma sonrasında kontrol raporu 7 güne kadar erişilebilir kalır ve ardından otomatik olarak silinir. Faturanız kalıcı olarak saklanmaz." },
         { "heading": "Ödeme işlemi (Stripe)", "body": "Ödemeler, ödeme hizmeti sağlayıcısı Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, ABD) üzerinden gerçekleştirilir. İşlem için gerekli ödeme verileri Stripe'a iletilir. Stripe, EU-U.S. Data Privacy Framework kapsamında sertifikalıdır. Ayrıntılı bilgi: https://stripe.com/de/privacy." },
         { "heading": "Yasal dayanak", "body": "Verileriniz DSGVO md. 6/1-b (sözleşmenin ifası veya sözleşme öncesi tedbirler) temelinde işlenir. Dosyanın Anthropic tarafından işlenmesini başlattığınız ölçüde, DSGVO md. 6/1-a uyarınca rızanız geçerlidir." },
         { "heading": "Haklarınız", "body": "Hakkınızda saklanan verilere erişim (DSGVO Md. 15), yanlış verilerin düzeltilmesi (DSGVO Md. 16), silme (DSGVO Md. 17) ve işlemeye itiraz (DSGVO Md. 21) haklarına sahipsiniz. Ayrıca yetkili veri koruma denetim makamına şikâyette bulunma hakkınız vardır.\n\nSorularınız için: kontakt@nebenkostencheck24.de" }

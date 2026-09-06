@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { stripe, sessionUnlocksAnalysis } from "@/lib/stripe";
 import { markPaid } from "@/lib/kv";
-
-let _stripe: Stripe | null = null;
-function stripe(): Stripe {
-  if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-  return _stripe;
-}
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -18,15 +13,29 @@ export async function POST(req: NextRequest) {
   try {
     event = await stripe().webhooks.constructEventAsync(body, sig, webhookSecret);
   } catch (err: unknown) {
-    console.error("Webhook signature error:", err);
+    console.error("Webhook signature error:", err instanceof Error ? err.message : err);
     return NextResponse.json({ error: "Ungültige Signatur." }, { status: 400 });
   }
 
-  if (event.type === "checkout.session.completed") {
+  // `completed` feuert bei Klarna/SEPA/Sofort auch mit payment_status "unpaid";
+  // die echte Zahlung kommt dann später als `async_payment_succeeded`.
+  if (
+    event.type === "checkout.session.completed" ||
+    event.type === "checkout.session.async_payment_succeeded"
+  ) {
     const session = event.data.object as Stripe.Checkout.Session;
     const id = session.metadata?.analysisId ?? session.client_reference_id;
-    const email = session.customer_details?.email ?? session.customer_email;
-    if (id) await markPaid(id, email ?? undefined);
+    if (id && sessionUnlocksAnalysis(session, id)) {
+      const email = session.customer_details?.email ?? session.customer_email ?? undefined;
+      const ok = await markPaid(id, email);
+      if (!ok) {
+        // Geld ist da, Ergebnis nicht mehr: muss auffallen (Refund manuell).
+        console.error(`Webhook: Zahlung fuer abgelaufene Analyse ${id}, session ${session.id}`);
+      }
+    }
+  } else if (event.type === "checkout.session.async_payment_failed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    console.warn(`Webhook: asynchrone Zahlung fehlgeschlagen, session ${session.id}`);
   }
 
   return NextResponse.json({ received: true });

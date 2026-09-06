@@ -93,7 +93,7 @@
       },
       {
         "q": "What happens to my uploaded bill?",
-        "a": "Your bill is processed solely for the check and is deleted automatically after 24 hours. No user account is required. Details are in the privacy policy."
+        "a": "Your bill is processed solely for the check and is deleted automatically no later than 24 hours after upload. After a purchase, the report remains available for up to 7 days. No user account is required. Details are in the privacy policy."
       },
       {
         "q": "Which files can I upload?",
@@ -233,7 +233,7 @@
         { "heading": "Controller", "body": "[Operator name]\n[Street & number], [Postcode & city]\nEmail: kontakt@nebenkostencheck24.de" },
         { "heading": "What data we process", "body": "We process the utility-cost statement you upload (as a PDF or image file) as well as the details extracted from it (e.g. line items, amounts, periods). When you purchase the full report, the payment data required to process the transaction is additionally processed." },
         { "heading": "Processing by Anthropic (Claude)", "body": "The file you upload is transmitted to Anthropic (Claude API) for the automated check. The server location is, among others, in the USA; this therefore constitutes a transfer to a third country under Art. 44 et seq. GDPR. Under its terms of use, Anthropic undertakes not to use data to train models (API usage). Further information: https://www.anthropic.com/privacy." },
-        { "heading": "Storage & deletion", "body": "Check results are stored temporarily on our servers and deleted automatically after 24 hours. Your bill is not stored permanently." },
+        { "heading": "Storage & deletion", "body": "Check results are stored temporarily on our servers and deleted automatically no later than 24 hours after upload. After a purchase, the report remains available for up to 7 days and is then deleted automatically. Your statement is never stored permanently." },
         { "heading": "Payment processing (Stripe)", "body": "Payments are processed by the payment service provider Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA). The payment data required for the transaction is transmitted to Stripe. Stripe is certified under the EU-U.S. Data Privacy Framework. Further information: https://stripe.com/de/privacy." },
         { "heading": "Legal basis", "body": "Your data is processed on the basis of Art. 6 (1) (b) GDPR (performance of a contract or pre-contractual measures). Where you initiate processing of the file by Anthropic, your consent applies pursuant to Art. 6 (1) (a) GDPR." },
         { "heading": "Your rights", "body": "You have the right to access the data stored about you (Art. 15 GDPR), to rectification of inaccurate data (Art. 16 GDPR), to erasure (Art. 17 GDPR) and to object to processing (Art. 21 GDPR). You also have the right to lodge a complaint with the competent data protection supervisory authority.\n\nIf you have any questions, please contact: kontakt@nebenkostencheck24.de" }
