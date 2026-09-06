@@ -21,6 +21,7 @@ export default function LandingHero() {
       >
         {t("cta")} <span aria-hidden>→</span>
       </a>
+      <p className="text-sm text-faint mt-3">{t("priceNote")}</p>
       <ul className="lg:hidden flex flex-wrap gap-x-5 gap-y-1.5 mt-6 text-sm text-muted">
         <li className="flex items-center gap-1.5"><span className="text-accent-soft">✓</span> {tt("dsgvo")}</li>
         <li className="flex items-center gap-1.5"><span className="text-accent-soft">✓</span> {tt("deletion")}</li>

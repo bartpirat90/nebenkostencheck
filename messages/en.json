@@ -5,7 +5,7 @@
     "ogAlt": "Nebenkostencheck – check your German utility bill and get money back"
   },
   "nav": {
-    "badge": "AUDIT REPORT · FREE"
+    "badge": "FREE FIRST CHECK · REPORT €9.90"
   },
   "trust": {
     "dsgvo": "GDPR-compliant",
@@ -16,12 +16,12 @@
     "eyebrow": "§ checked against BetrKV / HeizkV / BGH",
     "headline": "Is there money hidden in your utility bill?",
     "subline": "Upload your statement. It is checked for typical errors in seconds and your potential refund is calculated.",
-    "cta": "Check my bill"
+    "cta": "Check my bill",
+    "priceNote": "First check free · full report once for €9.90, no subscription"
   },
   "stats": {
-    "source": "Source: German Tenants' Association (Deutscher Mieterbund)",
     "items": [
-      { "label": "Statements with errors", "value": "~50%" },
+      { "label": "Statements with errors", "value": "~50%", "source": "Source: German Tenants' Association (Deutscher Mieterbund)" },
       { "label": "Analysis time", "value": "15 sec." },
       { "label": "First check", "value": "€0" }
     ]

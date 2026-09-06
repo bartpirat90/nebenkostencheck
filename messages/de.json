@@ -5,7 +5,7 @@
     "ogAlt": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen"
   },
   "nav": {
-    "badge": "PRÜFBERICHT · GRATIS"
+    "badge": "ERST-PRÜFUNG GRATIS · BERICHT 9,90 €"
   },
   "trust": {
     "dsgvo": "DSGVO-konform",
@@ -16,12 +16,12 @@
     "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
     "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
     "subline": "Lade deine Abrechnung hoch. Sie wird in Sekunden auf typische Fehler geprüft und dein Erstattungspotenzial berechnet.",
-    "cta": "Abrechnung prüfen"
+    "cta": "Abrechnung prüfen",
+    "priceNote": "Erst-Prüfung kostenlos · vollständiger Bericht einmalig 9,90 €, kein Abo"
   },
   "stats": {
-    "source": "Quelle: Deutscher Mieterbund",
     "items": [
-      { "label": "Abrechnungen mit Fehlern", "value": "~50 %" },
+      { "label": "Abrechnungen mit Fehlern", "value": "~50 %", "source": "Quelle: Deutscher Mieterbund" },
       { "label": "Analyse-Dauer", "value": "15 Sek." },
       { "label": "Erst-Prüfung", "value": "0 €" }
     ]
