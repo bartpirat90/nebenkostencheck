@@ -8,8 +8,12 @@ import {
 } from "@/lib/limits";
 
 describe("limits", () => {
-  it("exportiert nur positive Integer", () => {
-    for (const [key, value] of Object.entries(limits)) {
+  // Alle Rate-Limit-Konstanten (Namensmuster *_PER_*) müssen ganze, positive
+  // Zahlen sein – ein versehentliches 0 oder 0.5 würde Nutzer aussperren.
+  it("alle *_PER_*-Limits sind positive Integer", () => {
+    const rateLimits = Object.entries(limits).filter(([key]) => key.includes("_PER_"));
+    expect(rateLimits.length).toBeGreaterThan(0);
+    for (const [key, value] of rateLimits) {
       expect(Number.isInteger(value), `${key} sollte ein Integer sein`).toBe(true);
       expect((value as number) > 0, `${key} sollte positiv sein`).toBe(true);
     }

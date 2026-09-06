@@ -62,8 +62,8 @@ export async function POST(req: NextRequest) {
     // Kostenschutz: jeder Aufruf kostet einen Claude-Call.
     const ip = getClientIp(req);
     const [okId, okIp] = await Promise.all([
-      checkLimit("rl:letter:id", LETTER_PER_ID_PER_DAY, "24 h", id),
-      checkLimit("rl:letter:ip", LETTER_PER_IP_PER_DAY, "24 h", ip),
+      checkLimit("rl:letter:id", LETTER_PER_ID_PER_DAY, "1 d", id),
+      checkLimit("rl:letter:ip", LETTER_PER_IP_PER_DAY, "1 d", ip),
     ]);
     if (!okId || !okIp) {
       return NextResponse.json(
@@ -82,7 +82,8 @@ export async function POST(req: NextRequest) {
       filename: LETTER_FILENAMES[type],
     });
   } catch (err: unknown) {
-    console.error("Letter generation error:", err);
+    // Stack statt ganzes Objekt: API-Fehlerobjekte können Request-Inhalte tragen.
+    console.error("Letter generation error:", err instanceof Error ? err.stack ?? err.message : String(err));
     const message = err instanceof Error ? err.message : "";
     return NextResponse.json({ error: classifyError(message) }, { status: 500 });
   }

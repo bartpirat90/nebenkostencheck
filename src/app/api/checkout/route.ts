@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (err: unknown) {
-    console.error("Checkout error:", err);
+    console.error("Checkout error:", err instanceof Error ? err.stack ?? err.message : String(err));
     return NextResponse.json({ error: "Zahlung konnte nicht gestartet werden." }, { status: 500 });
   }
 }
