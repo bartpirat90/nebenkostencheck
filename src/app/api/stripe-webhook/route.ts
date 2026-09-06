@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe, sessionUnlocksAnalysis } from "@/lib/stripe";
-import { extendAnalysisTtl, markPaid, PAID_TTL_SECONDS } from "@/lib/kv";
+import { extendAnalysisTtl, markPaid, PENDING_TTL_SECONDS } from "@/lib/kv";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     } else if (id && session.payment_status === "unpaid") {
       // Zahlung steht noch aus (SEPA bis zu 14 Tage): Record am Leben halten,
       // aber NICHT freischalten.
-      await extendAnalysisTtl(id, PAID_TTL_SECONDS);
+      await extendAnalysisTtl(id, PENDING_TTL_SECONDS);
     }
   } else if (event.type === "checkout.session.async_payment_failed") {
     const session = event.data.object as Stripe.Checkout.Session;

@@ -19,6 +19,8 @@ export function redis(): Redis {
 const TTL_SECONDS = 60 * 60 * 24; // 24 h Auto-Ablauf (unbezahlt)
 /** Nach Zahlung: 7 Tage, damit der Bericht nicht kurz nach dem Kauf verschwindet. */
 export const PAID_TTL_SECONDS = 60 * 60 * 24 * 7;
+/** Zahlung angestoßen, aber noch offen (SEPA-Lastschrift braucht bis zu 14 Tage). */
+export const PENDING_TTL_SECONDS = 60 * 60 * 24 * 14;
 const key = (id: string) => `analysis:${id}`;
 
 /** Speichert das volle Ergebnis, gibt die ID zurück. */

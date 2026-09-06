@@ -20,8 +20,9 @@ export async function POST(req: NextRequest) {
 
     // Die Session darf den Record nicht überleben: Wer erst nach dem Ablauf
     // zahlt, bekäme nichts. Also nur starten, wenn genug Rest-TTL da ist.
+    // -1 = kein Ablauf (ok), -2 = Record ist gerade verschwunden (nicht ok).
     const remaining = await getAnalysisTtl(id);
-    if (remaining >= 0 && remaining < SESSION_LIFETIME_S + 60) {
+    if (remaining !== -1 && remaining < SESSION_LIFETIME_S + 60) {
       return NextResponse.json(
         { error: "Analyse läuft gleich ab. Bitte lade die Abrechnung erneut hoch." },
         { status: 410 }

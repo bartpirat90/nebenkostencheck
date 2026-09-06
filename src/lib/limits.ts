@@ -30,5 +30,10 @@ export const SEND_PDF_PER_ID_PER_DAY = 5;
 /** PDF-Mailversand: pro IP und Tag. */
 export const SEND_PDF_PER_IP_PER_DAY = 20;
 
-/** Stripe-Session-Fallback in /api/result (je ein Stripe-API-Call): pro IP und Stunde. */
-export const RESULT_FALLBACK_PER_IP_PER_HOUR = 20;
+/**
+ * Stripe-Session-Fallback in /api/result (je ein Stripe-API-Call): pro
+ * Analyse-ID und Stunde. Bewusst nicht pro IP: Die Ergebnisseite pollt bis zu
+ * 5× pro Aufruf, hinter CGNAT würden sich zahlende Nutzer sonst gegenseitig
+ * aussperren. Neue IDs sind ohnehin über das Analyse-Limit gedeckelt.
+ */
+export const RESULT_FALLBACK_PER_ID_PER_HOUR = 20;
