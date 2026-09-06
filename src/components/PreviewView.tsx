@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PreviewData } from "@/types";
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 export default function PreviewView({ preview, onReset }: Props) {
   const t = useTranslations("teaser");
   const te = useTranslations("errors");
+  const locale = useLocale();
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,13 +24,18 @@ export default function PreviewView({ preview, onReset }: Props) {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: preview.id }),
+        body: JSON.stringify({ id: preview.id, locale }),
       });
       if (!res.ok) {
         const e = await res.json();
         throw new Error(e.error || t("checkoutError"));
       }
       const { url } = await res.json();
+      // Vorschau vor der Weiterleitung sichern: bricht der Nutzer bei Stripe ab,
+      // holen wir sie zurueck statt eine zweite KI-Analyse zu erzwingen.
+      try {
+        sessionStorage.setItem("nkc:preview", JSON.stringify(preview));
+      } catch {}
       window.location.href = url;
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : te("unknown"));

@@ -1,16 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { getAnalysis, getAnalysisTtl } from "@/lib/kv";
 import { stripe } from "@/lib/stripe";
 import { checkLimit, getClientIp } from "@/lib/ratelimit";
 import { CHECKOUT_PER_IP_PER_HOUR } from "@/lib/limits";
+import { localePrefix, stripeLocale, toLocale } from "@/lib/checkoutLocale";
 
 /** Lebensdauer der Checkout-Session: Stripe-Minimum 30 min + Puffer. */
 const SESSION_LIFETIME_S = 30 * 60 + 60;
 
 export async function POST(req: NextRequest) {
   try {
-    const { id } = await req.json();
-    if (!id) return NextResponse.json({ error: "Fehlende ID." }, { status: 400 });
+    const body = (await req.json()) as { id?: unknown; locale?: unknown };
+    const { id } = body;
+    if (typeof id !== "string" || !id) {
+      return NextResponse.json({ error: "Fehlende ID." }, { status: 400 });
+    }
+
+    // Rücksprung von Stripe soll in der Sprache des Nutzers landen, nicht immer auf Deutsch.
+    const locale = toLocale(body.locale);
+    const prefix = localePrefix(locale);
 
     const record = await getAnalysis(id);
     if (!record) {
@@ -57,8 +66,9 @@ export async function POST(req: NextRequest) {
       allow_promotion_codes: true,
       metadata: { analysisId: id },
       client_reference_id: id,
-      success_url: `${base}/ergebnis?id=${id}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${base}/?canceled=1`,
+      locale: stripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale,
+      success_url: `${base}${prefix}/ergebnis?id=${id}&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${base}${prefix}/?canceled=1&id=${id}`,
     });
 
     return NextResponse.json({ url: session.url });

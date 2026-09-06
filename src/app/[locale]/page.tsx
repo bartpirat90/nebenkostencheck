@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import UploadZone from "@/components/UploadZone";
 import PreviewView from "@/components/PreviewView";
@@ -22,6 +23,17 @@ export default function Home() {
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  // Zahlungsabbruch bei Stripe: gespeicherte Vorschau wiederherstellen statt
+  // den Nutzer zu einer zweiten (kostenpflichtigen) KI-Analyse zu zwingen.
+  const handleCanceled = useCallback(
+    (restored: PreviewData) => {
+      setPreview(restored);
+      setNotice(t("teaser.canceled"));
+    },
+    [t]
+  );
 
   const handleFileUpload = useCallback(
     async (file: File) => {
@@ -73,6 +85,7 @@ export default function Home() {
   const handleReset = () => {
     setPreview(null);
     setError(null);
+    setNotice(null);
   };
 
   const serviceJsonLd = {
@@ -92,6 +105,13 @@ export default function Home() {
 
   return (
     <main className="min-h-[100dvh] bg-ink">
+      {/* Eigene, kleine Suspense-Grenze nur fuer useSearchParams: haelt sie fern von
+          preview/notice weiter oben, damit ein Re-Suspend beim URL-Cleanup nicht
+          den gesamten Seiten-State zuruecksetzt. */}
+      <Suspense fallback={null}>
+        <CancelRestore onRestore={handleCanceled} />
+      </Suspense>
+
       {/* Navigation */}
       <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
         <Logo />
@@ -206,7 +226,17 @@ export default function Home() {
           ) : preview?.notAStatement ? (
             <NotAStatementBox onReset={handleReset} />
           ) : (
-            <PreviewView preview={preview!} onReset={handleReset} />
+            <>
+              {notice && preview && (
+                <div
+                  role="status"
+                  className="mb-4 rounded-xl border border-line bg-surface px-4 py-3 text-sm text-muted"
+                >
+                  {notice}
+                </div>
+              )}
+              <PreviewView preview={preview!} onReset={handleReset} />
+            </>
           )}
         </div>
       )}
@@ -240,6 +270,38 @@ function NotAStatementBox({ onReset }: { onReset: () => void }) {
       </button>
     </div>
   );
+}
+
+/**
+ * Liest den `canceled`/`id`-Query-Parameter und meldet eine passende gespeicherte
+ * Vorschau an den Elternteil zurueck. Bewusst als eigene, winzige Komponente:
+ * `useSearchParams` braucht eine Suspense-Grenze, und wenn diese Grenze beim
+ * Bereinigen der URL neu rendert, darf das nur diese Komponente treffen – nicht
+ * `Home` mit seinem preview/notice-State (sonst geht die Wiederherstellung sofort
+ * wieder verloren, siehe Kommentar bei history.replaceState unten).
+ */
+function CancelRestore({ onRestore }: { onRestore: (preview: PreviewData) => void }) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("canceled") !== "1") return;
+    const id = searchParams.get("id");
+    try {
+      const raw = sessionStorage.getItem("nkc:preview");
+      if (raw) {
+        const parsed: PreviewData = JSON.parse(raw);
+        if (parsed.id === id) onRestore(parsed);
+      }
+    } catch {}
+    // Nur die URL-Leiste bereinigen (kein next-intl-Router-Push): jede Aenderung
+    // an history.pushState/replaceState wird vom App Router abgefangen und laesst
+    // diese Suspense-Grenze neu aufloesen. Da `onRestore` den State im Elternteil
+    // (ausserhalb dieser Grenze) setzt, bleibt er davon unberuehrt.
+    window.history.replaceState(null, "", window.location.pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return null;
 }
 
 function fileToBase64(file: File): Promise<string> {

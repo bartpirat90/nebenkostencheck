@@ -146,6 +146,7 @@
     "unlockCta": "9,90 € karşılığında aç",
     "redirecting": "Yönlendiriliyor…",
     "checkoutError": "Ödeme başlatılamadı.",
+    "canceled": "Ödeme iptal edildi. Önizlemeniz hâlâ burada – istediğiniz zaman kilidini açabilirsiniz.",
     "demo": "Demo modu: raporu ödeme yapmadan aç →",
     "checkAnother": "Başka bir dosya kontrol et"
   },

@@ -145,6 +145,7 @@
     "unlockCta": "Unlock for €9.90",
     "redirecting": "Redirecting…",
     "checkoutError": "Payment could not be started.",
+    "canceled": "The payment was cancelled. Your preview is still here – you can unlock it any time.",
     "demo": "Demo mode: open the report without payment →",
     "checkAnother": "Check another file"
   },

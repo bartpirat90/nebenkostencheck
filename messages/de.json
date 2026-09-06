@@ -145,6 +145,7 @@
     "unlockCta": "Für 9,90 € freischalten",
     "redirecting": "Weiterleitung…",
     "checkoutError": "Zahlung konnte nicht gestartet werden.",
+    "canceled": "Die Zahlung wurde abgebrochen. Deine Vorschau ist noch da – du kannst jederzeit freischalten.",
     "demo": "Demo-Modus: Bericht ohne Bezahlung öffnen →",
     "checkAnother": "Andere Datei prüfen"
   },
