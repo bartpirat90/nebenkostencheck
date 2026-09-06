@@ -3,6 +3,7 @@ import { ANALYSIS_SYSTEM_PROMPT, buildLetterPrompt } from "./prompts";
 import { AnalysisResult, LetterRequest } from "@/types";
 import { MOCK_ANALYSIS_RESULT, MOCK_LETTER } from "./mockData";
 import { MOCK } from "./mock";
+import { InvalidAnalysisError, normalizeAnalysis } from "./validateAnalysis";
 
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
 // (ohne gesetzten API-Key) das Modul importieren kann, ohne zu werfen.
@@ -108,7 +109,9 @@ export async function analyzeStatement(
     }),
   );
 
-  return extractJson(extractText(message)) as AnalysisResult;
+  const parsed = normalizeAnalysis(extractJson(extractText(message)));
+  if (!parsed) throw new InvalidAnalysisError();
+  return parsed;
 }
 
 /**

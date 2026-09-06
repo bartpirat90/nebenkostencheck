@@ -6,6 +6,7 @@ import { storeAnalysis } from "@/lib/kv";
 import { classifyError } from "@/lib/errors";
 import { AnalysisResult, PreviewData } from "@/types";
 import { MOCK } from "@/lib/mock";
+import { InvalidAnalysisError } from "@/lib/validateAnalysis";
 
 export const maxDuration = 60;
 
@@ -79,14 +80,15 @@ export async function POST(req: NextRequest) {
     const id = await storeAnalysis(result);
     return NextResponse.json(toPreview(id, result));
   } catch (err: unknown) {
-    console.error("Analysis error:", err);
-    if (err instanceof SyntaxError) {
+    if (err instanceof SyntaxError || err instanceof InvalidAnalysisError) {
+      console.error("Analysis error: unbrauchbare KI-Antwort", err.message);
       return NextResponse.json(
         { error: "Die Analyse konnte nicht verarbeitet werden. Bitte erneut versuchen." },
-        { status: 500 }
+        { status: 502 }
       );
     }
     const message = err instanceof Error ? err.message : "";
+    console.error("Analysis error:", message);
     return NextResponse.json({ error: classifyError(message) }, { status: 500 });
   }
 }
