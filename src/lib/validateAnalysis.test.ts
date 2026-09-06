@@ -76,4 +76,37 @@ describe("normalizeAnalysis", () => {
     expect(r.paid).toBeUndefined();
     expect(r.evil).toBeUndefined();
   });
+
+  it("does not let __proto__ keys pollute the result", () => {
+    const raw = JSON.parse('{"summary":"x","errors":[],"__proto__":{"polluted":true}}');
+    const r = normalizeAnalysis(raw) as unknown as Record<string, unknown>;
+    expect(r.polluted).toBeUndefined();
+    expect(Object.getPrototypeOf(r)).toBe(Object.prototype);
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
+
+  it("nulls string fields that arrive as objects/arrays", () => {
+    const r = normalizeAnalysis({
+      summary: "x",
+      errors: [{ ...valid.errors[0], legalBasis: { nested: true }, evidence: ["a"] }],
+      contactData: { tenantName: { first: "Max" } },
+    });
+    expect(r!.errors[0].legalBasis).toBeNull();
+    expect(r!.errors[0].evidence).toBeNull();
+    expect(r!.contactData?.tenantName).toBeNull();
+  });
+
+  it("nulls NaN, Infinity and negative amounts", () => {
+    const r = normalizeAnalysis({
+      summary: "x",
+      totalPotentialEur: NaN,
+      directPotentialEur: Infinity,
+      reviewPotentialEur: -1,
+      errors: [{ ...valid.errors[0], potentialEur: -0.01 }],
+    });
+    expect(r!.totalPotentialEur).toBeNull();
+    expect(r!.directPotentialEur).toBeNull();
+    expect(r!.reviewPotentialEur).toBeNull();
+    expect(r!.errors[0].potentialEur).toBeNull();
+  });
 });
