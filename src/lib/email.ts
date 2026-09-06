@@ -5,7 +5,9 @@
  */
 const EMAIL_RE = /^[^\s@,;<>]+@[^\s@,;<>]+\.[A-Za-z]{2,}$/;
 // Steuerzeichen (NUL, ESC, …) deckt `\s` nicht ab – separat ausschließen.
-// eslint-disable-next-line no-control-regex
+// Hinweis: no-control-regex ist in eslint-config-next nicht aktiv (kein
+// eslint:recommended in der Basis) – kein eslint-disable noetig, siehe
+// eslint.config.mjs.
 const CONTROL_RE = /[\x00-\x1f\x7f]/;
 const MAX_LEN = 254;
 

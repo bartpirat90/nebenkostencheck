@@ -14,14 +14,15 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 /** Sanitizes client-provided contact data: only known fields, max 200 chars each. */
-function sanitizeContact(raw: any, serverDefault?: ContactData): ContactData {
+function sanitizeContact(raw: unknown, serverDefault?: ContactData): ContactData {
   const ALLOWED_KEYS: (keyof ContactData)[] = [
     "tenantName", "tenantAddress", "landlordName", "landlordAddress", "contractNumber", "billingPeriod",
   ];
   const MAX_LEN = 200;
   const result: ContactData = { ...serverDefault };
+  const source = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
   for (const key of ALLOWED_KEYS) {
-    const val = raw?.[key];
+    const val = source[key];
     if (typeof val === "string" && val.trim()) {
       result[key] = val.trim().slice(0, MAX_LEN);
     }

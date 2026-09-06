@@ -46,7 +46,9 @@ export default function LetterModal({
   onClose,
   type,
   initialContact,
-  errors,
+  // errors wird bewusst nicht verwendet: der Brieftext wird serverseitig aus
+  // dem bezahlten Analyseergebnis erzeugt, nicht aus Client-Input (siehe
+  // generate-letter/route.tsx). Prop bleibt Teil der Schnittstelle fuer den Aufrufer.
   id,
   customerEmail,
 }: Props) {

@@ -1,4 +1,5 @@
 import { Geist } from "next/font/google";
+import Link from "next/link";
 import Logo from "@/components/Logo";
 import Button from "@/components/ui/Button";
 // globals.css wird hier erneut importiert, weil das Root-Layout kein CSS laedt –
@@ -16,9 +17,10 @@ export default function RootNotFound() {
       <body className={`${geist.variable} ${geist.className}`}>
         <main className="min-h-[100dvh] bg-ink">
           <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-            <a href="/" aria-label="Zur Startseite" className="inline-flex items-center min-h-11">
+            {/* next/link (nicht next-intl's Link) – diese 404 hat keinen Locale-Kontext. */}
+            <Link href="/" aria-label="Zur Startseite" className="inline-flex items-center min-h-11">
               <Logo />
-            </a>
+            </Link>
           </nav>
 
           <div className="max-w-2xl mx-auto px-6 py-24 text-center space-y-6">

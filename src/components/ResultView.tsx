@@ -264,7 +264,7 @@ function ErrorCard({ error }: { error: ErrorItem }) {
           )}
           {error.evidence && (
             <p className="text-xs text-faint mt-1 italic">
-              {t("cardEvidence")} „{error.evidence}"
+              {t("cardEvidence")} „{error.evidence}“
             </p>
           )}
           {error.actionText && (

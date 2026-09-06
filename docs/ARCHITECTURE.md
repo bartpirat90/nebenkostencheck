@@ -279,7 +279,7 @@ Der Client übersetzt anhand des `code` über `apiErrors.*` in `messages/*.json`
 | Vercel Hobby | Verbietet kommerzielle Nutzung → **Pro erforderlich**. Pro hebt auch das Function-Timeout (`maxDuration = 60`) an. |
 | KI-Kosten | ~14 Cent/Analyse, ~3 Cent/Brief (s. o.). Pro Verkauf vernachlässigbar. |
 | Datenpersistenz | Nur kurzlebiger KV-Eintrag (24 h unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener Zahlung), keine History, kein Account. |
-| Tests | Vitest (`npm test`, aktuell 15 Dateien / 80 Tests) + `tsc --noEmit` + `npm run build`. |
+| Tests | Vitest (`npm test`, aktuell 15 Dateien / 80 Tests) + `tsc --noEmit` + `npm run lint` (ESLint 9 Flat Config, `eslint-config-next`) + `npm run build`. |
 | Lokale env-Eigenheit | Eine bereits in der Shell gesetzte (auch leere) `ANTHROPIC_API_KEY` überschattet `.env.local`, da dotenv existierende Variablen nicht überschreibt. Lokaler Workaround: `env -u ANTHROPIC_API_KEY npm run dev`. Betrifft nicht Vercel. |
 | Rechtstexte | Impressum/Datenschutz/AGB sind unverbindliche Roh-Vorlagen mit Platzhaltern (Betreibername/-anschrift) — vor Live-Betrieb prüfen lassen. |
 | Arabisch im PDF | Noto Sans deckt Latin-Ext + Kyrillisch ab, aber kein Arabisch — Briefe/Berichte auf Arabisch werden im PDF-Export nicht korrekt dargestellt. |
