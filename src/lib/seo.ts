@@ -30,6 +30,13 @@ export const OG_LOCALES: Record<Locale, string> = {
 };
 
 /**
+ * Maße des Apple-Touch-Icons – hier statt in apple-icon.tsx, damit Manifest
+ * und Tests die Zahl teilen können, ohne `next/og` zu importieren.
+ */
+export const APPLE_ICON_SIZE = { width: 180, height: 180 } as const;
+export const APPLE_ICON_TYPE = "image/png";
+
+/**
  * Vollstaendige Metadaten einer Unterseite (Rechtsseiten etc.).
  * `openGraph` und `twitter` muessen komplett sein: Next ersetzt die Objekte des
  * Layouts, statt sie tief zu mergen – eine Teilangabe wuerde og:image, og:type,

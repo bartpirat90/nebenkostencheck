@@ -14,7 +14,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// themeColor gehoert seit Next 15 in ein eigenes viewport-Export, nicht ins
+// themeColor gehört seit Next 15 in einen eigenen viewport-Export, nicht ins
 // metadata-Objekt – sonst warnt Next beim Build.
 export const viewport: Viewport = {
   themeColor: "#0C1016",

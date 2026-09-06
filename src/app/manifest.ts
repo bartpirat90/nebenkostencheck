@@ -1,8 +1,12 @@
 import type { MetadataRoute } from "next";
+import { APPLE_ICON_SIZE, APPLE_ICON_TYPE } from "@/lib/seo";
 
-// Web-App-Manifest fuer "Zum Startbildschirm hinzufuegen" (Android/Chrome).
-// Icons: icon.svg deckt beliebige Groessen ab, apple-icon liefert das PNG,
-// das auch Chrome/Android als maskierbares Fallback nutzen kann.
+// Web-App-Manifest für „Zum Startbildschirm hinzufügen" (Android/Chrome).
+// Icons: icon.svg deckt beliebige Größen ab, apple-icon liefert das PNG,
+// das auch Chrome/Android als Fallback nutzen kann.
+// start_url bleibt bewusst "/" (Deutsch): Das Manifest liegt außerhalb von
+// [locale] und wird für alle Sprachen identisch ausgeliefert; die
+// Locale-Erkennung der Middleware leitet beim Start ggf. weiter.
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Nebenkostencheck",
@@ -13,7 +17,11 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#0C1016",
     icons: [
       { src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
-      { src: "/apple-icon", sizes: "180x180", type: "image/png" },
+      {
+        src: "/apple-icon",
+        sizes: `${APPLE_ICON_SIZE.width}x${APPLE_ICON_SIZE.height}`,
+        type: APPLE_ICON_TYPE,
+      },
     ],
   };
 }

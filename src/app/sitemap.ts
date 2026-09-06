@@ -12,8 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     return routing.locales.map((l) => ({
       url: localeUrl(l, page),
-      // Kein lastModified: ein Build-Zeitstempel waere ein falsches Frische-Signal,
-      // da sich der Seiteninhalt beim Build nicht zwangslaeufig geaendert hat.
+      // Kein lastModified: ein Build-Zeitstempel wäre ein falsches Frische-Signal,
+      // da sich der Seiteninhalt beim Build nicht zwangsläufig geändert hat.
       changeFrequency: (page === "" ? "monthly" : "yearly") as "monthly" | "yearly",
       priority: page === "" ? 1 : 0.3,
       alternates: { languages },
