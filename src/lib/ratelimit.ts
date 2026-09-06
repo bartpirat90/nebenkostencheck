@@ -5,10 +5,13 @@ import { RATE_LIMIT_PER_HOUR, RATE_LIMIT_PER_DAY } from "./limits";
 
 type Window = Parameters<typeof Ratelimit.slidingWindow>[1];
 
-// Ein Limiter pro Prefix, lazy erzeugt (Build darf ohne Env importieren).
+// Ein Limiter pro Konfiguration, lazy erzeugt (Build darf ohne Env importieren).
+// Cache-Key enthält Limit + Fenster, damit ein Prefix nicht still eine alte
+// Konfiguration wiederverwendet.
 const _limiters = new Map<string, Ratelimit>();
 function limiter(prefix: string, limit: number, window: Window): Ratelimit {
-  let l = _limiters.get(prefix);
+  const cacheKey = `${prefix}|${limit}|${window}`;
+  let l = _limiters.get(cacheKey);
   if (!l) {
     l = new Ratelimit({
       redis: redis(),
@@ -16,7 +19,7 @@ function limiter(prefix: string, limit: number, window: Window): Ratelimit {
       analytics: false,
       prefix,
     });
-    _limiters.set(prefix, l);
+    _limiters.set(cacheKey, l);
   }
   return l;
 }
