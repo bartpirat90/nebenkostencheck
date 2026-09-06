@@ -6,7 +6,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { routing, RTL_LOCALES } from "@/i18n/routing";
 import { isServerOnlyNamespace } from "@/i18n/serverOnly";
 import { SITE_URL } from "@/lib/constants";
-import { localeUrl, pageAlternates, toLocale, OG_LOCALES } from "@/lib/seo";
+import { localeUrl, pageAlternates, toLocale, BRAND_INK, OG_LOCALES } from "@/lib/seo";
 import "../globals.css";
 
 const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });
@@ -18,7 +18,7 @@ export function generateStaticParams() {
 // themeColor gehört seit Next 15 in einen eigenen viewport-Export, nicht ins
 // metadata-Objekt – sonst warnt Next beim Build.
 export const viewport: Viewport = {
-  themeColor: "#0C1016",
+  themeColor: BRAND_INK,
   width: "device-width",
   initialScale: 1,
 };

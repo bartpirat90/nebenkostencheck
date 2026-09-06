@@ -124,12 +124,14 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>(fu
   if (props.href !== undefined) {
     const { href, external } = props;
     const anchorRest = domProps(props);
+    // Eigene Attribute NACH dem Spread: ein von außen übergebenes tabIndex darf
+    // die Sperre im inaktiven Zustand nicht wieder aufheben.
     const linkProps = {
+      ...anchorRest,
       className: classes,
       "aria-disabled": inactive || undefined,
       "aria-busy": loading || undefined,
       tabIndex: inactive ? -1 : anchorRest.tabIndex,
-      ...anchorRest,
     };
     const content = (
       <>

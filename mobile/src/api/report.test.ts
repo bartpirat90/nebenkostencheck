@@ -71,12 +71,22 @@ describe("startCheckout", () => {
     await expect(startCheckout("abc")).rejects.toThrow(/Verbindung fehlgeschlagen/);
   });
 
-  it("wirft eine generische Meldung, wenn die Antwort keine gueltige URL enthaelt", async () => {
+  it("wirft eine generische Meldung, wenn die Antwort keine gültige URL enthält", async () => {
     global.fetch = jest
       .fn()
       .mockResolvedValue({ ok: true, json: async () => ({ url: null }) }) as unknown as typeof fetch;
     await expect(startCheckout("abc")).rejects.toThrow(/Es ist ein Fehler aufgetreten/);
   });
+
+  it.each(["tel:123", "intent://x#Intent;end", "http://checkout.stripe.com/xyz", "nicht-mal-eine-url"])(
+    "lehnt Nicht-HTTPS-Ziele ab (%s), damit Linking.openURL nur Web-Seiten öffnet",
+    async (url) => {
+      global.fetch = jest
+        .fn()
+        .mockResolvedValue({ ok: true, json: async () => ({ url }) }) as unknown as typeof fetch;
+      await expect(startCheckout("abc")).rejects.toThrow(/Es ist ein Fehler aufgetreten/);
+    },
+  );
 });
 
 describe("generateLetter", () => {

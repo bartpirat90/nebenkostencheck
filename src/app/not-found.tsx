@@ -33,8 +33,8 @@ export default function RootNotFound() {
               Seite nicht gefunden
             </h1>
             <p className="text-muted">Die Adresse existiert nicht oder wurde entfernt.</p>
-            {/* external: diese 404 liegt ausserhalb von [locale] und hat keinen
-                Locale-Kontext – der next-intl-Link wuerde hier fehlschlagen. */}
+            {/* external: diese 404 liegt außerhalb von [locale] und hat keinen
+                Locale-Kontext – der next-intl-Link würde hier fehlschlagen. */}
             <Button href="/" external>
               Zur Startseite
             </Button>

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { APPLE_ICON_SIZE, APPLE_ICON_TYPE } from "@/lib/seo";
+import { APPLE_ICON_SIZE, APPLE_ICON_TYPE, BRAND_INK } from "@/lib/seo";
 
 // Web-App-Manifest für „Zum Startbildschirm hinzufügen" (Android/Chrome).
 // Icons: icon.svg deckt beliebige Größen ab, apple-icon liefert das PNG,
@@ -13,8 +13,8 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "NK-Check",
     start_url: "/",
     display: "standalone",
-    background_color: "#0C1016",
-    theme_color: "#0C1016",
+    background_color: BRAND_INK,
+    theme_color: BRAND_INK,
     icons: [
       { src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
       {

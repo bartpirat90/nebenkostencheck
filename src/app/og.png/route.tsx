@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { BRAND_INK } from "@/lib/seo";
 
 // ImageResponse laeuft auch unter Node; das Projekt deployt durchgaengig auf der
 // Node-Runtime, deshalb hier kein Edge-Sonderfall.
@@ -23,7 +24,7 @@ export function GET() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0C1016",
+          background: BRAND_INK,
           padding: "72px",
           fontFamily: "sans-serif",
         }}

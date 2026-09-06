@@ -13,7 +13,7 @@ interface Props {
   error: string | null;
 }
 
-// Eine Quelle fuer erlaubte Typen: dieselbe Liste, die die Route serverseitig sniffed.
+// Eine Quelle für erlaubte Typen: dieselbe Liste, die die Route serverseitig sniffed.
 const ACCEPTED_TYPES: readonly string[] = ALLOWED_MEDIA_TYPES;
 
 export default function UploadZone({ onUpload, loading, error }: Props) {

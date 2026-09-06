@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   try {
     // Body kommt roh vom Client — kein Vertrauen in Form/Typ, bevor wir ihn geprueft haben.
     const body = await req.json().catch(() => null);
-    if (!body || typeof body !== "object") {
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
       return apiError("INVALID_REQUEST");
     }
     const { base64, mediaType, fileName } = body as Record<string, unknown>;
@@ -43,7 +43,12 @@ export async function POST(req: NextRequest) {
     if (typeof base64 !== "string" || typeof mediaType !== "string") {
       return apiError("INVALID_REQUEST");
     }
-    const safeFileName = typeof fileName === "string" ? fileName.slice(0, 200) : "upload";
+    // Der Dateiname landet im Prompt und in Logs: Steuerzeichen (Zeilenumbrüche,
+    // ESC-Sequenzen) raus, Länge begrenzen.
+    const safeFileName =
+      typeof fileName === "string"
+        ? fileName.replace(/[\x00-\x1f\x7f]/g, "").slice(0, 200) || "upload"
+        : "upload";
 
     // Gate 1: Magic-Byte-Prüfung — der deklarierte mediaType ist nur noch ein
     // Plausibilitäts-Check; maßgeblich sind die echten Datei-Bytes (sniffed).

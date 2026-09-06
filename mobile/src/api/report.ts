@@ -59,8 +59,21 @@ export async function startCheckout(id: string): Promise<string> {
     throw new Error((json as { error?: string }).error ?? GENERIC_MSG);
   }
   const url = (json as { url?: unknown }).url;
-  if (typeof url !== "string" || !url) throw new Error(GENERIC_MSG);
+  if (typeof url !== "string" || !isHttpsUrl(url)) throw new Error(GENERIC_MSG);
   return url;
+}
+
+/**
+ * Linking.openURL öffnet jedes Schema (tel:, sms:, intent:, App-Deep-Links).
+ * Die Checkout-URL kommt zwar vom eigenen Server, aber falls die Antwort je
+ * manipuliert würde, soll die App höchstens eine Web-Seite öffnen können.
+ */
+function isHttpsUrl(value: string): boolean {
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 export async function generateLetter(

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import manifest from "./manifest";
-import { APPLE_ICON_SIZE as appleIconSize, APPLE_ICON_TYPE as appleIconType } from "@/lib/seo";
+import { APPLE_ICON_SIZE as appleIconSize, APPLE_ICON_TYPE as appleIconType, BRAND_INK } from "@/lib/seo";
 
 describe("manifest", () => {
   const result = manifest();
@@ -12,9 +12,12 @@ describe("manifest", () => {
     expect(result.display).toBe("standalone");
   });
 
-  it("nutzt dieselbe Farbe für Hintergrund, Theme und theme-color-Meta", () => {
+  it("nutzt die Markenfarbe für Hintergrund und Theme (dieselbe Konstante wie viewport.themeColor)", () => {
+    // viewport.themeColor im [locale]-Layout bezieht BRAND_INK aus derselben
+    // Quelle; das Layout selbst lässt sich hier nicht importieren (next/font, CSS).
     expect(result.background_color).toBe(result.theme_color);
-    expect(result.theme_color).toMatch(/^#[0-9A-F]{6}$/);
+    expect(result.theme_color).toBe(BRAND_INK);
+    expect(BRAND_INK).toMatch(/^#[0-9A-F]{6}$/);
   });
 
   it("verweist auf das Apple-Icon mit den Maßen und dem Typ aus apple-icon.tsx", () => {

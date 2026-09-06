@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { APPLE_ICON_SIZE, APPLE_ICON_TYPE } from "@/lib/seo";
+import { APPLE_ICON_SIZE, APPLE_ICON_TYPE, BRAND_INK } from "@/lib/seo";
 
 // ImageResponse läuft auch unter Node; das Projekt deployt durchgängig auf der
 // Node-Runtime, deshalb hier kein Edge-Sonderfall (analog zu og.png/route.tsx).
@@ -24,7 +24,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0C1016",
+          background: BRAND_INK,
         }}
       >
         <svg width="132" height="132" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@ export default function AppleIcon() {
           <path
             d="M7.8 11.8l3 3L16.6 9.2"
             fill="none"
-            stroke="#0C1016"
+            stroke={BRAND_INK}
             strokeWidth="2.4"
             strokeLinecap="round"
             strokeLinejoin="round"

@@ -21,15 +21,22 @@ describe("SERVER_ONLY_NAMESPACES", () => {
     }
   });
 
-  it("wird von keiner Client-Komponente per useTranslations angefragt", () => {
-    const clientFiles = COMPONENT_DIRS.flatMap(listFiles)
-      .filter((f) => /\.tsx?$/.test(f) && !f.endsWith(".test.ts"))
-      .filter((f) => /^\s*["']use client["']/m.test(readFileSync(f, "utf8")));
-    for (const file of clientFiles) {
+  it("wird nirgends per useTranslations angefragt (Hook = potenziell Client)", () => {
+    // Bewusst alle Dateien, nicht nur die mit eigener "use client"-Direktive:
+    // Komponenten wie Footer oder Faq sind transitiv Client (importiert aus der
+    // "use client"-Startseite) und würden bei useTranslations("legal") zur
+    // Laufzeit MISSING_MESSAGE werfen. Server-Komponenten nutzen im Projekt
+    // durchgängig getTranslations, deshalb ist der Hook das richtige Signal.
+    // Das Regex fängt auch Unter-Namespaces wie "legal.impressum".
+    const files = COMPONENT_DIRS.flatMap(listFiles).filter(
+      (f) => /\.tsx?$/.test(f) && !/\.test\.tsx?$/.test(f),
+    );
+    for (const file of files) {
       const src = readFileSync(file, "utf8");
+      if (!src.includes("useTranslations(")) continue;
       for (const ns of SERVER_ONLY_NAMESPACES) {
         expect(src, `${file} nutzt useTranslations("${ns}")`).not.toMatch(
-          new RegExp(`useTranslations\\(\\s*["']${ns}["']`),
+          new RegExp(`useTranslations\\(\\s*["']${ns}(\\.[^"']*)?["']`),
         );
       }
     }

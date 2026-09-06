@@ -37,6 +37,13 @@ export const APPLE_ICON_SIZE = { width: 180, height: 180 } as const;
 export const APPLE_ICON_TYPE = "image/png";
 
 /**
+ * Hintergrund der Marke („ink“, entspricht bg-ink in tailwind.config.js).
+ * Eine Quelle für theme-color, Manifest, Apple-Icon und OG-Bild – sonst
+ * driften Browser-Chrome und App-Icon bei einer Farbänderung auseinander.
+ */
+export const BRAND_INK = "#0C1016";
+
+/**
  * Vollstaendige Metadaten einer Unterseite (Rechtsseiten etc.).
  * `openGraph` und `twitter` muessen komplett sein: Next ersetzt die Objekte des
  * Layouts, statt sie tief zu mergen – eine Teilangabe wuerde og:image, og:type,

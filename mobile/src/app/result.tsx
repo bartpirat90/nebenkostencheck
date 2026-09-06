@@ -32,6 +32,12 @@ export default function ResultScreen() {
       return;
     }
     if (res.code === NOT_UNLOCKED_CODE) {
+      // Zweiter Versuch nach „Ich habe bezahlt“: der Stripe-Webhook kann ein paar
+      // Sekunden brauchen – ohne Meldung sähe der Nutzer nur einen Spinner, der
+      // verschwindet, und wüsste nicht, ob überhaupt etwas passiert ist.
+      if (locked) {
+        setErrorMsg("Die Zahlung ist noch nicht bestätigt. Bitte in ein paar Sekunden erneut versuchen.");
+      }
       setLocked(true);
     } else {
       setErrorMsg(res.message);
