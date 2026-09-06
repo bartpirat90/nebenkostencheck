@@ -186,9 +186,11 @@ verifiziert.
 | Fehlerbehandlung (deutsche Meldung statt Absturz) | ✅ |
 | `tsc` sauber, `jest` 7/7, Code-Review APPROVE | ✅ |
 
-**Bewusst NICHT in Meilenstein 1** (spätere Meilensteine): Bezahlung in der App
-(Google Play Billing ~15 %), voller Bericht nach Zahlung, Brief-PDFs/Mailversand,
-Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung.
+**Bewusst NICHT in Meilenstein 1**: voller Bericht nach Zahlung, Brief-PDFs/Mailversand,
+Push-Benachrichtigungen, iOS, Play-Store-Veröffentlichung. Die Bezahlung selbst läuft
+bereits über den Web-Checkout: Die App startet per `POST /api/checkout` den
+Stripe-Checkout im Browser und lädt den Bericht nach „Ich habe bezahlt" erneut.
+Echtes In-App-Billing (Google Play Billing) bleibt ein späteres Thema.
 
 ---
 
@@ -263,8 +265,8 @@ Schreiben nutzt denselben `generateLetter`-Pfad wie der Widerspruch.
 - ~~**App-Design an neues Web-„Ledger" angleichen**~~ ✅ **erledigt + auf Gerät verifiziert (2026-06-16)**
   — Theme (grün/ink) + Outline-Logo gespiegelt aus dem Web; Home + Bericht-Screen auf dem
   Pixel_7 (`expo run:android`, frischer Bundle) im neuen grünen Design bestätigt.
-- **Spätere Meilensteine:** echte Bezahlung in der App (Google Play Billing ~15 %),
-  echte Analyse (MOCK aus), Push, iOS, Play-Store-Release.
+- **Spätere Meilensteine:** echtes In-App-Billing (Google Play Billing ~15 %) statt
+  Web-Checkout, echte Analyse (MOCK aus), Push, iOS, Play-Store-Release.
 
 ---
 

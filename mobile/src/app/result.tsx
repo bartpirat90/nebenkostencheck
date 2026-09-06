@@ -41,11 +41,18 @@ export default function ResultScreen() {
   const unlockReport = async (id: string) => {
     setCheckoutLoading(true);
     setCheckoutError(null);
+    let url: string;
     try {
-      const url = await startCheckout(id);
-      await Linking.openURL(url);
+      url = await startCheckout(id);
     } catch (e) {
       setCheckoutError(e instanceof Error ? e.message : "Zahlung konnte nicht gestartet werden.");
+      setCheckoutLoading(false);
+      return;
+    }
+    try {
+      await Linking.openURL(url);
+    } catch {
+      setCheckoutError("Der Browser konnte nicht geöffnet werden. Bitte versuche es erneut.");
     } finally {
       setCheckoutLoading(false);
     }

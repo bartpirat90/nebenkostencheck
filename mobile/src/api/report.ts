@@ -58,7 +58,9 @@ export async function startCheckout(id: string): Promise<string> {
   if (!res.ok) {
     throw new Error((json as { error?: string }).error ?? GENERIC_MSG);
   }
-  return (json as { url: string }).url;
+  const url = (json as { url?: unknown }).url;
+  if (typeof url !== "string" || !url) throw new Error(GENERIC_MSG);
+  return url;
 }
 
 export async function generateLetter(
@@ -79,7 +81,8 @@ export async function generateLetter(
   const json = await parseJson(res);
   if (json === null) return { ok: false, message: PARSE_MSG };
   if (!res.ok) {
-    return { ok: false, message: (json as { error?: string }).error ?? GENERIC_MSG };
+    const body = json as { error?: string; code?: string };
+    return { ok: false, message: body.error ?? GENERIC_MSG, code: body.code };
   }
   return { ok: true, data: json as LetterPdfResponse };
 }

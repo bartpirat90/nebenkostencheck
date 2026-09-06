@@ -70,6 +70,13 @@ describe("startCheckout", () => {
     global.fetch = jest.fn().mockRejectedValue(new Error("net")) as unknown as typeof fetch;
     await expect(startCheckout("abc")).rejects.toThrow(/Verbindung fehlgeschlagen/);
   });
+
+  it("wirft eine generische Meldung, wenn die Antwort keine gueltige URL enthaelt", async () => {
+    global.fetch = jest
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => ({ url: null }) }) as unknown as typeof fetch;
+    await expect(startCheckout("abc")).rejects.toThrow(/Es ist ein Fehler aufgetreten/);
+  });
 });
 
 describe("generateLetter", () => {
