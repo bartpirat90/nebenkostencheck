@@ -29,6 +29,37 @@ module.exports = {
           bg: "#06231C", // getönte Akzentfläche (emerald-950-nah)
           border: "#065F46", // (emerald-800)
         },
+
+        // Statusfarben der Befund-Ampel und der Meldungsboxen. Bewusst getrennt
+        // vom Marken-Akzent: "ok" ist eine Aussage über einen Befund, nicht die
+        // Markenfarbe – sonst würde jede Akzent-Anpassung die Ampel mitziehen.
+        // Werte sind 1:1 die bisherigen Hex-Literale aus ResultView/LetterModal/
+        // UploadZone, damit die Umstellung rein strukturell bleibt.
+        status: {
+          ok: "#4ADE80", // Text/Icon "sicher" (green-400)
+          okStrong: "#22C55E", // Ampelpunkt (green-500)
+          okSoft: "#86EFAC", // Fließtext im Erfolgsfeld (green-300)
+          okBg: "#0F2B1F", // Kartenfläche
+          okSurface: "#14532D", // gefüllter Icon-Kreis (green-900)
+          okBorder: "#166534", // (green-800)
+
+          warn: "#FCD34D", // Text/Icon "wahrscheinlich" (amber-300)
+          warnStrong: "#F59E0B", // Ampelpunkt (amber-500)
+          warnSoft: "#D97706", // Fließtext im Hinweisfeld (amber-600)
+          warnBg: "#1C1A0E", // Kartenfläche
+          warnBgHover: "#231F12", // Hover der Demo-Kachel
+          warnSurface: "#451A03", // gefüllter Icon-Kreis (amber-950)
+          warnBorder: "#92400E", // (amber-800)
+
+          neutral: "#B8C2CF", // Text "unsicher" – offene Prüfkategorie, kein Fehler
+          neutralStrong: "#8A96A6", // Ampelpunkt
+          neutralBg: "#161B23",
+          neutralBorder: "#3A4556",
+
+          danger: "#FCA5A5", // Text echter Fehlerzustände (red-300)
+          dangerBg: "#1C0F0F",
+          dangerBorder: "#991B1B", // (red-800)
+        },
       },
     },
   },

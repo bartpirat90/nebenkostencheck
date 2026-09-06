@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnalysisResult, ErrorItem, LetterType, Confidence } from "@/types";
 import LetterModal from "./LetterModal";
+import Button from "@/components/ui/Button";
 
 interface Props {
   result: AnalysisResult;
@@ -14,11 +15,11 @@ interface Props {
 // Nur die Farben der Konfidenz-Ampel (grün/gelb/rot). Label + Beschreibung
 // kommen übersetzt aus messages (Namespace "report.confidence").
 const CONFIDENCE_COLORS: Record<Confidence, { bg: string; border: string; text: string; dot: string }> = {
-  sicher: { bg: "bg-[#0F2B1F]", border: "border-[#166534]", text: "text-[#4ADE80]", dot: "bg-[#22C55E]" },
-  wahrscheinlich: { bg: "bg-[#1C1A0E]", border: "border-[#92400E]", text: "text-[#FCD34D]", dot: "bg-[#F59E0B]" },
+  sicher: { bg: "bg-status-okBg", border: "border-status-okBorder", text: "text-status-ok", dot: "bg-status-okStrong" },
+  wahrscheinlich: { bg: "bg-status-warnBg", border: "border-status-warnBorder", text: "text-status-warn", dot: "bg-status-warnStrong" },
   // Neutral statt Rot: "unsicher" ist keine Fehlermeldung, sondern eine offene
   // Pruefkategorie. Rot bleibt echten Fehlerzustaenden (API-/Sendefehler) vorbehalten.
-  unsicher: { bg: "bg-[#161B23]", border: "border-[#3A4556]", text: "text-[#B8C2CF]", dot: "bg-[#8A96A6]" },
+  unsicher: { bg: "bg-status-neutralBg", border: "border-status-neutralBorder", text: "text-status-neutral", dot: "bg-status-neutralStrong" },
 };
 
 export default function ResultView({ result, id, onReset }: Props) {
@@ -49,12 +50,12 @@ export default function ResultView({ result, id, onReset }: Props) {
               <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-line">
                 <div>
                   <p className="text-xs text-muted">{t("directLabel")}</p>
-                  <p className="text-lg font-bold text-[#4ADE80] tabular-nums">{formatEur(directTotal)}</p>
+                  <p className="text-lg font-bold text-status-ok tabular-nums">{formatEur(directTotal)}</p>
                   <p className="text-xs text-faint tabular-nums">{t("points", { count: directErrors.length })}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted">{t("reviewLabel")}</p>
-                  <p className="text-lg font-bold text-[#FCD34D] tabular-nums">{formatEur(reviewTotal)}</p>
+                  <p className="text-lg font-bold text-status-warn tabular-nums">{formatEur(reviewTotal)}</p>
                   <p className="text-xs text-faint tabular-nums">{t("points", { count: reviewErrors.length })}</p>
                 </div>
               </div>
@@ -68,17 +69,17 @@ export default function ResultView({ result, id, onReset }: Props) {
           </div>
 
           {/* Report PDF download */}
-          <button
+          <Button
+            variant="secondary"
+            className="w-full"
             onClick={() => window.open(`/api/generate-report?id=${id}`, "_blank")}
-            className="w-full rounded-xl border border-line-strong text-muted font-semibold py-3.5 text-sm
-              hover:border-accent hover:text-accent-bright transition-colors flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
             {t("downloadPdf")}
-          </button>
+          </Button>
 
           {/* Direct errors section */}
           {directErrors.length > 0 && (
@@ -87,17 +88,13 @@ export default function ResultView({ result, id, onReset }: Props) {
               {directErrors.map((err) => (
                 <ErrorCard key={`direct-${err.title}`} error={err} />
               ))}
-              <button
-                onClick={() => setLetterModal("objection")}
-                className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3.5 text-sm
-                  transition-colors flex items-center justify-center gap-2"
-              >
+              <Button className="w-full" onClick={() => setLetterModal("objection")}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
                 {t("createObjection")}
-              </button>
+              </Button>
             </section>
           )}
 
@@ -108,17 +105,13 @@ export default function ResultView({ result, id, onReset }: Props) {
               {reviewErrors.map((err) => (
                 <ErrorCard key={`review-${err.title}`} error={err} />
               ))}
-              <button
-                onClick={() => setLetterModal("document_review")}
-                className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3.5 text-sm
-                  transition-colors flex items-center justify-center gap-2"
-              >
+              <Button className="w-full" onClick={() => setLetterModal("document_review")}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 {t("requestReview")}
-              </button>
+              </Button>
             </section>
           )}
 
@@ -126,30 +119,26 @@ export default function ResultView({ result, id, onReset }: Props) {
           {directErrors.length > 0 && reviewErrors.length > 0 && (
             <section className="space-y-2 bg-surface border border-line rounded-2xl p-4">
               <p className="text-sm text-muted">{t("combinedText")}</p>
-              <button
-                onClick={() => setLetterModal("combined")}
-                className="w-full rounded-xl border border-accent-border text-accent-bright font-semibold py-3.5 text-sm
-                  hover:bg-accent-bg/40 transition-colors flex items-center justify-center gap-2"
-              >
+              <Button variant="accent" className="w-full" onClick={() => setLetterModal("combined")}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z M9 13h6m-6 4h6" />
                 </svg>
                 {t("createCombined")}
-              </button>
+              </Button>
             </section>
           )}
 
           {/* No errors state */}
           {!hasErrors && (
-            <div className="bg-[#0F2B1F] border border-[#166534] rounded-2xl p-6 text-center">
-              <div className="w-12 h-12 bg-[#14532D] rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 text-[#4ADE80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-status-okBg border border-status-okBorder rounded-2xl p-6 text-center">
+              <div className="w-12 h-12 bg-status-okSurface rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-status-ok" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <p className="font-semibold text-[#4ADE80]">{t("noErrorsTitle")}</p>
-              <p className="text-sm text-[#86EFAC] mt-1">{t("noErrorsBody")}</p>
+              <p className="font-semibold text-status-ok">{t("noErrorsTitle")}</p>
+              <p className="text-sm text-status-okSoft mt-1">{t("noErrorsBody")}</p>
             </div>
           )}
 
@@ -166,13 +155,9 @@ export default function ResultView({ result, id, onReset }: Props) {
           </div>
 
           {/* Reset CTA */}
-          <button
-            onClick={onReset}
-            className="w-full rounded-xl border border-line-strong text-muted font-semibold py-3.5 text-sm
-              hover:border-accent hover:text-accent-bright transition-colors"
-          >
+          <Button variant="secondary" className="w-full" onClick={onReset}>
             {t("reset")}
-          </button>
+          </Button>
         </div>
 
         {/* Farblegende – Desktop-Randleiste, klebend */}

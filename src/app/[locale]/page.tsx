@@ -19,6 +19,7 @@ import Faq from "@/components/Faq";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { SITE_URL } from "@/lib/constants";
 import { reviews } from "@/lib/reviews";
+import Button from "@/components/ui/Button";
 
 export default function Home() {
   const t = useTranslations();
@@ -258,21 +259,16 @@ export default function Home() {
 function NotAStatementBox({ onReset }: { onReset: () => void }) {
   const t = useTranslations("notAStatement");
   return (
-    <div className="bg-[#1C1A0E] border border-[#92400E] rounded-2xl p-8 text-center">
-      <div className="w-12 h-12 bg-[#451a03] rounded-full flex items-center justify-center mx-auto mb-4">
-        <svg className="w-6 h-6 text-[#FCD34D]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <div className="bg-status-warnBg border border-status-warnBorder rounded-2xl p-8 text-center">
+      <div className="w-12 h-12 bg-status-warnSurface rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg className="w-6 h-6 text-status-warn" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
       </div>
-      <p className="font-bold text-[#FCD34D] text-lg mb-2">{t("title")}</p>
-      <p className="text-sm text-[#D97706] leading-relaxed mb-6">{t("body")}</p>
-      <button
-        onClick={onReset}
-        className="rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3 px-6 text-sm transition-colors"
-      >
-        {t("cta")}
-      </button>
+      <p className="font-bold text-status-warn text-lg mb-2">{t("title")}</p>
+      <p className="text-sm text-status-warnSoft leading-relaxed mb-6">{t("body")}</p>
+      <Button onClick={onReset}>{t("cta")}</Button>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { Geist } from "next/font/google";
 import Logo from "@/components/Logo";
+import Button from "@/components/ui/Button";
 // globals.css wird hier erneut importiert, weil das Root-Layout kein CSS laedt –
 // die Styles haengen am [locale]-Layout, das fuer diese 404 nie rendert.
 import "./globals.css";
@@ -26,12 +27,11 @@ export default function RootNotFound() {
               Seite nicht gefunden
             </h1>
             <p className="text-muted">Die Adresse existiert nicht oder wurde entfernt.</p>
-            <a
-              href="/"
-              className="inline-block rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-6 text-sm transition-colors"
-            >
+            {/* external: diese 404 liegt ausserhalb von [locale] und hat keinen
+                Locale-Kontext – der next-intl-Link wuerde hier fehlschlagen. */}
+            <Button href="/" external>
               Zur Startseite
-            </a>
+            </Button>
           </div>
         </main>
       </body>

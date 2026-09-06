@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Logo from "@/components/Logo";
 import { Link } from "@/i18n/navigation";
+import Button from "@/components/ui/Button";
 
 // Zusaetzlich zur Root-404: greift fuer unbekannte Pfade *innerhalb* einer
 // gueltigen Sprache (z. B. /en/gibtsnicht). Nur hier steht eine Locale fest,
@@ -21,12 +22,7 @@ export default async function NotFound() {
         <p className="text-sm font-semibold tracking-widest text-faint">404</p>
         <h1 className="text-3xl sm:text-4xl font-black text-fg tracking-tight">{t("title")}</h1>
         <p className="text-muted">{t("body")}</p>
-        <Link
-          href="/"
-          className="inline-block rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-6 text-sm transition-colors"
-        >
-          {t("home")}
-        </Link>
+        <Button href="/">{t("home")}</Button>
       </div>
     </main>
   );

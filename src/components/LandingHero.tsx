@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Button from "@/components/ui/Button";
 
 export default function LandingHero() {
   const t = useTranslations("hero");
@@ -14,13 +15,10 @@ export default function LandingHero() {
       <p className="text-muted text-lg leading-relaxed mb-7 max-w-lg">
         {t("subline")}
       </p>
-      <a
-        href="#upload"
-        className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover active:scale-[0.98]
-          text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
-      >
+      {/* Sprungmarke, kein Routenwechsel – deshalb <a> statt next-intl-Link. */}
+      <Button href="#upload" size="lg">
         {t("cta")} <span aria-hidden>→</span>
-      </a>
+      </Button>
       <p className="text-sm text-faint mt-3">{t("priceNote")}</p>
       <ul className="lg:hidden flex flex-wrap gap-x-5 gap-y-1.5 mt-6 text-sm text-muted">
         <li className="flex items-center gap-1.5"><span className="text-accent-soft">✓</span> {tt("dsgvo")}</li>

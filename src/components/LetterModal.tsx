@@ -7,6 +7,7 @@ import { MAIL_SUBJECTS } from "@/lib/letters";
 import { useApiErrorMessage } from "@/lib/clientErrors";
 import ContactForm from "./ContactForm";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
+import Button from "@/components/ui/Button";
 
 interface Props {
   open: boolean;
@@ -234,10 +235,6 @@ export default function LetterModal({
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
 
-  const secondaryBtn =
-    "w-full rounded-xl border border-line-strong bg-surface text-fg font-semibold text-sm " +
-    "hover:border-accent hover:text-accent-bright transition-colors flex items-center justify-center gap-2";
-
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
@@ -295,17 +292,13 @@ export default function LetterModal({
             /* Aktions-Schritt */
             <div className="space-y-6">
               {/* PDF herunterladen */}
-              <button
-                onClick={downloadPdf}
-                className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3 px-4 text-sm
-                  transition-colors flex items-center justify-center gap-2"
-              >
+              <Button className="w-full" onClick={downloadPdf}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
                 {t("downloadPdf")}
-              </button>
+              </Button>
 
               {/* Per Mail an Vermieter */}
               <div className="space-y-2 border-t border-line pt-5">
@@ -322,13 +315,13 @@ export default function LetterModal({
                     className={inputClass}
                   />
                 </label>
-                <button onClick={openMailto} className={`${secondaryBtn} py-3 px-4`}>
+                <Button variant="secondary" className="w-full" onClick={openMailto}>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   {t("mailToLandlord")}
-                </button>
+                </Button>
                 <p className="text-xs text-muted">{t("mailHint")}</p>
               </div>
 
@@ -346,20 +339,21 @@ export default function LetterModal({
                     className={inputClass}
                   />
                 </label>
-                <button
+                <Button
+                  variant="secondary"
+                  className="w-full"
                   onClick={sendToMyEmail}
-                  disabled={sending}
-                  className={`${secondaryBtn} py-3 px-4 disabled:opacity-60`}
+                  loading={sending}
                 >
                   {sending ? t("sending") : t("sendToMe")}
-                </button>
+                </Button>
                 {sent && (
-                  <p className="text-xs text-[#4ADE80] font-semibold">
+                  <p className="text-xs text-status-ok font-semibold">
                     {t("sent")}
                   </p>
                 )}
                 {sendError && (
-                  <div className="bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-3 text-sm text-[#FCA5A5]">
+                  <div className="bg-status-dangerBg border border-status-dangerBorder rounded-xl p-3 text-sm text-status-danger">
                     {sendError}
                   </div>
                 )}
@@ -370,7 +364,7 @@ export default function LetterModal({
               <ContactForm contact={contact} onChange={setContact} />
 
               {error && (
-                <div className="mt-4 bg-[#1C0F0F] border border-[#991B1B] rounded-xl p-3 text-sm text-[#FCA5A5]">
+                <div className="mt-4 bg-status-dangerBg border border-status-dangerBorder rounded-xl p-3 text-sm text-status-danger">
                   {error}
                 </div>
               )}
@@ -381,28 +375,19 @@ export default function LetterModal({
         {/* Footer */}
         {!loading && !result && (
           <div className="border-t border-line p-4 flex flex-col sm:flex-row gap-2">
-            <button
-              onClick={onClose}
-              className="flex-1 sm:flex-none rounded-xl border border-line-strong text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
-            >
+            <Button variant="secondary" className="flex-1 sm:flex-none" onClick={onClose}>
               {t("cancel")}
-            </button>
-            <button
-              onClick={generateLetter}
-              className="flex-1 rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-semibold py-3 px-4 text-sm transition-colors"
-            >
+            </Button>
+            <Button className="flex-1" onClick={generateLetter}>
               {t("createPdf")}
-            </button>
+            </Button>
           </div>
         )}
         {!loading && result && (
           <div className="border-t border-line p-4">
-            <button
-              onClick={onClose}
-              className="w-full rounded-xl border border-line-strong text-muted font-semibold py-3 px-4 text-sm hover:text-fg transition-colors"
-            >
+            <Button variant="secondary" className="w-full" onClick={onClose}>
               {t("done")}
-            </button>
+            </Button>
           </div>
         )}
       </div>

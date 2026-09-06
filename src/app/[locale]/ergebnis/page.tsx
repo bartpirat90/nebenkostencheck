@@ -7,6 +7,7 @@ import ResultView from "@/components/ResultView";
 import Logo from "@/components/Logo";
 import { Link, useRouter } from "@/i18n/navigation";
 import { AnalysisResult } from "@/types";
+import Button from "@/components/ui/Button";
 
 const POLL_ATTEMPTS = 5;
 const POLL_DELAY_MS = 1500;
@@ -78,12 +79,7 @@ function ErgebnisInner() {
     return (
       <div className="text-center py-20 space-y-6">
         <p className="text-muted">{t("pending")}</p>
-        <button
-          onClick={() => setAttempt((a) => a + 1)}
-          className="rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-6 text-sm transition-colors"
-        >
-          {t("retry")}
-        </button>
+        <Button onClick={() => setAttempt((a) => a + 1)}>{t("retry")}</Button>
       </div>
     );
   }
@@ -91,7 +87,7 @@ function ErgebnisInner() {
   if (error || !result) {
     return (
       <div className="text-center py-20 space-y-6">
-        <p className="text-[#FCA5A5]">{error ?? t("notFound")}</p>
+        <p className="text-status-danger">{error ?? t("notFound")}</p>
         <Link href="/" className="inline-flex items-center min-h-11 text-sm text-muted underline hover:text-fg">
           {t("home")}
         </Link>

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { PreviewData } from "@/types";
 import { useApiErrorMessage } from "@/lib/clientErrors";
 import { savePreview } from "@/lib/previewStorage";
+import Button from "@/components/ui/Button";
 
 interface Props {
   preview: PreviewData;
@@ -135,28 +136,32 @@ export default function PreviewView({ preview, onReset }: Props) {
           <span>{t("consent")}</span>
         </label>
 
-        <button
+        <Button
+          size="lg"
+          className="w-full tabular-nums"
           onClick={startCheckout}
-          disabled={!consent || loading}
-          className="w-full rounded-xl bg-accent hover:bg-accent-hover active:scale-[0.98] text-white font-bold py-3.5 text-base tabular-nums transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+          disabled={!consent}
+          loading={loading}
         >
           {loading ? t("redirecting") : t("unlockCta")}
-        </button>
-        {error && <p className="mt-3 text-sm text-[#FCA5A5]">{error}</p>}
+        </Button>
+        {error && <p className="mt-3 text-sm text-status-danger">{error}</p>}
       </div>
 
+      {/* Nur im Testmodus sichtbar: bewusst als gestrichelte Warn-Kachel und
+          nicht als Button-Variante – das ist ein Debug-Hinweis, kein CTA. */}
       {preview.mock && (
         <a
           href={`/ergebnis?id=${preview.id}`}
-          className="block text-center rounded-xl border border-dashed border-[#92400E] bg-[#1C1A0E] text-[#FCD34D] text-sm font-semibold py-3 px-4 hover:bg-[#231f12] transition-colors"
+          className="block text-center rounded-xl border border-dashed border-status-warnBorder bg-status-warnBg text-status-warn text-sm font-semibold py-3 px-4 hover:bg-status-warnBgHover transition-colors"
         >
           {t("demo")}
         </a>
       )}
 
-      <button onClick={onReset} className="w-full min-h-11 flex items-center justify-center text-sm text-muted hover:text-fg transition-colors">
+      <Button variant="ghost" className="w-full" onClick={onReset}>
         {t("checkAnother")}
-      </button>
+      </Button>
     </div>
   );
 }
