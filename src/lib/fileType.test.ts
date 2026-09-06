@@ -10,7 +10,7 @@ const JPEG_HEADER = toB64([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10]);
 const PNG_HEADER = toB64([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 const WEBP_HEADER = toB64([
   0x52, 0x49, 0x46, 0x46, // RIFF
-  0x00, 0x00, 0x00, 0x00, // Groesse (fuer den Sniff irrelevant)
+  0x00, 0x00, 0x00, 0x00, // Größe (für den Sniff irrelevant)
   0x57, 0x45, 0x42, 0x50, // WEBP
 ]);
 const UNKNOWN_TEXT = Buffer.from("Hallo Welt", "utf8").toString("base64");
@@ -32,21 +32,33 @@ describe("sniffMediaType", () => {
     expect(sniffMediaType(WEBP_HEADER)).toBe("image/webp");
   });
 
-  it("gibt null fuer unbekannte Signaturen zurueck", () => {
+  it("gibt null für unbekannte Signaturen zurück", () => {
     expect(sniffMediaType(UNKNOWN_TEXT)).toBeNull();
   });
 
-  it("gibt null fuer einen leeren String zurueck", () => {
+  it("gibt null für einen leeren String zurück", () => {
     expect(sniffMediaType("")).toBeNull();
   });
 
-  it("gibt null fuer ungueltiges Base64 zurueck", () => {
+  it("gibt null für ungültiges Base64 zurück", () => {
     expect(sniffMediaType("!!!invalid-b64!!")).toBeNull();
+  });
+
+  it("gibt null zurück, wenn der Base64-Kopf einen Zeilenumbruch enthält", () => {
+    expect(sniffMediaType(PDF_HEADER.slice(0, 4) + "\n" + PDF_HEADER.slice(4))).toBeNull();
+  });
+
+  it("gibt null für das Base64URL-Alphabet (-, _) zurück", () => {
+    expect(sniffMediaType("abc-_def")).toBeNull();
+  });
+
+  it("gibt null für eine Data-URL mit Präfix zurück (Client muss das Präfix abschneiden)", () => {
+    expect(sniffMediaType("data:application/pdf;base64," + PDF_HEADER)).toBeNull();
   });
 });
 
 describe("isAllowedUpload", () => {
-  it("ist true, wenn deklarierter und gesniffter Typ uebereinstimmen", () => {
+  it("ist true, wenn deklarierter und gesniffter Typ übereinstimmen", () => {
     expect(isAllowedUpload("application/pdf", "application/pdf")).toBe(true);
     expect(isAllowedUpload("image/png", "image/png")).toBe(true);
   });
@@ -56,7 +68,7 @@ describe("isAllowedUpload", () => {
     expect(isAllowedUpload("IMAGE/JPG", "image/jpeg")).toBe(true);
   });
 
-  it("ignoriert Gross-/Kleinschreibung beim deklarierten Typ", () => {
+  it("ignoriert Groß-/Kleinschreibung beim deklarierten Typ", () => {
     expect(isAllowedUpload("Application/PDF", "application/pdf")).toBe(true);
   });
 

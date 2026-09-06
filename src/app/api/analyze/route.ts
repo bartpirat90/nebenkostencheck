@@ -35,13 +35,18 @@ export async function POST(req: NextRequest) {
       return apiError("INVALID_REQUEST");
     }
     const { base64, mediaType, fileName } = body as Record<string, unknown>;
-    if (typeof base64 !== "string" || !base64 || typeof mediaType !== "string") {
+    // Zwei Codes: „nichts geschickt" ist ein Nutzerfehler (NO_FILE), ein falscher
+    // Typ im JSON ein Client-Bug (INVALID_REQUEST) — beides 400, aber anders zu deuten.
+    if (base64 === undefined || base64 === "" || mediaType === undefined || mediaType === "") {
       return apiError("NO_FILE");
+    }
+    if (typeof base64 !== "string" || typeof mediaType !== "string") {
+      return apiError("INVALID_REQUEST");
     }
     const safeFileName = typeof fileName === "string" ? fileName.slice(0, 200) : "upload";
 
-    // Gate 1: Magic-Byte-Pruefung — der deklarierte mediaType ist nur noch ein
-    // Plausibilitaets-Check; massgeblich sind die echten Datei-Bytes (sniffed).
+    // Gate 1: Magic-Byte-Prüfung — der deklarierte mediaType ist nur noch ein
+    // Plausibilitäts-Check; maßgeblich sind die echten Datei-Bytes (sniffed).
     const sniffed = sniffMediaType(base64);
     if (!sniffed || !isAllowedUpload(mediaType, sniffed)) {
       return apiError("UNSUPPORTED_TYPE");

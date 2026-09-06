@@ -1,8 +1,10 @@
-// Magic-Byte-Pruefung: der vom Client gemeldete mediaType ist nicht vertrauenswuerdig
+// Magic-Byte-Prüfung: der vom Client gemeldete mediaType ist nicht vertrauenswürdig
 // (Body kommt roh als JSON rein) — wir sniffen die echten Datei-Bytes und vergleichen.
 //
-// GIF/HEIC bewusst nicht: weder die Dropzone (UploadZone.ACCEPTED_TYPES) noch die
-// Anthropic-API (buildDocBlock in claude.ts) akzeptieren diese Typen.
+// GIF bewusst nicht: die Anthropic-API akzeptiert image/gif zwar, aber die Dropzone
+// (UploadZone.ACCEPTED_TYPES) bietet per `accept`-Attribut nur PDF/JPG/PNG/WebP an —
+// Abrechnungen kommen als Scan/Foto/PDF, nie als GIF. HEIC (iOS-Fotos) akzeptiert die
+// Anthropic-API dagegen nicht; solche Dateien müssen vor dem Upload konvertiert werden.
 export const ALLOWED_MEDIA_TYPES = [
   "application/pdf",
   "image/jpeg",
@@ -13,13 +15,13 @@ export const ALLOWED_MEDIA_TYPES = [
 export type AllowedMediaType = (typeof ALLOWED_MEDIA_TYPES)[number];
 
 // Nur Standard-Base64-Zeichen zulassen (kein base64url, kein Whitespace) — alles
-// andere ist kein gueltiges Base64 und wird nicht "grosszuegig" dekodiert.
+// andere ist kein gültiges Base64 und wird nicht "großzügig" dekodiert.
 const VALID_BASE64_RE = /^[A-Za-z0-9+/]*={0,2}$/;
 
 /**
  * Sniffed den Datei-Typ anhand der ersten Bytes (Magic Numbers). Dekodiert nur
- * die ersten 16 Base64-Zeichen (= 12 Bytes ohne Padding) — reicht fuer alle
- * unterstuetzten Signaturen und bleibt fuer riesige Uploads billig.
+ * die ersten 16 Base64-Zeichen (= 12 Bytes ohne Padding) — reicht für alle
+ * unterstützten Signaturen und bleibt für riesige Uploads billig.
  */
 export function sniffMediaType(base64: string): AllowedMediaType | null {
   if (!base64) return null;
@@ -66,7 +68,7 @@ export function sniffMediaType(base64: string): AllowedMediaType | null {
   return null;
 }
 
-/** image/jpg (nicht-standard, aber gaengig) auf image/jpeg abbilden; sonst nur Gross-/Kleinschreibung angleichen. */
+/** image/jpg (nicht-standard, aber gängig) auf image/jpeg abbilden; sonst nur Groß-/Kleinschreibung angleichen. */
 function normalizeMediaType(mediaType: string): string {
   const lower = mediaType.toLowerCase().trim();
   return lower === "image/jpg" ? "image/jpeg" : lower;
@@ -74,11 +76,16 @@ function normalizeMediaType(mediaType: string): string {
 
 /**
  * True nur, wenn die echten Datei-Bytes (sniffed) zu einem erlaubten Typ
- * gehoeren UND der vom Client deklarierte Typ (normalisiert) damit uebereinstimmt.
- * Der deklarierte Typ dient damit nur noch als Plausibilitaets-Check.
+ * gehören UND der vom Client deklarierte Typ (normalisiert) damit übereinstimmt.
+ * Der deklarierte Typ dient damit nur noch als Plausibilitäts-Check.
+ *
+ * Hinweis: `sniffed` ist bereits vom Typ `AllowedMediaType | null` — die
+ * Zugehörigkeit zu ALLOWED_MEDIA_TYPES ist also durch das Typsystem garantiert
+ * und muss hier nicht erneut zur Laufzeit geprüft werden. Es wird nur die
+ * Signatur geprüft, nicht die Wohlgeformtheit der Datei; das reicht, weil die
+ * Rohbytes nur an die Anthropic-API gehen und nie an den Browser zurückgereicht werden.
  */
 export function isAllowedUpload(declared: string, sniffed: AllowedMediaType | null): boolean {
   if (!sniffed) return false;
-  if (!(ALLOWED_MEDIA_TYPES as readonly string[]).includes(sniffed)) return false;
   return normalizeMediaType(declared) === sniffed;
 }
