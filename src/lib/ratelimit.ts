@@ -3,31 +3,28 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { redis } from "./kv";
 import { RATE_LIMIT_PER_HOUR, RATE_LIMIT_PER_DAY } from "./limits";
 
+type Window = Parameters<typeof Ratelimit.slidingWindow>[1];
 
-let _hourly: Ratelimit | null = null;
-function hourly(): Ratelimit {
-  if (!_hourly) {
-    _hourly = new Ratelimit({
+// Ein Limiter pro Prefix, lazy erzeugt (Build darf ohne Env importieren).
+const _limiters = new Map<string, Ratelimit>();
+function limiter(prefix: string, limit: number, window: Window): Ratelimit {
+  let l = _limiters.get(prefix);
+  if (!l) {
+    l = new Ratelimit({
       redis: redis(),
-      limiter: Ratelimit.slidingWindow(RATE_LIMIT_PER_HOUR, "1 h"),
+      limiter: Ratelimit.slidingWindow(limit, window),
       analytics: false,
-      prefix: "rl:analyze:h",
+      prefix,
     });
+    _limiters.set(prefix, l);
   }
-  return _hourly;
+  return l;
 }
 
-let _daily: Ratelimit | null = null;
-function daily(): Ratelimit {
-  if (!_daily) {
-    _daily = new Ratelimit({
-      redis: redis(),
-      limiter: Ratelimit.slidingWindow(RATE_LIMIT_PER_DAY, "1 d"),
-      analytics: false,
-      prefix: "rl:analyze:d",
-    });
-  }
-  return _daily;
+/** Generisches Sliding-Window-Limit. true = erlaubt. */
+export async function checkLimit(prefix: string, limit: number, window: Window, key: string): Promise<boolean> {
+  const res = await limiter(prefix, limit, window).limit(key);
+  return res.success;
 }
 
 /** Ermittelt die Client-IP aus den von Vercel gesetzten Headern. */
@@ -37,8 +34,11 @@ export function getClientIp(req: NextRequest): string {
   return req.headers.get("x-real-ip") ?? "unknown";
 }
 
-/** Prüft beide Fenster (Stunde + Tag). Gibt true zurück, wenn beide erlauben. */
+/** Analyse-Limit: prüft beide Fenster (Stunde + Tag). true, wenn beide erlauben. */
 export async function checkRateLimit(ip: string): Promise<boolean> {
-  const [h, d] = await Promise.all([hourly().limit(ip), daily().limit(ip)]);
-  return h.success && d.success;
+  const [h, d] = await Promise.all([
+    checkLimit("rl:analyze:h", RATE_LIMIT_PER_HOUR, "1 h", ip),
+    checkLimit("rl:analyze:d", RATE_LIMIT_PER_DAY, "1 d", ip),
+  ]);
+  return h && d;
 }

@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { AnalysisResult, StoredAnalysis } from "@/types";
+import { AnalysisResult, LetterType, StoredAnalysis } from "@/types";
 import { MOCK } from "./mock";
 
 // Lazy-Init: Client erst beim ersten Aufruf erstellen, damit der Build
@@ -55,4 +55,20 @@ export async function markPaid(id: string, customerEmail?: string): Promise<bool
   const remaining = await redis().ttl(key(id));
   await redis().set(key(id), record, { ex: Math.max(remaining, PAID_TTL_SECONDS) });
   return true;
+}
+
+const letterKey = (id: string, type: LetterType) => `analysis:${id}:letter:${type}`;
+
+/**
+ * Legt den generierten Brieftext ab, damit send-pdf das PDF serverseitig neu
+ * rendern kann statt Client-Bytes zu verschicken. Lebt genau so lange wie die
+ * Analyse selbst.
+ */
+export async function storeLetter(id: string, type: LetterType, letter: string): Promise<void> {
+  const remaining = await redis().ttl(key(id));
+  await redis().set(letterKey(id, type), letter, { ex: remaining > 0 ? remaining : TTL_SECONDS });
+}
+
+export async function getLetter(id: string, type: LetterType): Promise<string | null> {
+  return (await redis().get<string>(letterKey(id, type))) ?? null;
 }

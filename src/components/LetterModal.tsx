@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { ContactData, ErrorItem, LetterType, LetterPdfResponse } from "@/types";
+import { MAIL_SUBJECTS } from "@/lib/letters";
 import ContactForm from "./ContactForm";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 
@@ -15,13 +16,6 @@ interface Props {
   id: string;
   customerEmail?: string;
 }
-
-// Betreffzeilen gehen an den (deutschen) Vermieter → bewusst Deutsch.
-const MAIL_SUBJECTS: Record<LetterType, string> = {
-  objection: "Widerspruch gegen die Nebenkostenabrechnung",
-  document_review: "Aufforderung zur Belegeinsicht",
-  combined: "Widerspruch und Belegeinsicht – Nebenkostenabrechnung",
-};
 
 /** Wandelt einen Base64-String in einen PDF-Blob um. */
 function base64ToPdfBlob(base64: string): Blob {
@@ -152,7 +146,7 @@ export default function LetterModal({
       const res = await fetch("/api/send-pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, email, pdfBase64: result.pdfBase64, filename: result.filename }),
+        body: JSON.stringify({ id, email, type }),
       });
       if (!res.ok) {
         const e = await res.json();

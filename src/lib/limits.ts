@@ -23,3 +23,9 @@ export const RATE_LIMIT_PER_HOUR = 10;
 
 /** Maximale kostenlose Analysen pro IP und Tag. */
 export const RATE_LIMIT_PER_DAY = 30;
+
+/** PDF-Mailversand: pro Analyse-ID und Tag (schützt die Absender-Reputation). */
+export const SEND_PDF_PER_ID_PER_DAY = 5;
+
+/** PDF-Mailversand: pro IP und Tag. */
+export const SEND_PDF_PER_IP_PER_DAY = 20;

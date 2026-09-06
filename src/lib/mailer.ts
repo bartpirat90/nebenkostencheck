@@ -17,7 +17,7 @@ function transport() {
 
 export async function sendLetterPdf(
   to: string,
-  pdfBase64: string,
+  pdf: Buffer,
   filename: string,
   subject: string,
 ) {
@@ -26,6 +26,6 @@ export async function sendLetterPdf(
     to,
     subject,
     text: `Anbei dein erstelltes Schreiben als PDF. Du kannst es ausdrucken oder an deinen Vermieter weiterleiten.\n\nViele Grüße\nNebenkostencheck`,
-    attachments: [{ filename, content: Buffer.from(pdfBase64, "base64") }],
+    attachments: [{ filename, content: pdf, contentType: "application/pdf" }],
   });
 }

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { generateLetter } from "@/lib/claude";
-import { getAnalysis, isUnlocked } from "@/lib/kv";
+import { getAnalysis, isUnlocked, storeLetter } from "@/lib/kv";
 import { classifyError } from "@/lib/errors";
+import { isLetterType, LETTER_FILENAMES } from "@/lib/letters";
 import { LetterDoc } from "@/lib/pdf/LetterDoc";
-import { ContactData, LetterType } from "@/types";
+import { ContactData } from "@/types";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -27,11 +28,12 @@ function sanitizeContact(raw: any, serverDefault?: ContactData): ContactData {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as { id: string; type: LetterType; contact: ContactData };
-    if (!body.id || !body.type) {
+    const body = (await req.json()) as { id?: unknown; type?: unknown; contact?: unknown };
+    if (typeof body.id !== "string" || !body.id || !isLetterType(body.type)) {
       return NextResponse.json({ error: "Ungültige Anfrage." }, { status: 400 });
     }
-    const record = await getAnalysis(body.id);
+    const { id, type } = body;
+    const record = await getAnalysis(id);
     if (!record) return NextResponse.json({ error: "Analyse abgelaufen." }, { status: 404 });
     if (!isUnlocked(record)) return NextResponse.json({ error: "Nicht freigeschaltet." }, { status: 402 });
 
@@ -41,12 +43,12 @@ export async function POST(req: NextRequest) {
 
     // Fehler serverseitig aus dem bezahlten Ergebnis beziehen (nicht aus Client-Input).
     const errors =
-      body.type === "combined"
+      type === "combined"
         ? record.full.errors.filter(
             (e) => e.category === "direct" || e.category === "needs_review"
           )
         : record.full.errors.filter(
-            (e) => e.category === (body.type === "objection" ? "direct" : "needs_review")
+            (e) => e.category === (type === "objection" ? "direct" : "needs_review")
           );
     if (!errors.length) {
       return NextResponse.json(
@@ -55,20 +57,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const filename =
-      body.type === "combined"
-        ? "Widerspruch_und_Belegeinsicht"
-        : body.type === "objection"
-        ? "Widerspruch"
-        : "Belegeinsicht";
-
-    const letter = await generateLetter({ type: body.type, contact, errors });
+    const letter = await generateLetter({ type, contact, errors });
+    await storeLetter(id, type, letter);
     const pdf = await renderToBuffer(<LetterDoc letter={letter} />);
 
     return NextResponse.json({
       letter,
       pdfBase64: Buffer.from(pdf).toString("base64"),
-      filename: `${filename}.pdf`,
+      filename: LETTER_FILENAMES[type],
     });
   } catch (err: unknown) {
     console.error("Letter generation error:", err);
