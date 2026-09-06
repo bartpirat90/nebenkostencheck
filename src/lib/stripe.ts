@@ -39,6 +39,10 @@ export async function unlockFromStripeSession(
   const session = await stripe().checkout.sessions.retrieve(sessionId);
   if (!sessionUnlocksAnalysis(session, analysisId)) return false;
   const email = session.customer_details?.email ?? session.customer_email ?? undefined;
-  await markPaid(analysisId, email);
-  return true;
+  const ok = await markPaid(analysisId, email);
+  if (!ok) {
+    // Bezahlt, aber Record schon abgelaufen – gleiche Meldung wie im Webhook.
+    console.error(`Stripe-Fallback: Zahlung fuer abgelaufene Analyse ${analysisId}, session ${session.id}`);
+  }
+  return ok;
 }
