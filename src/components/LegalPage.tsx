@@ -8,7 +8,7 @@ type LegalKey = "impressum" | "datenschutz" | "agb";
 // in den Body-Strings. Für Nicht-Deutsch erscheint der Unverbindlichkeits-Hinweis.
 // Server Component (getTranslations statt useTranslations): "legal" wird
 // bewusst nicht mehr an den Client-Provider gegeben (siehe [locale]/layout.tsx),
-// deshalb muss diese Seite ihre Uebersetzungen serverseitig auflösen.
+// deshalb muss diese Seite ihre Übersetzungen serverseitig auflösen.
 export default async function LegalPage({ page }: { page: LegalKey }) {
   const t = await getTranslations("legal");
   const locale = await getLocale();

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing, RTL_LOCALES } from "@/i18n/routing";
+import { isServerOnlyNamespace } from "@/i18n/serverOnly";
 import { SITE_URL } from "@/lib/constants";
 import { localeUrl, pageAlternates, toLocale, OG_LOCALES } from "@/lib/seo";
 import "../globals.css";
@@ -101,12 +102,11 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  // "legal" enthaelt die langen Rechtstexte und wird nur von den drei
-  // Rechtsseiten gebraucht, die inzwischen serverseitig uebersetzen
-  // (getTranslations statt useTranslations) – deshalb hier bewusst aus dem
-  // Client-Payload ausschliessen, spart mehrere KB pro HTML-Seite.
+  // Server-only-Namespaces (Rechtstexte, 404) werden nur per getTranslations
+  // gelesen – deshalb bewusst aus dem Client-Payload ausschließen, das spart
+  // mehrere KB pro HTML-Seite. Liste und Test: src/i18n/serverOnly.ts.
   const clientMessages = Object.fromEntries(
-    Object.entries(messages).filter(([namespace]) => namespace !== "legal"),
+    Object.entries(messages).filter(([namespace]) => !isServerOnlyNamespace(namespace)),
   );
   // hasLocale oben verengt `locale` bereits auf Locale – kein Cast noetig.
   const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
