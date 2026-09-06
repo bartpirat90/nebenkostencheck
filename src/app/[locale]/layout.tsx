@@ -7,7 +7,7 @@ import { routing, RTL_LOCALES, type Locale } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/constants";
 import "../globals.css";
 
-const geist = Geist({ subsets: ["latin"] });
+const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -97,7 +97,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir}>
-      <body className={geist.className}>
+      <body className={`${geist.variable} ${geist.className}`}>
         <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
         <script
           type="application/ld+json"

@@ -1,4 +1,7 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { PDF_FONT, registerPdfFonts } from "./fonts";
+
+registerPdfFonts();
 
 // Sauberer formaler Geschäftsbrief in Anlehnung an DIN 5008.
 // Der Brieftext enthält bereits Briefkopf/Anrede/Betreff (von der KI erzeugt);
@@ -10,13 +13,14 @@ const s = StyleSheet.create({
     paddingBottom: 56,
     paddingLeft: 70, // ~25 mm linker Rand (DIN)
     paddingRight: 50,
-    fontSize: 11,
+    fontSize: 10.5, // Noto Sans hat eine sichtbar groessere x-Hoehe als Helvetica
     lineHeight: 1.5,
-    fontFamily: "Helvetica",
+    fontFamily: PDF_FONT,
     color: "#1A1A1A",
   },
   betreff: {
-    fontFamily: "Helvetica-Bold",
+    fontFamily: PDF_FONT,
+    fontWeight: "bold",
     marginTop: 6,
     marginBottom: 6,
   },
