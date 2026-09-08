@@ -1,45 +1,62 @@
 import { Geist } from "next/font/google";
 import Logo from "@/components/Logo";
 import Button from "@/components/ui/Button";
-// globals.css wird hier erneut importiert, weil das Root-Layout kein CSS laedt –
-// die Styles haengen am [locale]-Layout, das fuer diese 404 nie rendert.
+// globals.css wird hier erneut importiert, weil das Root-Layout kein CSS lädt –
+// die Styles hängen am [locale]-Layout, das für diese 404 nie rendert.
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });
 
-// Greift bei Pfaden ausserhalb von [locale] (z. B. /xx/foo mit unbekannter Sprache).
-// Das Root-Layout rendert kein <html>, deshalb hier eigenes Grundgeruest –
-// und ohne next-intl, weil es hier keine gueltige Locale gibt.
+// Greift bei Pfaden außerhalb von [locale] (z. B. /xx/foo mit unbekannter Sprache).
+// Das Root-Layout rendert kein <html>, deshalb hier ein eigenes Grundgerüst.
+//
+// Bewusst NICHT die gemeinsame SiteShell: die zieht ihre Texte per
+// useTranslations und rendert LocaleSwitcher und Footer-Links über den
+// next-intl-Router. Hier gibt es weder einen NextIntlClientProvider noch eine
+// gültige Locale – jeder dieser Aufrufe würde zur Laufzeit werfen. Deshalb
+// eine schlanke Kopie des Rahmens mit fest deutschen Texten und rohen <a>.
+// Ändert sich die Shell optisch, muss diese Datei mitgezogen werden.
 export default function RootNotFound() {
   return (
     <html lang="de" dir="ltr">
       <body className={`${geist.variable} ${geist.className}`}>
-        <main className="min-h-[100dvh] bg-ink">
-          <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-            {/* Bewusst ein rohes <a> statt next/link: diese 404 rendert ein eigenes
-                <html> außerhalb des [locale]-Baums. Eine Soft-Navigation von hier in
-                den Locale-Baum scheitert am RSC-Fetch (Konsolenfehler, dann ohnehin
-                Fallback auf harte Navigation) – der harte Reload ist hier der
-                Normalfall, wie beim Button unten (external). */}
+        <div className="min-h-[100dvh] bg-ink flex flex-col">
+          <nav
+            data-on-ink
+            className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 flex items-center border-b border-ink-line bg-ink/90 backdrop-blur-sm"
+          >
+            {/* Rohes <a> statt next/link: eine Soft-Navigation von hier in den
+                [locale]-Baum scheitert am RSC-Fetch (Konsolenfehler, danach
+                ohnehin harte Navigation) – der Reload ist hier der Normalfall. */}
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a href="/" aria-label="Zur Startseite" className="inline-flex items-center min-h-11">
               <Logo />
             </a>
           </nav>
 
-          <div className="max-w-2xl mx-auto px-6 py-24 text-center space-y-6">
-            <p className="text-sm font-semibold tracking-widest text-faint">404</p>
-            <h1 className="text-3xl sm:text-4xl font-black text-fg tracking-tight">
-              Seite nicht gefunden
-            </h1>
-            <p className="text-muted">Die Adresse existiert nicht oder wurde entfernt.</p>
-            {/* external: diese 404 liegt außerhalb von [locale] und hat keinen
-                Locale-Kontext – der next-intl-Link würde hier fehlschlagen. */}
-            <Button href="/" external>
-              Zur Startseite
-            </Button>
+          <div className="flex-1 px-2 sm:px-6">
+            <main className="mx-auto w-full max-w-3xl bg-paper text-fg shadow-[0_30px_80px_rgba(0,0,0,0.55)] rounded-xl sm:rounded-b-none sm:rounded-t-[18px] px-5 py-10 sm:px-14 sm:py-14">
+              <div className="py-16 text-center space-y-6">
+                <p className="text-[12.5px] font-semibold text-faint">404</p>
+                <h1 className="text-[26px] sm:text-[34px] font-extrabold leading-[1.12] tracking-[-0.02em] text-fg">
+                  Seite nicht gefunden
+                </h1>
+                <p className="text-base text-muted">Die Adresse existiert nicht oder wurde entfernt.</p>
+                {/* external: diese 404 liegt außerhalb von [locale] und hat keinen
+                    Locale-Kontext – der next-intl-Link wuerde hier fehlschlagen. */}
+                <Button href="/" external>
+                  Zur Startseite
+                </Button>
+              </div>
+            </main>
           </div>
-        </main>
+
+          <footer data-on-ink className="bg-ink px-5 sm:px-6 py-10">
+            <p className="max-w-3xl mx-auto text-[12.5px] text-ink-faint">
+              Nebenkostencheck · Automatische Löschung · Keine Rechtsberatung
+            </p>
+          </footer>
+        </div>
       </body>
     </html>
   );

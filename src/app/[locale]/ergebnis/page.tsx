@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import ResultView from "@/components/ResultView";
-import Logo from "@/components/Logo";
+import SiteShell from "@/components/SiteShell";
 import { Link, useRouter } from "@/i18n/navigation";
 import { AnalysisResult } from "@/types";
 import Button from "@/components/ui/Button";
@@ -88,7 +88,7 @@ function ErgebnisInner() {
     return (
       <div className="text-center py-20 space-y-6">
         <p className="text-status-danger">{error ?? t("notFound")}</p>
-        <Link href="/" className="inline-flex items-center min-h-11 text-sm text-muted underline hover:text-fg">
+        <Link href="/" className="inline-flex items-center min-h-11 text-sm text-accent underline hover:text-accent-hover">
           {t("home")}
         </Link>
       </div>
@@ -101,18 +101,10 @@ function ErgebnisInner() {
 export default function ErgebnisPage() {
   const t = useTranslations("ergebnis");
   return (
-    <main className="min-h-[100dvh] bg-ink">
-      <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-        <Link href="/" aria-label={t("home")} className="inline-flex items-center min-h-11">
-          <Logo />
-        </Link>
-      </nav>
-
-      <div className="max-w-4xl mx-auto px-6 py-10">
-        <Suspense fallback={<p className="text-center text-muted py-20">{t("loading")}</p>}>
-          <ErgebnisInner />
-        </Suspense>
-      </div>
-    </main>
+    <SiteShell>
+      <Suspense fallback={<p className="text-center text-muted py-20">{t("loading")}</p>}>
+        <ErgebnisInner />
+      </Suspense>
+    </SiteShell>
   );
 }
