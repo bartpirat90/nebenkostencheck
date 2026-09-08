@@ -7,10 +7,10 @@ die Akzentfarbe setzt.
 
 | Komponente | unDraw-Motiv | Einsatz |
 |---|---|---|
-| `Receipt.tsx` | Receipt | Schritt 1 „Abrechnung hochladen" |
-| `DocumentReview.tsx` | Document Review | Schritt 2 „Automatische Prüfung" |
-| `MailSent.tsx` | Mail Sent | Schritt 3 „Widerspruch schicken" |
-| `ApartmentRent.tsx` | Apartment rent | Sektion „Dein gutes Recht als Mieter" |
+| `Receipt.tsx` | Receipt | Schritt 1 „Abrechnung hochladen“ |
+| `DocumentReview.tsx` | Document Review | Schritt 2 „Automatische Prüfung“ |
+| `MailSent.tsx` | Mail Sent | Schritt 3 „Widerspruch schicken“ |
+| `ApartmentRent.tsx` | Apartment rent | Sektion „Dein gutes Recht als Mieter“ |
 
 ## Lizenz
 

@@ -20,7 +20,10 @@ export default function TenantRights() {
   const items: RightItem[] = Array.isArray(raw) ? (raw as RightItem[]) : [];
 
   return (
-    <section className="mt-16 rounded-[18px] bg-paper-2 px-6 py-10 sm:px-12 sm:py-11">
+    <section
+      className="mt-16 rounded-[18px] bg-paper-2 px-6 py-10 sm:px-12 sm:py-11"
+      aria-labelledby="rechte-heading"
+    >
       <div className="grid gap-8 items-center min-[900px]:grid-cols-[0.9fr_1.1fr] min-[900px]:gap-12">
         {/* Der Container setzt die Akzentfarbe für currentColor im Motiv. */}
         <div className="mx-auto w-full max-w-[360px] min-[900px]:max-w-none text-accent">
@@ -28,7 +31,10 @@ export default function TenantRights() {
         </div>
 
         <div className="min-w-0">
-          <h3 className="text-[22px] sm:text-[28px] font-extrabold leading-[1.15] tracking-[-0.02em] text-fg">
+          <h3
+            id="rechte-heading"
+            className="text-[22px] sm:text-[28px] font-extrabold leading-[1.15] tracking-[-0.02em] text-fg"
+          >
             {t("heading")}
           </h3>
           <dl className="mt-6 space-y-5">

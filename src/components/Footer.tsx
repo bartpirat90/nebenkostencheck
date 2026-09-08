@@ -13,8 +13,8 @@ export default function Footer() {
         <span className="font-black text-ink-fg tracking-tight text-lg">Nebenkostencheck</span>
 
         {/* -mx-2 gleicht das Innenpolster der Touch-Ziele optisch aus, damit die
-            Linkreihe buendig mit der Wortmarke beginnt. */}
-        <nav className="flex flex-wrap gap-1 -mx-2 text-sm">
+            Linkreihe bündig mit der Wortmarke beginnt. */}
+        <nav aria-label={t("navLabel")} className="flex flex-wrap gap-1 -mx-2 text-sm">
           <Link href="/impressum" className="inline-flex items-center justify-center min-h-11 min-w-11 px-2 text-ink-faint hover:text-ink-fg transition-colors">{t("impressum")}</Link>
           <Link href="/datenschutz" className="inline-flex items-center justify-center min-h-11 min-w-11 px-2 text-ink-faint hover:text-ink-fg transition-colors">{t("datenschutz")}</Link>
           <Link href="/agb" className="inline-flex items-center justify-center min-h-11 min-w-11 px-2 text-ink-faint hover:text-ink-fg transition-colors">{t("agb")}</Link>

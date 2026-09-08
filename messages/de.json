@@ -6,6 +6,7 @@
   },
   "nav": {
     "home": "Zur Startseite",
+    "label": "Hauptnavigation",
     "links": {
       "how": "So funktioniert's",
       "report": "Bericht",
@@ -27,7 +28,7 @@
   "heroReport": {
     "badge": "Beispiel",
     "title": "Prüfbericht",
-    "meta": "Abrechnung 2025 · 3 Befunde",
+    "meta": "Abrechnung 2026 · 3 Befunde",
     "items": [
       {
         "title": "Verwaltungskosten umgelegt",
@@ -128,12 +129,13 @@
     "recipientName": "Hausverwaltung Bergmann GmbH",
     "recipientAddress": "Yorckstraße 12\n10965 Berlin",
     "date": "Berlin, 12.03.2027",
-    "subject": "Widerspruch gegen die Betriebskostenabrechnung 2025",
+    "subject": "Widerspruch gegen die Betriebskostenabrechnung 2026",
     "paragraphs": [
-      "sehr geehrte Damen und Herren,",
-      "gegen Ihre Betriebskostenabrechnung für das Jahr 2025, zugegangen am 14.02.2027, erhebe ich hiermit Widerspruch.",
-      "Die Position „Verwaltungskosten“ in Höhe von 96,00 € ist nach § 1 Abs. 2 Nr. 1 BetrKV nicht umlagefähig. Die unter „Instandhaltung“ abgerechneten 61,40 € sind Instandsetzungskosten und damit keine Betriebskosten im Sinne des § 2 BetrKV. Die Heizkosten wurden zudem nicht nach Verbrauch verteilt; § 7 HeizkV verlangt einen Verbrauchsanteil von mindestens 50 Prozent.",
-      "Ich bitte Sie, die Abrechnung bis zum 30.03.2027 zu korrigieren und mir den Betrag von 184,50 € zu erstatten."
+      "Sehr geehrte Damen und Herren,",
+      "gegen Ihre Betriebskostenabrechnung für das Jahr 2026, zugegangen am 14.02.2027, erhebe ich fristgerecht Einwendungen nach § 556 Abs. 3 BGB.",
+      "Die Position „Verwaltungskosten“ in Höhe von 96,00 € ist nach § 1 Abs. 2 Nr. 1 BetrKV nicht umlagefähig. Die unter „Instandhaltung“ abgerechneten 61,40 € sind Instandsetzungskosten und keine Betriebskosten im Sinne des § 2 BetrKV. Die Heizkosten wurden nicht nach Verbrauch verteilt, obwohl § 7 HeizkV einen Verbrauchsanteil von mindestens 50 Prozent verlangt; daraus ergibt sich ein weiterer Betrag von 27,10 €.",
+      "Bitte gewähren Sie mir Einsicht in die Originalbelege zu den beanstandeten Positionen (§ 259 BGB). Eine eventuelle Nachzahlung leiste ich bis zur Klärung nur unter Vorbehalt.",
+      "Bitte korrigieren Sie die Abrechnung bis zum 30.03.2027 und schreiben Sie mir den zu viel berechneten Betrag von insgesamt 184,50 € gut."
     ],
     "closing": "Mit freundlichen Grüßen",
     "signature": "Lena Hartmann"
@@ -156,7 +158,6 @@
     ]
   },
   "reviews": {
-    "heading": "ERFAHRUNGEN",
     "saved": "{amount} € zurückgeholt"
   },
   "faq": {
@@ -164,11 +165,11 @@
     "items": [
       {
         "q": "Wie funktioniert die Prüfung?",
-        "a": "Du lädst deine Nebenkostenabrechnung als PDF oder Foto hoch. Sie wird automatisiert anhand der Betriebskostenverordnung (BetrKV), der Heizkostenverordnung (HeizkV) und höchstrichterlicher BGH-Rechtsprechung geprüft. Du erhältst eine Übersicht der Auffälligkeiten mit geschätztem Erstattungspotenzial – und auf Wunsch fertige Musterschreiben (Widerspruch oder Aufforderung zur Belegeinsicht)."
+        "a": "Du lädst deine Nebenkostenabrechnung als PDF oder Foto hoch. Sie wird automatisiert anhand der Betriebskostenverordnung (BetrKV), der Heizkostenverordnung (HeizkV) und höchstrichterlicher BGH-Rechtsprechung geprüft. Du erhältst eine Übersicht der Auffälligkeiten mit geschätztem Erstattungspotenzial und auf Wunsch fertige Musterschreiben (Widerspruch oder Aufforderung zur Belegeinsicht)."
       },
       {
         "q": "Was kostet der Nebenkostencheck?",
-        "a": "Die erste Prüfung mit Vorschau – Anzahl der Auffälligkeiten und geschätztes Potenzial – ist kostenlos. Der vollständige Bericht inklusive Begründung je Punkt und der fertigen Musterschreiben kostet einmalig 9,90 €. Kein Abo, keine versteckten Kosten."
+        "a": "Die erste Prüfung mit Vorschau (Anzahl der Auffälligkeiten und geschätztes Potenzial) ist kostenlos. Der vollständige Bericht inklusive Begründung je Punkt und der fertigen Musterschreiben kostet einmalig 9,90 €. Kein Abo, keine versteckten Kosten."
       },
       {
         "q": "Welche Fehler werden gefunden?",
@@ -180,7 +181,7 @@
       },
       {
         "q": "Wie lange kann ich der Abrechnung widersprechen?",
-        "a": "Einwendungen gegen die Nebenkostenabrechnung kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung geltend machen (§ 556 Abs. 3 BGB) – auch dann noch, wenn du die geforderte Nachzahlung bereits geleistet hast."
+        "a": "Einwendungen gegen die Nebenkostenabrechnung kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung geltend machen (§ 556 Abs. 3 BGB), auch dann noch, wenn du die geforderte Nachzahlung bereits geleistet hast."
       },
       {
         "q": "Was passiert mit meiner hochgeladenen Abrechnung?",
@@ -191,16 +192,17 @@
         "a": "PDF-Dateien oder Fotos (z. B. JPG oder PNG) deiner Abrechnung bis 3 MB. Am besten lädst du nur die eigentliche Nebenkostenabrechnung hoch, nicht den gesamten Schriftverkehr."
       },
       {
-        "q": "Nebenkosten- oder Betriebskostenabrechnung – was ist der Unterschied?",
-        "a": "Inhaltlich ist es dasselbe Dokument: „Nebenkostenabrechnung“ ist der umgangssprachliche Begriff, „Betriebskostenabrechnung“ der juristisch korrekte Begriff aus der Betriebskostenverordnung (BetrKV). Der Nebenkostencheck prüft beide Bezeichnungen gleich – du kannst deine Abrechnung unabhängig von der Überschrift hochladen."
+        "q": "Nebenkosten- oder Betriebskostenabrechnung: Was ist der Unterschied?",
+        "a": "Inhaltlich ist es dasselbe Dokument: „Nebenkostenabrechnung“ ist der umgangssprachliche Begriff, „Betriebskostenabrechnung“ der juristisch korrekte Begriff aus der Betriebskostenverordnung (BetrKV). Der Nebenkostencheck prüft beide Bezeichnungen gleich. Du kannst deine Abrechnung unabhängig von der Überschrift hochladen."
       },
       {
         "q": "Wird auch die Heizkostenabrechnung geprüft?",
-        "a": "Ja, sofern die Heizkosten Teil deiner hochgeladenen Abrechnung sind, werden sie nach der Heizkostenverordnung (HeizkV) mitgeprüft – etwa ob die Heizkosten überhaupt nach Verbrauch verteilt werden (§ 7 HeizkV verlangt mindestens 50 %) und ob die Wärmemenge für das Warmwasser mit einem Wärmemengenzähler gemessen statt per Formel berechnet wird (§ 9 HeizkV). Die Prüfung ist auf die Abrechnung deines Vermieters ausgelegt; eine separate Heizkostenabrechnung des Messdienstleisters als eigenes Dokument ist dafür nicht vorgesehen."
+        "a": "Ja, sofern die Heizkosten Teil deiner hochgeladenen Abrechnung sind, werden sie nach der Heizkostenverordnung (HeizkV) mitgeprüft, etwa ob die Heizkosten überhaupt nach Verbrauch verteilt werden (§ 7 HeizkV verlangt mindestens 50 %) und ob die Wärmemenge für das Warmwasser mit einem Wärmemengenzähler gemessen statt per Formel berechnet wird (§ 9 HeizkV). Die Prüfung ist auf die Abrechnung deines Vermieters ausgelegt; eine separate Heizkostenabrechnung des Messdienstleisters als eigenes Dokument ist dafür nicht vorgesehen."
       }
     ]
   },
   "footer": {
+    "navLabel": "Rechtliches und Kontakt",
     "impressum": "Impressum",
     "datenschutz": "Datenschutz",
     "agb": "AGB",

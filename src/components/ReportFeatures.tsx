@@ -25,10 +25,13 @@ export default function ReportFeatures() {
   const items: Feature[] = Array.isArray(raw) ? (raw as Feature[]) : [];
 
   return (
-    <section id="bericht" className="mt-16 scroll-mt-24">
+    <section id="bericht" className="mt-16 scroll-mt-24" aria-labelledby="bericht-heading">
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-[56px] lg:items-center">
         <div className="min-w-0">
-          <h2 className="text-[26px] sm:text-[34px] font-extrabold leading-[1.12] tracking-[-0.02em] text-fg">
+          <h2
+            id="bericht-heading"
+            className="text-[26px] sm:text-[34px] font-extrabold leading-[1.12] tracking-[-0.02em] text-fg"
+          >
             {t("heading")}
           </h2>
           <p className="mt-3 text-base sm:text-[17px] leading-[1.55] text-muted max-w-[62ch]">

@@ -31,6 +31,7 @@ export default function SiteShell({ children, withNavLinks = false, width = "wid
     <div className="min-h-[100dvh] bg-ink flex flex-col">
       <nav
         data-on-ink
+        aria-label={t("label")}
         className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 flex items-center justify-between gap-3 border-b border-ink-line bg-ink/90 backdrop-blur-sm"
       >
         <Link href="/" aria-label={t("home")} className="inline-flex items-center min-h-11">
