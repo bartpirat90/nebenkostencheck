@@ -21,15 +21,23 @@ export default function ProofLine() {
   const raw = t.raw("items");
   const items: ProofItem[] = Array.isArray(raw) ? (raw as ProofItem[]) : [];
 
+  // Ohne Belege bliebe nur ein leerer Streifen zwischen zwei Haarlinien stehen;
+  // solange eine Sprache den Namespace noch nicht hat, entfällt die Zeile ganz.
+  if (items.length === 0) return null;
+
   return (
     <section className="border-y border-paper-line py-6">
       <div className="grid gap-[18px] md:grid-cols-[1.4fr_1fr_1fr] md:gap-10">
         {items.map((item) => (
           <div key={item.value} className="min-w-0">
-            <p className="text-[26px] sm:text-[30px] font-extrabold leading-[1.1] tracking-[-0.02em] text-fg">
-              {item.value}
+            {/* Zahl und Satz ergeben zusammen einen Satz und stehen deshalb in
+                einem Absatz; die Block-Klassen halten den optischen Umbruch. */}
+            <p className="m-0">
+              <strong className="block text-[26px] sm:text-[30px] font-extrabold leading-[1.1] tracking-[-0.02em] text-fg">
+                {item.value}
+              </strong>
+              <span className="mt-1 block text-sm leading-[1.5] text-muted">{item.text}</span>
             </p>
-            <p className="mt-1 text-sm leading-[1.5] text-muted">{item.text}</p>
             <p className="mt-1 text-[12.5px] text-faint">{item.source}</p>
           </div>
         ))}
