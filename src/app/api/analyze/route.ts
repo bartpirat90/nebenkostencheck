@@ -29,7 +29,7 @@ function toPreview(id: string, r: AnalysisResult): PreviewData {
 
 export async function POST(req: NextRequest) {
   try {
-    // Body kommt roh vom Client — kein Vertrauen in Form/Typ, bevor wir ihn geprueft haben.
+    // Body kommt roh vom Client — kein Vertrauen in Form/Typ, bevor wir ihn geprüft haben.
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== "object" || Array.isArray(body)) {
       return apiError("INVALID_REQUEST");

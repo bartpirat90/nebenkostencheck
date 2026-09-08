@@ -108,7 +108,7 @@ export default async function LocaleLayout({
   const clientMessages = Object.fromEntries(
     Object.entries(messages).filter(([namespace]) => !isServerOnlyNamespace(namespace)),
   );
-  // hasLocale oben verengt `locale` bereits auf Locale – kein Cast noetig.
+  // hasLocale oben verengt `locale` bereits auf Locale – kein Cast nötig.
   const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
 
   return (

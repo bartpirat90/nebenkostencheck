@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { routing, type Locale } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/constants";
 
-// Eine einzige Locale-Pruefung im Projekt: die Implementierung liegt schon in
+// Eine einzige Locale-Prüfung im Projekt: die Implementierung liegt schon in
 // checkoutLocale.ts. Hier nur re-exportiert, damit SEO-Aufrufer sie zusammen mit
 // pageAlternates/pageMetadata aus einem Modul beziehen.
 export { toLocale } from "@/lib/checkoutLocale";
 
-/** Absolute URL einer Seite je Locale – de ohne Praefix, andere mit /<locale>. */
+/** Absolute URL einer Seite je Locale – de ohne Präfix, andere mit /<locale>. */
 export function localeUrl(locale: string, path = ""): string {
   return locale === routing.defaultLocale ? `${SITE_URL}${path}` : `${SITE_URL}/${locale}${path}`;
 }
 
-/** canonical + hreflang (inkl. x-default = de) fuer eine Seite. */
+/** canonical + hreflang (inkl. x-default = de) für eine Seite. */
 export function pageAlternates(locale: Locale, path = "") {
   const languages: Record<string, string> = { "x-default": localeUrl(routing.defaultLocale, path) };
   for (const l of routing.locales) languages[l] = localeUrl(l, path);
@@ -51,9 +51,9 @@ export const BRAND_INK = "#12171E";
 export const BRAND_PAPER = "#FBF9F4";
 
 /**
- * Vollstaendige Metadaten einer Unterseite (Rechtsseiten etc.).
- * `openGraph` und `twitter` muessen komplett sein: Next ersetzt die Objekte des
- * Layouts, statt sie tief zu mergen – eine Teilangabe wuerde og:image, og:type,
+ * Vollständige Metadaten einer Unterseite (Rechtsseiten etc.).
+ * `openGraph` und `twitter` müssen komplett sein: Next ersetzt die Objekte des
+ * Layouts, statt sie tief zu mergen – eine Teilangabe würde og:image, og:type,
  * og:site_name und og:locale aus dem Layout verlieren.
  */
 export function pageMetadata(

@@ -28,7 +28,7 @@ function base64ToPdfBlob(base64: string): Blob {
 
 /**
  * Ermittelt alle fokussierbaren Elemente innerhalb eines Containers.
- * Wird sowohl fuer den initialen Fokus als auch fuer die Fokus-Falle
+ * Wird sowohl für den initialen Fokus als auch für die Fokus-Falle
  * (Tab/Shift+Tab) gebraucht, deshalb als eigene Funktion ausgelagert.
  * offsetParent === null filtert unsichtbare Elemente (z.B. display:none) heraus.
  */
@@ -67,9 +67,9 @@ export default function LetterModal({
 
   const initialContactRef = useRef<ContactData>(initialContact);
   const modalRef = useRef<HTMLDivElement>(null);
-  // Merkt sich das Element, das vor dem Oeffnen fokussiert war, damit der
-  // Fokus beim Schliessen dorthin zurueckkehrt (sonst faellt er auf <body>
-  // zurueck und Tastatur-/Screenreader-Nutzer verlieren ihre Position).
+  // Merkt sich das Element, das vor dem Öffnen fokussiert war, damit der
+  // Fokus beim Schließen dorthin zurückkehrt (sonst fällt er auf <body>
+  // zurück und Tastatur-/Screenreader-Nutzer verlieren ihre Position).
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   // Update ref only when modal is closed so open-modal edits are never overwritten
@@ -94,9 +94,9 @@ export default function LetterModal({
     }
   }, [open, customerEmail]);
 
-  // Fokus-Uebergabe: aktuelles Element merken, solange das Modal offen ist;
-  // beim Schliessen (Cleanup greift sowohl bei open=false als auch bei Unmount)
-  // den Fokus zurueckgeben, damit die Seite dahinter bedienbar bleibt.
+  // Fokus-Übergabe: aktuelles Element merken, solange das Modal offen ist;
+  // beim Schließen (Cleanup greift sowohl bei open=false als auch bei Unmount)
+  // den Fokus zurückgeben, damit die Seite dahinter bedienbar bleibt.
   useEffect(() => {
     if (!open) return;
     previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
@@ -106,9 +106,9 @@ export default function LetterModal({
   }, [open]);
 
   // Escape schliesst das Modal – mit denselben Ausnahmen wie der Backdrop-Klick:
-  // nicht waehrend des Ladens (laufende PDF-Generierung nicht abbrechen) und
-  // nicht mit fertigem Brief (ein Reflex-Escape wuerde das Ergebnis genauso
-  // verwerfen wie ein Fehlklick; dann nur ueber "Fertig"/X). Tab/Shift+Tab
+  // nicht während des Ladens (laufende PDF-Generierung nicht abbrechen) und
+  // nicht mit fertigem Brief (ein Reflex-Escape würde das Ergebnis genauso
+  // verwerfen wie ein Fehlklick; dann nur über "Fertig"/X). Tab/Shift+Tab
   // wird innerhalb des Modals gefangen (Focus-Trap), damit der Tastaturfokus
   // die Seite dahinter nicht verlassen kann, solange der Dialog offen ist.
   useEffect(() => {
@@ -237,8 +237,8 @@ export default function LetterModal({
     <div
       className="fixed inset-0 z-50 bg-ink/70 flex items-center justify-center p-4"
       // Schliessen per Backdrop-Klick nur im Formular-Schritt: ist der Brief
-      // bereits fertig (result) oder wird gerade geladen, wuerde ein Fehlklick
-      // das Ergebnis unwiederbringlich verwerfen – dann nur ueber "Fertig"/X.
+      // bereits fertig (result) oder wird gerade geladen, würde ein Fehlklick
+      // das Ergebnis unwiederbringlich verwerfen – dann nur über "Fertig"/X.
       onClick={(e) => { if (e.button === 0 && !loading && !result) onClose(); }}
     >
       <div

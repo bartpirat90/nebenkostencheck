@@ -110,7 +110,7 @@ export default function Home() {
 
   return (
     <SiteShell withNavLinks={!preview && !loading}>
-      {/* Eigene, kleine Suspense-Grenze nur fuer useSearchParams: haelt sie fern von
+      {/* Eigene, kleine Suspense-Grenze nur für useSearchParams: hält sie fern von
           preview/notice weiter oben, damit ein Re-Suspend beim URL-Cleanup nicht
           den gesamten Seiten-State zuruecksetzt. */}
       <Suspense fallback={null}>
@@ -189,7 +189,7 @@ function NotAStatementBox({ onReset }: { onReset: () => void }) {
 
 /**
  * Liest den `canceled`/`id`-Query-Parameter und meldet eine passende gespeicherte
- * Vorschau an den Elternteil zurueck. Bewusst als eigene, winzige Komponente:
+ * Vorschau an den Elternteil zurück. Bewusst als eigene, winzige Komponente:
  * `useSearchParams` braucht eine Suspense-Grenze, und wenn diese Grenze beim
  * Bereinigen der URL neu rendert, darf das nur diese Komponente treffen – nicht
  * `Home` mit seinem preview/notice-State (sonst geht die Wiederherstellung sofort
@@ -202,10 +202,10 @@ function CancelRestore({ onRestore }: { onRestore: (preview: PreviewData) => voi
     if (searchParams.get("canceled") !== "1") return;
     const restored = loadPreview(searchParams.get("id"));
     if (restored) onRestore(restored);
-    // Nur die URL-Leiste bereinigen (kein next-intl-Router-Push): jede Aenderung
+    // Nur die URL-Leiste bereinigen (kein next-intl-Router-Push): jede Änderung
     // an history.pushState/replaceState wird vom App Router abgefangen und laesst
-    // diese Suspense-Grenze neu aufloesen. Da `onRestore` den State im Elternteil
-    // (ausserhalb dieser Grenze) setzt, bleibt er davon unberuehrt.
+    // diese Suspense-Grenze neu auflösen. Da `onRestore` den State im Elternteil
+    // (außerhalb dieser Grenze) setzt, bleibt er davon unberührt.
     window.history.replaceState(null, "", window.location.pathname);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

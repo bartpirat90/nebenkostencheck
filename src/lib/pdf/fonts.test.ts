@@ -31,7 +31,7 @@ describe("PDF-Fonts (Noto Sans fuer Latin-Ext + Kyrillisch)", () => {
   it("bettet Noto Sans ein und bildet Sonderzeichen auf ihre Unicode-Codepunkte ab", async () => {
     const letter = "Sehr geehrte Frau Şçğüİ Іваненко,\nBetreff: Test\nЖ ő ł";
     // renderToBuffer erwartet ReactElement<DocumentProps> - createElement mit
-    // den tatsaechlichen LetterDoc-Props ist strukturell enger, daher der Cast.
+    // den tatsächlichen LetterDoc-Props ist strukturell enger, daher der Cast.
     const buffer = await renderToBuffer(
       createElement(LetterDoc, { letter }) as unknown as ReactElement<DocumentProps>,
     );
@@ -43,12 +43,12 @@ describe("PDF-Fonts (Noto Sans fuer Latin-Ext + Kyrillisch)", () => {
     expect(text).toContain("FontFile2");
     expect(text).toMatch(/BaseFont\s*\/[A-Z]{6}\+NotoSans-Regular/);
     // Die Betreff-Zeile ist fett -> auch der Bold-Schnitt muss eingebettet sein
-    // (und zwar ueber die von `page` vererbte fontFamily, ohne eigene Angabe).
+    // (und zwar über die von `page` vererbte fontFamily, ohne eigene Angabe).
     expect(text).toMatch(/BaseFont\s*\/[A-Z]{6}\+NotoSans-Bold/);
 
     // Die ToUnicode-CMap des Subsets listet jeden verwendeten Codepunkt als
     // 4-stelliges Hex. Fehlt ein Glyph im Font, landet er als .notdef ohne
-    // Codepunkt -> genau das wuerde hier auffallen.
+    // Codepunkt -> genau das würde hier auffallen.
     const streams = inflatedStreams(buffer);
     for (const [name, hex] of [
       ["ğ", "011f"],

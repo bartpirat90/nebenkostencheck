@@ -101,7 +101,8 @@ function ErgebnisInner() {
 export default function ErgebnisPage() {
   const t = useTranslations("ergebnis");
   return (
-    <SiteShell>
+    // narrow: ResultView ist auf eine Lesespalte ausgelegt, nicht auf die volle Blattbreite.
+    <SiteShell width="narrow">
       <Suspense fallback={<p className="text-center text-muted py-20">{t("loading")}</p>}>
         <ErgebnisInner />
       </Suspense>

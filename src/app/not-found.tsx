@@ -23,6 +23,7 @@ export default function RootNotFound() {
         <div className="min-h-[100dvh] bg-ink flex flex-col">
           <nav
             data-on-ink
+            aria-label="Hauptnavigation"
             className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 flex items-center border-b border-ink-line bg-ink/90 backdrop-blur-sm"
           >
             {/* Rohes <a> statt next/link: eine Soft-Navigation von hier in den
@@ -43,7 +44,7 @@ export default function RootNotFound() {
                 </h1>
                 <p className="text-base text-muted">Die Adresse existiert nicht oder wurde entfernt.</p>
                 {/* external: diese 404 liegt außerhalb von [locale] und hat keinen
-                    Locale-Kontext – der next-intl-Link wuerde hier fehlschlagen. */}
+                    Locale-Kontext – der next-intl-Link würde hier fehlschlagen. */}
                 <Button href="/" external>
                   Zur Startseite
                 </Button>
@@ -52,9 +53,21 @@ export default function RootNotFound() {
           </div>
 
           <footer data-on-ink className="bg-ink px-5 sm:px-6 py-10">
-            <p className="max-w-3xl mx-auto text-[12.5px] text-ink-faint">
-              Nebenkostencheck · Automatische Löschung · Keine Rechtsberatung
-            </p>
+            <div className="max-w-3xl mx-auto flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[12.5px] text-ink-faint">
+                Nebenkostencheck · Automatische Löschung · Keine Rechtsberatung
+              </p>
+              {/* Rohes <a> statt next-intl-Link: siehe Kommentar am Kopf der Datei. */}
+              <nav aria-label="Rechtliches" className="flex text-sm">
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                <a
+                  href="/impressum"
+                  className="inline-flex items-center justify-center min-h-11 min-w-11 px-2 text-ink-faint hover:text-ink-fg transition-colors"
+                >
+                  Impressum
+                </a>
+              </nav>
+            </div>
           </footer>
         </div>
       </body>
