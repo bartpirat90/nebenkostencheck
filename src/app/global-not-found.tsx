@@ -1,14 +1,32 @@
+import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import Logo from "@/components/Logo";
 import Button from "@/components/ui/Button";
-// globals.css wird hier erneut importiert, weil das Root-Layout kein CSS lädt –
-// die Styles hängen am [locale]-Layout, das für diese 404 nie rendert.
+// Eigener CSS-Import: dieses Dokument steht außerhalb jedes Layouts (siehe
+// Kommentarblock unten).
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" });
 
+export const metadata: Metadata = {
+  title: "Seite nicht gefunden · Nebenkostencheck",
+  robots: { index: false, follow: false },
+};
+
 // Greift bei Pfaden außerhalb von [locale] (z. B. /xx/foo mit unbekannter Sprache).
-// Das Root-Layout rendert kein <html>, deshalb hier ein eigenes Grundgerüst.
+//
+// Bewusst die Next-Konvention `global-not-found` (aktiviert über
+// experimental.globalNotFound in next.config.ts) statt eines normalen
+// `not-found.tsx`. Zwei Gründe, beide vorher kaputt:
+//   1. Ein `notFound()` aus [locale]/layout.tsx fliegt, bevor dieses Layout sein
+//      <html> zurückgibt. Das Root-Layout rendert ebenfalls keins, also blieb nur
+//      Nexts Fehler-Shell (<html id="__next_error__">) – der 404-Baum landete nur
+//      als Flight-Payload im HTML und wurde erst im Browser gerendert.
+//   2. Next dedupliziert CSS-Importe über alle App-Router-Segmente hinweg: weil
+//      [locale]/layout.tsx dasselbe globals.css importiert, fiel der Import hier
+//      aus dem Bundle und übrig blieb nur die Font-CSS von next/font.
+// `global-not-found` ist von beidem ausgenommen: eigenes vollständiges Dokument,
+// eigener CSS-Bundle-Eintrag.
 //
 // Bewusst NICHT die gemeinsame SiteShell: die zieht ihre Texte per
 // useTranslations und rendert LocaleSwitcher und Footer-Links über den
@@ -16,7 +34,7 @@ const geist = Geist({ subsets: ["latin", "latin-ext"], variable: "--font-geist" 
 // gültige Locale – jeder dieser Aufrufe würde zur Laufzeit werfen. Deshalb
 // eine schlanke Kopie des Rahmens mit fest deutschen Texten und rohen <a>.
 // Ändert sich die Shell optisch, muss diese Datei mitgezogen werden.
-export default function RootNotFound() {
+export default function GlobalNotFound() {
   return (
     <html lang="de" dir="ltr">
       <body className={`${geist.variable} ${geist.className}`}>

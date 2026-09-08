@@ -3,6 +3,12 @@ import { securityHeaders } from "./security-headers.mjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // Aktiviert die Konvention src/app/global-not-found.tsx: die 404 außerhalb
+    // gültiger Locales rendert damit ein eigenes vollständiges HTML-Dokument
+    // samt eigenem CSS-Bundle. Begründung siehe global-not-found.tsx.
+    globalNotFound: true,
+  },
   // Noto-Sans-TTFs (fuer PDF-Briefe/Bericht) muessen ins Serverless-Bundle,
   // sonst fehlen sie bei Vercel und @react-pdf faellt auf Helvetica zurueck.
   outputFileTracingIncludes: {

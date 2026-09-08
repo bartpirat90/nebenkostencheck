@@ -15,6 +15,14 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// Unbekannte Locale-Segmente (z. B. /test.xyz, das am Middleware-Matcher
+// vorbeiläuft) sollen schon beim Routing als 404 enden und nicht erst in einem
+// notFound() aus diesem Layout. Sonst fliegt der Fehler, bevor das Layout sein
+// <html> zurückgibt: Next hat dann kein Dokument und liefert seine Fehler-Shell
+// aus, die 404 landet nur als Flight-Payload im HTML. Mit dynamicParams=false
+// greift stattdessen die Route /_not-found, also global-not-found.tsx.
+export const dynamicParams = false;
+
 // themeColor gehört seit Next 15 in einen eigenen viewport-Export, nicht ins
 // metadata-Objekt – sonst warnt Next beim Build.
 export const viewport: Viewport = {

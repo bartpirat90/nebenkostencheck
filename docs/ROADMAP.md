@@ -59,7 +59,7 @@
 - **Upstash-Produktiv-Datenbank:** muss neu angelegt werden (aktueller Host ist nicht erreichbar); danach `KV_REST_API_URL`/`KV_REST_API_TOKEN` in Vercel setzen.
 - **Stripe-Test mit 100-%-Gutschein** vor Live-Schaltung einmal end-to-end durchspielen.
 - **Muttersprachler-Review** für Türkisch, Arabisch, Russisch, Ukrainisch — aktuell KI-Erstübersetzungen (`_meta.status: "ai-draft"` in `messages/{tr,ar,ru,uk}.json`).
-- **404-Seite:** Statuscode und Inhalt stimmen (lokalisiert unter `/<locale>/…`, deutsch außerhalb gültiger Locales), aber das HTML wird erst im Browser gerendert — Next liefert für not-found nur seine Fehler-Shell, weil das Root-Layout kein `<html>` rendert (das steckt im `[locale]`-Layout). Ohne JS bleibt die Seite leer; für Suchmaschinen (Status 404 + noindex) unkritisch. Next.js 16 bringt mit `global-not-found` vermutlich die sauberere Lösung.
+- **404-Seite (lokalisiert):** Die 404 *innerhalb* einer gültigen Sprache (`/en/nixda`) rendert weiterhin erst im Browser — das `notFound()` aus `[locale]/[...rest]` erreicht die Not-Found-Boundary erst nach dem Server-Render, Next liefert dafür seine Fehler-Shell und der 404-Baum steckt nur im Flight-Payload. Ohne JS bleibt die Seite leer; für Suchmaschinen (Status 404 + noindex) unkritisch. Die 404 *außerhalb* gültiger Locales ist seit `global-not-found.tsx` + `dynamicParams = false` serverseitig gerendert und gestylt.
 - **Arabisch im PDF:** Noto Sans (Latin-Ext + Kyrillisch) deckt kein Arabisch ab — Briefe/Berichte auf Arabisch fehlen im PDF-Export bislang.
 
 ---
