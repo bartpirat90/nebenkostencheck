@@ -12,13 +12,10 @@ import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import { useApiErrorMessage } from "@/lib/clientErrors";
 import { clearPreview, loadPreview } from "@/lib/previewStorage";
-import Logo from "@/components/Logo";
-import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Faq from "@/components/Faq";
-import LocaleSwitcher from "@/components/LocaleSwitcher";
+import SiteShell from "@/components/SiteShell";
 import { SITE_URL } from "@/lib/constants";
-import { reviews } from "@/lib/reviews";
 import Button from "@/components/ui/Button";
 
 export default function Home() {
@@ -110,7 +107,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-[100dvh] bg-ink">
+    <SiteShell withNavLinks={!preview && !loading}>
       {/* Eigene, kleine Suspense-Grenze nur fuer useSearchParams: haelt sie fern von
           preview/notice weiter oben, damit ein Re-Suspend beim URL-Cleanup nicht
           den gesamten Seiten-State zuruecksetzt. */}
@@ -118,115 +115,25 @@ export default function Home() {
         <CancelRestore onRestore={handleCanceled} />
       </Suspense>
 
-      {/* Navigation */}
-      <nav className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between border-b border-line bg-ink/90 backdrop-blur-sm">
-        <Logo />
-        <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-block text-[11px] font-medium tracking-[0.14em] text-faint">
-            {t("nav.badge")}
-          </span>
-          <LocaleSwitcher />
-        </div>
-      </nav>
-
       {!preview && !loading ? (
-        /* Landing: eine Lesespalte + schmale, klebende Akten-Randleiste (nur Desktop) */
-        <div className="max-w-6xl mx-auto px-6 pt-10 lg:pt-14 pb-16">
-          <div className="lg:grid lg:grid-cols-[12rem_minmax(0,1fr)_14rem] lg:gap-10">
-
-            {/* Linke Randspalte: belegte Editorial-Stimmen (nur Desktop) */}
-            <aside className="hidden lg:block">
-              <div className="sticky top-24 border-e border-line pe-6 space-y-5">
-                <figure className="m-0">
-                  <div aria-hidden className="text-accent text-4xl leading-none mb-1">&ldquo;</div>
-                  <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    {t("evidence.mieterbundQuote")}
-                  </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">{t("evidence.mieterbundSource")}</figcaption>
-                </figure>
-
-                <figure className="m-0 border-t border-line pt-5">
-                  <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    {t("evidence.vzQuote")}
-                  </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">{t("evidence.vzSource")}</figcaption>
-                </figure>
-
-                <figure className="m-0 border-t border-line pt-5">
-                  <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                    {t("evidence.fristQuote")}
-                  </blockquote>
-                  <figcaption className="mt-2 text-xs text-faint">{t("evidence.fristSource")}</figcaption>
-                </figure>
-
-                {/* Echte Kundenstimmen – erscheint nur, wenn welche eingetragen sind (src/lib/reviews.ts) */}
-                {reviews.length > 0 && (
-                  <div className="border-t border-line pt-5 space-y-5">
-                    <p className="text-[11px] font-medium tracking-[0.12em] text-faint">{t("reviews.heading")}</p>
-                    {reviews.map((r, i) => (
-                      <figure key={i} className="m-0">
-                        <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
-                          {r.text}
-                        </blockquote>
-                        <figcaption className="mt-2 text-xs text-faint">
-                          {r.name}
-                          {r.location ? ` · ${r.location}` : ""}
-                        </figcaption>
-                        {r.savedEur != null && (
-                          <p className="mt-1 text-xs font-semibold text-accent tabular-nums">
-                            {t("reviews.saved", { amount: r.savedEur })}
-                          </p>
-                        )}
-                      </figure>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </aside>
-
-            {/* Hauptspalte */}
-            <div className="min-w-0">
-              <LandingHero />
-              <Reveal>
-                <StatsBar />
-              </Reveal>
-              <Reveal delay={80}>
-                <HowItWorks />
-              </Reveal>
-              <div id="upload" className="mt-2">
-                <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
-              </div>
-              <Reveal delay={120}>
-                <Faq />
-              </Reveal>
-            </div>
-
-            {/* Rechte Akten-Randleiste (nur Desktop) */}
-            <aside className="hidden lg:block">
-              <div className="sticky top-24 border-s border-line ps-6 space-y-7">
-                <div>
-                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">{t("assurance.checkedTitle")}</p>
-                  <ul className="space-y-1.5 text-sm text-muted">
-                    <li>BetrKV</li>
-                    <li>HeizkV</li>
-                    <li>BGH-Rechtsprechung</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">{t("assurance.securityTitle")}</p>
-                  <ul className="space-y-2 text-sm text-muted">
-                    <li className="flex items-center gap-2"><span className="text-accent">✓</span> {t("trust.dsgvo")}</li>
-                    <li className="flex items-center gap-2"><span className="text-accent">✓</span> {t("trust.deletion")}</li>
-                    <li className="flex items-center gap-2"><span className="text-accent">✓</span> {t("trust.noAccount")}</li>
-                  </ul>
-                </div>
-              </div>
-            </aside>
+        <>
+          <LandingHero />
+          <Reveal>
+            <StatsBar />
+          </Reveal>
+          <Reveal delay={80}>
+            <HowItWorks />
+          </Reveal>
+          <div id="upload" className="mt-2">
+            <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
           </div>
-        </div>
+          <Reveal delay={120}>
+            <Faq />
+          </Reveal>
+        </>
       ) : (
-        /* Laden / Teaser / Ergebnis: schmale Lesespalte */
-        <div id="upload" className="max-w-2xl mx-auto px-6 pt-10 pb-12">
+        /* Laden / Teaser: schmale Lesespalte innerhalb des Blatts */
+        <div id="upload" className="max-w-2xl mx-auto">
           {loading ? (
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
           ) : preview?.notAStatement ? (
@@ -247,12 +154,11 @@ export default function Home() {
         </div>
       )}
 
-      <Footer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
-    </main>
+    </SiteShell>
   );
 }
 

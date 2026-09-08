@@ -5,7 +5,13 @@
     "ogAlt": "Nebenkostencheck – Nebenkostenabrechnung prüfen & Geld zurückholen"
   },
   "nav": {
-    "badge": "ERST-PRÜFUNG GRATIS · BERICHT 9,90 €"
+    "home": "Zur Startseite",
+    "links": {
+      "how": "So funktioniert's",
+      "report": "Bericht",
+      "faq": "Fragen"
+    },
+    "pill": "Erst-Prüfung gratis · Bericht 9,90 €"
   },
   "trust": {
     "dsgvo": "DSGVO-konform",

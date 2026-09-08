@@ -16,27 +16,30 @@ type Variant = "primary" | "secondary" | "ghost" | "accent";
 type Size = "md" | "lg";
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-xl transition-colors " +
+  "inline-flex items-center justify-center gap-2 rounded-xl transition-colors duration-150 " +
+  // Active-Scale gibt haptisches Feedback; im deaktivierten Zustand
+  // zurückgenommen, sonst „wackelt“ ein Button, der nichts tut.
+  "active:scale-[0.97] disabled:active:scale-100 " +
   "disabled:opacity-60 disabled:cursor-not-allowed";
 
 const VARIANTS: Record<Variant, string> = {
-  // Haupt-CTA. active:scale gibt haptisches Feedback, wird im deaktivierten
-  // Zustand zurückgenommen (sonst "wackelt" ein Button, der nichts tut).
-  primary:
-    "bg-accent hover:bg-accent-hover text-white active:scale-[0.98] disabled:active:scale-100",
-  secondary:
-    "border border-line-strong text-muted hover:border-accent hover:text-accent",
+  // Haupt-CTA auf Papier: dunkle Fläche, Blattfarbe als Text (15,7:1).
+  // Das Akzentgrün bleibt den Beträgen und dem Berichts-Button vorbehalten,
+  // damit auf einer Seite nur ein Element „grün ruft“.
+  primary: "bg-fg hover:bg-fg-hover text-paper",
+  secondary: "border border-paper-line-strong text-fg hover:border-accent hover:text-accent",
   ghost: "text-muted hover:text-fg",
-  // Akzent-Umriss: für nachgeordnete Aktionen, die trotzdem zum Kern gehören
-  // (kombiniertes Schreiben) – sichtbar hervorgehoben, aber nicht als zweiter Haupt-CTA.
-  accent: "border border-accent-border text-accent-bright hover:bg-accent-soft",
+  // Akzent-Umriss auf Dokumentfläche: für nachgeordnete Aktionen, die trotzdem
+  // zum Kern gehören (kombiniertes Schreiben, PDF im Bericht).
+  accent: "bg-doc border border-accent-border text-accent hover:bg-accent-soft",
 };
 
-// Beide Größen erfüllen die 44-px-Mindestfläche aus Task 2 auch dann, wenn der
-// Text kleiner wird oder das Label umbricht – deshalb zusätzlich min-h.
+// Beide Größen erfüllen die 44-px-Mindestfläche auch dann, wenn der Text
+// kleiner wird oder das Label umbricht – deshalb zusätzlich min-h.
+// lg trägt exakt die 15/26 px Innenabstand aus Spec 5.1 (Hero-CTA).
 const SIZES: Record<Size, string> = {
   md: "min-h-11 py-3 px-5 text-sm",
-  lg: "min-h-12 py-3.5 px-7 text-base",
+  lg: "min-h-12 py-[15px] px-[26px] text-base",
 };
 
 // Schriftgewicht kommt aus genau einer Quelle: Tailwind sortiert font-*-Utilities
