@@ -67,28 +67,25 @@ export default function PreviewView({ preview, onReset }: Props) {
   return (
     <div className="space-y-5">
       {/* Bericht-Kopf */}
-      <div className="border border-line rounded-xl p-6">
-        <p className="text-xs font-semibold tracking-wide text-accent-bright mb-2">
-          {t("firstCheckDone")}
-        </p>
-        <p className="text-3xl font-black text-fg tabular-nums">
+      <div className="rounded-[14px] border border-paper-line bg-doc p-6">
+        <p className="text-[12.5px] text-faint mb-2">{t("firstCheckDone")}</p>
+        <p className="text-[30px] font-extrabold leading-[1.1] tracking-[-0.02em] text-fg tabular-nums">
           {t("findings", { count: preview.errorCount })}
         </p>
-        <div className="flex items-baseline justify-between gap-3 border-t border-line mt-4 pt-4">
+        <div className="flex items-baseline justify-between gap-3 border-t border-paper-line mt-4 pt-4">
           <span className="text-sm text-muted">{t("potentialLabel")}</span>
-          <span className="text-lg font-bold text-accent tabular-nums">{potential}</span>
+          <span className="text-lg font-extrabold text-accent tabular-nums">{potential}</span>
         </div>
       </div>
 
       {preview.errorTitles.length > 0 && (
-        <div className="border border-line rounded-xl divide-y divide-line">
+        <div className="rounded-[14px] border border-paper-line bg-doc divide-y divide-paper-line">
           {preview.errorTitles.map((title, i) => (
-            <div key={i} className="flex items-center gap-3 px-4 py-3">
-              <span className="text-xs font-medium tabular-nums text-accent w-6 shrink-0">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="text-sm font-medium text-fg">{title}</span>
-              <span className="ms-auto flex items-center gap-1.5 text-xs text-faint shrink-0">
+            <div key={i} className="flex items-center gap-3 px-4 py-3.5">
+              <span className="w-2 h-2 rounded-full shrink-0 bg-status-neutralStrong" />
+              {/* Titel bewusst in faint: der Inhalt ist noch nicht gekauft. */}
+              <span className="text-sm font-medium text-faint min-w-0">{title}</span>
+              <span className="ms-auto flex items-center gap-1.5 text-[12.5px] text-faint shrink-0">
                 <LockIcon /> {t("locked")}
               </span>
             </div>
@@ -97,11 +94,11 @@ export default function PreviewView({ preview, onReset }: Props) {
       )}
 
       {/* So geht's weiter (kein Befund-Inhalt, Fall-Bezug über Schreiben-Typ) */}
-      <div className="rounded-xl border border-line overflow-hidden">
-        <div className="px-4 py-2.5 border-b border-line">
-          <span className="text-[11px] font-medium tracking-[0.12em] text-faint">{t("howItGoes")}</span>
+      <div className="rounded-[14px] border border-paper-line bg-doc overflow-hidden">
+        <div className="px-4 py-2.5 border-b border-paper-line">
+          <span className="text-[12.5px] text-faint">{t("howItGoes")}</span>
         </div>
-        <div className="divide-y divide-line">
+        <div className="divide-y divide-paper-line">
           {nextSteps.map((step, i) => (
             <div key={step.title} className="flex items-start gap-3 px-4 py-3">
               <span className="text-xs font-medium tabular-nums text-accent w-6 shrink-0 pt-0.5">
@@ -116,13 +113,24 @@ export default function PreviewView({ preview, onReset }: Props) {
         </div>
       </div>
 
-      <div className="border border-accent-border bg-accent-soft rounded-xl p-6">
+      <div className="rounded-[14px] border border-accent-border bg-accent-soft p-6">
         <p className="font-bold text-fg mb-3">{t("unlockTitle")}</p>
-        <ul className="text-sm text-muted space-y-1.5 mb-4">
-          <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureAll")}</li>
-          {preview.hasDirect && <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureObjection")}</li>}
-          {preview.hasReview && <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureReview")}</li>}
-          <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureRecommendations")}</li>
+        <ul className="text-sm text-muted space-y-2.5 mb-4">
+          {[
+            t("featureAll"),
+            preview.hasDirect ? t("featureObjection") : null,
+            preview.hasReview ? t("featureReview") : null,
+            t("featureRecommendations"),
+          ]
+            .filter((label): label is string => label !== null)
+            .map((label) => (
+              <li key={label} className="flex items-start gap-2.5">
+                <span className="mt-0.5 shrink-0 w-5 h-5 rounded-md bg-doc border border-accent-border flex items-center justify-center text-accent text-[12px] leading-none">
+                  ✓
+                </span>
+                <span>{label}</span>
+              </li>
+            ))}
         </ul>
 
         {/* min-h-11 + größere Box: Checkbox ist Teil des Bezahl-Flows, Touch-Ziel ≥ 44 px */}

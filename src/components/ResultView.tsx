@@ -40,14 +40,14 @@ export default function ResultView({ result, id, onReset }: Props) {
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_14rem] lg:gap-10">
         <div className="space-y-6 min-w-0">
           {/* Bericht-Kopf */}
-          <div className="bg-doc rounded-2xl p-6 border border-line">
+          <div className="bg-doc rounded-[14px] p-6 border border-paper-line">
             <p className="text-sm text-muted mb-1">{t("potentialLabel")}</p>
-            <p className="text-4xl font-bold tracking-tight mb-4 text-accent tabular-nums">
+            <p className="text-[30px] font-extrabold leading-[1.1] tracking-[-0.02em] mb-4 text-accent tabular-nums">
               {hasErrors ? formatEur(total) : "0 €"}
             </p>
 
             {hasErrors && (
-              <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-line">
+              <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-paper-line">
                 <div>
                   <p className="text-xs text-muted">{t("directLabel")}</p>
                   <p className="text-lg font-bold text-status-ok tabular-nums">{formatEur(directTotal)}</p>
@@ -62,7 +62,7 @@ export default function ResultView({ result, id, onReset }: Props) {
             )}
 
             {result.summary && (
-              <p className="mt-4 text-sm text-muted leading-relaxed border-t border-line pt-4">
+              <p className="mt-4 text-sm text-muted leading-relaxed border-t border-paper-line pt-4">
                 {result.summary}
               </p>
             )}
@@ -117,7 +117,7 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* Combined letter */}
           {directErrors.length > 0 && reviewErrors.length > 0 && (
-            <section className="space-y-2 bg-doc border border-line rounded-2xl p-4">
+            <section className="space-y-2 bg-doc border border-paper-line rounded-2xl p-4">
               <p className="text-sm text-muted">{t("combinedText")}</p>
               <Button variant="accent" className="w-full" onClick={() => setLetterModal("combined")}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,13 +144,13 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* Farblegende – mobil im Fluss (Desktop: in der Randleiste) */}
           {hasErrors && (
-            <div className="lg:hidden bg-doc border border-line rounded-xl p-4">
+            <div className="lg:hidden bg-doc border border-paper-line rounded-xl p-4">
               <ConfidenceLegend />
             </div>
           )}
 
           {/* Legal disclaimer */}
-          <div className="bg-doc border border-line rounded-xl p-4 text-xs text-faint leading-relaxed">
+          <div className="bg-doc border border-paper-line rounded-xl p-4 text-xs text-faint leading-relaxed">
             <strong className="text-muted">{t("disclaimerLabel")}</strong> {t("disclaimer")}
           </div>
 
@@ -163,7 +163,7 @@ export default function ResultView({ result, id, onReset }: Props) {
         {/* Farblegende – Desktop-Randleiste, klebend */}
         {hasErrors && (
           <aside className="hidden lg:block">
-            <div className="sticky top-24 border-s border-line ps-6">
+            <div className="sticky top-24 border-s border-paper-line ps-6">
               <ConfidenceLegend />
             </div>
           </aside>
@@ -190,7 +190,7 @@ function ConfidenceLegend() {
   const order: Confidence[] = ["sicher", "wahrscheinlich", "unsicher"];
   return (
     <div>
-      <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-4">{t("legendTitle")}</p>
+      <p className="text-[12.5px] text-faint mb-4">{t("legendTitle")}</p>
       <ul className="space-y-4">
         {order.map((key) => {
           const c = CONFIDENCE_COLORS[key];
@@ -216,7 +216,7 @@ function SectionHeader({ badge, title, subtitle }: {
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="shrink-0 w-8 h-8 rounded-lg bg-doc border border-line text-fg font-bold flex items-center justify-center text-sm tabular-nums">
+      <div className="shrink-0 w-8 h-8 rounded-lg bg-accent-soft border border-accent-border text-accent font-bold flex items-center justify-center text-sm tabular-nums">
         {badge}
       </div>
       <div>
@@ -239,7 +239,7 @@ function ErrorCard({ error }: { error: ErrorItem }) {
           <div className="flex items-start justify-between gap-2 flex-wrap">
             <div>
               <p className={`font-semibold text-sm ${conf.text}`}>{error.title}</p>
-              <span className={`inline-block text-[10px] uppercase tracking-wider font-bold mt-0.5 ${conf.text} opacity-70`}>
+              <span className={`inline-block text-[12.5px] font-semibold mt-0.5 ${conf.text}`}>
                 {t(`confidence.${error.confidence}.label`)}
               </span>
             </div>
@@ -261,7 +261,7 @@ function ErrorCard({ error }: { error: ErrorItem }) {
             </p>
           )}
           {error.actionText && (
-            <p className="text-xs text-muted mt-2 bg-paper-2 rounded-md px-2 py-1.5">
+            <p className="text-[12.5px] text-muted mt-2 bg-paper-2 rounded-md px-2.5 py-2">
               <strong className="text-fg">{t("cardRecommendation")}</strong> {error.actionText}
             </p>
           )}
