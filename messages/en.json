@@ -5,7 +5,13 @@
     "ogAlt": "Nebenkostencheck – check your German utility bill and get money back"
   },
   "nav": {
-    "badge": "FREE FIRST CHECK · REPORT €9.90"
+    "home": "Go to the home page",
+    "links": {
+      "how": "How it works",
+      "report": "The report",
+      "faq": "Questions"
+    },
+    "pill": "First check free · report €9.90"
   },
   "trust": {
     "dsgvo": "GDPR-compliant",

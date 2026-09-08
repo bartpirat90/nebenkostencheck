@@ -6,7 +6,13 @@
     "ogAlt": "Nebenkostencheck – Alman yan gider faturanızı kontrol edin ve paranızı geri alın"
   },
   "nav": {
-    "badge": "İLK KONTROL ÜCRETSİZ · RAPOR 9,90 €"
+    "home": "Ana sayfaya git",
+    "links": {
+      "how": "Nasıl çalışır",
+      "report": "Rapor",
+      "faq": "Sorular"
+    },
+    "pill": "İlk kontrol ücretsiz · rapor 9,90 €"
   },
   "trust": {
     "dsgvo": "KVKK/DSGVO uyumlu",

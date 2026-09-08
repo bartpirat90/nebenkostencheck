@@ -29,7 +29,10 @@ export default function Logo({ className = "" }: { className?: string }) {
           fill="none"
         />
       </svg>
-      <span className="font-black text-fg tracking-tight text-lg">Nebenkostencheck</span>
+      {/* text-ink-fg statt text-fg: Das Logo liegt immer im dunklen Ink-Rahmen
+          (Nav auf bg-ink), nie auf dem hellen Papierblatt – die Wortmarke
+          braucht daher bewusst die helle Textfarbe für Dunkelgrund. */}
+      <span className="font-black text-ink-fg tracking-tight text-lg">Nebenkostencheck</span>
     </div>
   );
 }
