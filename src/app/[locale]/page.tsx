@@ -124,7 +124,7 @@ export default function Home() {
           <Reveal delay={80}>
             <HowItWorks />
           </Reveal>
-          <div id="upload" className="mt-2">
+          <div id="upload" className="mt-12 scroll-mt-24">
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
           </div>
           <Reveal delay={120}>

@@ -73,12 +73,12 @@
     ]
   },
   "howItWorks": {
-    "eyebrow": "So funktioniert's",
-    "heading": "In 3 Schritten zu deiner Erstattung",
+    "heading": "In drei Schritten zu deiner Erstattung",
+    "lead": "Kein Konto, keine Formulare. Du lädst hoch, wir prüfen, du verschickst.",
     "steps": [
-      { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung – einfach ablegen oder auswählen." },
-      { "title": "Automatische Prüfung in Sekunden", "description": "Prüft Nebenkosten- und Heizkostenabrechnung (HeizkV) auf Verstöße, falsche Umlageschlüssel, Fristfehler und mehr." },
-      { "title": "Widerspruch mit einem Klick", "description": "Fertiger Widerspruchsbrief als PDF zum Download." }
+      { "title": "Abrechnung hochladen", "description": "PDF oder Foto deiner Nebenkostenabrechnung, einfach ablegen oder auswählen." },
+      { "title": "Prüfen lassen", "description": "Geprüft werden Nebenkosten- und Heizkostenabrechnung (HeizkV) auf nicht umlagefähige Posten, falsche Umlageschlüssel, Fristfehler und mehr." },
+      { "title": "Widerspruch schicken", "description": "Fertiger Widerspruchsbrief als PDF, mit Begründung und Paragrafen zum Ausdrucken oder Mailen." }
     ]
   },
   "upload": {

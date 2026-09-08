@@ -73,10 +73,10 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
         className={`
           relative rounded-2xl border-2 border-dashed transition-colors cursor-pointer
           flex flex-col items-center justify-center
-          min-h-[240px] p-8 text-center
+          min-h-[240px] p-11 text-center
           ${dragging
             ? "border-accent bg-accent-soft"
-            : "border-line-strong bg-doc hover:border-accent hover:bg-accent-soft"
+            : "border-paper-line-strong bg-doc hover:border-accent hover:bg-accent-soft"
           }
           ${loading ? "pointer-events-none opacity-60" : ""}
         `}
@@ -94,17 +94,17 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           <LoadingState />
         ) : (
           <>
-            <div className="w-14 h-14 bg-accent-soft rounded-full flex items-center justify-center mb-4">
-              <svg className="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                  d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <div className="w-11 h-11 bg-accent-soft border border-accent-border rounded-xl flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7}
+                  d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V17" />
               </svg>
             </div>
-            <p className="font-semibold text-fg text-base mb-1">
+            <p className="text-xl font-bold text-fg mb-1">
               {t("heading")}
             </p>
             <p className="text-sm text-muted mb-4">{t("hint")}</p>
-            <span className="text-xs bg-paper-2 border border-line text-muted px-3 py-1 rounded-full">
+            <span className="text-[12.5px] text-faint">
               {t("formats", { mb: MAX_FILE_MB })}
             </span>
           </>
@@ -114,7 +114,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
       <p className="text-xs text-faint text-center leading-relaxed">
         {t.rich("privacyHint", {
           link: (chunks) => (
-            <Link href="/datenschutz" className="underline hover:text-fg">{chunks}</Link>
+            <Link href="/datenschutz" className="underline text-accent hover:text-accent-hover">{chunks}</Link>
           ),
         })}
       </p>
@@ -139,7 +139,7 @@ function LoadingState() {
       <div className="w-full">
         <ProgressBar />
       </div>
-      <div className="w-12 h-12 rounded-full border-2 border-line border-t-accent animate-spin" />
+      <div className="w-12 h-12 rounded-full border-2 border-paper-line border-t-accent animate-spin" />
       <div className="space-y-1 text-center">
         <p className="font-semibold text-fg">{t("loadingTitle")}</p>
         <p className="text-sm text-muted">{t("loadingSubtitle")}</p>
