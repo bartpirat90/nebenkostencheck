@@ -7,12 +7,13 @@
   },
   "nav": {
     "home": "Ana sayfaya git",
+    "label": "Ana gezinme",
     "links": {
       "how": "Nasıl çalışır",
       "report": "Rapor",
       "faq": "Sorular"
     },
-    "pill": "İlk kontrol ücretsiz · rapor 9,90 €"
+    "pill": "İlk kontrol ücretsiz · rapor 9,90 €"
   },
   "trust": {
     "dsgvo": "KVKK/DSGVO uyumlu",
@@ -20,26 +21,75 @@
     "noAccount": "Hesap gerekmez"
   },
   "hero": {
-    "eyebrow": "§ BetrKV / HeizkV / BGH'ye göre kontrol edildi",
     "headline": "Yan gider faturanızda para gizli mi?",
-    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin – saniyeler içinde tipik hatalar kontrol edilir, iadeniz tahmin edilir.",
+    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin. Saniyeler içinde tipik hatalara karşı kontrol edilir, tahmini iadenizle birlikte.",
     "cta": "Faturamı kontrol et",
     "priceNote": "İlk kontrol ücretsiz · tam rapor tek seferlik 9,90 €, abonelik yok"
   },
-  "stats": {
+  "heroReport": {
+    "badge": "Örnek",
+    "title": "Kontrol raporu",
+    "meta": "2026 faturası · 3 bulgu",
     "items": [
-      { "label": "Hatalı faturalar", "value": "~%50", "source": "Kaynak: Alman Kiracılar Birliği (Deutscher Mieterbund)" },
-      { "label": "Analiz süresi", "value": "15 sn." },
-      { "label": "İlk kontrol", "value": "0 €" }
+      {
+        "title": "Yönetim giderleri yansıtılmış",
+        "reason": "§ 1 Abs. 2 Nr. 1 BetrKV uyarınca yansıtılamaz",
+        "amount": "96,00 €",
+        "confidence": "ok"
+      },
+      {
+        "title": "Faturada onarım giderleri",
+        "reason": "Onarım, § 2 BetrKV anlamında işletme gideri değildir",
+        "amount": "61,40 €",
+        "confidence": "ok"
+      },
+      {
+        "title": "Isıtma giderleri tüketime göre dağıtılmamış",
+        "reason": "§ 7 HeizkV en az yüzde 50 tüketim payı ister",
+        "amount": "27,10 €",
+        "confidence": "warn"
+      }
+    ],
+    "totalLabel": "Tahmini iade potansiyeli",
+    "totalValue": "≈ 184,50 €",
+    "cta": "İtirazı PDF olarak oluştur",
+    "footer": "Örnek · BetrKV, HeizkV ve BGH içtihadına göre kontrol edildi"
+  },
+  "proof": {
+    "items": [
+      {
+        "value": "Yaklaşık yarısı",
+        "text": "tüm işletme gideri faturalarının hatalıdır.",
+        "source": "Deutscher Mieterbund"
+      },
+      {
+        "value": "15 saniye",
+        "text": "faturanızın otomatik kontrolü bu kadar sürer.",
+        "source": "Kendi ölçümümüz"
+      },
+      {
+        "value": "12 ay",
+        "text": "ödeme yapmış olsanız bile itiraz için süreniz var.",
+        "source": "§ 556 Abs. 3 BGB"
+      }
     ]
   },
   "howItWorks": {
-    "eyebrow": "Nasıl çalışır",
-    "heading": "3 adımda iadenize",
+    "heading": "Üç adımda iadenize",
+    "lead": "Hesap yok, form yok. Siz yüklersiniz, biz kontrol ederiz, siz gönderirsiniz.",
     "steps": [
-      { "title": "Faturanızı yükleyin", "description": "Yan gider faturanızın PDF veya fotoğrafı – sürükleyip bırakın ya da seçin." },
-      { "title": "Saniyeler içinde otomatik kontrol", "description": "Yan gider faturanızı ve ısıtma gideri faturasını (Heizkostenabrechnung, HeizkV) ihlaller, hatalı dağıtım anahtarları, süre hataları ve daha fazlası için kontrol eder." },
-      { "title": "Tek tıkla itiraz", "description": "İndirmeye hazır itiraz mektubu PDF olarak." }
+      {
+        "title": "Faturanızı yükleyin",
+        "description": "Yan gider faturanızın PDF veya fotoğrafı, sürükleyip bırakın ya da seçin."
+      },
+      {
+        "title": "Kontrol ettirin",
+        "description": "Yan gider ve ısıtma gideri faturanız (HeizkV) yansıtılamayan kalemler, hatalı dağıtım anahtarları, süre hataları ve daha fazlası için kontrol edilir."
+      },
+      {
+        "title": "İtirazınızı gönderin",
+        "description": "Gerekçesi ve kanun maddeleriyle hazır itiraz mektubu, PDF olarak yazdırmaya veya e-postayla göndermeye hazır."
+      }
     ]
   },
   "upload": {
@@ -60,33 +110,76 @@
       "Rapor derleniyor"
     ]
   },
-  "evidence": {
-    "mieterbundQuote": "Tüm işletme gideri faturalarının yaklaşık yarısı hatalıdır.",
-    "mieterbundSource": "Alman Kiracılar Birliği",
-    "vzQuote": "İncelenen 1.046 ısıtma gideri faturasının %37'si açıkça hatalı, %32'si ise belirsizdi.",
-    "vzSource": "Tüketici Danışma Merkezi Rheinland-Pfalz",
-    "fristQuote": "İtiraz için on iki ay – ödeme yapılmış olsa bile.",
-    "fristSource": "§ 556/3 Alman Medeni Kanunu (BGB)"
+  "reportFeatures": {
+    "heading": "Raporda neler var",
+    "lead": "9,90 € karşılığında her bulguyu gerekçesiyle, hukuki dayanağıyla ve uygun mektupla birlikte alırsınız.",
+    "items": [
+      {
+        "title": "Her bulgu hukuki dayanağıyla",
+        "subtitle": "Kanun maddesi, gerekçe ve söz konusu tutar."
+      },
+      {
+        "title": "Hazır PDF olarak itiraz",
+        "subtitle": "Ev sahibinize adreslenmiş, imzaya hazır."
+      },
+      {
+        "title": "Belge inceleme talebi",
+        "subtitle": "Belgeler olmadan açıklığa kavuşmayan kalemler için (§ 259 BGB)."
+      },
+      {
+        "title": "Her madde için eylem önerisi",
+        "subtitle": "Önce neyi ele alacağınız ve neyi ekleyeceğiniz."
+      }
+    ]
   },
-  "assurance": {
-    "checkedTitle": "TAHMİN DEĞİL, KONTROL",
-    "securityTitle": "GÜVENLİĞİNİZ"
+  "letterPreview": {
+    "badge": "Örnek",
+    "senderName": "Lena Hartmann",
+    "senderAddress": "Gneisenaustraße 41 · 10961 Berlin",
+    "recipientName": "Hausverwaltung Bergmann GmbH",
+    "recipientAddress": "Yorckstraße 12\n10965 Berlin",
+    "date": "Berlin, 12.03.2027",
+    "subject": "Widerspruch gegen die Betriebskostenabrechnung 2026",
+    "paragraphs": [
+      "Sehr geehrte Damen und Herren,",
+      "gegen Ihre Betriebskostenabrechnung für das Jahr 2026, zugegangen am 14.02.2027, erhebe ich fristgerecht Einwendungen nach § 556 Abs. 3 BGB.",
+      "Die Position „Verwaltungskosten“ in Höhe von 96,00 € ist nach § 1 Abs. 2 Nr. 1 BetrKV nicht umlagefähig. Die unter „Instandhaltung“ abgerechneten 61,40 € sind Instandsetzungskosten und keine Betriebskosten im Sinne des § 2 BetrKV. Die Heizkosten wurden nicht nach Verbrauch verteilt, obwohl § 7 HeizkV einen Verbrauchsanteil von mindestens 50 Prozent verlangt; daraus ergibt sich ein weiterer Betrag von 27,10 €.",
+      "Bitte gewähren Sie mir Einsicht in die Originalbelege zu den beanstandeten Positionen (§ 259 BGB). Eine eventuelle Nachzahlung leiste ich bis zur Klärung nur unter Vorbehalt.",
+      "Bitte korrigieren Sie die Abrechnung bis zum 30.03.2027 und schreiben Sie mir den zu viel berechneten Betrag von insgesamt 184,50 € gut."
+    ],
+    "closing": "Mit freundlichen Grüßen",
+    "signature": "Lena Hartmann"
+  },
+  "rights": {
+    "heading": "Kiracı olarak haklarınız",
+    "items": [
+      {
+        "term": "On iki ay itiraz süresi",
+        "description": "Faturanın size ulaşmasından sonraki on ikinci ayın sonuna kadar itiraz edebilirsiniz, ek ödemeyi çoktan yapmış olsanız bile (§ 556 Abs. 3 BGB)."
+      },
+      {
+        "term": "Belgeleri inceleme hakkı",
+        "description": "Her kalemin asıl belgelerini inceleyebilirsiniz. İnceleme engellenirse ek ödemeyi bekletebilirsiniz (§ 259 BGB)."
+      },
+      {
+        "term": "Geç gelen fatura",
+        "description": "Ev sahibiniz hesap döneminin bitiminden on iki aydan geç fatura düzenlerse, ek talep kural olarak düşer (§ 556 Abs. 3 Satz 3 BGB)."
+      }
+    ]
   },
   "reviews": {
-    "heading": "DENEYİMLER",
-    "saved": "{amount} € geri alındı"
+    "saved": "{amount} € geri alındı"
   },
   "faq": {
-    "eyebrow": "SIKÇA SORULAN",
     "heading": "Kontrolden önce bilmeniz gerekenler",
     "items": [
       {
         "q": "Kontrol nasıl işler?",
-        "a": "Yan gider faturanızı PDF veya fotoğraf olarak yüklersiniz. Alman İşletme Giderleri Yönetmeliği (BetrKV), Isıtma Giderleri Yönetmeliği (HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre otomatik olarak kontrol edilir. Bulunan sorunların, tahmini iade potansiyeliyle birlikte bir özetini alırsınız – dilerseniz hazır örnek mektuplar da (itiraz veya belge inceleme talebi)."
+        "a": "Yan gider faturanızı PDF veya fotoğraf olarak yüklersiniz. Alman İşletme Giderleri Yönetmeliği (BetrKV), Isıtma Giderleri Yönetmeliği (HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre otomatik olarak kontrol edilir. Bulunan sorunların tahmini iade potansiyeliyle birlikte bir özetini ve dilediğinizde hazır örnek mektupları (itiraz veya belge inceleme talebi) alırsınız."
       },
       {
         "q": "Nebenkostencheck ne kadar?",
-        "a": "Önizlemeli ilk kontrol – sorun sayısı ve tahmini potansiyel – ücretsizdir. Her madde için gerekçe ve hazır örnek mektupları içeren tam rapor, tek seferlik 9,90 € tutarındadır. Abonelik yok, gizli ücret yok."
+        "a": "Önizlemeli ilk kontrol (sorun sayısı ve tahmini potansiyel) ücretsizdir. Her madde için gerekçe ve hazır örnek mektupları içeren tam rapor, tek seferlik 9,90 € tutarındadır. Abonelik yok, gizli ücret yok."
       },
       {
         "q": "Hangi hatalar bulunur?",
@@ -98,7 +191,7 @@
       },
       {
         "q": "Faturaya ne kadar süre itiraz edebilirim?",
-        "a": "Yan gider faturasına, faturanın size ulaşmasından sonraki on ikinci ayın sonuna kadar itiraz edebilirsiniz (§ 556/3 BGB) – talep edilen ek ödemeyi zaten yapmış olsanız bile."
+        "a": "Yan gider faturasına, faturanın size ulaşmasından sonraki on ikinci ayın sonuna kadar itiraz edebilirsiniz (§ 556 Abs. 3 BGB), talep edilen ek ödemeyi zaten yapmış olsanız bile."
       },
       {
         "q": "Yüklediğim faturaya ne olur?",
@@ -109,16 +202,17 @@
         "a": "Faturanızın PDF dosyaları veya fotoğrafları (örn. JPG veya PNG), en fazla 3 MB. En iyisi yalnızca asıl yan gider faturasını yüklemektir, tüm yazışmayı değil."
       },
       {
-        "q": "Nebenkostenabrechnung veya Betriebskostenabrechnung – aradaki fark nedir?",
-        "a": "İçerik olarak aynı belgedir: \"Nebenkostenabrechnung\" günlük dildeki terimdir, \"Betriebskostenabrechnung\" ise İşletme Giderleri Yönetmeliği'nden (BetrKV) gelen hukuki olarak doğru terimdir. Nebenkostencheck her iki terimi de aynı şekilde kontrol eder – faturanızı başlığından bağımsız olarak yükleyebilirsiniz."
+        "q": "Nebenkostenabrechnung veya Betriebskostenabrechnung: aradaki fark nedir?",
+        "a": "İçerik olarak aynı belgedir: \"Nebenkostenabrechnung\" günlük dildeki terimdir, \"Betriebskostenabrechnung\" ise İşletme Giderleri Yönetmeliği'nden (BetrKV) gelen hukuki olarak doğru terimdir. Nebenkostencheck her iki terimi de aynı şekilde kontrol eder. Faturanızı başlığından bağımsız olarak yükleyebilirsiniz."
       },
       {
         "q": "Isıtma gideri faturası (Heizkostenabrechnung) da kontrol ediliyor mu?",
-        "a": "Evet, ısıtma giderleri yüklediğiniz faturanın bir parçasıysa Isıtma Giderleri Yönetmeliği'ne (HeizkV) göre de kontrol edilir – örneğin ısıtma giderlerinin genel olarak tüketime göre dağıtılıp dağıtılmadığı (§ 7 HeizkV en az %50 şartını arar) ve sıcak su için ısı miktarının formülle hesaplanması yerine bir ısı sayacıyla ölçülüp ölçülmediği (§ 9 HeizkV). Bu kontrol, ev sahibinizin faturası için tasarlanmıştır; ölçüm hizmeti sağlayıcısının ayrı bir belge olarak sunduğu Heizkostenabrechnung bunun için öngörülmemiştir."
+        "a": "Evet, ısıtma giderleri yüklediğiniz faturanın bir parçasıysa Isıtma Giderleri Yönetmeliği'ne (HeizkV) göre de kontrol edilir, örneğin ısıtma giderlerinin genel olarak tüketime göre dağıtılıp dağıtılmadığı (§ 7 HeizkV en az yüzde 50 şartını arar) ve sıcak su için ısı miktarının formülle hesaplanması yerine bir ısı sayacıyla ölçülüp ölçülmediği (§ 9 HeizkV). Bu kontrol, ev sahibinizin faturası için tasarlanmıştır; ölçüm hizmeti sağlayıcısının ayrı bir belge olarak sunduğu Heizkostenabrechnung bunun için öngörülmemiştir."
       }
     ]
   },
   "footer": {
+    "navLabel": "Hukuki bilgiler ve iletişim",
     "impressum": "Künye",
     "datenschutz": "Gizlilik",
     "agb": "Şartlar",
@@ -182,7 +276,7 @@
     "featureReview": "Belge inceleme mektubu (§ 259 BGB) PDF olarak",
     "featureRecommendations": "Somut eylem önerileri",
     "consent": "Derhal ifayı talep ediyorum ve tam ifa ile cayma hakkımın sona erdiğini onaylıyorum.",
-    "unlockCta": "9,90 € karşılığında aç",
+    "unlockCta": "9,90 € karşılığında aç",
     "redirecting": "Yönlendiriliyor…",
     "checkoutError": "Ödeme başlatılamadı.",
     "canceled": "Ödeme iptal edildi. Önizlemeniz hâlâ burada – istediğiniz zaman kilidini açabilirsiniz.",
@@ -213,9 +307,18 @@
     "cardEvidence": "Belgedeki kanıt:",
     "cardRecommendation": "Öneri:",
     "confidence": {
-      "sicher": { "label": "Kesin", "desc": "açık hukuk ihlali, yüksek iade şansı" },
-      "wahrscheinlich": { "label": "Muhtemel", "desc": "ağırlıklı başarı şansı, yorum mümkün" },
-      "unsicher": { "label": "Belirsiz", "desc": "şüphe, yalnızca belgelerle doğrulanabilir" }
+      "sicher": {
+        "label": "Kesin",
+        "desc": "açık hukuk ihlali, yüksek iade şansı"
+      },
+      "wahrscheinlich": {
+        "label": "Muhtemel",
+        "desc": "ağırlıklı başarı şansı, yorum mümkün"
+      },
+      "unsicher": {
+        "label": "Belirsiz",
+        "desc": "şüphe, yalnızca belgelerle doğrulanabilir"
+      }
     }
   },
   "ergebnis": {
@@ -272,39 +375,102 @@
       "title": "Künye",
       "metaDescription": "Nebenkostencheck künyesi: § 5 DDG uyarınca sağlayıcı bilgileri, iletişim ve sorumluluk.",
       "sections": [
-        { "heading": "§ 5 DDG uyarınca bilgiler", "body": "[İşletmeci adı]\n[Sokak ve numara]\n[Posta kodu ve şehir]" },
-        { "heading": "İletişim", "body": "E-posta: kontakt@nebenkostencheck24.de" },
-        { "heading": "Katma değer vergisi", "body": "§ 19 UStG anlamında küçük işletme olarak KDV gösterilmez." },
-        { "heading": "§ 18/2 MStV uyarınca içerikten sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]" }
+        {
+          "heading": "§ 5 DDG uyarınca bilgiler",
+          "body": "[İşletmeci adı]\n[Sokak ve numara]\n[Posta kodu ve şehir]"
+        },
+        {
+          "heading": "İletişim",
+          "body": "E-posta: kontakt@nebenkostencheck24.de"
+        },
+        {
+          "heading": "Katma değer vergisi",
+          "body": "§ 19 UStG anlamında küçük işletme olarak KDV gösterilmez."
+        },
+        {
+          "heading": "§ 18/2 MStV uyarınca içerikten sorumlu",
+          "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]"
+        }
       ]
     },
     "datenschutz": {
       "title": "Gizlilik Politikası",
       "metaDescription": "Gizlilik politikası: Nebenkostencheck hangi verileri işler, ne kadar süre saklar ve hangi hizmet sağlayıcılar dahildir.",
       "sections": [
-        { "heading": "Sorumlu", "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]\nE-posta: kontakt@nebenkostencheck24.de" },
-        { "heading": "Hangi verileri işliyoruz", "body": "Yüklediğiniz yan gider faturasını (PDF veya görüntü dosyası olarak) ve ondan çıkarılan bilgileri (örn. fatura kalemleri, tutarlar, dönemler) işliyoruz. Tam raporu satın aldığınızda, işlemi gerçekleştirmek için gerekli ödeme verileri de işlenir." },
-        { "heading": "Barındırma (Vercel)", "body": "Web sitesi Vercel Inc. (440 N Barranca Ave #4133, Covina, CA 91723, ABD) tarafından barındırılmaktadır. Siteye erişildiğinde teknik olarak gerekli bağlantı verileri (IP adresi, zaman damgası, çağrılan sayfa, tarayıcı) sunucu günlüklerinde işlenir. Vercel ile bir veri işleme sözleşmesi bulunmaktadır; ABD'ye aktarım AB Standart Sözleşme Maddelerine dayanmaktadır (DSGVO md. 46/2-c). Ayrıntılı bilgi: https://vercel.com/legal/privacy-policy." },
-        { "heading": "Anthropic (Claude) tarafından işleme", "body": "Yüklediğiniz dosya otomatik kontrol için Anthropic'e (Claude API) iletilir. Sunucu konumu diğerlerinin yanı sıra ABD'dedir; bu nedenle DSGVO Md. 44 vd. uyarınca üçüncü ülkeye aktarım söz konusudur. Anthropic, kullanım koşulları uyarınca verileri model eğitiminde kullanmamayı taahhüt eder (API kullanımı). Ayrıntılı bilgi: https://www.anthropic.com/privacy. Aktarım, Anthropic Data Processing Addendum'un bir parçası olan AB Standart Sözleşme Maddelerine dayanılarak gerçekleştirilir." },
-        { "heading": "Geçici depolama (Upstash)", "body": "Kontrol sonuçları, mektup formunda girdiğiniz iletişim bilgileri (ad, adres, sözleşme numarası) ve oluşturulan mektuplar geçici olarak Upstash, Inc. (2261 Market Street #4032, San Francisco, CA 94114, ABD) tarafından işletilen bir veritabanında saklanır. Bunun dayanağı bir veri işleme sözleşmesi ve AB Standart Sözleşme Maddeleridir. Veriler otomatik olarak silinir (bkz. “Saklama ve silme”)." },
-        { "heading": "Saklama ve silme", "body": "Kontrol sonuçları sunucularımızda geçici olarak saklanır ve yüklemeden en geç 24 saat sonra otomatik olarak silinir. Satın alma sonrasında kontrol raporu 7 güne kadar erişilebilir kalır ve ardından otomatik olarak silinir. Bir ödeme henüz tamamlanmadıysa (örn. SEPA otomatik ödeme talimatı), kayıt, ödeme onaylanana veya reddedilene kadar 14 güne kadar saklı kalır. Faturanız kalıcı olarak saklanmaz. Oluşturulan mektuplar kontrol raporuyla birlikte silinir." },
-        { "heading": "Ödeme işlemi (Stripe)", "body": "Ödemeler, ödeme hizmeti sağlayıcısı Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, ABD) üzerinden gerçekleştirilir. İşlem için gerekli ödeme verileri Stripe'a iletilir. Stripe, EU-U.S. Data Privacy Framework kapsamında sertifikalıdır. Ayrıntılı bilgi: https://stripe.com/de/privacy." },
-        { "heading": "E-posta gönderimi (IONOS)", "body": "Oluşturulan bir mektubu e-posta ile almak isterseniz, belirttiğiniz e-posta adresi PDF ile birlikte IONOS SE (Elgendorfer Str. 57, 56410 Montabaur, Almanya) posta sunucusu üzerinden gönderilir. Adres başka hiçbir amaçla kullanılmaz." },
-        { "heading": "Kötüye kullanıma karşı koruma (IP adresi)", "body": "Otomatik toplu isteklere karşı koruma amacıyla IP adresinizi en fazla 48 saat boyunca bir sayaçta saklarız (DSGVO md. 6/1-f – hizmetin işletilmesine yönelik meşru menfaat)." },
-        { "heading": "Yasal dayanak", "body": "Verileriniz DSGVO md. 6/1-b (sözleşmenin ifası veya sözleşme öncesi tedbirler) temelinde işlenir. Dosyanın Anthropic tarafından işlenmesini başlattığınız ölçüde, DSGVO md. 6/1-a uyarınca rızanız geçerlidir." },
-        { "heading": "Haklarınız", "body": "Hakkınızda saklanan verilere erişim (DSGVO Md. 15), yanlış verilerin düzeltilmesi (DSGVO Md. 16), silme (DSGVO Md. 17) ve işlemeye itiraz (DSGVO Md. 21) haklarına sahipsiniz. Ayrıca yetkili veri koruma denetim makamına şikâyette bulunma hakkınız vardır.\n\nSorularınız için: kontakt@nebenkostencheck24.de" }
+        {
+          "heading": "Sorumlu",
+          "body": "[İşletmeci adı]\n[Sokak ve numara], [Posta kodu ve şehir]\nE-posta: kontakt@nebenkostencheck24.de"
+        },
+        {
+          "heading": "Hangi verileri işliyoruz",
+          "body": "Yüklediğiniz yan gider faturasını (PDF veya görüntü dosyası olarak) ve ondan çıkarılan bilgileri (örn. fatura kalemleri, tutarlar, dönemler) işliyoruz. Tam raporu satın aldığınızda, işlemi gerçekleştirmek için gerekli ödeme verileri de işlenir."
+        },
+        {
+          "heading": "Barındırma (Vercel)",
+          "body": "Web sitesi Vercel Inc. (440 N Barranca Ave #4133, Covina, CA 91723, ABD) tarafından barındırılmaktadır. Siteye erişildiğinde teknik olarak gerekli bağlantı verileri (IP adresi, zaman damgası, çağrılan sayfa, tarayıcı) sunucu günlüklerinde işlenir. Vercel ile bir veri işleme sözleşmesi bulunmaktadır; ABD'ye aktarım AB Standart Sözleşme Maddelerine dayanmaktadır (DSGVO md. 46/2-c). Ayrıntılı bilgi: https://vercel.com/legal/privacy-policy."
+        },
+        {
+          "heading": "Anthropic (Claude) tarafından işleme",
+          "body": "Yüklediğiniz dosya otomatik kontrol için Anthropic'e (Claude API) iletilir. Sunucu konumu diğerlerinin yanı sıra ABD'dedir; bu nedenle DSGVO Md. 44 vd. uyarınca üçüncü ülkeye aktarım söz konusudur. Anthropic, kullanım koşulları uyarınca verileri model eğitiminde kullanmamayı taahhüt eder (API kullanımı). Ayrıntılı bilgi: https://www.anthropic.com/privacy. Aktarım, Anthropic Data Processing Addendum'un bir parçası olan AB Standart Sözleşme Maddelerine dayanılarak gerçekleştirilir."
+        },
+        {
+          "heading": "Geçici depolama (Upstash)",
+          "body": "Kontrol sonuçları, mektup formunda girdiğiniz iletişim bilgileri (ad, adres, sözleşme numarası) ve oluşturulan mektuplar geçici olarak Upstash, Inc. (2261 Market Street #4032, San Francisco, CA 94114, ABD) tarafından işletilen bir veritabanında saklanır. Bunun dayanağı bir veri işleme sözleşmesi ve AB Standart Sözleşme Maddeleridir. Veriler otomatik olarak silinir (bkz. “Saklama ve silme”)."
+        },
+        {
+          "heading": "Saklama ve silme",
+          "body": "Kontrol sonuçları sunucularımızda geçici olarak saklanır ve yüklemeden en geç 24 saat sonra otomatik olarak silinir. Satın alma sonrasında kontrol raporu 7 güne kadar erişilebilir kalır ve ardından otomatik olarak silinir. Bir ödeme henüz tamamlanmadıysa (örn. SEPA otomatik ödeme talimatı), kayıt, ödeme onaylanana veya reddedilene kadar 14 güne kadar saklı kalır. Faturanız kalıcı olarak saklanmaz. Oluşturulan mektuplar kontrol raporuyla birlikte silinir."
+        },
+        {
+          "heading": "Ödeme işlemi (Stripe)",
+          "body": "Ödemeler, ödeme hizmeti sağlayıcısı Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, ABD) üzerinden gerçekleştirilir. İşlem için gerekli ödeme verileri Stripe'a iletilir. Stripe, EU-U.S. Data Privacy Framework kapsamında sertifikalıdır. Ayrıntılı bilgi: https://stripe.com/de/privacy."
+        },
+        {
+          "heading": "E-posta gönderimi (IONOS)",
+          "body": "Oluşturulan bir mektubu e-posta ile almak isterseniz, belirttiğiniz e-posta adresi PDF ile birlikte IONOS SE (Elgendorfer Str. 57, 56410 Montabaur, Almanya) posta sunucusu üzerinden gönderilir. Adres başka hiçbir amaçla kullanılmaz."
+        },
+        {
+          "heading": "Kötüye kullanıma karşı koruma (IP adresi)",
+          "body": "Otomatik toplu isteklere karşı koruma amacıyla IP adresinizi en fazla 48 saat boyunca bir sayaçta saklarız (DSGVO md. 6/1-f – hizmetin işletilmesine yönelik meşru menfaat)."
+        },
+        {
+          "heading": "Yasal dayanak",
+          "body": "Verileriniz DSGVO md. 6/1-b (sözleşmenin ifası veya sözleşme öncesi tedbirler) temelinde işlenir. Dosyanın Anthropic tarafından işlenmesini başlattığınız ölçüde, DSGVO md. 6/1-a uyarınca rızanız geçerlidir."
+        },
+        {
+          "heading": "Haklarınız",
+          "body": "Hakkınızda saklanan verilere erişim (DSGVO Md. 15), yanlış verilerin düzeltilmesi (DSGVO Md. 16), silme (DSGVO Md. 17) ve işlemeye itiraz (DSGVO Md. 21) haklarına sahipsiniz. Ayrıca yetkili veri koruma denetim makamına şikâyette bulunma hakkınız vardır.\n\nSorularınız için: kontakt@nebenkostencheck24.de"
+        }
       ]
     },
     "agb": {
       "title": "Genel İşlem Koşulları",
-      "metaDescription": "Nebenkostencheck genel işlem koşulları: hizmet kapsamı, 9,90 € fiyat, cayma hakkı ve otomatik kontrol sorumluluğu.",
+      "metaDescription": "Nebenkostencheck genel işlem koşulları: hizmet kapsamı, 9,90 € fiyat, cayma hakkı ve otomatik kontrol sorumluluğu.",
       "sections": [
-        { "heading": "1. Hizmet tanımı", "body": "Nebenkostencheck, yan gider faturalarının otomatik kontrolünü ve örnek mektupların (itiraz, belge inceleme talebi) oluşturulmasını sunar. Kontrol, ilgili yasal dayanaklara (BetrKV, HeizkV dahil) ve yüksek mahkeme içtihatlarına göre yapılır." },
-        { "heading": "2. Hukuki danışmanlık değildir", "body": "Hizmet otomatik bir araçtır ve Alman Hukuki Hizmetler Kanunu (RDG) anlamında hukuki danışmanlık teşkil etmez. Sonuçlar, garanti içermeyen bağlayıcı olmayan değerlendirmelerdir ve avukat danışmanlığının yerini tutmaz." },
-        { "heading": "3. Fiyat", "body": "Örnek mektuplar dahil tam kontrol raporunun açılması tek seferlik 9,90 € tutarındadır. § 19 UStG (küçük işletme düzenlemesi) uyarınca KDV gösterilmez. Önizlemeli ilk kontrol ücretsizdir." },
-        { "heading": "4. Cayma hakkı ve erken sona erme", "body": "Tüketicilerin kural olarak 14 günlük cayma hakkı vardır. Ancak dijital içerik ve hizmetlerde, müşteri derhal ifaya açıkça onay verip ifanın başlamasıyla cayma hakkını kaybedeceğini bildiğini teyit ederse cayma hakkı sona erer (§ 356/5 BGB). Bu onay, ödemeden önce açıkça alınır." },
-        { "heading": "5. Sorumluluk", "body": "Kontrol sonuçlarının ve oluşturulan mektupların içerik doğruluğu, eksiksizliği ve güncelliği için garanti vermeyiz. Belirtilen tutarlar tahminidir ve gerçekte elde edilebilecek iadelerden farklı olabilir. Sonuçların kullanımından doğan zararlara ilişkin sorumluluk, yasal olarak izin verilen ölçüde hariç tutulmuştur." },
-        { "heading": "6. Sağlayıcı", "body": "[İşletmeci adı], [Sokak ve numara], [Posta kodu ve şehir]. Ayrıntılar Künye'de." }
+        {
+          "heading": "1. Hizmet tanımı",
+          "body": "Nebenkostencheck, yan gider faturalarının otomatik kontrolünü ve örnek mektupların (itiraz, belge inceleme talebi) oluşturulmasını sunar. Kontrol, ilgili yasal dayanaklara (BetrKV, HeizkV dahil) ve yüksek mahkeme içtihatlarına göre yapılır."
+        },
+        {
+          "heading": "2. Hukuki danışmanlık değildir",
+          "body": "Hizmet otomatik bir araçtır ve Alman Hukuki Hizmetler Kanunu (RDG) anlamında hukuki danışmanlık teşkil etmez. Sonuçlar, garanti içermeyen bağlayıcı olmayan değerlendirmelerdir ve avukat danışmanlığının yerini tutmaz."
+        },
+        {
+          "heading": "3. Fiyat",
+          "body": "Örnek mektuplar dahil tam kontrol raporunun açılması tek seferlik 9,90 € tutarındadır. § 19 UStG (küçük işletme düzenlemesi) uyarınca KDV gösterilmez. Önizlemeli ilk kontrol ücretsizdir."
+        },
+        {
+          "heading": "4. Cayma hakkı ve erken sona erme",
+          "body": "Tüketicilerin kural olarak 14 günlük cayma hakkı vardır. Ancak dijital içerik ve hizmetlerde, müşteri derhal ifaya açıkça onay verip ifanın başlamasıyla cayma hakkını kaybedeceğini bildiğini teyit ederse cayma hakkı sona erer (§ 356/5 BGB). Bu onay, ödemeden önce açıkça alınır."
+        },
+        {
+          "heading": "5. Sorumluluk",
+          "body": "Kontrol sonuçlarının ve oluşturulan mektupların içerik doğruluğu, eksiksizliği ve güncelliği için garanti vermeyiz. Belirtilen tutarlar tahminidir ve gerçekte elde edilebilecek iadelerden farklı olabilir. Sonuçların kullanımından doğan zararlara ilişkin sorumluluk, yasal olarak izin verilen ölçüde hariç tutulmuştur."
+        },
+        {
+          "heading": "6. Sağlayıcı",
+          "body": "[İşletmeci adı], [Sokak ve numara], [Posta kodu ve şehir]. Ayrıntılar Künye'de."
+        }
       ]
     }
   },

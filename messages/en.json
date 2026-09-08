@@ -6,6 +6,7 @@
   },
   "nav": {
     "home": "Go to the home page",
+    "label": "Main navigation",
     "links": {
       "how": "How it works",
       "report": "The report",
@@ -19,26 +20,75 @@
     "noAccount": "No account needed"
   },
   "hero": {
-    "eyebrow": "§ checked against BetrKV / HeizkV / BGH",
     "headline": "Is there money hidden in your utility bill?",
-    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung – checked for typical errors in seconds, with your estimated refund.",
+    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung. It is checked for typical errors in seconds, with your estimated refund.",
     "cta": "Check my bill",
     "priceNote": "First check free · full report once for €9.90, no subscription"
   },
-  "stats": {
+  "heroReport": {
+    "badge": "Example",
+    "title": "Audit report",
+    "meta": "Statement 2026 · 3 findings",
     "items": [
-      { "label": "Statements with errors", "value": "~50%", "source": "Source: German Tenants' Association (Deutscher Mieterbund)" },
-      { "label": "Analysis time", "value": "15 sec." },
-      { "label": "First check", "value": "€0" }
+      {
+        "title": "Administration costs passed on",
+        "reason": "Not allocable under § 1 (2) no. 1 BetrKV",
+        "amount": "96,00 €",
+        "confidence": "ok"
+      },
+      {
+        "title": "Repair costs in the statement",
+        "reason": "Repairs are not an operating cost item, § 2 BetrKV",
+        "amount": "61,40 €",
+        "confidence": "ok"
+      },
+      {
+        "title": "Heating costs not split by consumption",
+        "reason": "§ 7 HeizkV requires at least 50 % by consumption",
+        "amount": "27,10 €",
+        "confidence": "warn"
+      }
+    ],
+    "totalLabel": "Estimated refund potential",
+    "totalValue": "≈ 184,50 €",
+    "cta": "Create objection as PDF",
+    "footer": "Example · Checked against BetrKV, HeizkV and BGH case law"
+  },
+  "proof": {
+    "items": [
+      {
+        "value": "About half",
+        "text": "of all operating-cost statements are incorrect.",
+        "source": "German Tenants’ Association"
+      },
+      {
+        "value": "15 seconds",
+        "text": "is how long the automatic check of your statement takes.",
+        "source": "Own measurement"
+      },
+      {
+        "value": "12 months",
+        "text": "you have to raise objections, even after you have paid.",
+        "source": "§ 556 (3) BGB"
+      }
     ]
   },
   "howItWorks": {
-    "eyebrow": "How it works",
-    "heading": "Your refund in 3 steps",
+    "heading": "Your refund in three steps",
+    "lead": "No account, no forms. You upload, we check, you send.",
     "steps": [
-      { "title": "Upload your bill", "description": "PDF or photo of your utility-cost statement – just drop it in or select it." },
-      { "title": "Automatic check in seconds", "description": "Checks your Nebenkostenabrechnung and Heizkostenabrechnung (heating-cost statement, HeizkV) for violations, incorrect allocation keys, deadline errors and more." },
-      { "title": "Objection in one click", "description": "A ready-made objection letter as a PDF to download." }
+      {
+        "title": "Upload your bill",
+        "description": "PDF or photo of your utility-cost statement, just drop it in or select it."
+      },
+      {
+        "title": "Have it checked",
+        "description": "Your utility and heating-cost statement (HeizkV) are checked for non-allocable items, incorrect allocation keys, deadline errors and more."
+      },
+      {
+        "title": "Send your objection",
+        "description": "A ready-made objection letter as a PDF, with reasoning and legal references, to print or email."
+      }
     ]
   },
   "upload": {
@@ -59,33 +109,76 @@
       "Compiling the report"
     ]
   },
-  "evidence": {
-    "mieterbundQuote": "About half of all operating-cost statements are incorrect.",
-    "mieterbundSource": "German Tenants' Association",
-    "vzQuote": "37% of 1,046 heating-cost statements examined were clearly incorrect, another 32% unclear.",
-    "vzSource": "Consumer Advice Centre Rhineland-Palatinate",
-    "fristQuote": "Twelve months to object – even after you have already paid.",
-    "fristSource": "§ 556 (3) German Civil Code (BGB)"
+  "reportFeatures": {
+    "heading": "What the report contains",
+    "lead": "For €9.90 you get every finding written out, with its legal basis and the matching letter.",
+    "items": [
+      {
+        "title": "Every finding with its legal basis",
+        "subtitle": "Statute, reasoning and the amount at stake."
+      },
+      {
+        "title": "Objection as a finished PDF",
+        "subtitle": "Addressed to your landlord, ready to sign."
+      },
+      {
+        "title": "Request to inspect the receipts",
+        "subtitle": "For items that cannot be settled without receipts (§ 259 BGB)."
+      },
+      {
+        "title": "A recommended step for each point",
+        "subtitle": "What to tackle first and what to enclose."
+      }
+    ]
   },
-  "assurance": {
-    "checkedTitle": "CHECKED, NOT GUESSED",
-    "securityTitle": "YOUR SECURITY"
+  "letterPreview": {
+    "badge": "Sample",
+    "senderName": "Lena Hartmann",
+    "senderAddress": "Gneisenaustraße 41 · 10961 Berlin",
+    "recipientName": "Hausverwaltung Bergmann GmbH",
+    "recipientAddress": "Yorckstraße 12\n10965 Berlin",
+    "date": "Berlin, 12.03.2027",
+    "subject": "Widerspruch gegen die Betriebskostenabrechnung 2026",
+    "paragraphs": [
+      "Sehr geehrte Damen und Herren,",
+      "gegen Ihre Betriebskostenabrechnung für das Jahr 2026, zugegangen am 14.02.2027, erhebe ich fristgerecht Einwendungen nach § 556 Abs. 3 BGB.",
+      "Die Position „Verwaltungskosten“ in Höhe von 96,00 € ist nach § 1 Abs. 2 Nr. 1 BetrKV nicht umlagefähig. Die unter „Instandhaltung“ abgerechneten 61,40 € sind Instandsetzungskosten und keine Betriebskosten im Sinne des § 2 BetrKV. Die Heizkosten wurden nicht nach Verbrauch verteilt, obwohl § 7 HeizkV einen Verbrauchsanteil von mindestens 50 Prozent verlangt; daraus ergibt sich ein weiterer Betrag von 27,10 €.",
+      "Bitte gewähren Sie mir Einsicht in die Originalbelege zu den beanstandeten Positionen (§ 259 BGB). Eine eventuelle Nachzahlung leiste ich bis zur Klärung nur unter Vorbehalt.",
+      "Bitte korrigieren Sie die Abrechnung bis zum 30.03.2027 und schreiben Sie mir den zu viel berechneten Betrag von insgesamt 184,50 € gut."
+    ],
+    "closing": "Mit freundlichen Grüßen",
+    "signature": "Lena Hartmann"
+  },
+  "rights": {
+    "heading": "Your rights as a tenant",
+    "items": [
+      {
+        "term": "Twelve months to object",
+        "description": "You can raise objections until the end of the twelfth month after the statement reached you, even if you have already paid the balance (§ 556 (3) BGB)."
+      },
+      {
+        "term": "Right to inspect the receipts",
+        "description": "You may inspect the original receipts for every item. If inspection is refused, you can withhold the balance (§ 259 BGB)."
+      },
+      {
+        "term": "A statement that comes too late",
+        "description": "If your landlord bills more than twelve months after the end of the accounting period, an additional claim is generally excluded (§ 556 (3) sentence 3 BGB)."
+      }
+    ]
   },
   "reviews": {
-    "heading": "EXPERIENCES",
     "saved": "€{amount} recovered"
   },
   "faq": {
-    "eyebrow": "FREQUENTLY ASKED",
     "heading": "What to know before the check",
     "items": [
       {
         "q": "How does the check work?",
-        "a": "You upload your utility-cost statement as a PDF or photo. It is checked automatically against the German Operating Costs Ordinance (BetrKV), the Heating Costs Ordinance (HeizkV) and Federal Court (BGH) case law. You get an overview of the issues found with an estimated refund potential – and, if you like, ready-made template letters (objection or request to inspect the supporting documents)."
+        "a": "You upload your utility-cost statement as a PDF or photo. It is checked automatically against the German Operating Costs Ordinance (BetrKV), the Heating Costs Ordinance (HeizkV) and Federal Court (BGH) case law. You get an overview of the issues found with an estimated refund potential and, if you like, ready-made template letters (objection or request to inspect the supporting documents)."
       },
       {
         "q": "How much does Nebenkostencheck cost?",
-        "a": "The first check with a preview – number of issues and estimated potential – is free. The full report including the reasoning for each point and the ready-made template letters costs a one-off €9.90. No subscription, no hidden fees."
+        "a": "The first check with a preview (number of issues and estimated potential) is free. The full report including the reasoning for each point and the ready-made template letters costs a one-off €9.90. No subscription, no hidden fees."
       },
       {
         "q": "Which errors are found?",
@@ -97,7 +190,7 @@
       },
       {
         "q": "How long can I object to the statement?",
-        "a": "You can raise objections to the utility-cost statement up to the end of the twelfth month after you receive it (§ 556 (3) BGB) – even if you have already paid the amount demanded."
+        "a": "You can raise objections to the utility-cost statement up to the end of the twelfth month after you receive it (§ 556 (3) BGB), even if you have already paid the amount demanded."
       },
       {
         "q": "What happens to my uploaded bill?",
@@ -108,16 +201,17 @@
         "a": "PDF files or photos (e.g. JPG or PNG) of your bill, up to 3 MB. It is best to upload only the actual utility-cost statement, not the entire correspondence."
       },
       {
-        "q": "Nebenkostenabrechnung or Betriebskostenabrechnung – what's the difference?",
-        "a": "They are the same document: \"Nebenkostenabrechnung\" is the everyday term, \"Betriebskostenabrechnung\" is the legally correct term from the German Operating Costs Ordinance (BetrKV). Nebenkostencheck checks both terms the same way – you can upload your statement no matter which heading it uses."
+        "q": "Nebenkostenabrechnung or Betriebskostenabrechnung: what is the difference?",
+        "a": "They are the same document: \"Nebenkostenabrechnung\" is the everyday term, \"Betriebskostenabrechnung\" is the legally correct term from the German Operating Costs Ordinance (BetrKV). Nebenkostencheck checks both terms the same way. You can upload your statement no matter which heading it uses."
       },
       {
         "q": "Is the Heizkostenabrechnung (heating-cost statement) checked too?",
-        "a": "Yes – if heating costs are part of your uploaded statement, they're checked against the Heating Costs Ordinance (HeizkV) too, for example whether heating costs are allocated by consumption at all (§ 7 HeizkV requires at least 50%) and whether the heat quantity for hot water is measured with a heat meter instead of calculated by formula (§ 9 HeizkV). The check is built for your landlord's statement; a separate Heizkostenabrechnung from the metering service provider as its own document isn't supported for this."
+        "a": "Yes, if heating costs are part of your uploaded statement, they are checked against the Heating Costs Ordinance (HeizkV) too, for example whether heating costs are allocated by consumption at all (§ 7 HeizkV requires at least 50 %) and whether the heat quantity for hot water is measured with a heat meter instead of calculated by formula (§ 9 HeizkV). The check is built for your landlord’s statement; a separate Heizkostenabrechnung from the metering service provider as its own document is not supported for this."
       }
     ]
   },
   "footer": {
+    "navLabel": "Legal and contact",
     "impressum": "Imprint",
     "datenschutz": "Privacy",
     "agb": "Terms",
@@ -212,9 +306,18 @@
     "cardEvidence": "Evidence in the document:",
     "cardRecommendation": "Recommendation:",
     "confidence": {
-      "sicher": { "label": "Certain", "desc": "clear legal violation, high chance of refund" },
-      "wahrscheinlich": { "label": "Likely", "desc": "predominant chance of success, interpretation possible" },
-      "unsicher": { "label": "Uncertain", "desc": "suspicion, only verifiable with documents" }
+      "sicher": {
+        "label": "Certain",
+        "desc": "clear legal violation, high chance of refund"
+      },
+      "wahrscheinlich": {
+        "label": "Likely",
+        "desc": "predominant chance of success, interpretation possible"
+      },
+      "unsicher": {
+        "label": "Uncertain",
+        "desc": "suspicion, only verifiable with documents"
+      }
     }
   },
   "ergebnis": {
@@ -271,39 +374,102 @@
       "title": "Imprint",
       "metaDescription": "Imprint of Nebenkostencheck: provider identification under section 5 DDG, contact details and responsibility.",
       "sections": [
-        { "heading": "Information pursuant to § 5 DDG", "body": "[Operator name]\n[Street & number]\n[Postcode & city]" },
-        { "heading": "Contact", "body": "Email: kontakt@nebenkostencheck24.de" },
-        { "heading": "VAT", "body": "As a small business within the meaning of § 19 UStG, no VAT is shown." },
-        { "heading": "Responsible for content under § 18 (2) MStV", "body": "[Operator name]\n[Street & number], [Postcode & city]" }
+        {
+          "heading": "Information pursuant to § 5 DDG",
+          "body": "[Operator name]\n[Street & number]\n[Postcode & city]"
+        },
+        {
+          "heading": "Contact",
+          "body": "Email: kontakt@nebenkostencheck24.de"
+        },
+        {
+          "heading": "VAT",
+          "body": "As a small business within the meaning of § 19 UStG, no VAT is shown."
+        },
+        {
+          "heading": "Responsible for content under § 18 (2) MStV",
+          "body": "[Operator name]\n[Street & number], [Postcode & city]"
+        }
       ]
     },
     "datenschutz": {
       "title": "Privacy Policy",
       "metaDescription": "Privacy policy: what data Nebenkostencheck processes, how long it is stored and which service providers are involved.",
       "sections": [
-        { "heading": "Controller", "body": "[Operator name]\n[Street & number], [Postcode & city]\nEmail: kontakt@nebenkostencheck24.de" },
-        { "heading": "What data we process", "body": "We process the utility-cost statement you upload (as a PDF or image file) as well as the details extracted from it (e.g. line items, amounts, periods). When you purchase the full report, the payment data required to process the transaction is additionally processed." },
-        { "heading": "Hosting (Vercel)", "body": "This website is hosted by Vercel Inc. (440 N Barranca Ave #4133, Covina, CA 91723, USA). When you access the site, technically necessary connection data (IP address, time of access, page requested, browser) is processed in server logs. A data processing agreement is in place with Vercel; the transfer to the USA is based on the EU Standard Contractual Clauses (Art. 46 (2) (c) GDPR). Further information: https://vercel.com/legal/privacy-policy." },
-        { "heading": "Processing by Anthropic (Claude)", "body": "The file you upload is transmitted to Anthropic (Claude API) for the automated check. The server location is, among others, in the USA; this therefore constitutes a transfer to a third country under Art. 44 et seq. GDPR. Under its terms of use, Anthropic undertakes not to use data to train models (API usage). Further information: https://www.anthropic.com/privacy. The transfer is based on the EU Standard Contractual Clauses, which form part of the Anthropic Data Processing Addendum." },
-        { "heading": "Temporary storage (Upstash)", "body": "Check results, the contact details you enter in the letter form (name, address, contract number) and any letters generated are stored temporarily in a database operated by Upstash, Inc. (2261 Market Street #4032, San Francisco, CA 94114, USA). This is based on a data processing agreement and the EU Standard Contractual Clauses. The data is deleted automatically (see “Storage & deletion”)." },
-        { "heading": "Storage & deletion", "body": "Check results are stored temporarily on our servers and deleted automatically no later than 24 hours after upload. After a purchase, the report remains available for up to 7 days and is then deleted automatically. If a payment has not yet been completed (e.g. SEPA direct debit), the record is retained for up to 14 days until the payment has been confirmed or declined. Your statement is never stored permanently. Letters generated are deleted together with the report." },
-        { "heading": "Payment processing (Stripe)", "body": "Payments are processed by the payment service provider Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA). The payment data required for the transaction is transmitted to Stripe. Stripe is certified under the EU-U.S. Data Privacy Framework. Further information: https://stripe.com/de/privacy." },
-        { "heading": "Email delivery (IONOS)", "body": "If you have a generated letter sent to you by email, the email address you provide is transmitted together with the PDF via the mail server of IONOS SE (Elgendorfer Str. 57, 56410 Montabaur, Germany). The address is not used for any other purpose." },
-        { "heading": "Abuse prevention (IP address)", "body": "To protect against automated bulk requests, we store your IP address in a counter for a maximum of 48 hours (Art. 6 (1) (f) GDPR – legitimate interest in operating the service)." },
-        { "heading": "Legal basis", "body": "Your data is processed on the basis of Art. 6 (1) (b) GDPR (performance of a contract or pre-contractual measures). Where you initiate processing of the file by Anthropic, your consent applies pursuant to Art. 6 (1) (a) GDPR." },
-        { "heading": "Your rights", "body": "You have the right to access the data stored about you (Art. 15 GDPR), to rectification of inaccurate data (Art. 16 GDPR), to erasure (Art. 17 GDPR) and to object to processing (Art. 21 GDPR). You also have the right to lodge a complaint with the competent data protection supervisory authority.\n\nIf you have any questions, please contact: kontakt@nebenkostencheck24.de" }
+        {
+          "heading": "Controller",
+          "body": "[Operator name]\n[Street & number], [Postcode & city]\nEmail: kontakt@nebenkostencheck24.de"
+        },
+        {
+          "heading": "What data we process",
+          "body": "We process the utility-cost statement you upload (as a PDF or image file) as well as the details extracted from it (e.g. line items, amounts, periods). When you purchase the full report, the payment data required to process the transaction is additionally processed."
+        },
+        {
+          "heading": "Hosting (Vercel)",
+          "body": "This website is hosted by Vercel Inc. (440 N Barranca Ave #4133, Covina, CA 91723, USA). When you access the site, technically necessary connection data (IP address, time of access, page requested, browser) is processed in server logs. A data processing agreement is in place with Vercel; the transfer to the USA is based on the EU Standard Contractual Clauses (Art. 46 (2) (c) GDPR). Further information: https://vercel.com/legal/privacy-policy."
+        },
+        {
+          "heading": "Processing by Anthropic (Claude)",
+          "body": "The file you upload is transmitted to Anthropic (Claude API) for the automated check. The server location is, among others, in the USA; this therefore constitutes a transfer to a third country under Art. 44 et seq. GDPR. Under its terms of use, Anthropic undertakes not to use data to train models (API usage). Further information: https://www.anthropic.com/privacy. The transfer is based on the EU Standard Contractual Clauses, which form part of the Anthropic Data Processing Addendum."
+        },
+        {
+          "heading": "Temporary storage (Upstash)",
+          "body": "Check results, the contact details you enter in the letter form (name, address, contract number) and any letters generated are stored temporarily in a database operated by Upstash, Inc. (2261 Market Street #4032, San Francisco, CA 94114, USA). This is based on a data processing agreement and the EU Standard Contractual Clauses. The data is deleted automatically (see “Storage & deletion”)."
+        },
+        {
+          "heading": "Storage & deletion",
+          "body": "Check results are stored temporarily on our servers and deleted automatically no later than 24 hours after upload. After a purchase, the report remains available for up to 7 days and is then deleted automatically. If a payment has not yet been completed (e.g. SEPA direct debit), the record is retained for up to 14 days until the payment has been confirmed or declined. Your statement is never stored permanently. Letters generated are deleted together with the report."
+        },
+        {
+          "heading": "Payment processing (Stripe)",
+          "body": "Payments are processed by the payment service provider Stripe, Inc. (185 Berry Street, Suite 550, San Francisco, CA 94107, USA). The payment data required for the transaction is transmitted to Stripe. Stripe is certified under the EU-U.S. Data Privacy Framework. Further information: https://stripe.com/de/privacy."
+        },
+        {
+          "heading": "Email delivery (IONOS)",
+          "body": "If you have a generated letter sent to you by email, the email address you provide is transmitted together with the PDF via the mail server of IONOS SE (Elgendorfer Str. 57, 56410 Montabaur, Germany). The address is not used for any other purpose."
+        },
+        {
+          "heading": "Abuse prevention (IP address)",
+          "body": "To protect against automated bulk requests, we store your IP address in a counter for a maximum of 48 hours (Art. 6 (1) (f) GDPR – legitimate interest in operating the service)."
+        },
+        {
+          "heading": "Legal basis",
+          "body": "Your data is processed on the basis of Art. 6 (1) (b) GDPR (performance of a contract or pre-contractual measures). Where you initiate processing of the file by Anthropic, your consent applies pursuant to Art. 6 (1) (a) GDPR."
+        },
+        {
+          "heading": "Your rights",
+          "body": "You have the right to access the data stored about you (Art. 15 GDPR), to rectification of inaccurate data (Art. 16 GDPR), to erasure (Art. 17 GDPR) and to object to processing (Art. 21 GDPR). You also have the right to lodge a complaint with the competent data protection supervisory authority.\n\nIf you have any questions, please contact: kontakt@nebenkostencheck24.de"
+        }
       ]
     },
     "agb": {
       "title": "Terms and Conditions",
       "metaDescription": "Terms and conditions of Nebenkostencheck: scope of service, price of €9.90, right of withdrawal and liability for the automated check.",
       "sections": [
-        { "heading": "1. Description of service", "body": "Nebenkostencheck provides an automated check of utility-cost statements as well as the creation of template letters (objection, request to inspect documents). The check is based on the relevant legal provisions (including BetrKV, HeizkV) and the case law of the highest courts." },
-        { "heading": "2. Not legal advice", "body": "The service is an automated tool and does not constitute legal advice within the meaning of the German Legal Services Act (RDG). The results are non-binding assessments without guarantee and do not replace advice from a lawyer." },
-        { "heading": "3. Price", "body": "Unlocking the full check report including the template letters costs a one-off €9.90. Pursuant to § 19 UStG (small-business rule), no VAT is shown. The first check with a preview is free." },
-        { "heading": "4. Right of withdrawal and early expiry", "body": "Consumers generally have a 14-day right of withdrawal. However, for digital content and services the right of withdrawal expires if the customer has expressly agreed to immediate performance and confirmed knowledge that, by agreeing, they lose their right of withdrawal once performance begins (§ 356 (5) BGB). This consent is obtained expressly before payment." },
-        { "heading": "5. Liability", "body": "We accept no warranty for the accuracy, completeness and timeliness of the check results and generated letters. Stated amounts are estimates and may differ from refunds actually obtainable. Liability for damages arising from the use of the results is excluded to the extent permitted by law." },
-        { "heading": "6. Provider", "body": "[Operator name], [Street & number], [Postcode & city]. Further details in the Imprint." }
+        {
+          "heading": "1. Description of service",
+          "body": "Nebenkostencheck provides an automated check of utility-cost statements as well as the creation of template letters (objection, request to inspect documents). The check is based on the relevant legal provisions (including BetrKV, HeizkV) and the case law of the highest courts."
+        },
+        {
+          "heading": "2. Not legal advice",
+          "body": "The service is an automated tool and does not constitute legal advice within the meaning of the German Legal Services Act (RDG). The results are non-binding assessments without guarantee and do not replace advice from a lawyer."
+        },
+        {
+          "heading": "3. Price",
+          "body": "Unlocking the full check report including the template letters costs a one-off €9.90. Pursuant to § 19 UStG (small-business rule), no VAT is shown. The first check with a preview is free."
+        },
+        {
+          "heading": "4. Right of withdrawal and early expiry",
+          "body": "Consumers generally have a 14-day right of withdrawal. However, for digital content and services the right of withdrawal expires if the customer has expressly agreed to immediate performance and confirmed knowledge that, by agreeing, they lose their right of withdrawal once performance begins (§ 356 (5) BGB). This consent is obtained expressly before payment."
+        },
+        {
+          "heading": "5. Liability",
+          "body": "We accept no warranty for the accuracy, completeness and timeliness of the check results and generated letters. Stated amounts are estimates and may differ from refunds actually obtainable. Liability for damages arising from the use of the results is excluded to the extent permitted by law."
+        },
+        {
+          "heading": "6. Provider",
+          "body": "[Operator name], [Street & number], [Postcode & city]. Further details in the Imprint."
+        }
       ]
     }
   },
