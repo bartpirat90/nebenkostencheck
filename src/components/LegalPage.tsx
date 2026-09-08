@@ -14,7 +14,13 @@ type LegalKey = "impressum" | "datenschutz" | "agb";
 export default async function LegalPage({ page }: { page: LegalKey }) {
   const t = await getTranslations("legal");
   const locale = await getLocale();
-  const sections = t.raw(`${page}.sections`) as { heading: string; body: string }[];
+  // Fehlt der Abschnittsblock in einer Sprache, liefert t.raw den Schlüssel als
+  // Zeichenkette statt der Liste; ohne diese Weiche bräche die Seite mit
+  // „map is not a function“ ab (siehe Faq/HowItWorks).
+  const raw = t.raw(`${page}.sections`);
+  const sections: { heading: string; body: string }[] = Array.isArray(raw)
+    ? (raw as { heading: string; body: string }[])
+    : [];
 
   return (
     <SiteShell width="narrow">

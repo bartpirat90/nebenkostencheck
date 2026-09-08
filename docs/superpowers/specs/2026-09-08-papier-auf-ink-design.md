@@ -39,7 +39,8 @@ Zwei Welten, beide in `tailwind.config.js` als Tokens. Kein `#000`, kein `#fff` 
 | `paper.DEFAULT` | `#FBF9F4` | Blattfläche |
 | `paper.2` | `#F3EFE6` | abgesetzte Sektion (Mieterrechte), Empfehlungsbox im Bericht |
 | `paper.line` | `#E3DDD0` | Haarlinien, Kartenrahmen |
-| `paper.line-strong` | `#C9C2B2` | Rahmen interaktiver Elemente, Schritt-Oberkanten, Upload-Strichlinie |
+| `paper.line-strong` | `#C9C2B2` | dekorative Strichlinien: Schritt-Oberkanten, Phasenpunkt, Muster-Badge |
+| `paper.line-control` | `#8F8878` | Rahmen von Bedienelementen (Eingaben, Upload-Zone, Sekundärbutton) – 3:1 nach WCAG 1.4.11 |
 | `doc` | `#FFFFFF` | Dokumentflächen: Berichtskarte, Brief, Upload-Zone, Modal, Eingabefelder |
 | `fg` | `#1B1F24` | Primärtext, Primärbutton-Fläche |
 | `muted` | `#4E555C` | Sekundärtext |
@@ -157,7 +158,7 @@ Drei Spalten (1,4fr / 1fr / 1fr), Ober- und Unterkante `paper.line`, 24 px Innen
 
 ### 5.6 Dein gutes Recht als Mieter (`TenantRights.tsx`)
 
-Kasten auf `paper.2`, Radius 18, 44/48 px Innenabstand, zwei Spalten (0,9fr / 1,1fr). Links Illustration `ApartmentRent` (volle Spaltenbreite). Rechts H3 `rights.heading` und `<dl>` mit drei Einträgen `rights.items[]` (Frist, Belegeinsicht, verspätete Abrechnung). Unter 900 px: Illustration oben, maximal 360 px breit.
+Kasten auf `paper.2`, Radius 18, 44/48 px Innenabstand, zwei Spalten (0,9fr / 1,1fr). Links Illustration `ApartmentRent` (volle Spaltenbreite). Rechts H2 `rights.heading` (visuell in H3-Größe) und `<dl>` mit drei Einträgen `rights.items[]` (Frist, Belegeinsicht, verspätete Abrechnung). Unter 900 px: Illustration oben, maximal 360 px breit.
 
 ### 5.7 Häufige Fragen (`Faq.tsx`)
 

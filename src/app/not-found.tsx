@@ -36,7 +36,7 @@ export default function RootNotFound() {
           </nav>
 
           <div className="flex-1 px-2 sm:px-6">
-            <main className="mx-auto w-full max-w-3xl bg-paper text-fg shadow-[0_30px_80px_rgba(0,0,0,0.55)] rounded-xl sm:rounded-b-none sm:rounded-t-[18px] px-5 py-10 sm:px-14 sm:py-14">
+            <main className="mx-auto w-full max-w-3xl bg-paper text-fg shadow-sheet rounded-xl sm:rounded-b-none sm:rounded-t-[18px] px-5 py-10 sm:px-14 sm:py-14">
               <div className="py-16 text-center space-y-6">
                 <p className="text-[12.5px] font-semibold text-faint">404</p>
                 <h1 className="text-[26px] sm:text-[34px] font-extrabold leading-[1.12] tracking-[-0.02em] text-fg">

@@ -53,12 +53,25 @@ const PAIRS: Array<[string, string, string]> = [
   ["ink.muted auf ink", "ink.muted", "ink"],
   ["ink.faint auf ink", "ink.faint", "ink"],
   ["faint auf paper.2", "faint", "paper.2"],
+  ["muted auf paper.2", "muted", "paper.2"],
+  ["fg auf paper.2", "fg", "paper.2"],
+  ["muted auf accent.soft", "muted", "accent.soft"],
+  ["fg auf accent.soft", "fg", "accent.soft"],
+  ["ink.muted auf ink.2", "ink.muted", "ink.2"],
   ["paper auf fg (Primaerbutton)", "paper", "fg"],
   ["accent.bright auf ink (Links im Rahmen)", "accent.bright", "ink"],
   ["status.ok auf status.okBg", "status.ok", "status.okBg"],
   ["status.warn auf status.warnBg", "status.warn", "status.warnBg"],
   ["status.neutral auf status.neutralBg", "status.neutral", "status.neutralBg"],
   ["status.danger auf status.dangerBg", "status.danger", "status.dangerBg"],
+];
+
+// WCAG 1.4.11 verlangt für Bedienelemente 3:1 gegen die angrenzende Fläche.
+// Betroffen ist nur paper.line-control (Eingaben, Upload-Zone, Sekundärbutton);
+// paper.line-strong bleibt bewusst dekorativ und wird hier nicht geprüft.
+const CONTROL_PAIRS: Array<[string, string, string]> = [
+  ["paper.line-control auf doc", "paper.line-control", "doc"],
+  ["paper.line-control auf paper", "paper.line-control", "paper"],
 ];
 
 describe("Farbkontraste des Design-Systems", () => {
@@ -74,11 +87,20 @@ describe("Farbkontraste des Design-Systems", () => {
 
   it("kennt die entfernten Tokens nicht mehr", () => {
     expect(colors).not.toHaveProperty("surface");
+    // Die Top-Level-Aliase sind entfallen: Papier heißt jetzt überall paper.*.
+    expect(colors).not.toHaveProperty("line");
+    expect(colors).not.toHaveProperty("line-strong");
     const accent = colors.accent as Record<string, unknown>;
     expect(accent).not.toHaveProperty("bg");
     const status = colors.status as Record<string, unknown>;
-    for (const gone of ["okSurface", "warnSurface", "warnBgHover", "okSoft", "warnSoft"]) {
+    for (const gone of ["okSurface", "warnSurface", "warnBgHover", "okSoft", "warnSoft", "dangerStrong"]) {
       expect(status).not.toHaveProperty(gone);
     }
+  });
+});
+
+describe("Nicht-Text-Kontrast (WCAG 1.4.11)", () => {
+  it.each(CONTROL_PAIRS)("%s erreicht mindestens 3:1", (_name, fg, bg) => {
+    expect(ratio(token(fg), token(bg))).toBeGreaterThanOrEqual(3.0);
   });
 });

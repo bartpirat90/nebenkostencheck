@@ -43,7 +43,9 @@ export function PhaseList({
   }, [active, phases.length, intervalMs]);
 
   return (
-    <div className="flex flex-col gap-1.5 w-full max-w-xs text-xs">
+    // 12,5 px statt text-xs: die noch ausstehenden Phasen stehen in "faint",
+    // das unterhalb dieser Größe den Kontrast nicht mehr trägt.
+    <div className="flex flex-col gap-1.5 w-full max-w-xs text-[12.5px]">
       {phases.map((phase, i) => {
         const done = i < active;
         const current = i === active;

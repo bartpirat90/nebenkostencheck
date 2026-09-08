@@ -21,18 +21,18 @@ module.exports = {
           DEFAULT: "#FBF9F4", // Blattfläche
           2: "#F3EFE6", // abgesetzte Sektion (Mieterrechte), Empfehlungsbox
           line: "#E3DDD0", // Haarlinien, Kartenrahmen
-          "line-strong": "#C9C2B2", // Rahmen interaktiver Elemente, Strichlinien
+          "line-strong": "#C9C2B2", // dekorative Strichlinien, Schritt-Oberkanten
+          // Rahmen von Bedienelementen (Eingaben, Upload-Zone, Sekundärbutton)
+          // brauchen nach WCAG 1.4.11 mindestens 3:1 gegen ihre Umgebung.
+          // "line-strong" schafft auf doc nur 1,77:1; dieser Ton erreicht
+          // 3,52:1 auf doc und 3,35:1 auf paper.
+          "line-control": "#8F8878",
         },
 
         // Dokumentfläche: Berichtskarte, Brief, Upload-Zone, Modal, Eingaben.
         // Der einzige Ort mit reinem Weiß - bewusst als "Papier im Papier",
         // damit gedruckte Artefakte sich vom Blatt abheben.
         doc: "#FFFFFF",
-
-        // Aliase, damit bestehende Komponenten mit border-line und
-        // border-line-strong ohne Umbenennung Papier werden (Spec 2.2).
-        line: "#E3DDD0",
-        "line-strong": "#C9C2B2",
 
         fg: {
           DEFAULT: "#1B1F24", // Primärtext, Primärbutton-Fläche
@@ -46,6 +46,10 @@ module.exports = {
         accent: {
           DEFAULT: "#047857", // Icons, Haken, Beträge, Berichts-Button
           hover: "#065F46", // Hover des Akzentbuttons
+          // Zugleich die Quelle des Hex-Werts, der in globals.css für den
+          // [data-on-ink]-Fokusring hart notiert ist: CSS außerhalb von
+          // Tailwind kann das Token nicht referenzieren. Wert also nur
+          // gemeinsam mit globals.css ändern.
           bright: "#34D399", // Akzent auf Ink
           soft: "#E4F2EA", // Akzent-Hintergrund (Icon-Kacheln, Marker)
           border: "#BFE0CF", // Rahmen auf Akzent-Hintergrund
@@ -74,8 +78,15 @@ module.exports = {
           danger: "#991B1B",
           dangerBg: "#FDECEC",
           dangerBorder: "#F2B8B8",
-          dangerStrong: "#DC2626",
         },
+      },
+
+      // Drei Schattenrollen statt wiederholter arbitrary values: das Blatt liegt
+      // auf dem Ink-Rahmen, Dokumente liegen auf dem Blatt, der Dialog über allem.
+      boxShadow: {
+        sheet: "0 30px 80px rgba(0,0,0,0.55)", // Blatt (main) auf dem Ink-Rahmen
+        card: "0 12px 30px rgba(27,31,36,0.08)", // Bericht- und Briefmuster auf Papier
+        dialog: "0 24px 60px rgba(18,23,30,0.35)", // Modal über dem Backdrop
       },
     },
   },

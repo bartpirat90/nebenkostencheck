@@ -153,7 +153,8 @@ export default function PreviewView({ preview, onReset }: Props) {
         >
           {loading ? t("redirecting") : t("unlockCta")}
         </Button>
-        {error && <p className="mt-3 text-sm text-status-danger">{error}</p>}
+        {/* role="alert": ein gescheiterter Checkout muss ohne Blickkontakt ankommen. */}
+        {error && <p role="alert" className="mt-3 text-sm text-status-danger">{error}</p>}
       </div>
 
       {/* Nur im Testmodus sichtbar: bewusst als gestrichelte Warn-Kachel und

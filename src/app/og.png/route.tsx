@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { BRAND_INK, BRAND_PAPER } from "@/lib/seo";
+import { LOGO_CHECK_PATH, LOGO_GREEN_ON_DARK, LOGO_SHIELD_PATH } from "@/lib/logo";
 
 // ImageResponse läuft auch unter Node; das Projekt deployt durchgängig auf der
 // Node-Runtime, deshalb hier kein Edge-Sonderfall.
@@ -31,17 +32,19 @@ export function GET() {
       >
         {/* Rahmenzeile oben: Logo und Wortmarke auf Ink */}
         <div style={{ display: "flex", alignItems: "center", gap: "16px", padding: "0 12px 26px" }}>
+          {/* Geometrie und Farbe aus lib/logo statt Kopie: sonst driftet das
+              Teilen-Bild vom Logo der Website und des PDF-Berichts weg. */}
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
             <path
-              d="M12 2l6 2.25 M20 6v5c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3"
-              stroke="#34D399"
+              d={LOGO_SHIELD_PATH}
+              stroke={LOGO_GREEN_ON_DARK}
               strokeWidth="1.7"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
-              d="M7.8 11.5l3.4 3.4L21.5 2.8"
-              stroke="#34D399"
+              d={LOGO_CHECK_PATH}
+              stroke={LOGO_GREEN_ON_DARK}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"

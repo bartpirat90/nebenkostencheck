@@ -80,10 +80,13 @@ function Field({
   placeholder?: string;
   multiline?: boolean;
 }) {
+  // Kein focus:outline-none: der sichtbare 2-px-Ring in Akzentfarbe kommt global
+  // aus globals.css (:focus-visible). Ein eigener ring-1 wäre dünner gewesen und
+  // hätte die Outline unterdrückt - auch bei Tastaturfokus.
   const baseClass = `
-    w-full min-h-11 px-3 py-2.5 rounded-lg border border-paper-line-strong bg-doc
+    w-full min-h-11 px-3 py-2.5 rounded-lg border border-paper-line-control bg-doc
     text-sm text-fg placeholder:text-faint
-    focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
+    focus:border-accent
   `;
 
   return (

@@ -10,8 +10,8 @@ export const contentType = APPLE_ICON_TYPE;
 
 // Apple-Touch-Icon: gleiches Schild-und-Haken-Motiv und gleiche Farben wie
 // icon.svg, aber mit gefülltem ink-Hintergrund statt Transparenz – iOS legt
-// sonst ein weißes Quadrat dahinter. Das helle Schildgrün (accent.soft) hält
-// auf dem dunklen Grund den Kontrast, den das SVG auf Weiß hat.
+// sonst ein weißes Quadrat dahinter. Die Füllung ist LOGO_GREEN_ON_DARK
+// (#10B981) wie in icon.svg; sie hält auf dem dunklen Grund den Kontrast.
 // Achtung: Die Route heißt /apple-icon (ohne Punkt) und muss im
 // Middleware-Matcher ausgenommen sein, sonst greift das Locale-Routing.
 export default function AppleIcon() {

@@ -25,7 +25,7 @@ export default function ReportPreviewCard() {
   return (
     <div
       aria-hidden="true"
-      className="w-full max-w-[520px] rounded-[14px] border border-paper-line bg-doc shadow-[0_12px_30px_rgba(27,31,36,0.08)] overflow-hidden"
+      className="w-full max-w-[520px] rounded-[14px] border border-paper-line bg-doc shadow-card overflow-hidden"
     >
       <div className="flex items-start justify-between gap-3 px-5 pt-5 pb-4 border-b border-paper-line">
         <div>

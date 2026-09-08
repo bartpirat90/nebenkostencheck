@@ -76,7 +76,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           min-h-[240px] p-11 text-center
           ${dragging
             ? "border-accent bg-accent-soft"
-            : "border-paper-line-strong bg-doc hover:border-accent hover:bg-accent-soft"
+            : "border-paper-line-control bg-doc hover:border-accent hover:bg-accent-soft"
           }
           ${loading ? "pointer-events-none opacity-60" : ""}
         `}
@@ -111,7 +111,8 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
         )}
       </div>
 
-      <p className="text-xs text-faint text-center leading-relaxed">
+      {/* 12,5 px statt text-xs: unterhalb dieser Größe trägt "faint" den Kontrast nicht. */}
+      <p className="text-[12.5px] text-faint text-center leading-relaxed">
         {t.rich("privacyHint", {
           link: (chunks) => (
             <Link href="/datenschutz" className="underline text-accent hover:text-accent-hover">{chunks}</Link>

@@ -57,7 +57,7 @@ export default function SiteShell({ children, withNavLinks = false, width = "wid
       {/* px-2 auf Mobil: 8 px Seitenrand, damit der Ink-Rahmen sichtbar bleibt. */}
       <div className="flex-1 px-2 sm:px-6">
         <main
-          className={`mx-auto w-full bg-paper text-fg shadow-[0_30px_80px_rgba(0,0,0,0.55)] rounded-xl sm:rounded-b-none sm:rounded-t-[18px] px-5 py-10 sm:px-14 sm:py-14 ${
+          className={`mx-auto w-full bg-paper text-fg shadow-sheet rounded-xl sm:rounded-b-none sm:rounded-t-[18px] px-5 py-10 sm:px-14 sm:py-14 ${
             width === "wide" ? "max-w-[1180px]" : "max-w-3xl"
           }`}
         >

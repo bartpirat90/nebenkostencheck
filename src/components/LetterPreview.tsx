@@ -17,7 +17,11 @@ export default function LetterPreview() {
   return (
     <div
       aria-hidden="true"
-      className="w-full max-w-[480px] -rotate-1 rounded-sm border border-paper-line bg-doc px-[34px] py-[38px] text-[12.5px] leading-[1.6] text-fg shadow-[0_12px_30px_rgba(27,31,36,0.08)]"
+      // dir="ltr" fest: der Musterbrief ist in jeder Sprachfassung deutsch.
+      // Unter /ar trägt <html> dir="rtl", die deutschen Absätze liefen sonst
+      // rechtsbündig und mit falsch platzierter Interpunktion.
+      dir="ltr"
+      className="w-full max-w-[480px] -rotate-1 rounded-sm border border-paper-line bg-doc px-[34px] py-[38px] text-[12.5px] leading-[1.6] text-fg shadow-card"
     >
       <div className="flex items-start justify-between gap-4">
         <div>

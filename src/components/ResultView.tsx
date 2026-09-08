@@ -41,7 +41,10 @@ export default function ResultView({ result, id, onReset }: Props) {
         <div className="space-y-6 min-w-0">
           {/* Bericht-Kopf */}
           <div className="bg-doc rounded-[14px] p-6 border border-paper-line">
-            <p className="text-sm text-muted mb-1">{t("potentialLabel")}</p>
+            {/* Als H1 statt <p>: die Ergebnisseite hatte sonst keine
+                Hauptüberschrift. Typografie bleibt unverändert, damit der Betrag
+                darunter der optische Anker bleibt. */}
+            <h1 className="text-sm text-muted mb-1">{t("potentialLabel")}</h1>
             <p className="text-[30px] font-extrabold leading-[1.1] tracking-[-0.02em] mb-4 text-accent tabular-nums">
               {hasErrors ? formatEur(total) : "0 €"}
             </p>
@@ -117,7 +120,7 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* Combined letter */}
           {directErrors.length > 0 && reviewErrors.length > 0 && (
-            <section className="space-y-2 bg-doc border border-paper-line rounded-2xl p-4">
+            <section className="space-y-2 bg-doc border border-paper-line rounded-[14px] p-4">
               <p className="text-sm text-muted">{t("combinedText")}</p>
               <Button variant="accent" className="w-full" onClick={() => setLetterModal("combined")}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,7 +134,7 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* No errors state */}
           {!hasErrors && (
-            <div className="bg-status-okBg border border-status-okBorder rounded-2xl p-6 text-center">
+            <div className="bg-status-okBg border border-status-okBorder rounded-[14px] p-6 text-center">
               {/* Kreis auf bg-doc statt bg-status-okBg: sonst verschwindet er im gleichfarbigen Kasten */}
               <div className="w-12 h-12 bg-doc border border-status-okBorder rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-status-ok" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,13 +148,13 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* Farblegende – mobil im Fluss (Desktop: in der Randleiste) */}
           {hasErrors && (
-            <div className="lg:hidden bg-doc border border-paper-line rounded-xl p-4">
+            <div className="lg:hidden bg-doc border border-paper-line rounded-[14px] p-4">
               <ConfidenceLegend />
             </div>
           )}
 
           {/* Legal disclaimer */}
-          <div className="bg-doc border border-paper-line rounded-xl p-4 text-[12.5px] text-faint leading-relaxed">
+          <div className="bg-doc border border-paper-line rounded-[14px] p-4 text-[12.5px] text-faint leading-relaxed">
             <strong className="text-muted">{t("disclaimerLabel")}</strong> {t("disclaimer")}
           </div>
 
@@ -236,7 +239,7 @@ function ErrorCard({ error }: { error: ErrorItem }) {
     // Karte auf bg-doc statt getönter Statusfläche: bei "unsicher" wäre die Fläche
     // sonst mit der Empfehlungsbox (bg-paper-2) identisch und würde darin verschwinden.
     // Der Status bleibt über Rahmenfarbe, Punkt und Etikett-Badge sichtbar.
-    <div className={`rounded-xl border p-4 bg-doc ${conf.border}`}>
+    <div className={`rounded-[14px] border p-4 bg-doc ${conf.border}`}>
       <div className="flex items-start gap-3">
         <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${conf.dot}`} />
         <div className="flex-1 min-w-0">

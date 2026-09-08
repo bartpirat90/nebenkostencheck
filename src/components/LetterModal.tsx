@@ -105,7 +105,7 @@ export default function LetterModal({
     };
   }, [open]);
 
-  // Escape schliesst das Modal – mit denselben Ausnahmen wie der Backdrop-Klick:
+  // Escape schließt das Modal – mit denselben Ausnahmen wie der Backdrop-Klick:
   // nicht während des Ladens (laufende PDF-Generierung nicht abbrechen) und
   // nicht mit fertigem Brief (ein Reflex-Escape würde das Ergebnis genauso
   // verwerfen wie ein Fehlklick; dann nur über "Fertig"/X). Tab/Shift+Tab
@@ -227,16 +227,18 @@ export default function LetterModal({
     }
   };
 
+  // Kein focus:outline-none: der sichtbare 2-px-Ring in Akzentfarbe kommt global
+  // aus globals.css (:focus-visible), analog zu ContactForm.
   const inputClass = `
-    w-full min-h-11 px-3 py-2.5 rounded-lg border border-paper-line-strong bg-doc
+    w-full min-h-11 px-3 py-2.5 rounded-lg border border-paper-line-control bg-doc
     text-sm text-fg placeholder:text-faint
-    focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
+    focus:border-accent
   `;
 
   return (
     <div
       className="fixed inset-0 z-50 bg-ink/70 flex items-center justify-center p-4"
-      // Schliessen per Backdrop-Klick nur im Formular-Schritt: ist der Brief
+      // Schließen per Backdrop-Klick nur im Formular-Schritt: ist der Brief
       // bereits fertig (result) oder wird gerade geladen, würde ein Fehlklick
       // das Ergebnis unwiederbringlich verwerfen – dann nur über "Fertig"/X.
       onClick={(e) => { if (e.button === 0 && !loading && !result) onClose(); }}
@@ -247,7 +249,7 @@ export default function LetterModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="letter-modal-title"
-        className="bg-doc rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-paper-line shadow-[0_24px_60px_rgba(18,23,30,0.35)] outline-none"
+        className="bg-doc rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-paper-line shadow-dialog outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -345,13 +347,15 @@ export default function LetterModal({
                 >
                   {sending ? t("sending") : t("sendToMe")}
                 </Button>
+                {/* status/alert, damit Screenreader den Ausgang des Versands
+                    mitbekommen: der Text erscheint weit unterhalb des Buttons. */}
                 {sent && (
-                  <p className="text-xs text-status-ok font-semibold">
+                  <p role="status" className="text-xs text-status-ok font-semibold">
                     {t("sent")}
                   </p>
                 )}
                 {sendError && (
-                  <div className="bg-status-dangerBg border border-status-dangerBorder rounded-xl p-3 text-sm text-status-danger">
+                  <div role="alert" className="bg-status-dangerBg border border-status-dangerBorder rounded-xl p-3 text-sm text-status-danger">
                     {sendError}
                   </div>
                 )}
@@ -362,7 +366,7 @@ export default function LetterModal({
               <ContactForm contact={contact} onChange={setContact} />
 
               {error && (
-                <div className="mt-4 bg-status-dangerBg border border-status-dangerBorder rounded-xl p-3 text-sm text-status-danger">
+                <div role="alert" className="mt-4 bg-status-dangerBg border border-status-dangerBorder rounded-xl p-3 text-sm text-status-danger">
                   {error}
                 </div>
               )}

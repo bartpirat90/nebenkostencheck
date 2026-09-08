@@ -112,7 +112,7 @@ export default function Home() {
     <SiteShell withNavLinks={!preview && !loading}>
       {/* Eigene, kleine Suspense-Grenze nur für useSearchParams: hält sie fern von
           preview/notice weiter oben, damit ein Re-Suspend beim URL-Cleanup nicht
-          den gesamten Seiten-State zuruecksetzt. */}
+          den gesamten Seiten-State zurücksetzt. */}
       <Suspense fallback={null}>
         <CancelRestore onRestore={handleCanceled} />
       </Suspense>
@@ -126,7 +126,7 @@ export default function Home() {
           <Reveal delay={80}>
             <HowItWorks />
           </Reveal>
-          <div id="upload" className="mt-12 scroll-mt-24">
+          <div id="upload" className="mt-16 scroll-mt-24">
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
           </div>
           <Reveal delay={120}>
@@ -141,7 +141,7 @@ export default function Home() {
         </>
       ) : (
         /* Laden / Teaser: schmale Lesespalte innerhalb des Blatts */
-        <div id="upload" className="max-w-2xl mx-auto">
+        <div id="upload" className="max-w-2xl mx-auto scroll-mt-24">
           {loading ? (
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
           ) : preview?.notAStatement ? (
@@ -151,7 +151,7 @@ export default function Home() {
               {notice && preview && (
                 <div
                   role="status"
-                  className="mb-4 rounded-xl border border-line bg-doc px-4 py-3 text-sm text-muted"
+                  className="mb-4 rounded-xl border border-paper-line bg-doc px-4 py-3 text-sm text-muted"
                 >
                   {notice}
                 </div>
@@ -203,7 +203,7 @@ function CancelRestore({ onRestore }: { onRestore: (preview: PreviewData) => voi
     const restored = loadPreview(searchParams.get("id"));
     if (restored) onRestore(restored);
     // Nur die URL-Leiste bereinigen (kein next-intl-Router-Push): jede Änderung
-    // an history.pushState/replaceState wird vom App Router abgefangen und laesst
+    // an history.pushState/replaceState wird vom App Router abgefangen und lässt
     // diese Suspense-Grenze neu auflösen. Da `onRestore` den State im Elternteil
     // (außerhalb dieser Grenze) setzt, bleibt er davon unberührt.
     window.history.replaceState(null, "", window.location.pathname);

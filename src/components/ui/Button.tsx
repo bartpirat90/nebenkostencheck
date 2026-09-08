@@ -27,7 +27,9 @@ const VARIANTS: Record<Variant, string> = {
   // Das Akzentgrün bleibt den Beträgen und dem Berichts-Button vorbehalten,
   // damit auf einer Seite nur ein Element „grün ruft“.
   primary: "bg-fg hover:bg-fg-hover text-paper",
-  secondary: "border border-paper-line-strong text-fg hover:border-accent hover:text-accent",
+  // line-control statt line-strong: der Rahmen ist hier das einzige Merkmal des
+  // Bedienelements und braucht deshalb 3:1 gegen Papier und Dokumentfläche.
+  secondary: "border border-paper-line-control text-fg hover:border-accent hover:text-accent",
   ghost: "text-muted hover:text-fg",
   // Akzent-Umriss auf Dokumentfläche: für nachgeordnete Aktionen, die trotzdem
   // zum Kern gehören (kombiniertes Schreiben, PDF im Bericht).

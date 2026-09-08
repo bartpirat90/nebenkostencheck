@@ -31,12 +31,15 @@ export default function TenantRights() {
         </div>
 
         <div className="min-w-0">
-          <h3
+          {/* H2 trotz H3-Größe: die Sektion steht auf derselben Ebene wie die
+              übrigen Landing-Abschnitte, eine übersprungene Stufe zerreißt die
+              Screenreader-Gliederung. Die Klassen bleiben unverändert. */}
+          <h2
             id="rechte-heading"
             className="text-[22px] sm:text-[28px] font-extrabold leading-[1.15] tracking-[-0.02em] text-fg"
           >
             {t("heading")}
-          </h3>
+          </h2>
           <dl className="mt-6 space-y-5">
             {items.map((item) => (
               <div key={item.term}>

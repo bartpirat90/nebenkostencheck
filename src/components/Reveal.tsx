@@ -18,12 +18,17 @@ export default function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
+  // Der Zustand wird mitgeführt, weil "sofort sichtbar" allein nicht reicht:
+  // stünde die Transition weiterhin im style, blendete der erste Frame nach
+  // shown=true trotzdem über 250 ms ein - genau die Bewegung, die abbestellt ist.
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReducedMotion(true);
       setShown(true);
       return;
     }
@@ -49,8 +54,8 @@ export default function Reveal({
         // Bewusst nur Opacity: ein zusätzliches Verschieben lässt die Seite
         // beim Scrollen „arbeiten“ und passt nicht zu einer Vertrauensmarke.
         opacity: shown ? 1 : 0,
-        transition: "opacity 250ms cubic-bezier(0.23, 1, 0.32, 1)",
-        transitionDelay: `${delay}ms`,
+        transition: reducedMotion ? undefined : "opacity 250ms cubic-bezier(0.23, 1, 0.32, 1)",
+        transitionDelay: reducedMotion ? undefined : `${delay}ms`,
       }}
     >
       {children}
