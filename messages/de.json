@@ -99,6 +99,45 @@
       "Bericht wird zusammengestellt"
     ]
   },
+  "reportFeatures": {
+    "heading": "Das steckt im Bericht",
+    "lead": "Für 9,90 € bekommst du jeden Befund ausformuliert, mit Rechtsgrundlage und dem passenden Schreiben.",
+    "items": [
+      {
+        "title": "Jeder Befund mit Rechtsgrundlage",
+        "subtitle": "Paragraf, Begründung und der Betrag, um den es geht."
+      },
+      {
+        "title": "Widerspruch als fertiges PDF",
+        "subtitle": "Adressiert an deinen Vermieter, unterschriftsreif."
+      },
+      {
+        "title": "Aufforderung zur Belegeinsicht",
+        "subtitle": "Für Positionen, die sich ohne Belege nicht klären lassen (§ 259 BGB)."
+      },
+      {
+        "title": "Handlungsempfehlung je Punkt",
+        "subtitle": "Was du zuerst angehst und was du dabei beilegen solltest."
+      }
+    ]
+  },
+  "letterPreview": {
+    "badge": "Muster",
+    "senderName": "Lena Hartmann",
+    "senderAddress": "Gneisenaustraße 41 · 10961 Berlin",
+    "recipientName": "Hausverwaltung Bergmann GmbH",
+    "recipientAddress": "Yorckstraße 12\n10965 Berlin",
+    "date": "Berlin, 12.03.2027",
+    "subject": "Widerspruch gegen die Betriebskostenabrechnung 2025",
+    "paragraphs": [
+      "sehr geehrte Damen und Herren,",
+      "gegen Ihre Betriebskostenabrechnung für das Jahr 2025, zugegangen am 14.02.2027, erhebe ich hiermit Widerspruch.",
+      "Die Position „Verwaltungskosten“ in Höhe von 96,00 € ist nach § 1 Abs. 2 Nr. 1 BetrKV nicht umlagefähig. Die unter „Instandhaltung“ abgerechneten 61,40 € sind Instandsetzungskosten und damit keine Betriebskosten im Sinne des § 2 BetrKV. Die Heizkosten wurden zudem nicht nach Verbrauch verteilt; § 7 HeizkV verlangt einen Verbrauchsanteil von mindestens 50 Prozent.",
+      "Ich bitte Sie, die Abrechnung bis zum 30.03.2027 zu korrigieren und mir den Betrag von 184,50 € zu erstatten."
+    ],
+    "closing": "Mit freundlichen Grüßen",
+    "signature": "Lena Hartmann"
+  },
   "reviews": {
     "heading": "ERFAHRUNGEN",
     "saved": "{amount} € zurückgeholt"

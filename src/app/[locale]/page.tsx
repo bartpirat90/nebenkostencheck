@@ -8,6 +8,7 @@ import PreviewView from "@/components/PreviewView";
 import LandingHero from "@/components/LandingHero";
 import ProofLine from "@/components/ProofLine";
 import HowItWorks from "@/components/HowItWorks";
+import ReportFeatures from "@/components/ReportFeatures";
 import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import { useApiErrorMessage } from "@/lib/clientErrors";
@@ -128,6 +129,9 @@ export default function Home() {
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
           </div>
           <Reveal delay={120}>
+            <ReportFeatures />
+          </Reveal>
+          <Reveal delay={160}>
             <Faq />
           </Reveal>
         </>
