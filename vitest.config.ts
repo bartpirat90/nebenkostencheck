@@ -8,7 +8,10 @@ export default defineConfig({
     jsx: { runtime: "automatic" },
   },
   test: {
-    include: ["src/**/*.test.ts"],
+    // .tsx zusätzlich, damit Komponententests (Illustrationen) laufen. Das
+    // node-Environment bleibt: gerendert wird per react-dom/server, ein DOM
+    // braucht das Projekt bisher nicht (kein @testing-library/react installiert).
+    include: ["src/**/*.test.{ts,tsx}"],
     environment: "node",
   },
   resolve: {
