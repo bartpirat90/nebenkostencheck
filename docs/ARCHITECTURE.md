@@ -117,7 +117,7 @@ Alle Fenster sind Sliding-Windows (Upstash): das vorherige Fenster wird zeitante
 
 `security-headers.mjs` definiert die Header, `next.config.mjs` hängt sie über `headers()` an jede Route (`source: "/(.*)"`):
 
-- **Content-Security-Policy** — `default-src 'self'`, `script-src 'self' 'unsafe-inline'` (zusätzlich `'unsafe-eval'`, aber **nur in Dev** für Next-HMR), `frame-ancestors 'none'`, `object-src 'none'`, `upgrade-insecure-requests` u. a.
+- **Content-Security-Policy** — `default-src 'self'`, `script-src 'self' 'unsafe-inline'` (zusätzlich `'unsafe-eval'`, aber **nur in Dev** für Next-HMR), in Branch-Previews (`VERCEL_ENV=preview`) zusätzlich `https://vercel.live` in script/connect/img/font/style/frame-src für die Vercel-Toolbar, `frame-ancestors 'none'`, `object-src 'none'`, `upgrade-insecure-requests` u. a.
 - **X-Frame-Options: DENY**, **X-Content-Type-Options: nosniff**
 - **Referrer-Policy: strict-origin-when-cross-origin** — die Ergebnis-URL trägt `?id=<uuid>`, die nie an Dritte durchgereicht werden soll
 - **Permissions-Policy** — sperrt Kamera/Mikrofon/Geolocation/Payment

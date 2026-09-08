@@ -11,7 +11,11 @@ const nextConfig = {
     "/api/send-pdf": ["./src/lib/pdf/fonts/*"],
   },
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders(process.env.NODE_ENV !== "production") }];
+    // VERCEL_ENV setzt Vercel selbst; "preview" gibt es nur für Branch-Deployments.
+    const isPreview = process.env.VERCEL_ENV === "preview";
+    return [
+      { source: "/(.*)", headers: securityHeaders(process.env.NODE_ENV !== "production", isPreview) },
+    ];
   },
 };
 
