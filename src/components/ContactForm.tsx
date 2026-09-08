@@ -81,14 +81,16 @@ function Field({
   multiline?: boolean;
 }) {
   const baseClass = `
-    w-full min-h-11 px-3 py-2.5 rounded-lg border border-line-strong bg-doc
+    w-full min-h-11 px-3 py-2.5 rounded-lg border border-paper-line-strong bg-doc
     text-sm text-fg placeholder:text-faint
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
 
   return (
     <label className="block">
-      <span className="text-xs font-semibold text-muted block mb-1">{label}</span>
+      {/* Label über dem Feld statt Platzhalter-Beschriftung: bleibt sichtbar,
+          sobald getippt wird (WCAG 3.3.2). */}
+      <span className="text-sm text-muted block mb-1.5">{label}</span>
       {multiline ? (
         <textarea
           rows={2}

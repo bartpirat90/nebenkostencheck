@@ -228,14 +228,14 @@ export default function LetterModal({
   };
 
   const inputClass = `
-    w-full min-h-11 px-3 py-2.5 rounded-lg border border-line-strong bg-doc
+    w-full min-h-11 px-3 py-2.5 rounded-lg border border-paper-line-strong bg-doc
     text-sm text-fg placeholder:text-faint
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-ink/70 flex items-center justify-center p-4"
       // Schliessen per Backdrop-Klick nur im Formular-Schritt: ist der Brief
       // bereits fertig (result) oder wird gerade geladen, wuerde ein Fehlklick
       // das Ergebnis unwiederbringlich verwerfen – dann nur ueber "Fertig"/X.
@@ -247,13 +247,13 @@ export default function LetterModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="letter-modal-title"
-        className="bg-doc rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-line outline-none"
+        className="bg-doc rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-paper-line shadow-[0_24px_60px_rgba(18,23,30,0.35)] outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between p-6 border-b border-line">
+        <div className="flex items-start justify-between p-6 border-b border-paper-line">
           <div>
-            <h2 id="letter-modal-title" className="text-xl font-bold text-fg">{title}</h2>
+            <h2 id="letter-modal-title" className="text-[22px] sm:text-[28px] font-extrabold leading-[1.15] tracking-[-0.02em] text-fg">{title}</h2>
             <p className="text-sm text-muted mt-1">
               {result ? t("readyDesc") : description}
             </p>
@@ -276,7 +276,7 @@ export default function LetterModal({
               <div className="w-full max-w-xs">
                 <ProgressBar />
               </div>
-              <div className="w-12 h-12 rounded-full border-2 border-line border-t-accent animate-spin" />
+              <div className="w-12 h-12 rounded-full border-2 border-paper-line border-t-accent animate-spin" />
               <div className="space-y-1 text-center">
                 <p className="font-semibold text-fg">{t("loadingTitle")}</p>
                 <p className="text-sm text-muted">{t("loadingSubtitle")}</p>
@@ -299,10 +299,10 @@ export default function LetterModal({
               </Button>
 
               {/* Per Mail an Vermieter */}
-              <div className="space-y-2 border-t border-line pt-5">
+              <div className="space-y-2 border-t border-paper-line pt-5">
                 <p className="text-sm font-semibold text-fg">{t("mailToLandlord")}</p>
                 <label className="block">
-                  <span className="text-xs font-semibold text-muted block mb-1">
+                  <span className="text-sm text-muted block mb-1.5">
                     {t("landlordEmailLabel")}
                   </span>
                   <input
@@ -324,11 +324,11 @@ export default function LetterModal({
               </div>
 
               {/* PDF an meine E-Mail senden */}
-              <div className="space-y-2 border-t border-line pt-5">
+              <div className="space-y-2 border-t border-paper-line pt-5">
                 <p className="text-sm font-semibold text-fg">{t("sendToMe")}</p>
                 <p className="text-xs text-muted">{t("sendToMeHint")}</p>
                 <label className="block">
-                  <span className="text-xs font-semibold text-muted block mb-1">{t("yourEmail")}</span>
+                  <span className="text-sm text-muted block mb-1.5">{t("yourEmail")}</span>
                   <input
                     type="email"
                     value={myEmail}
@@ -372,7 +372,7 @@ export default function LetterModal({
 
         {/* Footer */}
         {!loading && !result && (
-          <div className="border-t border-line p-4 flex flex-col sm:flex-row gap-2">
+          <div className="border-t border-paper-line p-4 flex flex-col sm:flex-row gap-2">
             <Button variant="secondary" className="flex-1 sm:flex-none" onClick={onClose}>
               {t("cancel")}
             </Button>
@@ -382,7 +382,7 @@ export default function LetterModal({
           </div>
         )}
         {!loading && result && (
-          <div className="border-t border-line p-4">
+          <div className="border-t border-paper-line p-4">
             <Button variant="secondary" className="w-full" onClick={onClose}>
               {t("done")}
             </Button>
