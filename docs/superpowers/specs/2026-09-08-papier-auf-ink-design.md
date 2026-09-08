@@ -48,6 +48,7 @@ Zwei Welten, beide in `tailwind.config.js` als Tokens. Kein `#000`, kein `#fff` 
 | `accent.hover` | `#065F46` | Hover des Akzentbuttons |
 | `accent.soft` | `#E4F2EA` | Akzent-Hintergrund (Icon-Kacheln, Feature-Marker) |
 | `accent.border` | `#BFE0CF` | Rahmen auf Akzent-Hintergrund |
+| `fg.hover` | `#2A3038` | Hover des Primärbuttons (Fläche `fg`) |
 
 Der Token `accent.bg` (`#06231C`) und `surface` (`#11161D`) entfallen. `line`, `line-strong` werden zu `paper.line`, `paper.line-strong`; die Klassen `border-line` und `border-line-strong` bleiben als Aliase auf dieselben Werte bestehen, damit bestehende Komponenten ohne Umbenennung Papier werden.
 
@@ -60,7 +61,7 @@ Der Token `accent.bg` (`#06231C`) und `surface` (`#11161D`) entfallen. `line`, `
 | neutral (`unsicher`) | `#4E555C` | `#F3EFE6` | `#D9D3C6` | `#8A96A6` |
 | danger (Fehlerzustände) | `#991B1B` | `#FDECEC` | `#F2B8B8` | `#DC2626` |
 
-Token-Namen bleiben (`status.ok`, `status.okBg`, `status.okBorder`, `status.okStrong`, entsprechend warn/neutral/danger); `okSurface`, `warnSurface`, `warnBgHover` entfallen, ihre Verwendungen werden auf `okBg`/`warnBg` umgestellt. Die Bedeutung bleibt: „unsicher“ ist neutral, Rot nur für echte Fehler (API, Versand, Upload).
+Token-Namen bleiben (`status.ok`, `status.okBg`, `status.okBorder`, `status.okStrong`, entsprechend warn/neutral/danger); `okSurface`, `warnSurface`, `warnBgHover` entfallen, ihre Verwendungen werden auf `okBg`/`warnBg` umgestellt. Zusätzlich `status.dangerStrong` (`#DC2626`) als Punktfarbe für danger; `okSoft`/`warnSoft` entfallen ebenfalls. Die Bedeutung bleibt: „unsicher“ ist neutral, Rot nur für echte Fehler (API, Versand, Upload).
 
 ### 2.4 Kontrast (WCAG AA, verifiziert per Rechnung)
 
@@ -116,7 +117,7 @@ Geist bleibt einzige Familie (Google Fonts, latin + latin-ext, Fallbacks für ru
 
 ```
 <html bg ink>
-  <nav on-ink>            Logo · Links (So funktioniert's, Bericht, Fragen) · Pill „Erst-Prüfung gratis“ · LocaleSwitcher
+  <nav on-ink>            Logo · Links (So funktioniert's, Bericht, Fragen) · Pill „Erst-Prüfung gratis · Bericht 9,90 €“ · LocaleSwitcher
   <main class="paper">    Blatt: max-width 1180, Radius 18 oben, Schatten 0 30px 80px rgba(0,0,0,.55), Innenabstand 56 px (Mobil 20 px)
     …Sektionen…
   </main>
@@ -136,7 +137,7 @@ Geist bleibt einzige Familie (Google Fonts, latin + latin-ext, Fallbacks für ru
 Zweispaltig ab 1024 px (1,05fr / 0,95fr, Abstand 52 px), darunter gestapelt mit der Karte unter dem Text, maximal 520 px breit.
 
 - Links: H1 `hero.headline`, Lead `hero.subline`, Primärbutton `hero.cta` (Fläche `fg`, Text `paper`, Radius 12, 15/26 px Innenabstand, Pfeil als Zeichen), Preiszeile `hero.priceNote` in `faint`, Trust-Haken `trust.*` als horizontale Liste mit `✓` in `accent`.
-- Rechts: **ReportPreviewCard**, ein statisches Beispiel des Prüfberichts auf `doc`, Rahmen `paper.line`, Radius 14, Schatten `0 12px 30px rgba(27,31,36,.08)`. Inhalt aus `messages` (`heroReport.*`): Titel „Prüfbericht“, Meta „Abrechnung 2025, 3 Befunde“, drei Befunde (Titel, Begründung mit Paragraf, Betrag; Punkt in `status.okStrong` bzw. `status.warnStrong`), Summenzeile „Geschätztes Erstattungspotenzial ≈ 184,50 €“ in `accent`, Button „Widerspruch als PDF erstellen“ (Fläche `accent`, Text weiß). Fußzeile in `faint`: „Beispiel · Geprüft nach BetrKV, HeizkV und BGH-Rechtsprechung“. Die Karte ist rein dekorativ (`aria-hidden` auf der Karte, der Button ist kein `<button>`), die Kennzeichnung „Beispiel“ ist Pflicht.
+- Rechts: **ReportPreviewCard**, ein statisches Beispiel des Prüfberichts auf `doc`, Rahmen `paper.line`, Radius 14, Schatten `0 12px 30px rgba(27,31,36,.08)`. Inhalt aus `messages` (`heroReport.*`): Titel „Prüfbericht“, Meta „Abrechnung 2025, 3 Befunde“, drei Befunde (Titel, Begründung mit Paragraf, Betrag; Punkt in `status.okStrong` bzw. `status.warnStrong`): Verwaltungskosten (§ 1 Abs. 2 Nr. 1 BetrKV, 96,00 €, ok), Reparaturkosten (§ 2 BetrKV, 61,40 €, ok), Heizkosten (§ 7 HeizkV, 27,10 €, warn), Summenzeile „Geschätztes Erstattungspotenzial ≈ 184,50 €“ in `accent`, Button „Widerspruch als PDF erstellen“ (Fläche `accent`, Text weiß). Fußzeile in `faint`: „Beispiel · Geprüft nach BetrKV, HeizkV und BGH-Rechtsprechung“. Die Karte ist rein dekorativ (`aria-hidden` auf der Karte, der Button ist kein `<button>`), die Kennzeichnung „Beispiel“ ist Pflicht.
 
 ### 5.2 Beleg-Zeile (`ProofLine.tsx`, ersetzt `StatsBar.tsx`)
 
@@ -160,7 +161,7 @@ Kasten auf `paper.2`, Radius 18, 44/48 px Innenabstand, zwei Spalten (0,9fr / 1,
 
 ### 5.7 Häufige Fragen (`Faq.tsx`)
 
-`id="fragen"`. H2 `faq.heading`, Liste maximal 760 px mit `<details>`, Trennlinien `paper.line`, Frage 16 px 600, Antwort `muted`; erster Eintrag geöffnet. JSON-LD bleibt. Inhalt bleibt `faq.items[]`, ergänzt um „Was passiert mit meiner Abrechnung?“ und „Funktioniert das auch mit einem Foto?“ (6 Einträge).
+`id="fragen"`. H2 `faq.heading`, Liste maximal 760 px mit `<details>`, Trennlinien `paper.line`, Frage 16 px 600, Antwort `muted`; erster Eintrag geöffnet. JSON-LD bleibt. Inhalt bleibt `faq.items[]` mit den bestehenden neun Einträgen; Datenschutz und Foto-Upload sind dort bereits beantwortet, neue Einträge kommen nicht dazu.
 
 ### 5.8 Footer (`Footer.tsx`)
 
@@ -179,13 +180,13 @@ Quelle unDraw (Katerina Limpitsouni), Lizenz: unDraw License, kommerziell frei, 
 
 - Ablage als React-Komponenten unter `src/components/illustrations/<Name>.tsx`, die das SVG inline rendern (kein `public/`, kein `next/image`), damit `currentColor` als Akzent greift. Root-Attribute: `viewBox`, `role="img"`, `aria-hidden="true"`, `focusable="false"`, `preserveAspectRatio="xMidYMid meet"`; `width`/`height` entfernt, Größe kommt per CSS.
 - Einmalige Umfärbung beim Import, dokumentiert in `src/components/illustrations/README.md`: `#090814` und `#2f2e41` → `#1B1F24`; `#3f3d56` → `#3A414A`; `#e6e6e6` → `#E3DDD0`; `#f2f2f2` → `#E7E1D4`; `#ccc` → `#CFC9BC`; `#fafafa` → `#FBF9F4`; `#57b894` → `#6DBE9A`. Hauttöne (`#fbbebe`, `#a0616a`, `#9f616a`) bleiben. Akzentflächen sind `currentColor`.
-- Der Container setzt `color: accent`. Jede Illustration wird über SVGO (Preset default, `removeViewBox: false`) verkleinert; `ApartmentRent` darf nach Optimierung höchstens 30 KB haben.
+- Der Container setzt `color: accent`. Jede Illustration wird beim Import per Skript (`scripts/import-undraw.mjs`, ohne neue Abhängigkeit) bereinigt und umgefärbt; `ApartmentRent` darf nach Optimierung höchstens 40 KB haben (das Motiv liegt roh bei 36 KB; der Import-Schritt räumt nur Attribute auf, ein zusätzliches SVGO-Paket kommt nicht ins Projekt).
 - Illustrationen sind rein dekorativ, tragen keinen Text und erscheinen nie im Hero, in Modals oder auf der Ergebnisseite.
 
 ## 7. Texte und Übersetzungen
 
-- Neue Namespaces in `messages/de.json`: `heroReport`, `proof`, `reportFeatures`, `letterPreview`, `rights`. Neue Keys: `howItWorks.lead`, `nav.links.{how,report,faq}`, `nav.pill`, zwei zusätzliche `faq.items`.
-- Entfallende Keys: `hero.eyebrow`, `howItWorks.eyebrow`, `faq.eyebrow`, `nav.badge`, `stats.*`, `evidence.*`, `assurance.*` (Inhalte gehen in `proof` und `heroReport.footer` auf). Der Test `src/i18n/serverOnly.test.ts` und Paritäts-Checks müssen danach grün sein.
+- Neue Namespaces in `messages/de.json`: `heroReport`, `proof`, `reportFeatures`, `letterPreview`, `rights`. Neue Keys: `howItWorks.lead`, `nav.home`, `nav.links.{how,report,faq}`, `nav.pill`, `letterPreview.date`. Die FAQ bleibt bei den bestehenden neun Einträgen, weil Frist und Belegeinsicht dort schon beantwortet werden.
+- Entfallende Keys: `hero.eyebrow`, `howItWorks.eyebrow`, `faq.eyebrow`, `nav.badge`, `stats.*`, `evidence.*`, `assurance.*` (Inhalte gehen in `proof` und `heroReport.footer` auf). Der Test `src/i18n/serverOnly.test.ts` muss danach grün sein; der Paritäts-One-Liner ist zwischen dem deutschen Textumbau und dem Übersetzungsschritt planmäßig rot und erst am Ende wieder grün.
 - Schreibregeln für alle Landing-Texte: keine Gedankenstriche als Trenner (bestehende „–“ in `hero.subline` und `hero.priceNote` werden zu Punkt oder Komma), Buttons als Verb plus Objekt, keine Versalien außer Abkürzungen, keine Marketing-Floskeln.
 - `en.json` wird vollständig nachgezogen; `tr`, `ar`, `ru`, `uk` erhalten Übersetzungen mit unverändertem `_meta.status: "ai-draft"`. Die Musterdaten im Brief und Bericht (Namen, Adressen, Beträge) bleiben in allen Sprachen identisch, nur Fließtext wird übersetzt. Der Brief bleibt in jeder Locale deutsch (Empfänger ist ein deutscher Vermieter); nur die Kennzeichnung „Muster“ wird übersetzt.
 - Für RTL (`ar`) spiegeln sich Grid-Spalten automatisch; Illustrationen werden nicht gespiegelt.
@@ -230,7 +231,7 @@ Quelle unDraw (Katerina Limpitsouni), Lizenz: unDraw License, kommerziell frei, 
 2. Seitenshell (Nav, Blatt, Footer) und Button-Varianten.
 3. Hero mit `ReportPreviewCard`, Beleg-Zeile, Texte in `de.json`.
 4. Illustrationen importieren, Schritte-Sektion, Upload-Zone.
-5. `ReportFeatures` mit `LetterPreview`, `TenantRights`, FAQ-Erweiterung.
+5. `ReportFeatures` mit `LetterPreview`, `TenantRights`, FAQ-Umbau.
 6. `PreviewView`, `ResultView`, `LetterModal`, Ergebnis-, Rechts- und 404-Seiten.
 7. OG-Bild, Manifest, Icons.
 8. Übersetzungen `en` vollständig, `tr/ar/ru/uk` als Draft, Paritäts-Check, Sichtprüfung, Push auf `origin monetarisierung`.
