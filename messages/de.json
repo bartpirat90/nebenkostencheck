@@ -20,7 +20,7 @@
     "noAccount": "Kein Account nötig"
   },
   "hero": {
-    "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
+    "headline": "Steckt Geld in deiner Nebenkosten­abrechnung?",
     "subline": "Lade deine Nebenkosten- oder Betriebskostenabrechnung hoch. In Sekunden auf typische Fehler geprüft, mit geschätztem Erstattungspotenzial.",
     "cta": "Abrechnung prüfen",
     "priceNote": "Erst-Prüfung kostenlos · vollständiger Bericht einmalig 9,90 €, kein Abo"
@@ -158,7 +158,7 @@
     ]
   },
   "reviews": {
-    "saved": "{amount} € zurückgeholt"
+    "saved": "{amount} € zurückgeholt"
   },
   "faq": {
     "heading": "Was du vor der Prüfung wissen solltest",
@@ -266,7 +266,7 @@
     "featureReview": "Belegeinsicht-Schreiben (§ 259 BGB) als PDF",
     "featureRecommendations": "Konkrete Handlungsempfehlungen",
     "consent": "Ich verlange die sofortige Bereitstellung und bestätige, dass mein Widerrufsrecht mit vollständiger Bereitstellung erlischt.",
-    "unlockCta": "Für 9,90 € freischalten",
+    "unlockCta": "Für 9,90 € freischalten",
     "redirecting": "Weiterleitung…",
     "checkoutError": "Zahlung konnte nicht gestartet werden.",
     "canceled": "Die Zahlung wurde abgebrochen. Deine Vorschau ist noch da – du kannst jederzeit freischalten.",
@@ -381,11 +381,11 @@
     },
     "agb": {
       "title": "Allgemeine Geschäftsbedingungen (AGB)",
-      "metaDescription": "AGB von Nebenkostencheck: Leistungsumfang, Preis von 9,90 €, Widerrufsrecht und Haftung für die automatisierte Prüfung.",
+      "metaDescription": "AGB von Nebenkostencheck: Leistungsumfang, Preis von 9,90 €, Widerrufsrecht und Haftung für die automatisierte Prüfung.",
       "sections": [
         { "heading": "1. Leistungsbeschreibung", "body": "Nebenkostencheck bietet eine automatisierte Prüfung von Nebenkostenabrechnungen sowie die Erstellung von Musterschreiben (Widerspruch, Aufforderung zur Belegeinsicht). Die Prüfung erfolgt anhand der einschlägigen gesetzlichen Grundlagen (u. a. BetrKV, HeizkV) und der höchstrichterlichen Rechtsprechung." },
         { "heading": "2. Keine Rechtsberatung", "body": "Der Dienst ist ein automatisiertes Werkzeug und stellt keine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Die Ergebnisse sind unverbindliche Einschätzungen ohne Gewähr und ersetzen keine anwaltliche Beratung." },
-        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
+        { "heading": "3. Preis", "body": "Die Freischaltung des vollständigen Prüfberichts inklusive der Musterschreiben kostet einmalig 9,90 €. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen. Die erste Prüfung mit Vorschau ist kostenlos." },
         { "heading": "4. Widerrufsrecht und vorzeitiges Erlöschen", "body": "Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Bei digitalen Inhalten und Dienstleistungen erlischt das Widerrufsrecht jedoch, wenn der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und seine Kenntnis davon bestätigt hat, dass er durch die Zustimmung mit Beginn der Ausführung sein Widerrufsrecht verliert (§ 356 Abs. 5 BGB). Diese Zustimmung wird vor der Zahlung ausdrücklich eingeholt." },
         { "heading": "5. Haftung", "body": "Wir übernehmen keine Gewähr für die inhaltliche Richtigkeit, Vollständigkeit und Aktualität der Prüfergebnisse und erstellten Schreiben. Angegebene Beträge sind Schätzungen und können von tatsächlich erzielbaren Erstattungen abweichen. Eine Haftung für Schäden, die aus der Verwendung der Ergebnisse entstehen, ist im gesetzlich zulässigen Rahmen ausgeschlossen." },
         { "heading": "6. Anbieter", "body": "[Name des Betreibers], [Straße & Hausnummer], [PLZ Ort]. Weitere Angaben im Impressum." }
