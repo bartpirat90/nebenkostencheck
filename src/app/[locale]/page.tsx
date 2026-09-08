@@ -138,7 +138,7 @@ export default function Home() {
             <aside className="hidden lg:block">
               <div className="sticky top-24 border-e border-line pe-6 space-y-5">
                 <figure className="m-0">
-                  <div aria-hidden className="text-accent-soft text-4xl leading-none mb-1">&ldquo;</div>
+                  <div aria-hidden className="text-accent text-4xl leading-none mb-1">&ldquo;</div>
                   <blockquote className="m-0 text-sm text-muted leading-relaxed hyphens-auto break-words">
                     {t("evidence.mieterbundQuote")}
                   </blockquote>
@@ -173,7 +173,7 @@ export default function Home() {
                           {r.location ? ` · ${r.location}` : ""}
                         </figcaption>
                         {r.savedEur != null && (
-                          <p className="mt-1 text-xs font-semibold text-accent-soft tabular-nums">
+                          <p className="mt-1 text-xs font-semibold text-accent tabular-nums">
                             {t("reviews.saved", { amount: r.savedEur })}
                           </p>
                         )}
@@ -215,9 +215,9 @@ export default function Home() {
                 <div>
                   <p className="text-[11px] font-medium tracking-[0.12em] text-faint mb-3">{t("assurance.securityTitle")}</p>
                   <ul className="space-y-2 text-sm text-muted">
-                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> {t("trust.dsgvo")}</li>
-                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> {t("trust.deletion")}</li>
-                    <li className="flex items-center gap-2"><span className="text-accent-soft">✓</span> {t("trust.noAccount")}</li>
+                    <li className="flex items-center gap-2"><span className="text-accent">✓</span> {t("trust.dsgvo")}</li>
+                    <li className="flex items-center gap-2"><span className="text-accent">✓</span> {t("trust.deletion")}</li>
+                    <li className="flex items-center gap-2"><span className="text-accent">✓</span> {t("trust.noAccount")}</li>
                   </ul>
                 </div>
               </div>
@@ -236,7 +236,7 @@ export default function Home() {
               {notice && preview && (
                 <div
                   role="status"
-                  className="mb-4 rounded-xl border border-line bg-surface px-4 py-3 text-sm text-muted"
+                  className="mb-4 rounded-xl border border-line bg-doc px-4 py-3 text-sm text-muted"
                 >
                   {notice}
                 </div>
@@ -260,14 +260,14 @@ function NotAStatementBox({ onReset }: { onReset: () => void }) {
   const t = useTranslations("notAStatement");
   return (
     <div className="bg-status-warnBg border border-status-warnBorder rounded-2xl p-8 text-center">
-      <div className="w-12 h-12 bg-status-warnSurface rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="w-12 h-12 bg-status-warnBg border border-status-warnBorder rounded-full flex items-center justify-center mx-auto mb-4">
         <svg className="w-6 h-6 text-status-warn" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
       </div>
       <p className="font-bold text-status-warn text-lg mb-2">{t("title")}</p>
-      <p className="text-sm text-status-warnSoft leading-relaxed mb-6">{t("body")}</p>
+      <p className="text-sm text-muted leading-relaxed mb-6">{t("body")}</p>
       <Button onClick={onReset}>{t("cta")}</Button>
     </div>
   );

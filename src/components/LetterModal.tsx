@@ -228,7 +228,7 @@ export default function LetterModal({
   };
 
   const inputClass = `
-    w-full min-h-11 px-3 py-2.5 rounded-lg border border-line-strong bg-ink
+    w-full min-h-11 px-3 py-2.5 rounded-lg border border-line-strong bg-doc
     text-sm text-fg placeholder:text-faint
     focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
   `;
@@ -247,7 +247,7 @@ export default function LetterModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="letter-modal-title"
-        className="bg-surface rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-line outline-none"
+        className="bg-doc rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-line outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

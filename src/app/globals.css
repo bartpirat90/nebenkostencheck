@@ -6,14 +6,16 @@
   box-sizing: border-box;
 }
 
+/* Ink auch auf html/body: der Overscroll-Bereich außerhalb des Papierblatts
+   soll die Rahmenfarbe zeigen, nicht Weiß. */
 html {
-  background-color: #0C1016;
+  background-color: #12171E;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
-  background-color: #0C1016;
-  color: #E7ECF2;
+  background-color: #12171E;
+  color: #1B1F24;
 }
 
 /* Kyrillisch/Arabisch: Geist deckt sie nicht ab -> saubere System-Fallbacks. */
@@ -23,8 +25,20 @@ html[lang="ar"] body { font-family: "Segoe UI", "Noto Sans Arabic", Tahoma, Aria
 /* Negatives/positives Tracking zerreisst arabische Ligaturen. */
 html[dir="rtl"] [class*="tracking-"] { letter-spacing: 0 !important; }
 
-/* Sichtbarer Fokusring projektweit fuer Tastaturbedienung (WCAG 2.4.7). */
+/* Überschriften brechen ausgewogen um, Fließtext vermeidet Schusterjungen.
+   Beides sind Fortschritts-Eigenschaften: Browser ohne Unterstützung
+   rendern unverändert weiter. */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* Sichtbarer Fokusring projektweit für Tastaturbedienung (WCAG 2.4.7).
+   Standard ist der Papier-Akzent; im dunklen Rahmen (Nav, Footer) wäre er
+   zu dunkel, deshalb schaltet [data-on-ink] dort auf accent.bright um. */
 :focus-visible {
-  outline: 2px solid #34D399;
+  outline: 2px solid #047857;
   outline-offset: 2px;
+}
+[data-on-ink]:focus-visible,
+[data-on-ink] :focus-visible {
+  outline-color: #34D399;
 }

@@ -36,7 +36,7 @@ export default async function LegalPage({ page }: { page: LegalKey }) {
 
         <Link
           href="/"
-          className="inline-flex items-center min-h-11 mt-8 text-accent-bright hover:text-accent-soft text-sm transition-colors"
+          className="inline-flex items-center min-h-11 mt-8 text-accent underline hover:text-accent-hover text-sm transition-colors"
         >
           {t("back")}
         </Link>

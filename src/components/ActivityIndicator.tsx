@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 /** Slim indeterminate progress bar with a continuously moving highlight. */
 export function ProgressBar() {
   return (
-    <div className="relative w-full h-1 rounded-full overflow-hidden bg-line">
+    <div className="relative w-full h-1 rounded-full overflow-hidden bg-paper-line">
       <div className="absolute inset-y-0 left-0 w-1/3 rounded-full bg-accent animate-[neko-progress_1.5s_ease-in-out_infinite]" />
       <style jsx>{`
         @keyframes neko-progress {
@@ -55,17 +55,17 @@ export function PhaseList({
             }`}
           >
             {done ? (
-              <svg className="w-3.5 h-3.5 shrink-0 text-accent-bright" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5 shrink-0 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             ) : current ? (
               <span className="w-3.5 h-3.5 shrink-0 flex items-center justify-center">
-                <span className="w-2 h-2 rounded-full bg-accent-soft animate-ping" />
-                <span className="absolute w-2 h-2 rounded-full bg-accent-soft" />
+                <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
+                <span className="absolute w-2 h-2 rounded-full bg-accent" />
               </span>
             ) : (
               <span className="w-3.5 h-3.5 shrink-0 flex items-center justify-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-line" />
+                <span className="w-1.5 h-1.5 rounded-full bg-paper-line-strong" />
               </span>
             )}
             <span>{phase}</span>

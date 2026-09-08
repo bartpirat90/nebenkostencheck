@@ -76,7 +76,7 @@ export default function PreviewView({ preview, onReset }: Props) {
         </p>
         <div className="flex items-baseline justify-between gap-3 border-t border-line mt-4 pt-4">
           <span className="text-sm text-muted">{t("potentialLabel")}</span>
-          <span className="text-lg font-bold text-accent-soft tabular-nums">{potential}</span>
+          <span className="text-lg font-bold text-accent tabular-nums">{potential}</span>
         </div>
       </div>
 
@@ -84,7 +84,7 @@ export default function PreviewView({ preview, onReset }: Props) {
         <div className="border border-line rounded-xl divide-y divide-line">
           {preview.errorTitles.map((title, i) => (
             <div key={i} className="flex items-center gap-3 px-4 py-3">
-              <span className="text-xs font-medium tabular-nums text-accent-soft w-6 shrink-0">
+              <span className="text-xs font-medium tabular-nums text-accent w-6 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="text-sm font-medium text-fg">{title}</span>
@@ -104,7 +104,7 @@ export default function PreviewView({ preview, onReset }: Props) {
         <div className="divide-y divide-line">
           {nextSteps.map((step, i) => (
             <div key={step.title} className="flex items-start gap-3 px-4 py-3">
-              <span className="text-xs font-medium tabular-nums text-accent-soft w-6 shrink-0 pt-0.5">
+              <span className="text-xs font-medium tabular-nums text-accent w-6 shrink-0 pt-0.5">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
@@ -116,13 +116,13 @@ export default function PreviewView({ preview, onReset }: Props) {
         </div>
       </div>
 
-      <div className="border border-accent-border bg-accent-bg/40 rounded-xl p-6">
+      <div className="border border-accent-border bg-accent-soft rounded-xl p-6">
         <p className="font-bold text-fg mb-3">{t("unlockTitle")}</p>
         <ul className="text-sm text-muted space-y-1.5 mb-4">
-          <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureAll")}</li>
-          {preview.hasDirect && <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureObjection")}</li>}
-          {preview.hasReview && <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureReview")}</li>}
-          <li className="flex gap-2"><span className="text-accent-soft">✓</span> {t("featureRecommendations")}</li>
+          <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureAll")}</li>
+          {preview.hasDirect && <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureObjection")}</li>}
+          {preview.hasReview && <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureReview")}</li>}
+          <li className="flex gap-2"><span className="text-accent">✓</span> {t("featureRecommendations")}</li>
         </ul>
 
         {/* min-h-11 + größere Box: Checkbox ist Teil des Bezahl-Flows, Touch-Ziel ≥ 44 px */}
@@ -153,7 +153,7 @@ export default function PreviewView({ preview, onReset }: Props) {
       {preview.mock && (
         <a
           href={`/ergebnis?id=${preview.id}`}
-          className="block text-center rounded-xl border border-dashed border-status-warnBorder bg-status-warnBg text-status-warn text-sm font-semibold py-3 px-4 hover:bg-status-warnBgHover transition-colors"
+          className="block text-center rounded-xl border border-dashed border-status-warnBorder bg-status-warnBg text-status-warn text-sm font-semibold py-3 px-4 hover:border-status-warnStrong transition-colors"
         >
           {t("demo")}
         </a>

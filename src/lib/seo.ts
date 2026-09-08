@@ -41,7 +41,14 @@ export const APPLE_ICON_TYPE = "image/png";
  * Eine Quelle für theme-color, Manifest, Apple-Icon und OG-Bild – sonst
  * driften Browser-Chrome und App-Icon bei einer Farbänderung auseinander.
  */
-export const BRAND_INK = "#0C1016";
+export const BRAND_INK = "#12171E";
+
+/**
+ * Blattfarbe der Marke („paper“, entspricht bg-paper in tailwind.config.js).
+ * Gegenstück zu BRAND_INK für Flächen, die außerhalb von Tailwind
+ * gezeichnet werden (aktuell das OG-Bild).
+ */
+export const BRAND_PAPER = "#FBF9F4";
 
 /**
  * Vollstaendige Metadaten einer Unterseite (Rechtsseiten etc.).

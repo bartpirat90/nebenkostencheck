@@ -25,11 +25,11 @@ const VARIANTS: Record<Variant, string> = {
   primary:
     "bg-accent hover:bg-accent-hover text-white active:scale-[0.98] disabled:active:scale-100",
   secondary:
-    "border border-line-strong text-muted hover:border-accent hover:text-accent-bright",
+    "border border-line-strong text-muted hover:border-accent hover:text-accent",
   ghost: "text-muted hover:text-fg",
   // Akzent-Umriss: für nachgeordnete Aktionen, die trotzdem zum Kern gehören
   // (kombiniertes Schreiben) – sichtbar hervorgehoben, aber nicht als zweiter Haupt-CTA.
-  accent: "border border-accent-border text-accent-bright hover:bg-accent-bg/40",
+  accent: "border border-accent-border text-accent-bright hover:bg-accent-soft",
 };
 
 // Beide Größen erfüllen die 44-px-Mindestfläche aus Task 2 auch dann, wenn der

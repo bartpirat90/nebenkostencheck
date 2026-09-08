@@ -20,7 +20,7 @@ export default function StatsBar() {
             </span>
             <span
               className={`text-base font-medium tabular-nums shrink-0 ps-3 ${
-                accentRows.includes(i) ? "text-accent-soft" : "text-fg"
+                accentRows.includes(i) ? "text-accent" : "text-fg"
               }`}
             >
               {stat.value}

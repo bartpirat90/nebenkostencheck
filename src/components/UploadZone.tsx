@@ -75,8 +75,8 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           flex flex-col items-center justify-center
           min-h-[240px] p-8 text-center
           ${dragging
-            ? "border-accent bg-accent-bg/40"
-            : "border-line-strong bg-surface hover:border-accent hover:bg-accent-bg/30"
+            ? "border-accent bg-accent-soft"
+            : "border-line-strong bg-doc hover:border-accent hover:bg-accent-soft"
           }
           ${loading ? "pointer-events-none opacity-60" : ""}
         `}
@@ -94,8 +94,8 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
           <LoadingState />
         ) : (
           <>
-            <div className="w-14 h-14 bg-accent-bg rounded-full flex items-center justify-center mb-4">
-              <svg className="w-7 h-7 text-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-14 h-14 bg-accent-soft rounded-full flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                   d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
@@ -104,7 +104,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
               {t("heading")}
             </p>
             <p className="text-sm text-muted mb-4">{t("hint")}</p>
-            <span className="text-xs bg-surface border border-line text-muted px-3 py-1 rounded-full">
+            <span className="text-xs bg-paper-2 border border-line text-muted px-3 py-1 rounded-full">
               {t("formats", { mb: MAX_FILE_MB })}
             </span>
           </>

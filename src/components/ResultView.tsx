@@ -40,9 +40,9 @@ export default function ResultView({ result, id, onReset }: Props) {
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_14rem] lg:gap-10">
         <div className="space-y-6 min-w-0">
           {/* Bericht-Kopf */}
-          <div className="bg-surface rounded-2xl p-6 border border-line">
+          <div className="bg-doc rounded-2xl p-6 border border-line">
             <p className="text-sm text-muted mb-1">{t("potentialLabel")}</p>
-            <p className="text-4xl font-bold tracking-tight mb-4 text-accent-soft tabular-nums">
+            <p className="text-4xl font-bold tracking-tight mb-4 text-accent tabular-nums">
               {hasErrors ? formatEur(total) : "0 €"}
             </p>
 
@@ -117,7 +117,7 @@ export default function ResultView({ result, id, onReset }: Props) {
 
           {/* Combined letter */}
           {directErrors.length > 0 && reviewErrors.length > 0 && (
-            <section className="space-y-2 bg-surface border border-line rounded-2xl p-4">
+            <section className="space-y-2 bg-doc border border-line rounded-2xl p-4">
               <p className="text-sm text-muted">{t("combinedText")}</p>
               <Button variant="accent" className="w-full" onClick={() => setLetterModal("combined")}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,25 +132,25 @@ export default function ResultView({ result, id, onReset }: Props) {
           {/* No errors state */}
           {!hasErrors && (
             <div className="bg-status-okBg border border-status-okBorder rounded-2xl p-6 text-center">
-              <div className="w-12 h-12 bg-status-okSurface rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 bg-status-okBg border border-status-okBorder rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-status-ok" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <p className="font-semibold text-status-ok">{t("noErrorsTitle")}</p>
-              <p className="text-sm text-status-okSoft mt-1">{t("noErrorsBody")}</p>
+              <p className="text-sm text-muted mt-1">{t("noErrorsBody")}</p>
             </div>
           )}
 
           {/* Farblegende – mobil im Fluss (Desktop: in der Randleiste) */}
           {hasErrors && (
-            <div className="lg:hidden bg-surface border border-line rounded-xl p-4">
+            <div className="lg:hidden bg-doc border border-line rounded-xl p-4">
               <ConfidenceLegend />
             </div>
           )}
 
           {/* Legal disclaimer */}
-          <div className="bg-surface border border-line rounded-xl p-4 text-xs text-faint leading-relaxed">
+          <div className="bg-doc border border-line rounded-xl p-4 text-xs text-faint leading-relaxed">
             <strong className="text-muted">{t("disclaimerLabel")}</strong> {t("disclaimer")}
           </div>
 
@@ -216,7 +216,7 @@ function SectionHeader({ badge, title, subtitle }: {
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="shrink-0 w-8 h-8 rounded-lg bg-surface border border-line text-fg font-bold flex items-center justify-center text-sm tabular-nums">
+      <div className="shrink-0 w-8 h-8 rounded-lg bg-doc border border-line text-fg font-bold flex items-center justify-center text-sm tabular-nums">
         {badge}
       </div>
       <div>
@@ -261,7 +261,7 @@ function ErrorCard({ error }: { error: ErrorItem }) {
             </p>
           )}
           {error.actionText && (
-            <p className="text-xs text-muted mt-2 bg-ink/60 rounded-md px-2 py-1.5">
+            <p className="text-xs text-muted mt-2 bg-paper-2 rounded-md px-2 py-1.5">
               <strong className="text-fg">{t("cardRecommendation")}</strong> {error.actionText}
             </p>
           )}
