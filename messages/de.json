@@ -19,11 +19,39 @@
     "noAccount": "Kein Account nötig"
   },
   "hero": {
-    "eyebrow": "§ geprüft nach BetrKV / HeizkV / BGH",
     "headline": "Steckt Geld in deiner Nebenkostenabrechnung?",
-    "subline": "Lade deine Nebenkosten- oder Betriebskostenabrechnung hoch – in Sekunden auf typische Fehler geprüft, mit geschätztem Erstattungspotenzial.",
+    "subline": "Lade deine Nebenkosten- oder Betriebskostenabrechnung hoch. In Sekunden auf typische Fehler geprüft, mit geschätztem Erstattungspotenzial.",
     "cta": "Abrechnung prüfen",
     "priceNote": "Erst-Prüfung kostenlos · vollständiger Bericht einmalig 9,90 €, kein Abo"
+  },
+  "heroReport": {
+    "badge": "Beispiel",
+    "title": "Prüfbericht",
+    "meta": "Abrechnung 2025 · 3 Befunde",
+    "items": [
+      {
+        "title": "Verwaltungskosten umgelegt",
+        "reason": "Nicht umlagefähig nach § 1 Abs. 2 Nr. 1 BetrKV",
+        "amount": "96,00 €",
+        "confidence": "ok"
+      },
+      {
+        "title": "Reparaturkosten in der Abrechnung",
+        "reason": "Instandsetzung ist keine Betriebskostenposition, § 2 BetrKV",
+        "amount": "61,40 €",
+        "confidence": "ok"
+      },
+      {
+        "title": "Heizkosten nicht nach Verbrauch verteilt",
+        "reason": "Mindestens 50 % Verbrauchsanteil verlangt § 7 HeizkV",
+        "amount": "27,10 €",
+        "confidence": "warn"
+      }
+    ],
+    "totalLabel": "Geschätztes Erstattungspotenzial",
+    "totalValue": "≈ 184,50 €",
+    "cta": "Widerspruch als PDF erstellen",
+    "footer": "Beispiel · Geprüft nach BetrKV, HeizkV und BGH-Rechtsprechung"
   },
   "stats": {
     "items": [
