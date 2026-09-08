@@ -125,6 +125,12 @@ Alle Fenster sind Sliding-Windows (Upstash): das vorherige Fenster wird zeitante
 
 ---
 
+## Design-System „Papier auf Ink“
+
+Zwei Farbwelten in `tailwind.config.js`: `ink.*` bildet den dunklen Rahmen (Navigation, Seitenrand, Footer, Modal-Backdrop), der Inhalt liegt auf dem hellen Blatt (`paper.*`, `doc`, `fg`, `muted`, `faint`, `accent.*`, `status.*`). `src/components/SiteShell.tsx` setzt Rahmen und Blatt für alle Seiten (`width="narrow"` für Lesespalten wie `/ergebnis` und Rechtsseiten); `[data-on-ink]` schaltet den Fokusring auf `accent.bright`. `src/lib/design/contrast.test.ts` prüft die WCAG-Kontrastpaare direkt aus den Tokens. Illustrationen sind Inline-SVG-Komponenten unter `src/components/illustrations/` (unDraw, per `scripts/import-undraw.mjs` auf die Papierpalette gezogen). Spezifikation: `docs/superpowers/specs/2026-09-08-papier-auf-ink-design.md`.
+
+---
+
 ## Mehrsprachigkeit (i18n) & Seitenstruktur
 
 Next-intl mit sechs Locales (`src/i18n/routing.ts`): `de` (Standard, ohne URL-Präfix), `en`, `tr`, `ar`, `ru`, `uk`. Seiten liegen unter `src/app/[locale]/...`; **API-Routen bleiben unpräfixiert** unter `src/app/api/*`, ebenso `src/app/og.png/route.tsx`. Übersetzungsstatus: `messages/{tr,ar,ru,uk}.json` tragen `_meta.status: "ai-draft"` (KI-Erstübersetzung, Review durch Muttersprachler vor Launch ausstehend), `de`/`en` sind manuell gepflegt.
@@ -279,7 +285,7 @@ Der Client übersetzt anhand des `code` über `apiErrors.*` in `messages/*.json`
 | Vercel Hobby | Verbietet kommerzielle Nutzung → **Pro erforderlich**. Pro hebt auch das Function-Timeout (`maxDuration = 60`) an. |
 | KI-Kosten | ~14 Cent/Analyse, ~3 Cent/Brief (s. o.). Pro Verkauf vernachlässigbar. |
 | Datenpersistenz | Nur kurzlebiger KV-Eintrag (24 h unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener Zahlung), keine History, kein Account. |
-| Tests | Vitest (`npm test`, aktuell 18 Dateien / 102 Tests) + `tsc --noEmit` + `npm run lint` (ESLint 9 Flat Config, `eslint-config-next`) + `npm run build`. |
+| Tests | Vitest (`npm test`, aktuell 20 Dateien / 124 Tests) + `tsc --noEmit` + `npm run lint` (ESLint 9 Flat Config, `eslint-config-next`) + `npm run build`. |
 | Lokale env-Eigenheit | Eine bereits in der Shell gesetzte (auch leere) `ANTHROPIC_API_KEY` überschattet `.env.local`, da dotenv existierende Variablen nicht überschreibt. Lokaler Workaround: `env -u ANTHROPIC_API_KEY npm run dev`. Betrifft nicht Vercel. |
 | Rechtstexte | Impressum/Datenschutz/AGB sind unverbindliche Roh-Vorlagen mit Platzhaltern (Betreibername/-anschrift) — vor Live-Betrieb prüfen lassen. |
 | Arabisch im PDF | Noto Sans deckt Latin-Ext + Kyrillisch ab, aber kein Arabisch — Briefe/Berichte auf Arabisch werden im PDF-Export nicht korrekt dargestellt. |

@@ -44,6 +44,18 @@ Die Bezahlinhalte werden **serverseitig** zurückgehalten, bis die Zahlung per S
 | PDF | `@react-pdf/renderer` (serverseitig) |
 | Deployment | Vercel (Pro für kommerziellen Betrieb erforderlich) |
 
+### Design-System „Papier auf Ink“
+
+Zwei Farbwelten in `tailwind.config.js`: `ink.*` trägt den dunklen Rahmen
+(Navigation, Seitenrand, Footer, Modal-Backdrop), alles Übrige liegt auf dem
+hellen Blatt (`paper.*`, `doc`, `fg`, `muted`, `faint`, `accent.*`). Die
+Seitenshell `src/components/SiteShell.tsx` setzt Rahmen und Blatt; `[data-on-ink]`
+schaltet den Fokusring auf die helle Akzentvariante. `src/lib/design/contrast.test.ts`
+rechnet die WCAG-Paare aus den Tokens nach. Illustrationen liegen inline unter
+`src/components/illustrations/` und werden per `node scripts/import-undraw.mjs`
+erzeugt (siehe README dort). Spezifikation:
+`docs/superpowers/specs/2026-09-08-papier-auf-ink-design.md`.
+
 ---
 
 ## Lokales Setup
@@ -160,12 +172,15 @@ src/
       generate-report/route.tsx # GET:  Detailbericht → PDF, paid-gated
 
   components/
-    LandingHero · StatsBar · HowItWorks   # Landing-Sektionen
+    SiteShell · Footer                    # Ink-Rahmen mit Navigation, Papierblatt, Footer
+    LandingHero · ReportPreviewCard       # Hero mit Muster-Prüfbericht
+    ProofLine · HowItWorks · ReportFeatures · LetterPreview · TenantRights · Faq  # Landing-Sektionen
+    illustrations/                        # Inline-SVGs (unDraw), erzeugt per scripts/import-undraw.mjs
     UploadZone                            # Drag-and-drop Upload + Lade-Animation
     PreviewView                           # Teaser + Widerrufs-Checkbox + Checkout-CTA
     ResultView                            # Voller Bericht + PDF-/Brief-Buttons
     ContactForm · LetterModal             # Brieferstellung (PDF-Download)
-    Logo · Footer                         # Schutzschild-Logo, Footer mit Rechtslinks
+    Logo · LocaleSwitcher · Reveal        # Schutzschild-Logo, Sprachwahl, Einblend-Animation
     ActivityIndicator                     # Geteilte Lade-Animation (Balken + Phasen)
 
   lib/

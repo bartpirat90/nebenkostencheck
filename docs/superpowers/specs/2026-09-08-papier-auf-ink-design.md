@@ -201,7 +201,7 @@ Quelle unDraw (Katerina Limpitsouni), Lizenz: unDraw License, kommerziell frei, 
 | `ergebnis/page.tsx`, `LegalPage.tsx`, beide `not-found.tsx` | Gleiche Shell wie die Startseite (Nav auf Ink, Blatt, Footer). Rechtstexte 16 px auf 62 ch, Überschriften nach 3, Links in `accent` mit Unterstreichung |
 | `Button.tsx` | primary: `fg` auf `paper`, Hover `#2A3038`; secondary: Rahmen `paper.line-strong`, Text `fg`; ghost: `muted`, Hover `fg`; accent: `accent` auf `doc` mit Rahmen `accent.border`. Alle: `:active { transform: scale(.97) }`, Mindesthöhe 44 px |
 | `LocaleSwitcher.tsx` | In der Nav: `ink.2`-Fläche, Rahmen `ink.line`, Text `ink.fg` |
-| `Logo.tsx` | Unverändert (Schild `#10B981` auf Ink) |
+| `Logo.tsx` | Wortmarke auf `ink.fg`, damit sie auf Ink lesbar bleibt; Schild `#10B981` unverändert |
 
 ## 9. Bewegung
 
