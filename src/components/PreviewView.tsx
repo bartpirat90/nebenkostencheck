@@ -36,7 +36,7 @@ export default function PreviewView({ preview, onReset }: Props) {
       }
       const { url } = await res.json();
       // Vorschau vor der Weiterleitung sichern: bricht der Nutzer bei Stripe ab,
-      // holen wir sie zurueck statt eine zweite KI-Analyse zu erzwingen.
+      // holen wir sie zurück statt eine zweite KI-Analyse zu erzwingen.
       savePreview(preview);
       window.location.href = url;
     } catch (err: unknown) {

@@ -18,7 +18,7 @@ const CONFIDENCE_COLORS: Record<Confidence, { bg: string; border: string; text: 
   sicher: { bg: "bg-status-okBg", border: "border-status-okBorder", text: "text-status-ok", dot: "bg-status-okStrong" },
   wahrscheinlich: { bg: "bg-status-warnBg", border: "border-status-warnBorder", text: "text-status-warn", dot: "bg-status-warnStrong" },
   // Neutral statt Rot: "unsicher" ist keine Fehlermeldung, sondern eine offene
-  // Pruefkategorie. Rot bleibt echten Fehlerzustaenden (API-/Sendefehler) vorbehalten.
+  // Prüfkategorie. Rot bleibt echten Fehlerzuständen (API-/Sendefehler) vorbehalten.
   unsicher: { bg: "bg-status-neutralBg", border: "border-status-neutralBorder", text: "text-status-neutral", dot: "bg-status-neutralStrong" },
 };
 
@@ -51,12 +51,12 @@ export default function ResultView({ result, id, onReset }: Props) {
                 <div>
                   <p className="text-xs text-muted">{t("directLabel")}</p>
                   <p className="text-lg font-bold text-status-ok tabular-nums">{formatEur(directTotal)}</p>
-                  <p className="text-xs text-faint tabular-nums">{t("points", { count: directErrors.length })}</p>
+                  <p className="text-[12.5px] text-faint tabular-nums">{t("points", { count: directErrors.length })}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted">{t("reviewLabel")}</p>
                   <p className="text-lg font-bold text-status-warn tabular-nums">{formatEur(reviewTotal)}</p>
-                  <p className="text-xs text-faint tabular-nums">{t("points", { count: reviewErrors.length })}</p>
+                  <p className="text-[12.5px] text-faint tabular-nums">{t("points", { count: reviewErrors.length })}</p>
                 </div>
               </div>
             )}
@@ -132,7 +132,8 @@ export default function ResultView({ result, id, onReset }: Props) {
           {/* No errors state */}
           {!hasErrors && (
             <div className="bg-status-okBg border border-status-okBorder rounded-2xl p-6 text-center">
-              <div className="w-12 h-12 bg-status-okBg border border-status-okBorder rounded-full flex items-center justify-center mx-auto mb-3">
+              {/* Kreis auf bg-doc statt bg-status-okBg: sonst verschwindet er im gleichfarbigen Kasten */}
+              <div className="w-12 h-12 bg-doc border border-status-okBorder rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-status-ok" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
@@ -150,7 +151,7 @@ export default function ResultView({ result, id, onReset }: Props) {
           )}
 
           {/* Legal disclaimer */}
-          <div className="bg-doc border border-paper-line rounded-xl p-4 text-xs text-faint leading-relaxed">
+          <div className="bg-doc border border-paper-line rounded-xl p-4 text-[12.5px] text-faint leading-relaxed">
             <strong className="text-muted">{t("disclaimerLabel")}</strong> {t("disclaimer")}
           </div>
 
@@ -232,14 +233,17 @@ function ErrorCard({ error }: { error: ErrorItem }) {
   const conf = CONFIDENCE_COLORS[error.confidence];
 
   return (
-    <div className={`rounded-xl border p-4 ${conf.bg} ${conf.border}`}>
+    // Karte auf bg-doc statt getönter Statusfläche: bei "unsicher" wäre die Fläche
+    // sonst mit der Empfehlungsbox (bg-paper-2) identisch und würde darin verschwinden.
+    // Der Status bleibt über Rahmenfarbe, Punkt und Etikett-Badge sichtbar.
+    <div className={`rounded-xl border p-4 bg-doc ${conf.border}`}>
       <div className="flex items-start gap-3">
         <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${conf.dot}`} />
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2 flex-wrap">
             <div>
               <p className={`font-semibold text-sm ${conf.text}`}>{error.title}</p>
-              <span className={`inline-block text-[12.5px] font-semibold mt-0.5 ${conf.text}`}>
+              <span className={`inline-block text-[12.5px] font-semibold mt-0.5 px-1.5 py-0.5 rounded ${conf.text} ${conf.bg}`}>
                 {t(`confidence.${error.confidence}.label`)}
               </span>
             </div>
@@ -251,12 +255,12 @@ function ErrorCard({ error }: { error: ErrorItem }) {
           </div>
           <p className="text-sm text-muted mt-2 leading-relaxed">{error.description}</p>
           {error.legalBasis && (
-            <p className="text-xs text-faint mt-2">
+            <p className="text-[12.5px] text-faint mt-2">
               {t("cardLegalBasis")} {error.legalBasis}
             </p>
           )}
           {error.evidence && (
-            <p className="text-xs text-faint mt-1 italic">
+            <p className="text-[12.5px] text-faint mt-1 italic">
               {t("cardEvidence")} „{error.evidence}“
             </p>
           )}
