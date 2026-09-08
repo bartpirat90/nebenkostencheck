@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import UploadZone from "@/components/UploadZone";
 import PreviewView from "@/components/PreviewView";
 import LandingHero from "@/components/LandingHero";
-import StatsBar from "@/components/StatsBar";
+import ProofLine from "@/components/ProofLine";
 import HowItWorks from "@/components/HowItWorks";
 import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
@@ -119,7 +119,7 @@ export default function Home() {
         <>
           <LandingHero />
           <Reveal>
-            <StatsBar />
+            <ProofLine />
           </Reveal>
           <Reveal delay={80}>
             <HowItWorks />
