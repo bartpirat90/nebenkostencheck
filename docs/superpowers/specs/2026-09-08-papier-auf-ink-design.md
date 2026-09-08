@@ -120,7 +120,7 @@ Geist bleibt einzige Familie (Google Fonts, latin + latin-ext, Fallbacks für ru
   <main class="paper">    Blatt: max-width 1180, Radius 18 oben, Schatten 0 30px 80px rgba(0,0,0,.55), Innenabstand 56 px (Mobil 20 px)
     …Sektionen…
   </main>
-  <footer on-ink>         Wortmarke · Impressum · Datenschutz · AGB · Kontakt · „Automatische Löschung · Keine Rechtsberatung“
+  <footer on-ink>         Wortmarke · Impressum · Datenschutz · AGB · „Automatische Löschung · Keine Rechtsberatung“
 </html>
 ```
 
@@ -140,7 +140,7 @@ Zweispaltig ab 1024 px (1,05fr / 0,95fr, Abstand 52 px), darunter gestapelt mit 
 
 ### 5.2 Beleg-Zeile (`ProofLine.tsx`, ersetzt `StatsBar.tsx`)
 
-Drei Spalten (1,4fr / 1fr / 1fr), Ober- und Unterkante `paper.line`, 24 px Innenabstand. Je Spalte Zahl in Proof-Größe, Satz in `muted`, Quelle in `faint`. Inhalt aus `proof.items[]`: „Rund die Hälfte“ (Deutscher Mieterbund), „15 Sekunden“, „12 Monate“ (§ 556 Abs. 3 BGB). Unter 768 px untereinander mit 18 px Abstand. Keine Tabelle, kein Kasten.
+Drei Spalten (1,4fr / 1fr / 1fr), Ober- und Unterkante `paper.line`, 24 px Innenabstand. Je Spalte Zahl in Proof-Größe, Satz in `muted`, Quelle in `faint`. Inhalt aus `proof.items[]`: „Rund die Hälfte“ (Deutscher Mieterbund), „15 Sekunden“, „12 Monate“ (§ 556 Abs. 3 BGB). Unter 768 px untereinander mit 18 px Abstand. Keine Tabelle, kein Kasten. Der Namespace `reviews` bleibt erhalten; echte Kundenstimmen erscheinen, sobald vorhanden, als eigene Zeile direkt unter der Beleg-Zeile (Zitat in `muted`, Name in `faint`), bis dahin wird nichts gerendert.
 
 ### 5.3 Drei Schritte (`HowItWorks.tsx`, neu `illustrations/*`)
 
@@ -152,7 +152,7 @@ Drei Spalten (1,4fr / 1fr / 1fr), Ober- und Unterkante `paper.line`, 24 px Innen
 
 ### 5.5 Das steckt im Bericht (`ReportFeatures.tsx`, neu `LetterPreview.tsx`)
 
-`id="bericht"`. Zwei Spalten (Abstand 56 px). Links H2 `reportFeatures.heading`, Lead, Liste `reportFeatures.items[]` (4 Einträge: Titel, Untertitel), jeder mit 28 px Marker-Kachel `accent.soft` und Lucide-Icon in `accent` (`scale`, `file-text`, `search`, `arrow-right`). Rechts **LetterPreview**: statischer Musterbrief auf `doc`, Rahmen `paper.line`, 34/38 px Innenabstand, 12,5 px Schrift, um -1° gedreht, gleicher Schatten wie die Berichtskarte. Inhalt aus `letterPreview.*` (Absender, Empfänger, Betreff, vier Absätze, Grußformel, Unterschrift in kursivem Fallback). Namen und Adressen sind erfunden und bleiben so; Kennzeichnung „Muster“ oben rechts in `faint`. Unter 1024 px: Brief unter der Liste, maximal 480 px.
+`id="bericht"`. Zwei Spalten (Abstand 56 px). Links H2 `reportFeatures.heading`, Lead, Liste `reportFeatures.items[]` (4 Einträge: Titel, Untertitel), jeder mit 28 px Marker-Kachel `accent.soft` und Icon in `accent` (Lucide-Motive `scale`, `file-text`, `search`, `arrow-right` als Inline-SVG kopiert, kein neues npm-Paket). Rechts **LetterPreview**: statischer Musterbrief auf `doc`, Rahmen `paper.line`, 34/38 px Innenabstand, 12,5 px Schrift, um -1° gedreht, gleicher Schatten wie die Berichtskarte. Inhalt aus `letterPreview.*` (Absender, Empfänger, Betreff, vier Absätze, Grußformel, Unterschrift in kursivem Fallback). Namen und Adressen sind erfunden und bleiben so; Kennzeichnung „Muster“ oben rechts in `faint`. Unter 1024 px: Brief unter der Liste, maximal 480 px.
 
 ### 5.6 Dein gutes Recht als Mieter (`TenantRights.tsx`)
 
