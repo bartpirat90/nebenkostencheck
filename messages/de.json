@@ -138,12 +138,28 @@
     "closing": "Mit freundlichen Grüßen",
     "signature": "Lena Hartmann"
   },
+  "rights": {
+    "heading": "Dein gutes Recht als Mieter",
+    "items": [
+      {
+        "term": "Zwölf Monate Widerspruchsfrist",
+        "description": "Einwendungen kannst du bis zum Ablauf des zwölften Monats nach Zugang der Abrechnung erheben, auch wenn du die Nachzahlung schon geleistet hast (§ 556 Abs. 3 BGB)."
+      },
+      {
+        "term": "Anspruch auf Belegeinsicht",
+        "description": "Du darfst die Originalbelege zu jeder Position einsehen. Bleibt die Einsicht verwehrt, kannst du die Nachzahlung zurückhalten (§ 259 BGB)."
+      },
+      {
+        "term": "Verspätete Abrechnung",
+        "description": "Rechnet dein Vermieter später als zwölf Monate nach Ende des Abrechnungszeitraums ab, ist eine Nachforderung in der Regel ausgeschlossen (§ 556 Abs. 3 Satz 3 BGB)."
+      }
+    ]
+  },
   "reviews": {
     "heading": "ERFAHRUNGEN",
     "saved": "{amount} € zurückgeholt"
   },
   "faq": {
-    "eyebrow": "HÄUFIGE FRAGEN",
     "heading": "Was du vor der Prüfung wissen solltest",
     "items": [
       {
