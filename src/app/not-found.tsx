@@ -24,15 +24,19 @@ export default function RootNotFound() {
           <nav
             data-on-ink
             aria-label="Hauptnavigation"
-            className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 flex items-center border-b border-ink-line bg-ink/90 backdrop-blur-sm"
+            className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 border-b border-ink-line bg-ink/90 backdrop-blur-sm"
           >
-            {/* Rohes <a> statt next/link: eine Soft-Navigation von hier in den
-                [locale]-Baum scheitert am RSC-Fetch (Konsolenfehler, danach
-                ohnehin harte Navigation) – der Reload ist hier der Normalfall. */}
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <a href="/" aria-label="Zur Startseite" className="inline-flex items-center min-h-11">
-              <Logo />
-            </a>
+            {/* Gleiche Achse wie Blatt und Fuß dieser Seite (max-w-3xl), damit das
+                Logo auf breiten Bildschirmen nicht an der Fensterkante klebt. */}
+            <div className="mx-auto flex h-full w-full max-w-3xl items-center">
+              {/* Rohes <a> statt next/link: eine Soft-Navigation von hier in den
+                  [locale]-Baum scheitert am RSC-Fetch (Konsolenfehler, danach
+                  ohnehin harte Navigation) – der Reload ist hier der Normalfall. */}
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href="/" aria-label="Zur Startseite" className="inline-flex items-center min-h-11">
+                <Logo />
+              </a>
+            </div>
           </nav>
 
           <div className="flex-1 px-2 sm:px-6">

@@ -32,25 +32,30 @@ export default function SiteShell({ children, withNavLinks = false, width = "wid
       <nav
         data-on-ink
         aria-label={t("label")}
-        className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 flex items-center justify-between gap-3 border-b border-ink-line bg-ink/90 backdrop-blur-sm"
+        className="sticky top-0 z-20 h-[68px] px-4 sm:px-6 border-b border-ink-line bg-ink/90 backdrop-blur-sm"
       >
-        <Link href="/" aria-label={t("home")} className="inline-flex items-center min-h-11">
-          <Logo />
-        </Link>
+        {/* Gleiche Achse wie Blatt und Fuß (max-w-[1180px]): ohne diesen Container
+            kleben Logo und Sprachwahl auf breiten Bildschirmen an den Fensterkanten,
+            während der Inhalt mittig liegt – die Kopfzeile wirkt dann versetzt. */}
+        <div className="mx-auto flex h-full w-full max-w-[1180px] items-center justify-between gap-3">
+          <Link href="/" aria-label={t("home")} className="inline-flex items-center min-h-11">
+            <Logo />
+          </Link>
 
-        <div className="flex items-center gap-2 sm:gap-4">
-          {withNavLinks && (
-            /* Echte Anker, keine Router-Links: die Ziele liegen auf derselben Seite. */
-            <div className="hidden md:flex items-center gap-4 text-sm">
-              <a href="#so-funktionierts" className={navLink}>{t("links.how")}</a>
-              <a href="#bericht" className={navLink}>{t("links.report")}</a>
-              <a href="#fragen" className={navLink}>{t("links.faq")}</a>
-            </div>
-          )}
-          <span className="hidden sm:inline-flex items-center rounded-full border border-ink-line bg-ink-2 px-3 py-1.5 text-[12.5px] text-ink-muted">
-            {t("pill")}
-          </span>
-          <LocaleSwitcher />
+          <div className="flex items-center gap-2 sm:gap-4">
+            {withNavLinks && (
+              /* Echte Anker, keine Router-Links: die Ziele liegen auf derselben Seite. */
+              <div className="hidden md:flex items-center gap-4 text-sm">
+                <a href="#so-funktionierts" className={navLink}>{t("links.how")}</a>
+                <a href="#bericht" className={navLink}>{t("links.report")}</a>
+                <a href="#fragen" className={navLink}>{t("links.faq")}</a>
+              </div>
+            )}
+            <span className="hidden sm:inline-flex items-center rounded-full border border-ink-line bg-ink-2 px-3 py-1.5 text-[12.5px] text-ink-muted">
+              {t("pill")}
+            </span>
+            <LocaleSwitcher />
+          </div>
         </div>
       </nav>
 
