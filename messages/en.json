@@ -9,7 +9,7 @@
     "label": "Main navigation",
     "links": {
       "how": "How it works",
-      "report": "The report",
+      "report": "Report",
       "faq": "Questions"
     },
     "pill": "First check free · report €9.90"
@@ -27,7 +27,7 @@
   },
   "heroReport": {
     "badge": "Example",
-    "title": "Audit report",
+    "title": "Check report",
     "meta": "Statement 2026 · 3 findings",
     "items": [
       {
@@ -68,7 +68,7 @@
       },
       {
         "value": "12 months",
-        "text": "you have to raise objections, even after you have paid.",
+        "text": "to raise objections, even after you have paid.",
         "source": "§ 556 (3) BGB"
       }
     ]
@@ -83,7 +83,7 @@
       },
       {
         "title": "Have it checked",
-        "description": "Your utility and heating-cost statement (HeizkV) are checked for non-allocable items, incorrect allocation keys, deadline errors and more."
+        "description": "Your utility-cost and heating-cost statements (HeizkV) are checked for non-allocable items, incorrect allocation keys, deadline errors and more."
       },
       {
         "title": "Send your objection",
@@ -122,8 +122,8 @@
         "subtitle": "Addressed to your landlord, ready to sign."
       },
       {
-        "title": "Request to inspect the receipts",
-        "subtitle": "For items that cannot be settled without receipts (§ 259 BGB)."
+        "title": "Request to inspect the supporting documents",
+        "subtitle": "For items that cannot be settled without supporting documents (§ 259 BGB)."
       },
       {
         "title": "A recommended step for each point",
@@ -158,10 +158,10 @@
       },
       {
         "term": "Right to inspect the receipts",
-        "description": "You may inspect the original receipts for every item. If inspection is refused, you can withhold the balance (§ 259 BGB)."
+        "description": "You may inspect the original supporting documents for every item. If inspection is refused, you can withhold the balance (§ 259 BGB)."
       },
       {
-        "term": "A statement that comes too late",
+        "term": "A statement that arrives too late",
         "description": "If your landlord bills more than twelve months after the end of the accounting period, an additional claim is generally excluded (§ 556 (3) sentence 3 BGB)."
       }
     ]
@@ -202,7 +202,7 @@
       },
       {
         "q": "Nebenkostenabrechnung or Betriebskostenabrechnung: what is the difference?",
-        "a": "They are the same document: \"Nebenkostenabrechnung\" is the everyday term, \"Betriebskostenabrechnung\" is the legally correct term from the German Operating Costs Ordinance (BetrKV). Nebenkostencheck checks both terms the same way. You can upload your statement no matter which heading it uses."
+        "a": "They are the same document: “Nebenkostenabrechnung” is the everyday term, “Betriebskostenabrechnung” is the legally correct term from the German Operating Costs Ordinance (BetrKV). Nebenkostencheck checks both terms the same way. You can upload your statement no matter which heading it uses."
       },
       {
         "q": "Is the Heizkostenabrechnung (heating-cost statement) checked too?",

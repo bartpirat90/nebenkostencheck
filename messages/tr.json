@@ -7,7 +7,7 @@
   },
   "nav": {
     "home": "Ana sayfaya git",
-    "label": "Ana gezinme",
+    "label": "Ana gezinme menüsü",
     "links": {
       "how": "Nasıl çalışır",
       "report": "Rapor",
@@ -22,8 +22,8 @@
   },
   "hero": {
     "headline": "Yan gider faturanızda para gizli mi?",
-    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin. Saniyeler içinde tipik hatalara karşı kontrol edilir, tahmini iadenizle birlikte.",
-    "cta": "Faturamı kontrol et",
+    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin. Saniyeler içinde tipik hatalar açısından kontrol edilir ve tahmini iade tutarınız hesaplanır.",
+    "cta": "Faturamı kontrol edin",
     "priceNote": "İlk kontrol ücretsiz · tam rapor tek seferlik 9,90 €, abonelik yok"
   },
   "heroReport": {
@@ -45,14 +45,14 @@
       },
       {
         "title": "Isıtma giderleri tüketime göre dağıtılmamış",
-        "reason": "§ 7 HeizkV en az yüzde 50 tüketim payı ister",
+        "reason": "§ 7 HeizkV en az yüzde 50 tüketim payı şart koşar",
         "amount": "27,10 €",
         "confidence": "warn"
       }
     ],
     "totalLabel": "Tahmini iade potansiyeli",
     "totalValue": "≈ 184,50 €",
-    "cta": "İtirazı PDF olarak oluştur",
+    "cta": "İtirazı PDF olarak oluşturun",
     "footer": "Örnek · BetrKV, HeizkV ve BGH içtihadına göre kontrol edildi"
   },
   "proof": {
@@ -69,13 +69,13 @@
       },
       {
         "value": "12 ay",
-        "text": "ödeme yapmış olsanız bile itiraz için süreniz var.",
+        "text": "itiraz için süreniz var, ödemeyi çoktan yapmış olsanız bile.",
         "source": "§ 556 Abs. 3 BGB"
       }
     ]
   },
   "howItWorks": {
-    "heading": "Üç adımda iadenize",
+    "heading": "Üç adımda iadenize kavuşun",
     "lead": "Hesap yok, form yok. Siz yüklersiniz, biz kontrol ederiz, siz gönderirsiniz.",
     "steps": [
       {
@@ -84,11 +84,11 @@
       },
       {
         "title": "Kontrol ettirin",
-        "description": "Yan gider ve ısıtma gideri faturanız (HeizkV) yansıtılamayan kalemler, hatalı dağıtım anahtarları, süre hataları ve daha fazlası için kontrol edilir."
+        "description": "Yan gider ve ısıtma gideri faturanız (HeizkV) yansıtılamayan kalemler, hatalı dağıtım anahtarları, süre hataları ve benzerleri açısından kontrol edilir."
       },
       {
         "title": "İtirazınızı gönderin",
-        "description": "Gerekçesi ve kanun maddeleriyle hazır itiraz mektubu, PDF olarak yazdırmaya veya e-postayla göndermeye hazır."
+        "description": "Gerekçesi ve kanun maddeleriyle hazırlanmış itiraz mektubu, PDF olarak yazdırmaya veya e-postayla göndermeye uygun."
       }
     ]
   },
@@ -119,7 +119,7 @@
         "subtitle": "Kanun maddesi, gerekçe ve söz konusu tutar."
       },
       {
-        "title": "Hazır PDF olarak itiraz",
+        "title": "Hazır PDF olarak itiraz mektubu",
         "subtitle": "Ev sahibinize adreslenmiş, imzaya hazır."
       },
       {
@@ -159,11 +159,11 @@
       },
       {
         "term": "Belgeleri inceleme hakkı",
-        "description": "Her kalemin asıl belgelerini inceleyebilirsiniz. İnceleme engellenirse ek ödemeyi bekletebilirsiniz (§ 259 BGB)."
+        "description": "Her kalemin asıl belgelerini inceleyebilirsiniz. İnceleme engellenirse ek ödemeyi alıkoyabilirsiniz (§ 259 BGB)."
       },
       {
         "term": "Geç gelen fatura",
-        "description": "Ev sahibiniz hesap döneminin bitiminden on iki aydan geç fatura düzenlerse, ek talep kural olarak düşer (§ 556 Abs. 3 Satz 3 BGB)."
+        "description": "Ev sahibiniz hesap döneminin bitiminden itibaren on iki ay geçtikten sonra fatura düzenlerse, ek talep kural olarak düşer (§ 556 Abs. 3 Satz 3 BGB)."
       }
     ]
   },
