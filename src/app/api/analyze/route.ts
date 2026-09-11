@@ -6,6 +6,7 @@ import { storeAnalysis } from "@/lib/kv";
 import { classifyErrorCode } from "@/lib/errors";
 import { apiError } from "@/lib/apiErrors";
 import { isAllowedUpload, sniffMediaType } from "@/lib/fileType";
+import { isUploadError, readUpload } from "@/lib/uploadRequest";
 import { AnalysisResult, PreviewData } from "@/types";
 import { MOCK } from "@/lib/mock";
 import { InvalidAnalysisError } from "@/lib/validateAnalysis";
@@ -29,26 +30,12 @@ function toPreview(id: string, r: AnalysisResult): PreviewData {
 
 export async function POST(req: NextRequest) {
   try {
-    // Body kommt roh vom Client — kein Vertrauen in Form/Typ, bevor wir ihn geprüft haben.
-    const body = await req.json().catch(() => null);
-    if (!body || typeof body !== "object" || Array.isArray(body)) {
-      return apiError("INVALID_REQUEST");
+    // Rohbytes (Website) oder JSON mit base64 (Android-App) — siehe readUpload.
+    const upload = await readUpload(req);
+    if (isUploadError(upload)) {
+      return apiError(upload.code);
     }
-    const { base64, mediaType, fileName } = body as Record<string, unknown>;
-    // Zwei Codes: „nichts geschickt" ist ein Nutzerfehler (NO_FILE), ein falscher
-    // Typ im JSON ein Client-Bug (INVALID_REQUEST) — beides 400, aber anders zu deuten.
-    if (base64 === undefined || base64 === "" || mediaType === undefined || mediaType === "") {
-      return apiError("NO_FILE");
-    }
-    if (typeof base64 !== "string" || typeof mediaType !== "string") {
-      return apiError("INVALID_REQUEST");
-    }
-    // Der Dateiname landet im Prompt und in Logs: Steuerzeichen (Zeilenumbrüche,
-    // ESC-Sequenzen) raus, Länge begrenzen.
-    const safeFileName =
-      typeof fileName === "string"
-        ? fileName.replace(/[\x00-\x1f\x7f]/g, "").slice(0, 200) || "upload"
-        : "upload";
+    const { base64, mediaType, fileName: safeFileName, byteSize } = upload;
 
     // Gate 1: Magic-Byte-Prüfung — der deklarierte mediaType ist nur noch ein
     // Plausibilitäts-Check; maßgeblich sind die echten Datei-Bytes (sniffed).
@@ -57,9 +44,7 @@ export async function POST(req: NextRequest) {
       return apiError("UNSUPPORTED_TYPE");
     }
 
-    // Gate 2: Dateigröße (aus base64-Länge rekonstruiert)
-    const padding = base64.endsWith("==") ? 2 : base64.endsWith("=") ? 1 : 0;
-    const byteSize = (base64.length * 3) / 4 - padding;
+    // Gate 2: Dateigröße
     if (byteSize > MAX_FILE_BYTES) {
       return apiError("FILE_TOO_LARGE");
     }

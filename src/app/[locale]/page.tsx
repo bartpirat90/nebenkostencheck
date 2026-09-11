@@ -13,6 +13,8 @@ import TenantRights from "@/components/TenantRights";
 import { PreviewData } from "@/types";
 import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
 import { useApiErrorMessage } from "@/lib/clientErrors";
+import { prepareUpload } from "@/lib/imageCompress";
+import { FILE_NAME_HEADER } from "@/lib/uploadRequest";
 import { clearPreview, loadPreview } from "@/lib/previewStorage";
 import Reveal from "@/components/Reveal";
 import Faq from "@/components/Faq";
@@ -40,23 +42,30 @@ export default function Home() {
 
   const handleFileUpload = useCallback(
     async (file: File) => {
-      if (file.size > MAX_FILE_BYTES) {
-        setError(t("errors.fileTooLarge", { mb: MAX_FILE_MB }));
-        setPreview(null);
-        return;
-      }
       setLoading(true);
       setError(null);
       setPreview(null);
 
       try {
-        const base64 = await fileToBase64(file);
-        const mediaType = file.type || "application/pdf";
+        // Fotos werden hier verkleinert – ein Handyfoto wiegt sonst mehr, als
+        // die Serverless-Function überhaupt entgegennimmt. PDFs bleiben, wie sie sind.
+        const prepared = await prepareUpload(file);
+        if (prepared.size > MAX_FILE_BYTES) {
+          setError(t("errors.fileTooLarge", { mb: MAX_FILE_MB }));
+          setLoading(false);
+          return;
+        }
 
+        // Rohbytes statt base64-JSON: spart 33 % Body und damit genau den
+        // Spielraum, an dem mehrseitige Scans sonst scheitern.
         const response = await fetch("/api/analyze", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ base64, mediaType, fileName: file.name }),
+          headers: {
+            "Content-Type": prepared.type || "application/pdf",
+            // Header tragen nur ASCII – Umlaute im Dateinamen müssen kodiert werden.
+            [FILE_NAME_HEADER]: encodeURIComponent(prepared.name),
+          },
+          body: prepared,
         });
 
         if (!response.ok) {
@@ -213,14 +222,3 @@ function CancelRestore({ onRestore }: { onRestore: (preview: PreviewData) => voi
   return null;
 }
 
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      resolve(result.split(",")[1]);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}

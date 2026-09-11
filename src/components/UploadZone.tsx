@@ -4,7 +4,12 @@ import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 import { Link } from "@/i18n/navigation";
-import { MAX_FILE_MB } from "@/lib/limits";
+import {
+  MAX_FILE_BYTES,
+  MAX_FILE_MB,
+  MAX_SOURCE_FILE_BYTES,
+  MAX_SOURCE_FILE_MB,
+} from "@/lib/limits";
 import { ALLOWED_MEDIA_TYPES } from "@/lib/fileType";
 
 interface Props {
@@ -24,7 +29,16 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
 
   const validate = (file: File): string | null => {
     if (!ACCEPTED_TYPES.includes(file.type)) return t("errInvalidType");
-    if (file.size > MAX_FILE_MB * 1024 * 1024) return t("errTooLarge", { mb: MAX_FILE_MB });
+    // Fotos dürfen groß ankommen – sie werden vor dem Upload verkleinert. Nur
+    // was selbst dafür zu schwer ist, wird abgewiesen. PDFs behalten die harte
+    // Grenze, weil sie ungekürzt an die Function gehen.
+    if (file.type.startsWith("image/")) {
+      if (file.size > MAX_SOURCE_FILE_BYTES) {
+        return t("errImageTooLarge", { mb: MAX_SOURCE_FILE_MB });
+      }
+      return null;
+    }
+    if (file.size > MAX_FILE_BYTES) return t("errTooLarge", { mb: MAX_FILE_MB });
     return null;
   };
 

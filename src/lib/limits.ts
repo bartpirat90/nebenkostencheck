@@ -3,11 +3,13 @@
 
 /**
  * Maximale Dateigröße eines Uploads. Vercel kappt den Serverless-Function-Body
- * bei ~4,5 MB; durch die base64-Aufblähung (×1,33) bleibt als Nutzdatei ~3 MB.
- * Höher zu setzen brächte nichts — Vercel würde den Request vorher mit einem
- * rohen 413 ablehnen.
+ * bei 4,5 MB; höher zu setzen brächte nichts, weil Vercel den Request vorher mit
+ * einem rohen 413 ablehnt. Die Website schickt die Datei als Rohbytes (siehe
+ * uploadRequest.ts), der Body entspricht also der Dateigröße – 4 MB lassen
+ * genug Luft für Header. Die Android-App schickt weiterhin base64 (×1,33) und
+ * riegelt deshalb schon selbst bei 3 MB ab (mobile/src/lib/fileGuard.ts).
  */
-export const MAX_FILE_MB = 3;
+export const MAX_FILE_MB = 4;
 export const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
 /** Maximale Input-Token, die ein Dokument an Claude kosten darf. */
@@ -49,3 +51,24 @@ export const CHECKOUT_PER_IP_PER_HOUR = 20;
 
 /** Bericht-PDF-Render pro IP und Stunde (CPU-lastig). */
 export const REPORT_PER_IP_PER_HOUR = 30;
+
+// ─── Upload-Vorbereitung im Browser ──────────────────────────────────────────
+
+/**
+ * Längste Kante, auf die Fotos vor dem Upload verkleinert werden. Claude
+ * skaliert Bilder ohnehin auf diese Kantenlänge herunter, bevor es sie ansieht –
+ * ein 12-MP-Handyfoto liefert also keinerlei Mehrinformation, kostet aber
+ * Bandbreite und sprengt die Größengrenze.
+ */
+export const IMAGE_MAX_EDGE_PX = 1568;
+
+/** JPEG-Qualität der verkleinerten Fotos. 0,82 hält Zahlen und Kleingedrucktes lesbar. */
+export const IMAGE_QUALITY = 0.82;
+
+/**
+ * Obergrenze für die Datei, die der Browser überhaupt zum Verkleinern annimmt.
+ * Deutlich über jedem Handyfoto, aber klein genug, dass das Dekodieren im
+ * Canvas den Tab nicht zum Absturz bringt.
+ */
+export const MAX_SOURCE_FILE_MB = 40;
+export const MAX_SOURCE_FILE_BYTES = MAX_SOURCE_FILE_MB * 1024 * 1024;
