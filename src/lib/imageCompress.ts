@@ -1,6 +1,7 @@
 "use client";
 
 import { IMAGE_MAX_EDGE_PX, IMAGE_QUALITY, MAX_FILE_BYTES } from "./limits";
+import { shouldCompressPdf } from "./pdfCompress";
 
 /**
  * Verkleinert Fotos im Browser, bevor sie hochgeladen werden.
@@ -10,8 +11,7 @@ import { IMAGE_MAX_EDGE_PX, IMAGE_QUALITY, MAX_FILE_BYTES } from "./limits";
  * skaliert Bilder ohnehin auf IMAGE_MAX_EDGE_PX herunter, bevor es sie ansieht;
  * das Verkleinern kostet also keine Erkennungsqualität, sondern nur Bytes.
  *
- * PDFs bleiben unangetastet – die ließen sich ohne Render-Bibliothek nicht
- * neu verpacken.
+ * PDFs laufen über pdfCompress, aber nur wenn sie sonst abgelehnt würden.
  */
 
 /**
@@ -102,10 +102,18 @@ export async function compressImage(file: File): Promise<File> {
 }
 
 /**
- * Bereitet eine Datei für den Upload vor: Fotos werden verkleinert, PDFs
- * unverändert durchgereicht. Wirft nie – im Zweifel kommt das Original zurück.
+ * Bereitet eine Datei für den Upload vor: Fotos werden verkleinert, zu große
+ * PDFs neu gerendert. Wirft nie – im Zweifel kommt das Original zurück.
  */
 export async function prepareUpload(file: File): Promise<File> {
-  if (!file.type.startsWith("image/")) return file;
-  return compressImage(file);
+  if (file.type.startsWith("image/")) return compressImage(file);
+
+  // Nachgeladen, damit pdf.js nicht im Bundle jedes Seitenaufrufs steckt –
+  // gebraucht wird es nur bei den seltenen übergroßen Scans.
+  if (shouldCompressPdf(file)) {
+    const { compressPdf } = await import("./pdfCompress");
+    return compressPdf(file);
+  }
+
+  return file;
 }

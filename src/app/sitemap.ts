@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { localeUrl } from "@/lib/seo";
 
-const PAGES = ["", "/impressum", "/datenschutz", "/agb"];
+const PAGES = ["", "/upload-hilfe", "/impressum", "/datenschutz", "/agb"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return PAGES.flatMap((page) => {

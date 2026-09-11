@@ -86,10 +86,10 @@
     "ariaLabel": "Abrechnung hochladen",
     "heading": "Abrechnung hier einreichen",
     "hint": "PDF oder Foto ablegen oder klicken zum Auswählen",
-    "formats": "PDF, JPG, PNG · PDF bis {mb} MB, Fotos werden verkleinert",
+    "formats": "PDF, JPG, PNG · große Scans werden automatisch verkleinert",
+    "helpLink": "Welche Seiten werden gebraucht?",
     "errInvalidType": "Nur PDF, JPG, PNG oder WebP erlaubt.",
-    "errTooLarge": "Datei zu groß (max. {mb} MB).",
-    "errImageTooLarge": "Das Foto ist zu groß (max. {mb} MB).",
+    "errSourceTooLarge": "Die Datei ist zu groß (max. {mb} MB).",
     "privacyHint": "Mit dem Upload wird die Datei zur Prüfung an Anthropic (USA) übermittelt und spätestens nach 24 Stunden gelöscht. Details in der <link>Datenschutzerklärung</link>.",
     "loadingTitle": "Deine Abrechnung wird geprüft…",
     "loadingSubtitle": "Das dauert meist 10–20 Sekunden",
@@ -214,6 +214,45 @@
     "title": "Kein passendes Dokument erkannt",
     "body": "Das sieht nicht wie eine Nebenkostenabrechnung aus. Bitte lade deine Abrechnung als PDF oder Foto hoch.",
     "cta": "Andere Datei hochladen"
+  },
+  "uploadHelp": {
+    "title": "Welche Seiten die Prüfung braucht",
+    "metaDescription": "Zu große Datei? Diese Seiten deiner Nebenkostenabrechnung werden geprüft – und diese kannst du weglassen.",
+    "intro": "Deine Datei ist zu groß oder zu umfangreich? Das liegt selten an der Abrechnung selbst, sondern an den Beiblättern, die Abrechnungsdienste mitschicken. Eine Heizkostenabrechnung hat oft vier Seiten Zahlen und danach sechs Seiten Erläuterung.",
+    "question": "Sind in deiner Datei wirklich nur die Seiten, auf die es ankommt?",
+    "needed": {
+      "heading": "Diese Seiten werden gebraucht",
+      "items": [
+        "Das Abrechnungsblatt mit Abrechnungszeitraum, Name und Wohnung.",
+        "Die Kostenaufstellung: jede Position mit Gesamtkosten und deinem Anteil – Heizung, Wasser, Müll, Hausmeister, Versicherung und so weiter.",
+        "Die Verteilerschlüssel: nach Wohnfläche, Personen oder Verbrauch, dazu deine Fläche und die Gesamtfläche.",
+        "Der Abschluss: geleistete Vorauszahlungen und die Nachzahlung oder das Guthaben.",
+        "Bei Heizkosten die Abrechnung des Wärmedienstes mit Verbrauchswerten und der Aufteilung in Grund- und Verbrauchskosten.",
+        "Das Datum der Abrechnung – daran hängt die Zwölfmonatsfrist aus § 556 Abs. 3 BGB."
+      ]
+    },
+    "skip": {
+      "heading": "Diese Seiten kannst du weglassen",
+      "items": [
+        "Energiemix, Primärenergiefaktor und Treibhausgasemissionen. Das steht am Ende fast jeder Heizkostenabrechnung und spielt für die Prüfung keine Rolle.",
+        "Verbrauchsvergleiche und Verbrauchsanalysen mit Balkendiagrammen und Vorjahreswerten.",
+        "Allgemeine Erläuterungen, Begriffserklärungen und Rechenbeispiele des Abrechnungsdienstes.",
+        "Hinweise zu Ablesegeräten, Beiblätter und Werbung.",
+        "Mietvertrag, Kontoauszüge und Mahnungen.",
+        "Leere Rückseiten."
+      ]
+    },
+    "smaller": {
+      "heading": "So wird die Datei kleiner",
+      "items": [
+        "Scanne in Graustufen statt in Farbe. Das allein spart oft zwei Drittel.",
+        "150 bis 200 dpi reichen für die Prüfung; eine höhere Auflösung bringt nichts mehr.",
+        "Exportiere aus dem PDF nur die Seiten, die oben aufgezählt sind.",
+        "Pro Upload geht eine Datei. Mehrseitige Abrechnungen deshalb als ein PDF scannen statt als einzelne Fotos."
+      ]
+    },
+    "note": "Fotos und große Scans werden vor dem Hochladen automatisch verkleinert. Wenn die Datei trotzdem abgelehnt wird, sind zu viele Seiten dabei.",
+    "back": "Zurück zum Upload"
   },
   "errors": {
     "fileTooLarge": "Die Datei ist zu groß (max. {mb} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.",

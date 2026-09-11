@@ -4,12 +4,7 @@ import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 import { Link } from "@/i18n/navigation";
-import {
-  MAX_FILE_BYTES,
-  MAX_FILE_MB,
-  MAX_SOURCE_FILE_BYTES,
-  MAX_SOURCE_FILE_MB,
-} from "@/lib/limits";
+import { MAX_SOURCE_FILE_BYTES, MAX_SOURCE_FILE_MB } from "@/lib/limits";
 import { ALLOWED_MEDIA_TYPES } from "@/lib/fileType";
 
 interface Props {
@@ -29,16 +24,13 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
 
   const validate = (file: File): string | null => {
     if (!ACCEPTED_TYPES.includes(file.type)) return t("errInvalidType");
-    // Fotos dürfen groß ankommen – sie werden vor dem Upload verkleinert. Nur
-    // was selbst dafür zu schwer ist, wird abgewiesen. PDFs behalten die harte
-    // Grenze, weil sie ungekürzt an die Function gehen.
-    if (file.type.startsWith("image/")) {
-      if (file.size > MAX_SOURCE_FILE_BYTES) {
-        return t("errImageTooLarge", { mb: MAX_SOURCE_FILE_MB });
-      }
-      return null;
+    // Beides darf groß ankommen: Fotos werden verkleinert, Scan-PDFs neu
+    // gerendert (prepareUpload). Hier wird nur abgewiesen, was schon zum
+    // Aufbereiten zu schwer ist – die harte Upload-Grenze prüft der Aufrufer
+    // danach noch einmal, dann mit der tatsächlich verschickten Datei.
+    if (file.size > MAX_SOURCE_FILE_BYTES) {
+      return t("errSourceTooLarge", { mb: MAX_SOURCE_FILE_MB });
     }
-    if (file.size > MAX_FILE_BYTES) return t("errTooLarge", { mb: MAX_FILE_MB });
     return null;
   };
 
@@ -119,7 +111,7 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
             </p>
             <p className="text-sm text-muted mb-4">{t("hint")}</p>
             <span className="text-[12.5px] text-faint">
-              {t("formats", { mb: MAX_FILE_MB })}
+              {t("formats")}
             </span>
           </>
         )}
@@ -135,11 +127,18 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
       </p>
 
       {displayError && (
-        <div id="upload-error" role="alert" className="flex items-start gap-2 bg-status-dangerBg border border-status-dangerBorder rounded-xl p-4 text-sm text-status-danger">
-          <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-          {displayError}
+        <div id="upload-error" role="alert" className="bg-status-dangerBg border border-status-dangerBorder rounded-xl p-4 text-sm text-status-danger">
+          <div className="flex items-start gap-2">
+            <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <span>{displayError}</span>
+          </div>
+          {/* Fast jede Ablehnung hat dieselbe Ursache: zu viele Seiten im Upload.
+              Deshalb steht hier die Anleitung statt nur der Fehlermeldung. */}
+          <Link href="/upload-hilfe" className="inline-flex items-center min-h-11 underline hover:no-underline">
+            {t("helpLink")}
+          </Link>
         </div>
       )}
     </div>

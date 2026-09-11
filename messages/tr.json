@@ -96,10 +96,10 @@
     "ariaLabel": "Fatura yükle",
     "heading": "Faturanızı buraya gönderin",
     "hint": "PDF veya fotoğraf bırakın ya da seçmek için tıklayın",
-    "formats": "PDF, JPG, PNG · PDF en fazla {mb} MB, fotoğraflar küçültülür",
+    "formats": "PDF, JPG, PNG · büyük taramalar otomatik küçültülür",
+    "helpLink": "Hangi sayfalar gerekli?",
     "errInvalidType": "Yalnızca PDF, JPG, PNG veya WebP kabul edilir.",
-    "errTooLarge": "Dosya çok büyük (en fazla {mb} MB).",
-    "errImageTooLarge": "Fotoğraf çok büyük (en fazla {mb} MB).",
+    "errSourceTooLarge": "Dosya çok büyük (en fazla {mb} MB).",
     "privacyHint": "Yükleme ile dosya kontrol amacıyla Anthropic'e (ABD) iletilir ve en geç 24 saat sonra silinir. Ayrıntılar <link>gizlilik politikasında</link>.",
     "loadingTitle": "Faturanız kontrol ediliyor…",
     "loadingSubtitle": "Bu genellikle 10–20 saniye sürer",
@@ -224,6 +224,45 @@
     "title": "Uygun belge tanınmadı",
     "body": "Bu bir yan gider faturasına benzemiyor. Lütfen faturanızı PDF veya fotoğraf olarak yükleyin.",
     "cta": "Başka bir dosya yükle"
+  },
+  "uploadHelp": {
+    "title": "Kontrol için hangi sayfalar gerekli",
+    "metaDescription": "Dosya çok mu büyük? Yan gider hesabınızın bu sayfaları kontrol edilir - bunları ise çıkarabilirsiniz.",
+    "intro": "Dosyanız çok büyük veya çok kapsamlı mı? Bunun nedeni genelde hesabın kendisi değil, hesaplama servislerinin eklediği ek sayfalardır. Bir ısıtma hesabında çoğu zaman dört sayfa rakam, ardından altı sayfa açıklama bulunur.",
+    "question": "Dosyanızda gerçekten yalnızca önemli sayfalar mı var?",
+    "needed": {
+      "heading": "Bu sayfalar gerekli",
+      "items": [
+        "Hesap dönemi, ad ve daire bilgisini taşıyan hesap sayfası.",
+        "Masraf dökümü: her kalemin toplam tutarı ve sizin payınız - ısıtma, su, çöp, kapıcı, sigorta vb.",
+        "Dağıtım anahtarları: konut alanı, kişi sayısı veya tüketime göre; ayrıca kendi alanınız ve toplam alan.",
+        "Kapanış: ödenen avanslar ve doğan fark ya da alacak.",
+        "Isıtma için ısı servisinin tüketim değerlerini ve temel/tüketim maliyet ayrımını gösteren hesabı.",
+        "Hesabın tarihi - § 556 Abs. 3 BGB'deki on iki aylık süre buna bağlıdır."
+      ]
+    },
+    "skip": {
+      "heading": "Bu sayfaları çıkarabilirsiniz",
+      "items": [
+        "Enerji karışımı, birincil enerji faktörü ve sera gazı emisyonları. Neredeyse her ısıtma hesabının sonunda yer alır ve kontrol için önemi yoktur.",
+        "Çubuk grafikli ve önceki yıl değerli tüketim karşılaştırmaları ve analizleri.",
+        "Hesaplama servisinin genel açıklamaları, kavram sözlükleri ve örnek hesapları.",
+        "Sayaç cihazlarına dair bilgiler, ek yapraklar ve reklamlar.",
+        "Kira sözleşmesi, hesap ekstreleri ve ihtarnameler.",
+        "Boş arka yüzler."
+      ]
+    },
+    "smaller": {
+      "heading": "Dosya nasıl küçülür",
+      "items": [
+        "Renkli yerine gri tonlamalı tarayın. Tek başına çoğu zaman üçte iki tasarruf sağlar.",
+        "150-200 dpi yeterlidir; daha yüksek çözünürlük bir şey katmaz.",
+        "PDF'ten yalnızca yukarıda sayılan sayfaları dışa aktarın.",
+        "Her yüklemede tek dosya gönderilir. Çok sayfalı hesapları ayrı fotoğraflar yerine tek bir PDF olarak tarayın."
+      ]
+    },
+    "note": "Fotoğraflar ve büyük taramalar yüklemeden önce otomatik olarak küçültülür. Dosya yine de kabul edilmiyorsa, içinde çok fazla sayfa var demektir.",
+    "back": "Yüklemeye dön"
   },
   "errors": {
     "fileTooLarge": "Dosya çok büyük (en fazla {mb} MB). Lütfen yalnızca yan gider faturasını PDF veya fotoğraf olarak yükleyin — büyük taramaları önce sıkıştırın.",

@@ -19,6 +19,7 @@ import { clearPreview, loadPreview } from "@/lib/previewStorage";
 import Reveal from "@/components/Reveal";
 import Faq from "@/components/Faq";
 import SiteShell from "@/components/SiteShell";
+import { Link } from "@/i18n/navigation";
 import { SITE_URL } from "@/lib/constants";
 import Button from "@/components/ui/Button";
 
@@ -47,8 +48,9 @@ export default function Home() {
       setPreview(null);
 
       try {
-        // Fotos werden hier verkleinert – ein Handyfoto wiegt sonst mehr, als
-        // die Serverless-Function überhaupt entgegennimmt. PDFs bleiben, wie sie sind.
+        // Fotos werden hier verkleinert und übergroße Scan-PDFs neu gerendert –
+        // beides wiegt sonst mehr, als die Serverless-Function entgegennimmt.
+        // Digitale PDFs unter der Grenze bleiben unangetastet.
         const prepared = await prepareUpload(file);
         if (prepared.size > MAX_FILE_BYTES) {
           setError(t("errors.fileTooLarge", { mb: MAX_FILE_MB }));
@@ -181,6 +183,7 @@ export default function Home() {
 
 function NotAStatementBox({ onReset }: { onReset: () => void }) {
   const t = useTranslations("notAStatement");
+  const tUpload = useTranslations("upload");
   return (
     <div className="bg-status-warnBg border border-status-warnBorder rounded-2xl p-8 text-center">
       <div className="w-12 h-12 bg-status-warnBg border border-status-warnBorder rounded-full flex items-center justify-center mx-auto mb-4">
@@ -192,6 +195,12 @@ function NotAStatementBox({ onReset }: { onReset: () => void }) {
       <p className="font-bold text-status-warn text-lg mb-2">{t("title")}</p>
       <p className="text-sm text-muted leading-relaxed mb-6">{t("body")}</p>
       <Button onClick={onReset}>{t("cta")}</Button>
+      {/* Häufigster Grund: es wurden die Beiblätter statt der Abrechnung erwischt. */}
+      <p className="mt-4">
+        <Link href="/upload-hilfe" className="text-sm text-accent underline hover:text-accent-hover transition-colors">
+          {tUpload("helpLink")}
+        </Link>
+      </p>
     </div>
   );
 }

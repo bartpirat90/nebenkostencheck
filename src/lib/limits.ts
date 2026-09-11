@@ -72,3 +72,29 @@ export const IMAGE_QUALITY = 0.82;
  */
 export const MAX_SOURCE_FILE_MB = 40;
 export const MAX_SOURCE_FILE_BYTES = MAX_SOURCE_FILE_MB * 1024 * 1024;
+
+/**
+ * Stufen, mit denen eine gerasterte PDF-Seite als JPEG kodiert wird – von der
+ * ersten passenden wird genommen. Die erste entspricht genau dem, was Claude
+ * ohnehin zu sehen bekommt, kostet also keine Erkennungsqualität.
+ *
+ * Reihenfolge ist Absicht: erst die Qualität senken (billig und kaum sichtbar),
+ * dann die Kante. Unter 1100 px wäre Kleingedrucktes nicht mehr sicher lesbar;
+ * dort ist Schluss, und der Nutzer bekommt lieber den Hinweis, überflüssige
+ * Seiten wegzulassen. Gerastert wird dabei nur ein einziges Mal – die weiteren
+ * Stufen rechnen auf dem fertigen Bild weiter, sonst dauerte ein zehnseitiger
+ * Scan im Browser eine halbe Minute.
+ */
+export const PDF_ENCODE_STEPS = [
+  { maxEdge: IMAGE_MAX_EDGE_PX, quality: IMAGE_QUALITY },
+  { maxEdge: IMAGE_MAX_EDGE_PX, quality: 0.68 },
+  { maxEdge: 1300, quality: 0.64 },
+  { maxEdge: 1100, quality: 0.56 },
+] as const;
+
+/**
+ * Ab wie vielen Seiten gar nicht erst neu gerendert wird. Rund 30 Bildseiten
+ * liegen bereits an MAX_INPUT_TOKENS – ein solches Dokument scheitert ohnehin
+ * am Token-Gate, das Rendern würde den Browser nur minutenlang blockieren.
+ */
+export const MAX_PDF_COMPRESS_PAGES = 30;

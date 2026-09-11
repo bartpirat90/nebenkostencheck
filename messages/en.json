@@ -95,10 +95,10 @@
     "ariaLabel": "Upload bill",
     "heading": "Submit your bill here",
     "hint": "Drop a PDF or photo, or click to select",
-    "formats": "PDF, JPG, PNG · PDF up to {mb} MB, photos are resized",
+    "formats": "PDF, JPG, PNG · large scans are shrunk automatically",
+    "helpLink": "Which pages are needed?",
     "errInvalidType": "Only PDF, JPG, PNG or WebP are allowed.",
-    "errTooLarge": "File too large (max. {mb} MB).",
-    "errImageTooLarge": "Photo too large (max. {mb} MB).",
+    "errSourceTooLarge": "The file is too large (max. {mb} MB).",
     "privacyHint": "By uploading, the file is transmitted to Anthropic (USA) for checking and deleted after 24 hours at the latest. Details in the <link>privacy policy</link>.",
     "loadingTitle": "Your bill is being checked…",
     "loadingSubtitle": "This usually takes 10–20 seconds",
@@ -223,6 +223,45 @@
     "title": "No matching document recognised",
     "body": "This does not look like a utility-cost statement. Please upload your bill as a PDF or photo.",
     "cta": "Upload a different file"
+  },
+  "uploadHelp": {
+    "title": "Which pages the check needs",
+    "metaDescription": "File too large? These pages of your utility statement are checked - and these you can leave out.",
+    "intro": "Is your file too large or too long? That is rarely the statement itself, but the extra sheets billing services add. A heating statement often has four pages of figures and then six pages of explanation.",
+    "question": "Does your file really contain only the pages that matter?",
+    "needed": {
+      "heading": "These pages are needed",
+      "items": [
+        "The statement sheet with billing period, name and flat.",
+        "The cost breakdown: every item with total cost and your share - heating, water, waste, caretaker, insurance and so on.",
+        "The distribution keys: by floor area, persons or consumption, plus your area and the total area.",
+        "The closing figures: advance payments made and the amount owed or refunded.",
+        "For heating, the heat service statement with consumption values and the split into base and consumption costs.",
+        "The date of the statement - the twelve-month deadline in section 556 (3) BGB depends on it."
+      ]
+    },
+    "skip": {
+      "heading": "These pages can be left out",
+      "items": [
+        "Energy mix, primary energy factor and greenhouse gas emissions. This closes almost every heating statement and plays no part in the check.",
+        "Consumption comparisons and analyses with bar charts and previous-year figures.",
+        "General explanations, glossaries and worked examples from the billing service.",
+        "Notes on metering devices, inserts and advertising.",
+        "Tenancy agreement, bank statements and reminders.",
+        "Blank back pages."
+      ]
+    },
+    "smaller": {
+      "heading": "How to make the file smaller",
+      "items": [
+        "Scan in greyscale instead of colour. That alone often saves two thirds.",
+        "150 to 200 dpi is enough; a higher resolution adds nothing.",
+        "Export only the pages listed above from the PDF.",
+        "One file per upload. Scan a multi-page statement as a single PDF rather than separate photos."
+      ]
+    },
+    "note": "Photos and large scans are shrunk automatically before upload. If the file is still rejected, it contains too many pages.",
+    "back": "Back to upload"
   },
   "errors": {
     "fileTooLarge": "The file is too large (max. {mb} MB). Please upload only the utility-cost statement as a PDF or photo — compress large scans first.",
