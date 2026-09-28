@@ -215,6 +215,21 @@
     "body": "Das sieht nicht wie eine Nebenkostenabrechnung aus. Bitte lade deine Abrechnung als PDF oder Foto hoch.",
     "cta": "Andere Datei hochladen"
   },
+  "pagePicker": {
+    "title": "Welche Seiten sollen geprüft werden?",
+    "loading": "Seiten werden geladen …",
+    "intro": "Deine Datei hat {count} Seiten. Wähle ab, was nicht zur Abrechnung gehört, etwa Energiemix, Verbrauchsgrafiken oder Werbung. Die Prüfung konzentriert sich dann auf das, worauf es ankommt.",
+    "blankNote": "{count, plural, one {Eine leere Seite haben wir bereits abgewählt.} other {# leere Seiten haben wir bereits abgewählt.}}",
+    "page": "Seite {n}",
+    "blank": "leer",
+    "skipped": "übersprungen",
+    "selectedCount": "{selected} von {total} Seiten ausgewählt",
+    "selectAll": "Alle auswählen",
+    "cancel": "Andere Datei",
+    "confirm": "{count, plural, one {# Seite prüfen} other {# Seiten prüfen}}",
+    "tooMany": "Höchstens {max} Seiten pro Prüfung. Bitte wähle weitere Seiten ab.",
+    "noneSelected": "Wähle mindestens eine Seite aus."
+  },
   "uploadHelp": {
     "title": "Welche Seiten die Prüfung braucht",
     "metaDescription": "Zu große Datei? Diese Seiten deiner Nebenkostenabrechnung werden geprüft – und diese kannst du weglassen.",
@@ -247,15 +262,16 @@
       "items": [
         "Scanne in Graustufen statt in Farbe. Das allein spart oft zwei Drittel.",
         "150 bis 200 dpi reichen für die Prüfung; eine höhere Auflösung bringt nichts mehr.",
-        "Exportiere aus dem PDF nur die Seiten, die oben aufgezählt sind.",
+        "Ab fünf Seiten zeigen wir dir vor der Prüfung jede Seite als Vorschau. Dort wählst du einfach ab, was nicht gebraucht wird.",
         "Pro Upload geht eine Datei. Mehrseitige Abrechnungen deshalb als ein PDF scannen statt als einzelne Fotos."
       ]
     },
-    "note": "Fotos und große Scans werden vor dem Hochladen automatisch verkleinert. Wenn die Datei trotzdem abgelehnt wird, sind zu viele Seiten dabei.",
+    "note": "Fotos und große Scans werden vor dem Hochladen automatisch verkleinert, leere Seiten erkennen wir selbst. Wird die Datei trotzdem abgelehnt, sind zu viele Seiten dabei: Wähle in der Vorschau ab, was oben unter „weglassen“ steht.",
     "back": "Zurück zum Upload"
   },
   "errors": {
     "fileTooLarge": "Die Datei ist zu groß (max. {mb} MB). Bitte lade die Abrechnung als PDF oder Foto hoch — große Scans vorher komprimieren.",
+    "tooManyPages": "Die Datei hat {count} Seiten und ist damit zu umfangreich. Bitte lade nur die Nebenkostenabrechnung hoch.",
     "analyzeFailed": "Analyse fehlgeschlagen. Bitte erneut versuchen.",
     "busy": "Der Prüfdienst ist gerade stark ausgelastet. Bitte in einem Moment erneut versuchen.",
     "unknown": "Unbekannter Fehler"

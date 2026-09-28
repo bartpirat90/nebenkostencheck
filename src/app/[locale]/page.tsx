@@ -5,13 +5,14 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import UploadZone from "@/components/UploadZone";
 import PreviewView from "@/components/PreviewView";
+import PagePicker from "@/components/PagePicker";
 import LandingHero from "@/components/LandingHero";
 import ProofLine from "@/components/ProofLine";
 import HowItWorks from "@/components/HowItWorks";
 import ReportFeatures from "@/components/ReportFeatures";
 import TenantRights from "@/components/TenantRights";
 import { PreviewData } from "@/types";
-import { MAX_FILE_BYTES, MAX_FILE_MB } from "@/lib/limits";
+import { MAX_FILE_BYTES, MAX_FILE_MB, MAX_PICKER_PAGES, PAGE_PICKER_MIN_PAGES } from "@/lib/limits";
 import { useApiErrorMessage } from "@/lib/clientErrors";
 import { prepareUpload } from "@/lib/imageCompress";
 import { FILE_NAME_HEADER } from "@/lib/uploadRequest";
@@ -30,6 +31,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  // PDF, dessen Seiten der Nutzer gerade auswählt – solange gesetzt, ersetzt
+  // die Seitenauswahl die Startseite.
+  const [picking, setPicking] = useState<File | null>(null);
 
   // Zahlungsabbruch bei Stripe: gespeicherte Vorschau wiederherstellen statt
   // den Nutzer zu einer zweiten (kostenpflichtigen) KI-Analyse zu zwingen.
@@ -41,17 +45,19 @@ export default function Home() {
     [t]
   );
 
-  const handleFileUpload = useCallback(
-    async (file: File) => {
+  const analyze = useCallback(
+    async (file: File, pages?: number[]) => {
       setLoading(true);
       setError(null);
       setPreview(null);
+      setPicking(null);
 
       try {
-        // Fotos werden hier verkleinert und übergroße Scan-PDFs neu gerendert –
-        // beides wiegt sonst mehr, als die Serverless-Function entgegennimmt.
-        // Digitale PDFs unter der Grenze bleiben unangetastet.
-        const prepared = await prepareUpload(file);
+        // Fotos werden hier verkleinert, PDFs auf die gewählten Seiten gekürzt
+        // und übergroße Scans neu gerendert – beides wiegt sonst mehr, als die
+        // Serverless-Function entgegennimmt. Ein vollständiges PDF unter der
+        // Grenze bleibt unangetastet.
+        const prepared = await prepareUpload(file, pages);
         if (prepared.size > MAX_FILE_BYTES) {
           setError(t("errors.fileTooLarge", { mb: MAX_FILE_MB }));
           setLoading(false);
@@ -96,10 +102,42 @@ export default function Home() {
     [t, apiMessage]
   );
 
+  const handleFileUpload = useCallback(
+    async (file: File) => {
+      if (file.type !== "application/pdf") {
+        await analyze(file);
+        return;
+      }
+
+      // Erst zählen, dann entscheiden: Kurze Abrechnungen gehen ohne Umweg in
+      // die Prüfung, lange bekommen die Seitenauswahl. pdf.js wird dafür
+      // ohnehin gebraucht, sobald ein Scan zu groß ist.
+      setLoading(true);
+      setError(null);
+      const { countPdfPages } = await import("@/lib/pdfPages");
+      const count = await countPdfPages(file);
+      setLoading(false);
+
+      if (count !== null && count > MAX_PICKER_PAGES) {
+        setError(t("errors.tooManyPages", { count }));
+        return;
+      }
+      if (count !== null && count >= PAGE_PICKER_MIN_PAGES) {
+        setPicking(file);
+        return;
+      }
+      await analyze(file);
+    },
+    [analyze, t]
+  );
+
+  const cancelPicking = useCallback(() => setPicking(null), []);
+
   const handleReset = () => {
     setPreview(null);
     setError(null);
     setNotice(null);
+    setPicking(null);
     // Wer bewusst neu startet, will die alte Vorschau nicht später zurückbekommen.
     clearPreview();
   };
@@ -120,7 +158,7 @@ export default function Home() {
   };
 
   return (
-    <SiteShell withNavLinks={!preview && !loading}>
+    <SiteShell withNavLinks={!preview && !loading && !picking}>
       {/* Eigene, kleine Suspense-Grenze nur für useSearchParams: hält sie fern von
           preview/notice weiter oben, damit ein Re-Suspend beim URL-Cleanup nicht
           den gesamten Seiten-State zurücksetzt. */}
@@ -128,7 +166,7 @@ export default function Home() {
         <CancelRestore onRestore={handleCanceled} />
       </Suspense>
 
-      {!preview && !loading ? (
+      {!preview && !loading && !picking ? (
         <>
           <LandingHero />
           <Reveal>
@@ -155,6 +193,8 @@ export default function Home() {
         <div id="upload" className="max-w-2xl mx-auto scroll-mt-24">
           {loading ? (
             <UploadZone onUpload={handleFileUpload} loading={loading} error={error} />
+          ) : picking ? (
+            <PagePicker file={picking} onConfirm={(pages) => analyze(picking, pages)} onCancel={cancelPicking} />
           ) : preview?.notAStatement ? (
             <NotAStatementBox onReset={handleReset} />
           ) : (

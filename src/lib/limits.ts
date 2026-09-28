@@ -55,46 +55,55 @@ export const REPORT_PER_IP_PER_HOUR = 30;
 // ─── Upload-Vorbereitung im Browser ──────────────────────────────────────────
 
 /**
- * Längste Kante, auf die Fotos vor dem Upload verkleinert werden. Claude
- * skaliert Bilder ohnehin auf diese Kantenlänge herunter, bevor es sie ansieht –
- * ein 12-MP-Handyfoto liefert also keinerlei Mehrinformation, kostet aber
- * Bandbreite und sprengt die Größengrenze.
+ * Was Claude (Sonnet 4.6, Standard-Auflösung) von einem Bild überhaupt ansieht:
+ * höchstens 1568 px lange Kante und höchstens 1568 Bild-Token zu je 28×28 px.
+ * Größere Bilder verkleinert Claude selbst – wir tun es vorher, dann fallen
+ * nur Bytes weg, die nie jemand gesehen hätte (Rechnung in visionSize.ts).
+ * Beim Wechsel auf ein Modell mit hoher Auflösung (Sonnet 5: 2576 px, 4784
+ * Token) müssen beide Werte mitziehen, sonst schicken wir zu wenig.
  */
-export const IMAGE_MAX_EDGE_PX = 1568;
+export const VISION_MAX_EDGE_PX = 1568;
+export const VISION_MAX_TOKENS = 1568;
 
 /** JPEG-Qualität der verkleinerten Fotos. 0,82 hält Zahlen und Kleingedrucktes lesbar. */
 export const IMAGE_QUALITY = 0.82;
 
 /**
- * Obergrenze für die Datei, die der Browser überhaupt zum Verkleinern annimmt.
- * Deutlich über jedem Handyfoto, aber klein genug, dass das Dekodieren im
- * Canvas den Tab nicht zum Absturz bringt.
+ * Obergrenzen für die Datei, die der Browser überhaupt zum Aufbereiten annimmt.
+ * Bilder enger, weil ein riesiges PNG beim Dekodieren komplett im Speicher
+ * liegt und einen Handy-Tab abstürzen lässt; pdf.js liest PDFs dagegen Seite
+ * für Seite und kommt mit großen Scans zurecht.
  */
-export const MAX_SOURCE_FILE_MB = 40;
-export const MAX_SOURCE_FILE_BYTES = MAX_SOURCE_FILE_MB * 1024 * 1024;
+export const MAX_SOURCE_IMAGE_MB = 40;
+export const MAX_SOURCE_IMAGE_BYTES = MAX_SOURCE_IMAGE_MB * 1024 * 1024;
+export const MAX_SOURCE_PDF_MB = 100;
+export const MAX_SOURCE_PDF_BYTES = MAX_SOURCE_PDF_MB * 1024 * 1024;
 
 /**
- * Stufen, mit denen eine gerasterte PDF-Seite als JPEG kodiert wird – von der
- * ersten passenden wird genommen. Die erste entspricht genau dem, was Claude
- * ohnehin zu sehen bekommt, kostet also keine Erkennungsqualität.
- *
- * Reihenfolge ist Absicht: erst die Qualität senken (billig und kaum sichtbar),
- * dann die Kante. Unter 1100 px wäre Kleingedrucktes nicht mehr sicher lesbar;
- * dort ist Schluss, und der Nutzer bekommt lieber den Hinweis, überflüssige
- * Seiten wegzulassen. Gerastert wird dabei nur ein einziges Mal – die weiteren
- * Stufen rechnen auf dem fertigen Bild weiter, sonst dauerte ein zehnseitiger
- * Scan im Browser eine halbe Minute.
+ * JPEG-Qualitäten, mit denen eine gerasterte PDF-Seite kodiert wird – die
+ * erste, die ins Seitenbudget passt, wird genommen. Die Auflösung bleibt
+ * dabei immer die, die Claude sieht: Weniger Pixel würden Kleingedrucktes
+ * kosten, weniger Qualität kostet bis 0,56 nur etwas Randschärfe.
  */
-export const PDF_ENCODE_STEPS = [
-  { maxEdge: IMAGE_MAX_EDGE_PX, quality: IMAGE_QUALITY },
-  { maxEdge: IMAGE_MAX_EDGE_PX, quality: 0.68 },
-  { maxEdge: 1300, quality: 0.64 },
-  { maxEdge: 1100, quality: 0.56 },
-] as const;
+export const PDF_JPEG_QUALITIES = [IMAGE_QUALITY, 0.72, 0.64, 0.56] as const;
 
 /**
- * Ab wie vielen Seiten gar nicht erst neu gerendert wird. Rund 30 Bildseiten
- * liegen bereits an MAX_INPUT_TOKENS – ein solches Dokument scheitert ohnehin
- * am Token-Gate, das Rendern würde den Browser nur minutenlang blockieren.
+ * Höchstzahl an Seiten, die in eine Prüfung gehen. Eine gerasterte Seite kostet
+ * rund 1.560 Token; 45 Seiten plus Systemprompt liegen knapp unter
+ * MAX_INPUT_TOKENS. Mehr würde ohnehin am Token-Gate der Route scheitern.
  */
-export const MAX_PDF_COMPRESS_PAGES = 30;
+export const MAX_PDF_PAGES = 45;
+
+/**
+ * Ab dieser Seitenzahl bekommt der Nutzer die Seitenauswahl zu sehen. Eine
+ * Abrechnung mit Deckblatt, Kostenaufstellung und Heizkosten hat selten mehr
+ * als vier Seiten – ab der fünften hängt meist Beiwerk wie der Energiemix dran.
+ */
+export const PAGE_PICKER_MIN_PAGES = 5;
+
+/**
+ * Ab dieser Seitenzahl zeigen wir nicht einmal mehr Vorschaubilder: Das ist
+ * keine Abrechnung mehr, sondern eine ganze Akte, und hundert Vorschaubilder
+ * rendern dauert auf dem Handy zu lange.
+ */
+export const MAX_PICKER_PAGES = 150;

@@ -1,37 +1,30 @@
 "use client";
 
-import { IMAGE_MAX_EDGE_PX, IMAGE_QUALITY, MAX_FILE_BYTES } from "./limits";
-import { shouldCompressPdf } from "./pdfCompress";
+import { IMAGE_QUALITY, MAX_FILE_BYTES } from "./limits";
+import { needsPdfWork } from "./pdfCompress";
+import { visionSize } from "./visionSize";
 
 /**
  * Verkleinert Fotos im Browser, bevor sie hochgeladen werden.
  *
  * Hintergrund: Vercel kappt den Request-Body bei 4,5 MB, ein Handyfoto wiegt
  * aber schnell 5–15 MB – die Abrechnung wäre dann gar nicht prüfbar. Claude
- * skaliert Bilder ohnehin auf IMAGE_MAX_EDGE_PX herunter, bevor es sie ansieht;
- * das Verkleinern kostet also keine Erkennungsqualität, sondern nur Bytes.
+ * verkleinert Bilder ohnehin auf höchstens 1568 Bild-Token, bevor es sie
+ * ansieht (visionSize); das Verkleinern kostet also keine Erkennungsqualität,
+ * sondern nur Bytes.
  *
- * PDFs laufen über pdfCompress, aber nur wenn sie sonst abgelehnt würden.
+ * PDFs laufen über pdfCompress, aber nur wenn Seiten abgewählt wurden oder sie
+ * sonst abgelehnt würden.
  */
 
 /**
- * Zielmaße für die Verkleinerung, oder null, wenn das Bild schon klein genug
- * ist. Seitenverhältnis bleibt erhalten; gerundet wird auf ganze Pixel, und nie
- * auf 0 (ein extrem schmales Panorama behält mindestens 1 px).
+ * Zielmaße für die Verkleinerung, oder null, wenn das Bild schon so klein ist,
+ * wie Claude es ansieht.
  */
-export function targetSize(
-  width: number,
-  height: number,
-  maxEdge: number = IMAGE_MAX_EDGE_PX,
-): { width: number; height: number } | null {
+export function targetSize(width: number, height: number): { width: number; height: number } | null {
   if (!(width > 0) || !(height > 0)) return null;
-  const longest = Math.max(width, height);
-  if (longest <= maxEdge) return null;
-  const factor = maxEdge / longest;
-  return {
-    width: Math.max(1, Math.round(width * factor)),
-    height: Math.max(1, Math.round(height * factor)),
-  };
+  const size = visionSize(width, height);
+  return size.width === Math.round(width) && size.height === Math.round(height) ? null : size;
 }
 
 /** Ersetzt die Endung durch .jpg, damit Dateiname und Inhalt zusammenpassen. */
@@ -63,7 +56,7 @@ function toBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
 }
 
 /**
- * Verkleinert ein Bild auf IMAGE_MAX_EDGE_PX und kodiert es als JPEG.
+ * Verkleinert ein Bild auf das Maß, das Claude ansieht, und kodiert es als JPEG.
  * Gibt das Original zurück, wenn nichts zu gewinnen ist oder etwas schiefgeht –
  * die Größenprüfung im Aufrufer greift dann wie bisher.
  */
@@ -102,17 +95,18 @@ export async function compressImage(file: File): Promise<File> {
 }
 
 /**
- * Bereitet eine Datei für den Upload vor: Fotos werden verkleinert, zu große
- * PDFs neu gerendert. Wirft nie – im Zweifel kommt das Original zurück.
+ * Bereitet eine Datei für den Upload vor: Fotos werden verkleinert, PDFs auf
+ * die gewählten Seiten gekürzt und, wenn nötig, neu gerendert. `pages` sind
+ * die gewählten Seiten eines PDFs (1-basiert), ohne Angabe alle.
+ * Wirft nie – im Zweifel kommt das Original zurück.
  */
-export async function prepareUpload(file: File): Promise<File> {
+export async function prepareUpload(file: File, pages?: readonly number[]): Promise<File> {
   if (file.type.startsWith("image/")) return compressImage(file);
 
-  // Nachgeladen, damit pdf.js nicht im Bundle jedes Seitenaufrufs steckt –
-  // gebraucht wird es nur bei den seltenen übergroßen Scans.
-  if (shouldCompressPdf(file)) {
-    const { compressPdf } = await import("./pdfCompress");
-    return compressPdf(file);
+  // Nachgeladen, damit pdf.js nicht im Bundle jedes Seitenaufrufs steckt.
+  if (needsPdfWork(file, pages)) {
+    const { preparePdf } = await import("./pdfCompress");
+    return preparePdf(file, pages);
   }
 
   return file;

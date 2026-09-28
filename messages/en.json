@@ -224,6 +224,21 @@
     "body": "This does not look like a utility-cost statement. Please upload your bill as a PDF or photo.",
     "cta": "Upload a different file"
   },
+  "pagePicker": {
+    "title": "Which pages should be checked?",
+    "loading": "Loading pages …",
+    "intro": "Your file has {count} pages. Deselect anything that isn't part of the statement, such as the energy mix, consumption charts or advertising. The check then focuses on what matters.",
+    "blankNote": "{count, plural, one {We've already deselected one blank page.} other {We've already deselected # blank pages.}}",
+    "page": "Page {n}",
+    "blank": "blank",
+    "skipped": "skipped",
+    "selectedCount": "{selected} of {total} pages selected",
+    "selectAll": "Select all",
+    "cancel": "Different file",
+    "confirm": "{count, plural, one {Check # page} other {Check # pages}}",
+    "tooMany": "At most {max} pages per check. Please deselect more pages.",
+    "noneSelected": "Select at least one page."
+  },
   "uploadHelp": {
     "title": "Which pages the check needs",
     "metaDescription": "File too large? These pages of your utility statement are checked - and these you can leave out.",
@@ -256,15 +271,16 @@
       "items": [
         "Scan in greyscale instead of colour. That alone often saves two thirds.",
         "150 to 200 dpi is enough; a higher resolution adds nothing.",
-        "Export only the pages listed above from the PDF.",
+        "From five pages on, we show you a preview of every page before the check. Simply deselect anything that isn't needed.",
         "One file per upload. Scan a multi-page statement as a single PDF rather than separate photos."
       ]
     },
-    "note": "Photos and large scans are shrunk automatically before upload. If the file is still rejected, it contains too many pages.",
+    "note": "Photos and large scans are shrunk automatically before upload, and we detect blank pages ourselves. If the file is still rejected, it contains too many pages: in the preview, deselect what's listed above as pages you can leave out.",
     "back": "Back to upload"
   },
   "errors": {
     "fileTooLarge": "The file is too large (max. {mb} MB). Please upload only the utility-cost statement as a PDF or photo — compress large scans first.",
+    "tooManyPages": "The file has {count} pages, which is too many. Please upload only the utility-cost statement.",
     "analyzeFailed": "Analysis failed. Please try again.",
     "busy": "The checking service is very busy right now. Please try again in a moment.",
     "unknown": "Unknown error"

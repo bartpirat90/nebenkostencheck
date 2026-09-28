@@ -4,7 +4,12 @@ import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 import { Link } from "@/i18n/navigation";
-import { MAX_SOURCE_FILE_BYTES, MAX_SOURCE_FILE_MB } from "@/lib/limits";
+import {
+  MAX_SOURCE_IMAGE_BYTES,
+  MAX_SOURCE_IMAGE_MB,
+  MAX_SOURCE_PDF_BYTES,
+  MAX_SOURCE_PDF_MB,
+} from "@/lib/limits";
 import { ALLOWED_MEDIA_TYPES } from "@/lib/fileType";
 
 interface Props {
@@ -24,12 +29,13 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
 
   const validate = (file: File): string | null => {
     if (!ACCEPTED_TYPES.includes(file.type)) return t("errInvalidType");
-    // Beides darf groß ankommen: Fotos werden verkleinert, Scan-PDFs neu
-    // gerendert (prepareUpload). Hier wird nur abgewiesen, was schon zum
-    // Aufbereiten zu schwer ist – die harte Upload-Grenze prüft der Aufrufer
-    // danach noch einmal, dann mit der tatsächlich verschickten Datei.
-    if (file.size > MAX_SOURCE_FILE_BYTES) {
-      return t("errSourceTooLarge", { mb: MAX_SOURCE_FILE_MB });
+    // Beides darf groß ankommen: Fotos werden verkleinert, PDFs gekürzt und
+    // Scans neu gerendert (prepareUpload). Hier wird nur abgewiesen, was schon
+    // zum Aufbereiten zu schwer ist – die harte Upload-Grenze prüft der
+    // Aufrufer danach noch einmal, dann mit der tatsächlich verschickten Datei.
+    const isPdf = file.type === "application/pdf";
+    if (file.size > (isPdf ? MAX_SOURCE_PDF_BYTES : MAX_SOURCE_IMAGE_BYTES)) {
+      return t("errSourceTooLarge", { mb: isPdf ? MAX_SOURCE_PDF_MB : MAX_SOURCE_IMAGE_MB });
     }
     return null;
   };

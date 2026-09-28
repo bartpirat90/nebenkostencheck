@@ -1,49 +1,25 @@
 "use client";
 
-import { MAX_FILE_BYTES, MAX_PDF_COMPRESS_PAGES, PDF_ENCODE_STEPS } from "./limits";
+import { MAX_FILE_BYTES, MAX_PDF_PAGES, PDF_JPEG_QUALITIES } from "./limits";
 import { buildPdf, type JpegPage } from "./pdfWriter";
+import { canUsePdfjs, openPdf, renderPage, type PdfDocument } from "./pdfjs";
+import { visionSize } from "./visionSize";
 
 /**
- * Rendert ein zu großes PDF im Browser neu und verpackt es kleiner.
+ * Bringt ein PDF auf die Seiten, die geprüft werden sollen, und in die
+ * Upload-Grenze.
  *
- * Gedacht für Farbscans: ein Kopierer legt jede Seite als 300-dpi-Bild ab, eine
- * zehnseitige Abrechnung wiegt dann schnell 15 MB und käme gar nicht erst durch
- * Vercels 4,5-MB-Grenze. Claude verkleinert Seitenbilder ohnehin auf
- * IMAGE_MAX_EDGE_PX, bevor es sie ansieht – am Ergebnis der Analyse ändert das
- * Neurendern also nichts, es fallen nur Bytes weg, die nie jemand gesehen hätte.
+ * Zwei Werkzeuge, in dieser Reihenfolge:
+ *  1. Seiten herauslösen (pdf.js extractPages). Das neue PDF enthält nur die
+ *     gewählten Seiten, die Textebene bleibt erhalten – für ein digitales PDF
+ *     ändert sich an der Analyse nichts, außer dass Beiwerk wegfällt.
+ *  2. Neu rastern. Nur wenn die Datei danach immer noch zu groß ist, also
+ *     praktisch bei Farbscans: Jede Seite wird genau in der Auflösung als JPEG
+ *     abgelegt, in der Claude sie ansieht (visionSize). Was darüber liegt,
+ *     hätte Claude selbst verworfen.
  *
- * Angeworfen wird es nur, wenn die Datei sonst abgelehnt würde: ein digitales
- * PDF mit echter Textebene bleibt unangetastet.
+ * Ein PDF mit allen Seiten und unter der Grenze bleibt unangetastet.
  */
-
-type PdfjsModule = typeof import("pdfjs-dist");
-type PdfDocument = Awaited<ReturnType<PdfjsModule["getDocument"]>["promise"]>;
-type PdfPage = Awaited<ReturnType<PdfDocument["getPage"]>>;
-
-/**
- * Faktor, mit dem eine PDF-Seite gerastert wird. Anders als beim Foto geht es
- * hier meist hinauf: eine A4-Seite misst 595×842 Punkte, für 1568 px lange
- * Kante muss also knapp doppelt so fein gerechnet werden. Die Auflösung der
- * eingebetteten Scans spielt dabei keine Rolle – zählt nur, was am Ende
- * angesehen wird.
- */
-export function renderScale(width: number, height: number, maxEdge: number): number {
-  const longest = Math.max(width, height);
-  if (!(longest > 0) || !(maxEdge > 0)) return 1;
-  return maxEdge / longest;
-}
-
-/** Canvas-Maße zum Skalierungsfaktor – ganze Pixel, nie 0. */
-export function pixelSize(
-  width: number,
-  height: number,
-  scale: number,
-): { width: number; height: number } {
-  return {
-    width: Math.max(1, Math.round(width * scale)),
-    height: Math.max(1, Math.round(height * scale)),
-  };
-}
 
 /**
  * Wie viele Bytes eine einzelne Seite kosten darf. Die 8 % Abzug decken das
@@ -55,152 +31,130 @@ export function pageBudget(pages: number): number {
 }
 
 /**
- * Lohnt sich das Neurendern überhaupt? Nur oberhalb der Upload-Grenze, sonst
- * würde ein sauberes Text-PDF ohne Not zu Bildern plattgerechnet.
+ * Pixelmaße, in denen eine Seite gerastert wird. PDF-Seiten messen in Punkten
+ * (A4 = 595×842) – für die Rechnung hochgerechnet, damit visionSize von einer
+ * großen Vorlage aus verkleinert und genau Claudes Zielmaß trifft.
  */
-export function shouldCompressPdf(file: { type: string; size: number }): boolean {
-  return file.type === "application/pdf" && file.size > MAX_FILE_BYTES;
+export function rasterSize(pointsWidth: number, pointsHeight: number): { width: number; height: number } {
+  return visionSize(pointsWidth * 4, pointsHeight * 4);
 }
 
-let workerStarted = false;
+/**
+ * Gewählte Seiten (1-basiert) bereinigt: sortiert, ohne Doppelte, nur
+ * vorhandene. Ohne Auswahl oder bei leerer Auswahl gelten alle Seiten.
+ */
+export function normalizeSelection(pages: readonly number[] | undefined, total: number): number[] {
+  const all = Array.from({ length: Math.max(0, total) }, (_, i) => i + 1);
+  if (!pages) return all;
+  const picked = [...new Set(pages)]
+    .filter((p) => Number.isInteger(p) && p >= 1 && p <= total)
+    .sort((a, b) => a - b);
+  return picked.length > 0 ? picked : all;
+}
 
 /**
- * pdf.js rechnet in einem Worker. Der Bundler legt ihn als eigenes Asset neben
- * das Bundle, also gleiche Herkunft – die CSP deckt ihn über script-src 'self'.
- * Bewusst workerPort statt workerSrc: so setzen wir „type: module" selbst und
- * pdf.js muss die URL nicht erraten.
+ * Muss pdf.js überhaupt ran? Nicht, wenn alle Seiten bleiben und die Datei in
+ * die Grenze passt – dann würde nur ein sauberes PDF ohne Not umgebaut.
  */
-function ensureWorker(pdfjs: PdfjsModule): void {
-  if (workerStarted) return;
-  pdfjs.GlobalWorkerOptions.workerPort = new Worker(
-    new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url),
-    { type: "module" },
-  );
-  workerStarted = true;
+export function needsPdfWork(file: { type: string; size: number }, pages?: readonly number[]): boolean {
+  if (file.type !== "application/pdf") return false;
+  return pages !== undefined || file.size > MAX_FILE_BYTES;
 }
 
 function toJpeg(canvas: HTMLCanvasElement, quality: number): Promise<Blob | null> {
   return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
 }
 
-function newCanvas(width: number, height: number): HTMLCanvasElement | null {
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return null;
-  // PDF-Seiten haben keinen Hintergrund, JPEG kennt keine Transparenz: ohne
-  // weiße Füllung stünde schwarze Schrift am Ende auf schwarzem Grund.
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, width, height);
-  return canvas;
-}
-
-/** Zeichnet ein fertiges Seitenbild kleiner – viel billiger als neu zu rastern. */
-function downscale(source: HTMLCanvasElement, maxEdge: number): HTMLCanvasElement {
-  const scale = renderScale(source.width, source.height, maxEdge);
-  const size = pixelSize(source.width, source.height, scale);
-  const target = newCanvas(size.width, size.height);
-  if (!target) return source;
-  target.getContext("2d")?.drawImage(source, 0, 0, size.width, size.height);
-  return target;
-}
-
 /**
- * Kodiert das Seitenbild und geht dabei die Stufen durch, bis es ins Budget
+ * Kodiert das Seitenbild und senkt dabei die Qualität, bis es ins Budget
  * passt. Reicht keine Stufe, kommt die kleinste zurück – dann ist das PDF am
  * Ende zwar immer noch zu groß, aber der Nutzer bekommt den Hinweis, welche
  * Seiten er weglassen kann, statt auf eine unlesbare Kopie zu warten.
  */
-async function encodePage(
-  rendered: HTMLCanvasElement,
-  budget: number,
-): Promise<{ blob: Blob; width: number; height: number } | null> {
-  let canvas = rendered;
-  let best: { blob: Blob; width: number; height: number } | null = null;
-
-  for (const step of PDF_ENCODE_STEPS) {
-    if (step.maxEdge < Math.max(canvas.width, canvas.height)) {
-      canvas = downscale(canvas, step.maxEdge);
-    }
-    const blob = await toJpeg(canvas, step.quality);
+async function encodePage(canvas: HTMLCanvasElement, budget: number): Promise<Blob | null> {
+  let best: Blob | null = null;
+  for (const quality of PDF_JPEG_QUALITIES) {
+    const blob = await toJpeg(canvas, quality);
     if (!blob) break;
-    if (!best || blob.size < best.blob.size) {
-      best = { blob, width: canvas.width, height: canvas.height };
-    }
+    if (!best || blob.size < best.size) best = blob;
     if (blob.size <= budget) break;
   }
-
   return best;
 }
 
-async function renderPage(page: PdfPage, budget: number): Promise<JpegPage | null> {
-  // scale 1 liefert die Seitenmaße in PDF-Punkten – die übernimmt das neue
-  // Dokument, damit die Seite exakt so groß bleibt wie vorher.
-  const base = page.getViewport({ scale: 1 });
-  const scale = renderScale(base.width, base.height, PDF_ENCODE_STEPS[0].maxEdge);
-  const viewport = page.getViewport({ scale });
-  const size = pixelSize(base.width, base.height, scale);
+async function rasterize(doc: PdfDocument, pages: number[]): Promise<Uint8Array<ArrayBuffer> | null> {
+  const budget = pageBudget(pages.length);
+  const out: JpegPage[] = [];
+  for (const number of pages) {
+    const page = await doc.getPage(number);
+    // scale 1 liefert die Seitenmaße in PDF-Punkten – die übernimmt das neue
+    // Dokument, damit die Seite exakt so groß bleibt wie vorher.
+    const base = page.getViewport({ scale: 1 });
+    const size = rasterSize(base.width, base.height);
+    const canvas = await renderPage(page, size.width, size.height);
+    if (!canvas) return null;
+    const blob = await encodePage(canvas, budget);
+    if (!blob) return null;
+    out.push({
+      data: new Uint8Array(await blob.arrayBuffer()),
+      pixelWidth: size.width,
+      pixelHeight: size.height,
+      pageWidth: base.width,
+      pageHeight: base.height,
+    });
+  }
+  return buildPdf(out);
+}
 
-  const canvas = newCanvas(size.width, size.height);
-  if (!canvas) return null;
+/** Löst die Seiten heraus; null, wenn pdf.js das Dokument nicht umbauen kann. */
+async function extract(doc: PdfDocument, pages: number[]): Promise<Uint8Array<ArrayBuffer> | null> {
+  const data = await doc.extractPages([{ document: null, includePages: pages.map((p) => p - 1) }]);
+  // Kopie, damit der Puffer sicher ein ArrayBuffer ist – nur den nimmt File.
+  return data ? new Uint8Array(data) : null;
+}
 
-  // intent "print" ist hier kein Druckwunsch, sondern die Entscheidung gegen
-  // requestAnimationFrame: pdf.js taktet das Zeichnen sonst über rAF, und das
-  // steht still, sobald der Tab in den Hintergrund gerät – der Upload bliebe
-  // dann hängen, bis der Nutzer zurückwechselt.
-  await page.render({ canvas, viewport, intent: "print" }).promise;
-  // Sonst hält pdf.js die Zeichenoperationen jeder Seite bis zum Schluss im
-  // Speicher – bei zwanzig Scanseiten sind das hunderte Megabyte.
-  page.cleanup();
-
-  const encoded = await encodePage(canvas, budget);
-  if (!encoded) return null;
-
-  return {
-    data: new Uint8Array(await encoded.blob.arrayBuffer()),
-    pixelWidth: encoded.width,
-    pixelHeight: encoded.height,
-    pageWidth: base.width,
-    pageHeight: base.height,
-  };
+function asPdf(data: Uint8Array<ArrayBuffer>, like: File): File {
+  return new File([data], like.name, { type: "application/pdf", lastModified: like.lastModified });
 }
 
 /**
- * Rendert das PDF neu und verpackt es als Bild-PDF. Gibt im Zweifel – zu viele
- * Seiten, fehlende Browser-API, Fehler, kein Größengewinn – das Original
- * zurück; die Prüfung im Aufrufer greift dann wie bisher.
+ * Bereitet das PDF vor. `pages` sind die gewählten Seiten (1-basiert), ohne
+ * Angabe alle. Gibt im Zweifel – fehlende Browser-API, Fehler, kein Gewinn –
+ * das Beste bis dahin zurück, mindestens das Original; die Größenprüfung im
+ * Aufrufer greift dann wie bisher.
  */
-export async function compressPdf(file: File): Promise<File> {
-  if (typeof document === "undefined" || typeof Worker === "undefined") return file;
+export async function preparePdf(file: File, pages?: readonly number[]): Promise<File> {
+  if (!canUsePdfjs()) return file;
 
-  let task: ReturnType<PdfjsModule["getDocument"]> | null = null;
+  let best = file;
+  let close: (() => Promise<void>) | null = null;
   try {
-    const pdfjs = await import("pdfjs-dist");
-    ensureWorker(pdfjs);
+    const opened = await openPdf(file);
+    close = opened.close;
+    const { doc } = opened;
+    const selection = normalizeSelection(pages, doc.numPages);
+    const complete = selection.length === doc.numPages;
 
-    task = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) });
-    const doc = await task.promise;
-    if (doc.numPages > MAX_PDF_COMPRESS_PAGES) return file;
+    if (complete && file.size <= MAX_FILE_BYTES) return file;
 
-    const budget = pageBudget(doc.numPages);
-    const pages: JpegPage[] = [];
-    for (let number = 1; number <= doc.numPages; number++) {
-      const rendered = await renderPage(await doc.getPage(number), budget);
-      if (!rendered) return file;
-      pages.push(rendered);
+    if (!complete) {
+      // Das Teil-PDF gilt auch dann, wenn es kaum kleiner ist: Die abgewählten
+      // Seiten sollen nicht mitgeprüft werden, ganz gleich, was sie wiegen.
+      const part = await extract(doc, selection).catch(() => null);
+      if (part) best = asPdf(part, file);
+      if (part && best.size <= MAX_FILE_BYTES) return best;
     }
 
-    const out = buildPdf(pages);
-    if (out.length >= file.size) return file;
-    return new File([out], file.name, {
-      type: "application/pdf",
-      lastModified: file.lastModified,
-    });
+    // Mehr Seiten, als eine Prüfung verträgt: Rastern würde den Browser lange
+    // beschäftigen und am Ende doch am Token-Gate der Route scheitern.
+    if (selection.length > MAX_PDF_PAGES) return best;
+
+    const raster = await rasterize(doc, selection);
+    if (raster && raster.length < best.size) best = asPdf(raster, file);
+    return best;
   } catch {
-    return file;
+    return best;
   } finally {
-    // Der LoadingTask hält den Worker offen – ohne destroy bleibt er am Leben.
-    await task?.destroy().catch(() => {});
+    await close?.();
   }
 }

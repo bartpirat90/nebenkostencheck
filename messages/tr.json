@@ -225,6 +225,21 @@
     "body": "Bu bir yan gider faturasına benzemiyor. Lütfen faturanızı PDF veya fotoğraf olarak yükleyin.",
     "cta": "Başka bir dosya yükle"
   },
+  "pagePicker": {
+    "title": "Hangi sayfalar kontrol edilsin?",
+    "loading": "Sayfalar yükleniyor …",
+    "intro": "Dosyanız {count} sayfa içeriyor. Enerji karışımı, tüketim grafikleri veya reklam gibi faturaya ait olmayan sayfaların seçimini kaldırın. Kontrol böylece önemli olana odaklanır.",
+    "blankNote": "Boş sayfaların seçimini zaten kaldırdık: {count}.",
+    "page": "Sayfa {n}",
+    "blank": "boş",
+    "skipped": "atlandı",
+    "selectedCount": "{total} sayfadan {selected} tanesi seçildi",
+    "selectAll": "Tümünü seç",
+    "cancel": "Başka dosya",
+    "confirm": "Kontrol et ({count} sayfa)",
+    "tooMany": "Kontrol başına en fazla {max} sayfa. Lütfen daha fazla sayfanın seçimini kaldırın.",
+    "noneSelected": "En az bir sayfa seçin."
+  },
   "uploadHelp": {
     "title": "Kontrol için hangi sayfalar gerekli",
     "metaDescription": "Dosya çok mu büyük? Yan gider hesabınızın bu sayfaları kontrol edilir - bunları ise çıkarabilirsiniz.",
@@ -257,15 +272,16 @@
       "items": [
         "Renkli yerine gri tonlamalı tarayın. Tek başına çoğu zaman üçte iki tasarruf sağlar.",
         "150-200 dpi yeterlidir; daha yüksek çözünürlük bir şey katmaz.",
-        "PDF'ten yalnızca yukarıda sayılan sayfaları dışa aktarın.",
+        "Beş sayfadan itibaren kontrolden önce her sayfayı önizleme olarak gösteriyoruz. Gerekmeyen sayfaların seçimini orada kaldırmanız yeterli.",
         "Her yüklemede tek dosya gönderilir. Çok sayfalı hesapları ayrı fotoğraflar yerine tek bir PDF olarak tarayın."
       ]
     },
-    "note": "Fotoğraflar ve büyük taramalar yüklemeden önce otomatik olarak küçültülür. Dosya yine de kabul edilmiyorsa, içinde çok fazla sayfa var demektir.",
+    "note": "Fotoğraflar ve büyük taramalar yüklemeden önce otomatik olarak küçültülür, boş sayfaları kendimiz tanırız. Dosya yine de kabul edilmiyorsa içinde çok fazla sayfa var demektir: Önizlemede yukarıda çıkarılabilir olarak sayılan sayfaların seçimini kaldırın.",
     "back": "Yüklemeye dön"
   },
   "errors": {
     "fileTooLarge": "Dosya çok büyük (en fazla {mb} MB). Lütfen yalnızca yan gider faturasını PDF veya fotoğraf olarak yükleyin — büyük taramaları önce sıkıştırın.",
+    "tooManyPages": "Dosya {count} sayfa içeriyor, bu çok fazla. Lütfen yalnızca yan gider faturasını yükleyin.",
     "analyzeFailed": "Analiz başarısız oldu. Lütfen tekrar deneyin.",
     "busy": "Kontrol hizmeti şu anda çok yoğun. Lütfen birazdan tekrar deneyin.",
     "unknown": "Bilinmeyen hata"

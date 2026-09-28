@@ -1,27 +1,25 @@
 import { describe, expect, it } from "vitest";
 import { compressImage, prepareUpload, targetSize, toJpegName } from "@/lib/imageCompress";
-import { IMAGE_MAX_EDGE_PX } from "@/lib/limits";
 
 describe("targetSize", () => {
-  it("verkleinert die lange Kante auf das Maximum und hält das Seitenverhältnis", () => {
-    // 4032x3024 ist das Standardformat eines Handyfotos (4:3, 12 MP).
-    expect(targetSize(4032, 3024)).toEqual({ width: 1568, height: 1176 });
+  it("verkleinert ein Handyfoto auf das Maß, das Claude ansieht", () => {
+    // 4032x3024 ist das Standardformat eines Handyfotos (4:3, 12 MP). Grenze ist
+    // hier nicht die Kante, sondern das Budget von 1568 Bild-Token.
+    expect(targetSize(4032, 3024)).toEqual({ width: 1270, height: 952 });
   });
 
   it("verkleinert auch hochkant korrekt", () => {
-    expect(targetSize(3024, 4032)).toEqual({ width: 1176, height: 1568 });
+    expect(targetSize(3024, 4032)).toEqual({ width: 952, height: 1270 });
+  });
+
+  it("verkleinert einen Scan, dessen Kanten schon unter 1568 px liegen", () => {
+    // Das Token-Budget greift auch ohne übergroße Kante.
+    expect(targetSize(1075, 1520)).toEqual({ width: 924, height: 1307 });
   });
 
   it("lässt Bilder in Zielgröße unangetastet", () => {
-    expect(targetSize(IMAGE_MAX_EDGE_PX, 900)).toBeNull();
-    expect(targetSize(1200, 800)).toBeNull();
-  });
-
-  it("behält bei extremen Seitenverhältnissen mindestens 1 px", () => {
-    // Ein sehr breites Panorama würde sonst auf Höhe 0 gerundet – der Canvas
-    // wäre leer und das Bild verloren.
-    const size = targetSize(20000, 5);
-    expect(size).toEqual({ width: 1568, height: 1 });
+    expect(targetSize(924, 1307)).toBeNull();
+    expect(targetSize(1000, 800)).toBeNull();
   });
 
   it("ignoriert unbrauchbare Maße", () => {
