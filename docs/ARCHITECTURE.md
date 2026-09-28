@@ -61,7 +61,7 @@ Der Browser konvertiert die Datei mit `FileReader` zu Base64 und sendet `{ base6
 
 ### 2. Analyse (`/api/analyze/route.ts` → `lib/claude.ts`)
 
-`analyzeStatement()` sendet das Dokument als `document`- (PDF) bzw. `image`-Content-Block plus den `ANALYSIS_SYSTEM_PROMPT` als gecachten System-Prompt (`cache_control: ephemeral`) in einem einzigen Call. Modell: `claude-sonnet-4-6`, `max_tokens: 4096`.
+`analyzeStatement()` sendet das Dokument als `document`- (PDF) bzw. `image`-Content-Block plus den `ANALYSIS_SYSTEM_PROMPT` als gecachten System-Prompt (`cache_control: ephemeral`) in einem einzigen Call. Modell: `claude-sonnet-5` mit adaptivem Denken (`effort: medium`), `max_tokens: 16000` (Denken + Antwort); Briefe mit `effort: low`. Zeitbudget je Route 120 s (Details in `src/lib/claude.ts`).
 
 - **Schritt 0 – Dokumentprüfung:** Ist es keine Nebenkostenabrechnung, gibt Claude `{"notAStatement": true, …}` zurück. Die Route liefert dann einen Teaser mit `notAStatement: true` (ohne KV-Speicherung); das Frontend zeigt die Hinweisbox.
 - **Retry/Backoff:** Bei `429/503/529` (Überlast) bis zu 3 Versuche mit exponentiellem Backoff (500 ms, 1 s, 2 s).

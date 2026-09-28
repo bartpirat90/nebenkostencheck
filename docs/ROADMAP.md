@@ -1,6 +1,6 @@
 # Roadmap & Projektstand
 
-**Stand:** 2026-09-06 · Branch `monetarisierung` (auf GitHub, NICHT nach `main` gemergt). Demo voll funktionsfähig & teilbar:
+**Stand:** 2026-09-28 · Branch `monetarisierung` (auf GitHub, NICHT nach `main` gemergt). Demo voll funktionsfähig & teilbar:
 `https://nebenkostencheck-git-monetarisierung-bartpirat-s-projects.vercel.app`
 
 ---
@@ -51,6 +51,12 @@
 - Noto-Sans-Fonts für Brief-/Bericht-PDFs (Latin-Ext + Kyrillisch); Arabisch wird im PDF weiterhin nicht dargestellt (offener Punkt, s. u.)
 - Canonical/hreflang je Seite, `/og.png` als eigene Route (kein Redirect), lokalisierte 404-Seite
 
+**Upload-Vorbereitung & Modellwechsel** (2026-09-28, Commits `2fb68db`, `d4a5d18` und folgende)
+- **Website:** Quellgrenzen PDF 100 MB / Bild 40 MB. Der Browser rendert Seiten und Fotos exakt auf Claudes Bildgröße (A4 → 924×1307) und hält den Upload so unter 4 MB (gemessen: 38-MB-Farbscan → 2,2 MB)
+- **Seitenauswahl** ab 5 Seiten mit Vorschaubildern; leere Seiten (auch durchscheinende Duplex-Rückseiten) sind vorab abgewählt; max. 45 Seiten je Prüfung
+- **App:** Fotos werden vor dem Upload verkleinert und als JPEG kodiert (50-MP-Foto 16 MB → 148 KB, EXIF-Drehung korrekt); neue Dependency `expo-image-manipulator`. Löst nebenbei das HEIC-Problem für Fotos
+- **Modell: Claude Sonnet 5** statt Sonnet 4.6, mit adaptivem Denken (`effort: medium` für die Prüfung, `low` für Briefe). Gemessen an einer vierseitigen Abrechnung: gleiche Kosten (~9 Cent), Antwort nach ~40 s statt ~30 s. Zeitbudget der Routen auf 120 s angehoben, Token-Gate auf 100.000 (neuer Tokenizer zählt Text 15–30 % höher; in Dollar trotzdem unter der alten Grenze)
+
 ---
 
 ## ⚠️ Offene Punkte vor dem Launch
@@ -68,7 +74,15 @@
 
 **Entscheidung:** Echte native App mit **React Native + Expo** (Android-first; iOS später). Nicht PWA, nicht Kotlin — RN bietet native Komponenten/Kamera/Push bei React-/TS-Wiederverwendung; für diese App-Art kein für Endnutzer spürbarer Unterschied zu Kotlin. App-Code im Unterordner `mobile/` (reiner Client zum bestehenden Backend, keine Backend-Änderung). Spec/Plan: `docs/superpowers/{specs,plans}/2026-06-07-native-app-meilenstein-1*`.
 
-**Meilenstein 1 — Code fertig & reviewt, Gerätetest offen** (Branch `mobile-app`, lokal):
+**Stand 2026-09-28:** Meilenstein 1 (Upload → Teaser) und 2 (Bericht, Briefe, PDF-Teilen) fertig und auf dem Emulator end-to-end geprüft, Details in `docs/MOBILE-APP.md`.
+
+**🔜 Nächster Umbau: höhere Uploadlimits in der App.** Die App ist heute bei PDFs auf 3 MB begrenzt (sie schickt base64-JSON, das die Datei um ein Drittel aufbläht) und nimmt nur ein Foto pro Prüfung an. Fotos werden inzwischen verkleinert; für PDFs und mehrseitige Abrechnungen reicht das nicht. Bausteine:
+- **Rohbytes statt base64** hochladen, wie die Website: 3 → 4 MB sofort, der Server nimmt Rohbytes schon an (`readUpload`)
+- **PDFs auf dem Gerät aufbereiten** wie im Web (Seitenauswahl, Leerseiten, Rasterung auf Claudes Bildgröße): braucht einen PDF-Renderer, z. B. Androids `PdfRenderer` über ein eigenes Expo-Modul oder pdf.js in einer WebView
+- **Mehrere Fotos pro Prüfung**, damit abfotografierte mehrseitige Abrechnungen vollständig geprüft werden; Server und Prompt müssen dafür mehrere Bilder annehmen
+- Alternative für sehr große Dateien: **Direkt-Upload in einen Speicher** (z. B. Vercel Blob), umgeht die 4,5-MB-Grenze komplett; kostet eine neue Dependency und Zwischenspeicherung (Datenschutztext)
+
+**Meilenstein 1 — historisch** (damals Branch `mobile-app`, heute Teil von `monetarisierung`):
 - Drei Screens: Home → Upload (PDF/Foto-Picker, 3-MB-Größen-Guard) → Ergebnis-Teaser. `tsc` sauber, `jest` 7/7 grün, Code-Review APPROVE.
 - Expo **SDK 56**, `src/`-Layout; Dev zeigt auf die MOCK-Preview → Gerätetest kostenlos.
 - **Offen:** Test auf echtem Android (Expo Go = null Setup, oder Android-Studio-Emulator), dann Branch-Merge.
@@ -79,8 +93,7 @@
 ## 💡 Offene Verbesserungen (nicht blockierend)
 
 - **Client-Payload weiter verkleinern:** `legal`/`notFound` sind seit 2026-09-06 aus dem `NextIntlClientProvider` raus (`src/i18n/serverOnly.ts`, ~8 KB pro Seite). Der größere Hebel ist noch offen: `src/app/[locale]/page.tsx` trägt `"use client"` für die ganze Startseite, dadurch wandern auch `faq`, `howItWorks`, `hero`, `meta` usw. (~6 KB) in jedes HTML. Lösung: Upload/Preview-State in eine Client-Insel ziehen und die Startseite als Server-Komponente rendern; zusätzlich den Provider pro Route-Segment scopen, damit die Rechtsseiten (die keine Client-Übersetzungen brauchen) gar keinen Message-Block mehr bekommen (~15 KB je Rechtsseite).
-- **Mobile-App und HEIC:** Die Web-API prüft Uploads seit 2026-09-06 per Magic Bytes und lässt nur PDF/JPEG/PNG/WebP durch. Der iOS-ImagePicker der Expo-App kann `image/heic` liefern (`mobile/src/app/upload.tsx` filtert nicht) → 400 `UNSUPPORTED_TYPE`. Vor einem iOS-Build: in der App nach JPEG konvertieren oder einen Hinweistext einbauen.
-- **Große Uploads (>3 MB) unterstützen:** Vercel kappt Serverless-Function-Bodies bei ~4,5 MB → echte Datei-Obergrenze aktuell ~3 MB. Für Nutzer mit großen mehrseitigen Scans/Fotos: **Direkt-Upload zu Vercel Blob** im Browser (umgeht die Body-Grenze), API bekommt nur die URL und lädt serverseitig. Eigenes Feature (brainstorming → plan), noch nicht gebaut. Bis dahin zeigt das Frontend bei zu großen Dateien eine freundliche deutsche Meldung.
+- **Qualitätsvergleich Sonnet 5 an echten Abrechnungen:** Umstellung ist mit synthetischen Dokumenten gemessen (Kosten, Dauer, gültiges JSON). Offen: 3–5 echte, anonymisierte Abrechnungen durch Sonnet 5 laufen lassen und die Befunde fachlich prüfen; bei Bedarf `effort` in `src/lib/claude.ts` anpassen. Der Systemprompt stammt aus Sonnet-4-Zeiten (viele GROSSBUCHSTABEN, „im Zweifel nicht melden“) – Sonnet 5 befolgt Anweisungen wörtlicher, ein Prompt-Audit kann Recall und Kosten verbessern.
 
 ---
 

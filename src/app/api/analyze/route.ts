@@ -11,7 +11,8 @@ import { AnalysisResult, PreviewData } from "@/types";
 import { MOCK } from "@/lib/mock";
 import { InvalidAnalysisError } from "@/lib/validateAnalysis";
 
-export const maxDuration = 60;
+// Sonnet 5 denkt vor der Antwort – Zeitbudget siehe lib/claude.ts.
+export const maxDuration = 120;
 
 function toPreview(id: string, r: AnalysisResult): PreviewData {
   const errors = r.errors ?? [];

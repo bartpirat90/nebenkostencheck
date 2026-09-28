@@ -38,7 +38,7 @@ Die Bezahlinhalte werden **serverseitig** zurückgehalten, bis die Zahlung per S
 | Framework | Next.js 15 (App Router), React 19 |
 | Sprache | TypeScript |
 | Styling | Tailwind CSS v3 |
-| KI | Anthropic Claude (`claude-sonnet-4-6`) via `@anthropic-ai/sdk`, mit Prompt-Caching + Retry/Backoff |
+| KI | Anthropic Claude (`claude-sonnet-5`) via `@anthropic-ai/sdk`, mit Prompt-Caching + Retry/Backoff |
 | Speicher | Vercel KV / Upstash Redis (`@upstash/redis`), 24 h TTL unbezahlt, 7 Tage nach Kauf, 14 Tage bei offener SEPA-Zahlung |
 | Zahlung | Stripe Checkout + Webhook (`stripe`, serverseitig; kein Client-SDK nötig) |
 | PDF | `@react-pdf/renderer` (serverseitig) |

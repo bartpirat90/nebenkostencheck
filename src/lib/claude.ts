@@ -10,14 +10,16 @@ import { InvalidAnalysisError, normalizeAnalysis } from "./validateAnalysis";
 let _client: Anthropic | null = null;
 
 /**
- * Zeitbudget je API-Route (maxDuration = 60 s):
- *   Token-Zählung ≤ 10 s  +  Analyse-Versuch(e) ≤ RETRY_BUDGET_MS  <  60 s.
+ * Zeitbudget je API-Route (maxDuration = 120 s):
+ *   Token-Zählung ≤ 10 s  +  Analyse-Versuch(e) ≤ RETRY_BUDGET_MS  <  120 s.
  * Ein zweiter Versuch startet nur, wenn er samt vollem Timeout noch ins Budget
- * passt – also praktisch nur nach einem sofortigen 429/529.
+ * passt – also praktisch nur nach einem sofortigen 429/529. Seit Sonnet 5 mit
+ * Denkphase dauert eine vierseitige Abrechnung rund 40 s statt 30 s; die
+ * früheren 45 s pro Versuch hätten bei längeren Abrechnungen nicht gereicht.
  */
-const REQUEST_TIMEOUT_MS = 45_000;
+const REQUEST_TIMEOUT_MS = 90_000;
 const COUNT_TOKENS_TIMEOUT_MS = 10_000;
-const RETRY_BUDGET_MS = 47_000;
+const RETRY_BUDGET_MS = 100_000;
 
 function client(): Anthropic {
   if (!_client) {
@@ -31,7 +33,34 @@ function client(): Anthropic {
   return _client;
 }
 
-const MODEL = "claude-sonnet-4-6";
+/**
+ * Sonnet 5 seit 2026-09-28 (vorher Sonnet 4.6). Sonnet 5 zählt Text mit einem
+ * neuen Tokenizer rund 15–30 % höher, kostet pro Token aber ein Drittel
+ * weniger; Bilder und gerasterte Scans kosten gleich viele Token wie vorher.
+ * Bei einem Modellwechsel mitprüfen: MAX_INPUT_TOKENS und VISION_MAX_* in
+ * limits.ts sowie die Kopie in mobile/src/lib/visionSize.ts.
+ */
+const MODEL = "claude-sonnet-5";
+
+/**
+ * Denkstufe der Prüfung. Sonnet 5 denkt vor der Antwort nach (adaptive
+ * thinking); „medium“ entspricht laut Anthropic etwa Sonnet 4.6 auf höchster
+ * Stufe. Gemessen an einer vierseitigen Abrechnung: gleiche Kosten wie zuvor
+ * Sonnet 4.6 ohne Denken (~9 Cent), aber ~40 s statt ~30 s. „low“ wäre so
+ * schnell wie früher und ~12 % billiger, denkt aber nur halb so lange.
+ */
+const ANALYSIS_EFFORT = "medium";
+
+/** Briefe setzen fertige Befunde in Text um – dafür reicht die niedrigste Stufe. */
+const LETTER_EFFORT = "low";
+
+/**
+ * Obergrenzen der Ausgabe. Sie umfassen Denken UND Antwort; knapp gesetzt
+ * würde das JSON mitten im Satz abgeschnitten. Die Analyse-Antwort selbst
+ * liegt bei 2.000–3.000 Token, das Denken bei „medium“ im Test bei ~2.000.
+ */
+const ANALYSIS_MAX_TOKENS = 16_000;
+const LETTER_MAX_TOKENS = 8_000;
 
 const RETRYABLE_STATUSES = new Set([429, 503, 529]);
 
@@ -124,7 +153,9 @@ export async function analyzeStatement(
   const message = await withRetry(() =>
     client().messages.create({
       model: MODEL,
-      max_tokens: 4096,
+      max_tokens: ANALYSIS_MAX_TOKENS,
+      thinking: { type: "adaptive" },
+      output_config: { effort: ANALYSIS_EFFORT },
       system: [
         {
           type: "text",
@@ -143,6 +174,13 @@ export async function analyzeStatement(
       ],
     }),
   );
+
+  // Abgeschnittenes JSON oder eine Ablehnung: nicht erst am Parser scheitern
+  // lassen, sondern mit Grund im Log als unbrauchbar melden.
+  if (message.stop_reason === "max_tokens" || message.stop_reason === "refusal") {
+    console.error("Analyse abgebrochen, stop_reason:", message.stop_reason);
+    throw new InvalidAnalysisError();
+  }
 
   const parsed = normalizeAnalysis(extractJson(extractText(message)));
   if (!parsed) throw new InvalidAnalysisError();
@@ -189,10 +227,17 @@ export async function generateLetter(req: LetterRequest): Promise<string> {
   const message = await withRetry(() =>
     client().messages.create({
       model: MODEL,
-      max_tokens: 2048,
+      max_tokens: LETTER_MAX_TOKENS,
+      thinking: { type: "adaptive" },
+      output_config: { effort: LETTER_EFFORT },
       messages: [{ role: "user", content: buildLetterPrompt(req) }],
     }),
   );
+
+  // Ein abgeschnittener Brief darf nicht gespeichert und verschickt werden.
+  if (message.stop_reason === "max_tokens" || message.stop_reason === "refusal") {
+    throw new Error(`Brief unvollständig, stop_reason: ${message.stop_reason}`);
+  }
 
   return extractText(message).trim();
 }

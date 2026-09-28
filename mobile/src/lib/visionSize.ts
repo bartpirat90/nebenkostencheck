@@ -7,9 +7,8 @@
  *
  * Neben der Kantenlänge zählt ein Token-Budget: Claude rechnet in Blöcken von
  * 28×28 Pixeln und nimmt höchstens VISION_MAX_TOKENS davon. Ein Handyfoto im
- * Hochformat landet dadurch bei 952×1270 – alles darüber wirft Claude weg.
- * Beim Wechsel auf ein Modell mit hoher Auflösung (Sonnet 5: 2576 px, 4784
- * Token) müssen beide Werte mitziehen, sonst schicken wir zu wenig.
+ * Hochformat landet dadurch bei 952×1270. Sonnet 5 könnte hochauflösend mehr
+ * lesen; warum wir bei der Standardgröße bleiben, steht in limits.ts im Web.
  */
 export const VISION_MAX_EDGE_PX = 1568;
 export const VISION_MAX_TOKENS = 1568;

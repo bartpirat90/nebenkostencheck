@@ -11,7 +11,8 @@ import { LETTER_PER_ID_PER_DAY, LETTER_PER_IP_PER_DAY } from "@/lib/limits";
 import { ContactData } from "@/types";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+// Sonnet 5 denkt vor der Antwort – Zeitbudget siehe lib/claude.ts.
+export const maxDuration = 120;
 
 /** Sanitizes client-provided contact data: only known fields, max 200 chars each. */
 function sanitizeContact(raw: unknown, serverDefault?: ContactData): ContactData {

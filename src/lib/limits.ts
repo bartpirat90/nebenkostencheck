@@ -12,8 +12,13 @@
 export const MAX_FILE_MB = 4;
 export const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
-/** Maximale Input-Token, die ein Dokument an Claude kosten darf. */
-export const MAX_INPUT_TOKENS = 80_000;
+/**
+ * Maximale Input-Token, die ein Dokument an Claude kosten darf. Seit Sonnet 5
+ * (neuer Tokenizer) zählen Systemprompt und PDF-Text 15–30 % mehr Token; die
+ * früheren 80.000 hätten digitale PDFs von ~18 auf ~15 Seiten gedrückt. 100.000
+ * Token kosten bei 2 $/MTok 0,20 $ – weniger als die alten 80.000 zu 3 $/MTok.
+ */
+export const MAX_INPUT_TOKENS = 100_000;
 
 // Gilt pro öffentlicher IP. Bewusst nicht zu knapp, weil sich Nutzer oft eine
 // IP teilen (Haushalt, Büro, Mobilfunk/CGNAT). Gezählt werden nur wohlgeformte
@@ -55,12 +60,15 @@ export const REPORT_PER_IP_PER_HOUR = 30;
 // ─── Upload-Vorbereitung im Browser ──────────────────────────────────────────
 
 /**
- * Was Claude (Sonnet 4.6, Standard-Auflösung) von einem Bild überhaupt ansieht:
- * höchstens 1568 px lange Kante und höchstens 1568 Bild-Token zu je 28×28 px.
- * Größere Bilder verkleinert Claude selbst – wir tun es vorher, dann fallen
- * nur Bytes weg, die nie jemand gesehen hätte (Rechnung in visionSize.ts).
- * Beim Wechsel auf ein Modell mit hoher Auflösung (Sonnet 5: 2576 px, 4784
- * Token) müssen beide Werte mitziehen, sonst schicken wir zu wenig.
+ * Bildgröße für Claude: höchstens 1568 px lange Kante und höchstens 1568
+ * Bild-Token zu je 28×28 px (Standardauflösung, Rechnung in visionSize.ts).
+ *
+ * Sonnet 5 könnte bis 2576 px / 4784 Token lesen. Wir bleiben bewusst bei der
+ * Standardgröße: PDF-Seiten rastert die API auch bei Sonnet 5 auf diese Größe
+ * (gemessen: ~1.576 Token je Seite, wie bei Sonnet 4.6), Fotos landen so auf
+ * demselben Niveau. Hochauflösend kostete jedes Foto das Dreifache an Token und
+ * sprengte bei mehrseitigen Scans die 4-MB-Grenze. Wer das ändert, muss die
+ * Kopie in mobile/src/lib/visionSize.ts mitziehen.
  */
 export const VISION_MAX_EDGE_PX = 1568;
 export const VISION_MAX_TOKENS = 1568;
@@ -89,8 +97,8 @@ export const PDF_JPEG_QUALITIES = [IMAGE_QUALITY, 0.72, 0.64, 0.56] as const;
 
 /**
  * Höchstzahl an Seiten, die in eine Prüfung gehen. Eine gerasterte Seite kostet
- * rund 1.560 Token; 45 Seiten plus Systemprompt liegen knapp unter
- * MAX_INPUT_TOKENS. Mehr würde ohnehin am Token-Gate der Route scheitern.
+ * rund 1.580 Token; 45 Seiten plus Systemprompt (~4.500) liegen bei rund
+ * 76.000 und damit unter MAX_INPUT_TOKENS. Mehr würde ohnehin am Token-Gate der Route scheitern.
  */
 export const MAX_PDF_PAGES = 45;
 
