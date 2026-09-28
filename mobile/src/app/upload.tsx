@@ -6,13 +6,14 @@ import * as ImagePicker from "expo-image-picker";
 import { File } from "expo-file-system";
 import { analyzeDocument } from "../api/analyze";
 import { isFileTooLarge, MAX_FILE_MB } from "../lib/fileGuard";
+import { prepareImage } from "../lib/prepareImage";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { Icon } from "../components/Icon";
 import { colors, spacing, radius } from "../theme";
 
-// Bei Bildern liefert der ImagePicker base64 direkt mit (kein Dateilesen nötig);
-// bei PDF lesen wir die Cache-Datei per File-API. base64 ist daher optional.
-type Picked = { uri: string; mediaType: string; fileName: string; base64?: string };
+// Fotos werden erst beim Prüfen verkleinert und kodiert (prepareImage), PDFs
+// gehen unverändert aus der Cache-Datei hoch.
+type Picked = { uri: string; mediaType: string; fileName: string; isImage: boolean };
 
 export default function UploadScreen() {
   const router = useRouter();
@@ -26,22 +27,20 @@ export default function UploadScreen() {
     });
     if (res.canceled) return;
     const a = res.assets[0];
-    setPicked({ uri: a.uri, mediaType: a.mimeType ?? "application/pdf", fileName: a.name });
+    setPicked({ uri: a.uri, mediaType: a.mimeType ?? "application/pdf", fileName: a.name, isImage: false });
   }
 
   async function pickPhoto() {
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      quality: 0.8,
-      base64: true,
-    });
+    // quality 1: Der Picker soll nicht vorab verlustbehaftet kodieren – das
+    // übernimmt prepareImage nach dem Verkleinern, sonst litte die Schrift doppelt.
+    const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ["images"], quality: 1 });
     if (res.canceled) return;
     const a = res.assets[0];
     setPicked({
       uri: a.uri,
       mediaType: a.mimeType ?? "image/jpeg",
       fileName: a.fileName ?? "foto.jpg",
-      base64: a.base64 ?? undefined,
+      isImage: true,
     });
   }
 
@@ -51,14 +50,14 @@ export default function UploadScreen() {
       Alert.alert("Kamera", "Bitte erlaube den Kamerazugriff, um ein Foto aufzunehmen.");
       return;
     }
-    const res = await ImagePicker.launchCameraAsync({ quality: 0.8, base64: true });
+    const res = await ImagePicker.launchCameraAsync({ quality: 1 });
     if (res.canceled) return;
     const a = res.assets[0];
     setPicked({
       uri: a.uri,
       mediaType: a.mimeType ?? "image/jpeg",
       fileName: a.fileName ?? "foto.jpg",
-      base64: a.base64 ?? undefined,
+      isImage: true,
     });
   }
 
@@ -76,19 +75,24 @@ export default function UploadScreen() {
   async function submit() {
     if (!picked) return;
     try {
-      let base64 = picked.base64;
-      if (base64) {
-        // Bild: base64 liegt schon vor (ImagePicker). Größe aus base64-Länge.
-        if (tooLarge(Math.floor((base64.length * 3) / 4))) return;
+      let upload: { base64: string; mediaType: string; fileName: string };
+      if (picked.isImage) {
+        // Foto: auf Claudes Zielgröße bringen. Danach liegt es praktisch immer
+        // weit unter der Grenze; die Prüfung bleibt für den Ausnahmefall.
         setLoading(true);
+        upload = await prepareImage(picked.uri, picked.fileName);
+        if (tooLarge(Math.floor((upload.base64.length * 3) / 4))) {
+          setLoading(false);
+          return;
+        }
       } else {
         // PDF: aus der Cache-Datei lesen (neue File-API, SDK 56).
         const file = new File(picked.uri);
         if (tooLarge(file.size ?? 0)) return;
         setLoading(true);
-        base64 = await file.base64();
+        upload = { base64: await file.base64(), mediaType: picked.mediaType, fileName: picked.fileName };
       }
-      const result = await analyzeDocument(base64, picked.mediaType, picked.fileName);
+      const result = await analyzeDocument(upload.base64, upload.mediaType, upload.fileName);
       setLoading(false);
       if (!result.ok) {
         Alert.alert("Hinweis", result.message);
@@ -115,7 +119,10 @@ export default function UploadScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>Abrechnung auswählen</Text>
-      <Text style={styles.hint}>PDF oder Foto deiner Nebenkostenabrechnung (max. {MAX_FILE_MB} MB).</Text>
+      <Text style={styles.hint}>
+        PDF (bis {MAX_FILE_MB} MB) oder Foto deiner Nebenkostenabrechnung. Fotos verkleinern wir
+        automatisch, ihre Größe spielt keine Rolle.
+      </Text>
 
       <Pressable style={styles.choice} onPress={pickPdf}>
         <Icon name="document" size={22} color={colors.text} />
@@ -133,7 +140,7 @@ export default function UploadScreen() {
       {picked && (
         <View style={styles.selected}>
           <Icon
-            name={picked.mediaType.startsWith("image") ? "image" : "document"}
+            name={picked.isImage ? "image" : "document"}
             size={18}
             color={colors.textMuted}
           />
