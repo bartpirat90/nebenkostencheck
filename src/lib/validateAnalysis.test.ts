@@ -96,6 +96,40 @@ describe("normalizeAnalysis", () => {
     expect(r!.contactData?.tenantName).toBeNull();
   });
 
+  it("rechnet die Summen aus den Einzelbeträgen statt sie zu übernehmen", () => {
+    const r = normalizeAnalysis({
+      summary: "x",
+      totalPotentialEur: 9999,
+      directPotentialEur: 9999,
+      errors: [
+        { ...valid.errors[0], potentialEur: 10.1 },
+        { ...valid.errors[0], potentialEur: 20.2 },
+        { ...valid.errors[0], category: "needs_review", potentialEur: 5 },
+        { ...valid.errors[0], category: "needs_review", potentialEur: null },
+      ],
+    });
+    expect(r!.directPotentialEur).toBe(30.3);
+    expect(r!.reviewPotentialEur).toBe(5);
+    expect(r!.totalPotentialEur).toBe(35.3);
+  });
+
+  it("ohne Befunde ist das Potenzial 0", () => {
+    const r = normalizeAnalysis({ summary: "x", errors: [], totalPotentialEur: 50 });
+    expect(r!.totalPotentialEur).toBe(0);
+    expect(r!.directPotentialEur).toBe(0);
+    expect(r!.reviewPotentialEur).toBe(0);
+  });
+
+  it("Befunde ohne Betrag: Gesamtsumme null, damit die Vorschau das Label zeigt", () => {
+    const r = normalizeAnalysis({
+      summary: "x",
+      totalPotentialLabel: "mittel",
+      errors: [{ ...valid.errors[0], potentialEur: null }],
+    });
+    expect(r!.totalPotentialEur).toBeNull();
+    expect(r!.totalPotentialLabel).toBe("mittel");
+  });
+
   it("nulls NaN, Infinity and negative amounts", () => {
     const r = normalizeAnalysis({
       summary: "x",
@@ -104,9 +138,11 @@ describe("normalizeAnalysis", () => {
       reviewPotentialEur: -1,
       errors: [{ ...valid.errors[0], potentialEur: -0.01 }],
     });
-    expect(r!.totalPotentialEur).toBeNull();
-    expect(r!.directPotentialEur).toBeNull();
-    expect(r!.reviewPotentialEur).toBeNull();
+    // Die Summen der Modellantwort werden ignoriert; der ungültige Einzelbetrag
+    // fällt weg, übrig bleibt ein Befund ohne Betrag.
     expect(r!.errors[0].potentialEur).toBeNull();
+    expect(r!.totalPotentialEur).toBeNull();
+    expect(r!.directPotentialEur).toBe(0);
+    expect(r!.reviewPotentialEur).toBe(0);
   });
 });

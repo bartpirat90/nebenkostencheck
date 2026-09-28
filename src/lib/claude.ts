@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { ANALYSIS_SYSTEM_PROMPT, buildLetterPrompt } from "./prompts";
+import { ANALYSIS_SCHEMA } from "./analysisSchema";
 import { AnalysisResult, LetterRequest } from "@/types";
 import { MOCK_ANALYSIS_RESULT, MOCK_LETTER } from "./mockData";
 import { MOCK } from "./mock";
@@ -43,13 +44,12 @@ function client(): Anthropic {
 const MODEL = "claude-sonnet-5";
 
 /**
- * Denkstufe der Prüfung. Sonnet 5 denkt vor der Antwort nach (adaptive
- * thinking); „medium“ entspricht laut Anthropic etwa Sonnet 4.6 auf höchster
- * Stufe. Gemessen an einer vierseitigen Abrechnung: gleiche Kosten wie zuvor
- * Sonnet 4.6 ohne Denken (~9 Cent), aber ~40 s statt ~30 s. „low“ wäre so
- * schnell wie früher und ~12 % billiger, denkt aber nur halb so lange.
+ * Denkstufe der Prüfung. Seit der Prompt die Prüfliste samt Vergleichswerten
+ * mitbringt (2026-09-28), findet „low“ an zwei echten Abrechnungen dieselben
+ * tragenden Befunde wie „medium“, braucht aber ~35 s statt 70–85 s und
+ * 5–10 statt 8–14 Cent. „medium“ lag mit 84 s zu nah am Timeout unten.
  */
-const ANALYSIS_EFFORT = "medium";
+const ANALYSIS_EFFORT = "low";
 
 /** Briefe setzen fertige Befunde in Text um – dafür reicht die niedrigste Stufe. */
 const LETTER_EFFORT = "low";
@@ -57,7 +57,7 @@ const LETTER_EFFORT = "low";
 /**
  * Obergrenzen der Ausgabe. Sie umfassen Denken UND Antwort; knapp gesetzt
  * würde das JSON mitten im Satz abgeschnitten. Die Analyse-Antwort selbst
- * liegt bei 2.000–3.000 Token, das Denken bei „medium“ im Test bei ~2.000.
+ * liegt bei 2.000–3.000 Token, das Denken bei „low“ im Test bei 1.000–2.000.
  */
 const ANALYSIS_MAX_TOKENS = 16_000;
 const LETTER_MAX_TOKENS = 8_000;
@@ -155,7 +155,12 @@ export async function analyzeStatement(
       model: MODEL,
       max_tokens: ANALYSIS_MAX_TOKENS,
       thinking: { type: "adaptive" },
-      output_config: { effort: ANALYSIS_EFFORT },
+      // Structured Outputs: Die API garantiert JSON in Schemaform, ein
+      // abgeschnittener oder ausgeschmückter Text kann nicht mehr ankommen.
+      output_config: {
+        effort: ANALYSIS_EFFORT,
+        format: { type: "json_schema", schema: ANALYSIS_SCHEMA },
+      },
       system: [
         {
           type: "text",

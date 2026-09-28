@@ -55,7 +55,8 @@
 - **Website:** Quellgrenzen PDF 100 MB / Bild 40 MB. Der Browser rendert Seiten und Fotos exakt auf Claudes Bildgröße (A4 → 924×1307) und hält den Upload so unter 4 MB (gemessen: 38-MB-Farbscan → 2,2 MB)
 - **Seitenauswahl** ab 5 Seiten mit Vorschaubildern; leere Seiten (auch durchscheinende Duplex-Rückseiten) sind vorab abgewählt; max. 45 Seiten je Prüfung
 - **App:** Fotos werden vor dem Upload verkleinert und als JPEG kodiert (50-MP-Foto 16 MB → 148 KB, EXIF-Drehung korrekt); neue Dependency `expo-image-manipulator`. Löst nebenbei das HEIC-Problem für Fotos
-- **Modell: Claude Sonnet 5** statt Sonnet 4.6, mit adaptivem Denken (`effort: medium` für die Prüfung, `low` für Briefe). Gemessen an einer vierseitigen Abrechnung: gleiche Kosten (~9 Cent), Antwort nach ~40 s statt ~30 s. Zeitbudget der Routen auf 120 s angehoben, Token-Gate auf 100.000 (neuer Tokenizer zählt Text 15–30 % höher; in Dollar trotzdem unter der alten Grenze)
+- **Modell: Claude Sonnet 5** statt Sonnet 4.6, mit adaptivem Denken (`effort: low` für Prüfung und Briefe), Zeitbudget der Routen 120 s, Token-Gate 100.000 (neuer Tokenizer zählt Text 15–30 % höher; in Dollar trotzdem unter der alten Grenze)
+- **Prompt überarbeitet** an zwei echten Abrechnungen (Vonovia digital, Hausverwaltung als Scan): ruhiger Ton statt GROSSBUCHSTABEN, Vergleichswerte aus dem Betriebskostenspiegel 2024 (Kostenausreißer je m²), Prüfung der Umlageflächen, unwirksame Einwendungsfristen, falsche BGH-Aktenzeichen korrigiert, Urteile nur noch aus einer freigegebenen Liste, Elementarschadenversicherung korrekt als umlagefähig. Antwort per Structured Outputs, Summen rechnet der Server. Vorauszahlungen zählen nicht mehr als Erstattungspotenzial. Ergebnis: mehr echte Befunde, ~35 s und 5–10 Cent je Prüfung
 
 ---
 
@@ -93,7 +94,7 @@
 ## 💡 Offene Verbesserungen (nicht blockierend)
 
 - **Client-Payload weiter verkleinern:** `legal`/`notFound` sind seit 2026-09-06 aus dem `NextIntlClientProvider` raus (`src/i18n/serverOnly.ts`, ~8 KB pro Seite). Der größere Hebel ist noch offen: `src/app/[locale]/page.tsx` trägt `"use client"` für die ganze Startseite, dadurch wandern auch `faq`, `howItWorks`, `hero`, `meta` usw. (~6 KB) in jedes HTML. Lösung: Upload/Preview-State in eine Client-Insel ziehen und die Startseite als Server-Komponente rendern; zusätzlich den Provider pro Route-Segment scopen, damit die Rechtsseiten (die keine Client-Übersetzungen brauchen) gar keinen Message-Block mehr bekommen (~15 KB je Rechtsseite).
-- **Qualitätsvergleich Sonnet 5 an echten Abrechnungen:** Umstellung ist mit synthetischen Dokumenten gemessen (Kosten, Dauer, gültiges JSON). Offen: 3–5 echte, anonymisierte Abrechnungen durch Sonnet 5 laufen lassen und die Befunde fachlich prüfen; bei Bedarf `effort` in `src/lib/claude.ts` anpassen. Der Systemprompt stammt aus Sonnet-4-Zeiten (viele GROSSBUCHSTABEN, „im Zweifel nicht melden“) – Sonnet 5 befolgt Anweisungen wörtlicher, ein Prompt-Audit kann Recall und Kosten verbessern.
+- **Weitere echte Abrechnungen testen:** Der Prompt ist an zwei Abrechnungen geprüft (Vonovia, kleine Hausverwaltung). Offen: Abrechnungen mit eigener Heizkostenabrechnung (Messdienst, § 9 HeizkV), mit Umlageausfallwagnis und aus Fotos. Die Durchschnittswerte im Prompt beim nächsten Betriebskostenspiegel des Mieterbunds aktualisieren.
 
 ---
 

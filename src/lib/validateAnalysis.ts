@@ -69,11 +69,38 @@ export function normalizeAnalysis(raw: unknown): AnalysisResult | null {
     notAStatement: r.notAStatement === true,
     summary,
     errors,
-    totalPotentialEur: eur(r.totalPotentialEur),
+    ...potentialTotals(errors),
     totalPotentialLabel: str(r.totalPotentialLabel, MAX_SHORT),
-    directPotentialEur: eur(r.directPotentialEur),
-    reviewPotentialEur: eur(r.reviewPotentialEur),
     contactData: contact(r.contactData),
+  };
+}
+
+const cents = (n: number) => Math.round(n * 100) / 100;
+
+/**
+ * Summen aus den Einzelbeträgen statt aus der Modellantwort: Das Modell hat
+ * sich früher verrechnet oder Beträge summiert, die es einzeln auf null
+ * gesetzt hatte, und die Summe steht als Erstattungspotenzial in der
+ * Vorschau. Ohne Befunde ist das Potenzial 0; gibt es Befunde, aber keinen
+ * bezifferten, bleibt die Gesamtsumme null, damit die Vorschau das Label zeigt.
+ */
+function potentialTotals(errors: ErrorItem[]) {
+  if (errors.length === 0) {
+    return { totalPotentialEur: 0, directPotentialEur: 0, reviewPotentialEur: 0 };
+  }
+  const sum = (category: ErrorCategory) =>
+    cents(
+      errors
+        .filter((e) => e.category === category && e.potentialEur != null)
+        .reduce((acc, e) => acc + (e.potentialEur ?? 0), 0),
+    );
+  const hasAmount = errors.some((e) => e.potentialEur != null);
+  const directPotentialEur = sum("direct");
+  const reviewPotentialEur = sum("needs_review");
+  return {
+    totalPotentialEur: hasAmount ? cents(directPotentialEur + reviewPotentialEur) : null,
+    directPotentialEur,
+    reviewPotentialEur,
   };
 }
 

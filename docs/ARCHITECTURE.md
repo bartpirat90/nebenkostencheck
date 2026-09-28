@@ -61,7 +61,7 @@ Der Browser konvertiert die Datei mit `FileReader` zu Base64 und sendet `{ base6
 
 ### 2. Analyse (`/api/analyze/route.ts` → `lib/claude.ts`)
 
-`analyzeStatement()` sendet das Dokument als `document`- (PDF) bzw. `image`-Content-Block plus den `ANALYSIS_SYSTEM_PROMPT` als gecachten System-Prompt (`cache_control: ephemeral`) in einem einzigen Call. Modell: `claude-sonnet-5` mit adaptivem Denken (`effort: medium`), `max_tokens: 16000` (Denken + Antwort); Briefe mit `effort: low`. Zeitbudget je Route 120 s (Details in `src/lib/claude.ts`).
+`analyzeStatement()` sendet das Dokument als `document`- (PDF) bzw. `image`-Content-Block plus den `ANALYSIS_SYSTEM_PROMPT` als gecachten System-Prompt (`cache_control: ephemeral`) in einem einzigen Call. Modell: `claude-sonnet-5` mit adaptivem Denken (`effort: low`, auch für Briefe), `max_tokens: 16000` (Denken + Antwort). Die Antwort ist per Structured Outputs an `ANALYSIS_SCHEMA` (`lib/analysisSchema.ts`) gebunden; die Summen des Erstattungspotenzials rechnet `normalizeAnalysis` aus den Einzelbeträgen. Zeitbudget je Route 120 s (Details in `src/lib/claude.ts`).
 
 - **Schritt 0 – Dokumentprüfung:** Ist es keine Nebenkostenabrechnung, gibt Claude `{"notAStatement": true, …}` zurück. Die Route liefert dann einen Teaser mit `notAStatement: true` (ohne KV-Speicherung); das Frontend zeigt die Hinweisbox.
 - **Retry/Backoff:** Bei `429/503/529` (Überlast) bis zu 3 Versuche mit exponentiellem Backoff (500 ms, 1 s, 2 s).
@@ -177,43 +177,40 @@ Ist `MOCK_ANALYSIS=true`, geben `analyzeStatement` und `generateLetter` Beispiel
 
 ## KI-Prompt-Design
 
-### Anti-Halluzinations-Regeln
+### Leitlinien des Prompts
 
-Das größte Risiko juristischer KI-Analysen ist das Erfinden von Fehlern. Der System-Prompt erzwingt:
+Der Prompt erklärt dem Modell, wer das Ergebnis liest und warum beides schadet: ein erfundener Befund (landet im Brief an den Vermieter) und ein übersehener (kostet den Mieter Geld). Daraus folgt:
 
-1. **Nur dokumentierte Zahlen** — jede genannte Zahl muss wörtlich im Dokument stehen.
-2. **Kein Konstruieren von Diskrepanzen** — Zwischensummen/verschiedene Darstellungen desselben Werts sind keine Fehler.
-3. **Zitierbarer Beleg Pflicht** — `evidence` muss ein wörtliches Zitat / eine konkrete Dokumentstelle enthalten.
-4. **Finaler Selbst-Check** — vor der Antwort wird jeder Fehler erneut auf Beleg geprüft.
-
-Philosophie: Lieber einen echten Fehler übersehen als einen nicht existenten melden.
+1. **Beleg Pflicht** — `evidence` zitiert Zahlen wörtlich aus dem Dokument. Eigene Rechnungen (Anteile, €/m² und Monat) sind erwünscht, stehen aber nachvollziehbar in der `description`.
+2. **Zwischensummen sind kein Widerspruch**, Rundungsdifferenzen von Cents kein Fehler.
+3. **Nur freigegebene Aktenzeichen** — das Modell zitiert Urteile nur aus der Liste im Prompt, sonst Paragraphen. Grund: Die Aktenzeichen landen in Briefen; erfundene oder falsche schwächen den Widerspruch.
+4. **Verdacht statt Weglassen** — begründete Verdachtsfälle gehen als `needs_review` mit ehrlicher `confidence` in den Bericht.
+5. **Kein Scheinpotenzial** — Vorauszahlungen, Fristhinweise und Wasser-Mehrverbrauch haben `potentialEur: null`.
 
 ### Fehlerregeln
 
-#### Sofort angreifbar — sicher
+#### Sofort angreifbar
 
 | Rechtsgrundlage | Verstoß | Folge |
 |---|---|---|
 | § 9 Abs. 2 HeizkV | Warmwasser-Wärmemenge per Formel statt Wärmemengenzähler (Pflicht seit 31.12.2013) | 15 % Kürzungsrecht (§ 12 HeizkV) |
-| § 7 Abs. 1 HeizkV | Heizkosten zu 100 % nach Wohnfläche (0 % Verbrauchsanteil, wörtlich belegt) | 15 % Kürzungsrecht (§ 12 HeizkV) |
-| § 1 Abs. 2 BetrKV | Positionstitel enthält wörtlich „Reparatur"/„Instandhaltung"/„Instandsetzung" | Position streichen |
-| § 259 BGB | Gesamtkosten des Gebäudes fehlen vollständig | Abrechnung formell unwirksam |
+| § 7 Abs. 1 HeizkV | Heizkosten zu 100 % nach Wohnfläche (Schlüssel im Dokument belegt) | 15 % Kürzungsrecht (§ 12 HeizkV) |
+| § 1 Abs. 2 BetrKV | Positionstitel nennt Reparatur/Instandhaltung/Instandsetzung (sicher) oder Verwaltung (wahrscheinlich) | Position streichen |
+| § 556 Abs. 3, § 259 BGB | Keinerlei Gesamtkosten angegeben | Abrechnung formell unwirksam |
 | § 556 Abs. 3 BGB | Abrechnungsfrist überschritten (> 12 Monate) | Nachforderung ausgeschlossen |
-| BGH VIII ZR 294/10 | Pauschaler Sicherheitszuschlag auf die Vorauszahlung (z. B. „+10 % erwartete Kostensteigerung“) | Erhöhung unwirksam |
-
-#### Sofort angreifbar — wahrscheinlich
-
-| Rechtsgrundlage | Verstoß |
-|---|---|
-| § 1 Abs. 2 BetrKV | Positionstitel „Verwaltungsgebühr"/„Hausverwaltungskosten"/„Verwalterhonorar" |
-| § 25a NMV | Umlageausfallwagnis bei nicht öffentlich gefördertem Wohnraum |
+| § 556 Abs. 3 S. 5, Abs. 4 BGB | Einwendungsfrist unter 12 Monaten oder „gilt als genehmigt“ | Klausel unwirksam (Hinweis, kein Betrag) |
+| BGH VIII ZR 294/10 | Pauschaler Sicherheitszuschlag auf die Vorauszahlung | Erhöhung unwirksam (kein Betrag) |
+| § 25a NMV | Umlageausfallwagnis bei nicht gefördertem Wohnraum | Position streichen |
 
 #### Belegeinsicht erforderlich
 
-- Auffällig hohe Versicherungsbeiträge (Elementarversicherung nicht umlagefähig)
-- Hauswartleistungen ohne Aufschlüsselung (Verwaltungsanteil nicht umlagefähig)
-- Leerstandskosten: Flächenschlüssel weicht deutlich von Mieterfläche ab (BGH VIII ZR 159/05)
-- (unsicher) Sperrmüll, Rauchwarnmelder-Anschaffung/-Miete, Verbrauchserfassungsgeräte, auffällige Vorjahressteigerungen
+- **Kostenausreißer:** Kosten je m² und Monat gegen den Betriebskostenspiegel des Mieterbunds (Abrechnungsjahr 2024, Werte im Prompt). Ab etwa dem Doppelten melden, `potentialEur` = Mehrbetrag gegenüber dem Durchschnitt. Allgemeinstrom weit darüber: Verdacht auf Heizungsstrom, der doppelt bezahlt wird. Die Werte beim Erscheinen eines neuen Betriebskostenspiegels aktualisieren.
+- **Umlageschlüssel passen nicht zusammen** (gleiches Gebäude, verschiedene Gesamtflächen ohne Erklärung)
+- **Leerstand** (BGH VIII ZR 159/05)
+- **Versicherungen** mit nicht umlagefähigen Bestandteilen (Rechtsschutz, Hausrat, Mietausfall); Elementarschäden sind nach § 2 Nr. 13 BetrKV umlagefähig
+- **Hauswart** über dem Durchschnitt ohne Aufschlüsselung
+- Vorauszahlung ohne Grund deutlich über einem Zwölftel der Kosten (die „bisherige“ Vorauszahlung nicht mit den Zahlungen des Abrechnungsjahres vergleichen)
+- (unsicher) Sperrmüll, Rauchwarnmelder-Kauf/-Miete, Kauf von Erfassungsgeräten, Vorjahressteigerungen
 
 ---
 
