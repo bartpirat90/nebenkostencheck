@@ -199,7 +199,7 @@ Philosophie: Lieber einen echten Fehler übersehen als einen nicht existenten me
 | § 1 Abs. 2 BetrKV | Positionstitel enthält wörtlich „Reparatur"/„Instandhaltung"/„Instandsetzung" | Position streichen |
 | § 259 BGB | Gesamtkosten des Gebäudes fehlen vollständig | Abrechnung formell unwirksam |
 | § 556 Abs. 3 BGB | Abrechnungsfrist überschritten (> 12 Monate) | Nachforderung ausgeschlossen |
-| BGH VIII ZR 78/12 | Pauschale Vorauszahlungserhöhungen ohne Einzelabrechnung | Erhöhung unwirksam |
+| BGH VIII ZR 294/10 | Pauschaler Sicherheitszuschlag auf die Vorauszahlung (z. B. „+10 % erwartete Kostensteigerung“) | Erhöhung unwirksam |
 
 #### Sofort angreifbar — wahrscheinlich
 
@@ -212,7 +212,7 @@ Philosophie: Lieber einen echten Fehler übersehen als einen nicht existenten me
 
 - Auffällig hohe Versicherungsbeiträge (Elementarversicherung nicht umlagefähig)
 - Hauswartleistungen ohne Aufschlüsselung (Verwaltungsanteil nicht umlagefähig)
-- Leerstandskosten: Flächenschlüssel weicht deutlich von Mieterfläche ab (BGH VIII ZR 167/03)
+- Leerstandskosten: Flächenschlüssel weicht deutlich von Mieterfläche ab (BGH VIII ZR 159/05)
 - (unsicher) Sperrmüll, Rauchwarnmelder-Anschaffung/-Miete, Verbrauchserfassungsgeräte, auffällige Vorjahressteigerungen
 
 ---

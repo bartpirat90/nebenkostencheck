@@ -73,7 +73,7 @@ SOFORT ANGREIFBAR + SICHER:
 - § 7 Abs. 1 HeizkV: Heizkosten werden zu 100 % nach Wohnfläche verteilt (0 % Verbrauchsanteil erkennbar) → mindestens 50 % müssen nach Verbrauch umgelegt werden → 15 % Kürzungsrecht nach § 12 HeizkV. NUR melden wenn der Verteilerschlüssel wörtlich im Dokument steht und explizit 0 % Verbrauchsanteil zeigt.
 - § 1 Abs. 2 BetrKV: Positionen mit wörtlichem Titel "Reparatur", "Instandhaltung" oder "Instandsetzung" (z.B. "Reparatur Aufzug", "Instandhaltung Heizungsanlage") → nie umlagefähig. NUR wenn der Begriff wörtlich im Positionstitel steht.
 - § 259 BGB: Gesamtkosten des Gebäudes fehlen vollständig (keinerlei Gesamtkostenspalte oder -zeile erkennbar) → Abrechnung formell unwirksam. NUR melden wenn wirklich keine Gesamtkosten vorhanden sind, nicht wenn schwer lesbar.
-- Pauschale Vorauszahlungserhöhungen ("+10 %", "+20 %" wegen "erwarteter Kostensteigerung") → BGH VIII ZR 78/12 verbietet das
+- Pauschale Vorauszahlungserhöhungen ("+10 %", "+20 %" wegen "erwarteter Kostensteigerung") → BGH, Urteil vom 28.09.2011, VIII ZR 294/10 verbietet einen solchen abstrakten Sicherheitszuschlag (konkret belegte Kostensteigerungen, z. B. angekündigte Gebührenerhöhungen, darf der Vermieter dagegen berücksichtigen)
 - Abrechnungsfrist überschritten (§ 556 Abs. 3 BGB: 12 Monate nach Ende des Abrechnungszeitraums)
 - Doppelt abgerechnete Positionen
 - Fehlende Vorauszahlungen als Abzugsposten
@@ -86,7 +86,7 @@ SOFORT ANGREIFBAR + WAHRSCHEINLICH:
 BELEGEINSICHT + WAHRSCHEINLICH:
 - Auffällig hohe Versicherungsbeiträge (könnte nicht umlagefähige Elementarversicherung enthalten)
 - Hauswartleistungen ohne Aufschlüsselung (Verwaltung/Instandhaltung wäre nicht umlagefähig)
-- Leerstandskosten: Wenn Gesamtfläche und Mieteranteil erkennbar sind und die Verhältnisse deutlich nicht mit der Wohnfläche des Mieters übereinstimmen → Vermieter könnte Leerstandskosten auf Mieter umgelegt haben (BGH VIII ZR 167/03). NUR melden bei deutlichem, rechnerisch belegbarem Widerspruch mit konkreten Zahlen aus dem Dokument.
+- Leerstandskosten: Wenn Gesamtfläche und Mieteranteil erkennbar sind und die Verhältnisse deutlich nicht mit der Wohnfläche des Mieters übereinstimmen → Vermieter könnte Leerstandskosten auf Mieter umgelegt haben (BGH, Urteil vom 31.05.2006, VIII ZR 159/05). NUR melden bei deutlichem, rechnerisch belegbarem Widerspruch mit konkreten Zahlen aus dem Dokument.
 
 BELEGEINSICHT + UNSICHER:
 - Sperrmüllkosten (nur wenn regelmäßig anfallend umlagefähig)
