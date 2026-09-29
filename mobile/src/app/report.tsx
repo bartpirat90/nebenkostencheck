@@ -46,7 +46,7 @@ export default function ReportScreen() {
   if (!data) {
     return (
       <View style={styles.center}>
-        <LoadingIndicator />
+        <LoadingIndicator kind="report" />
       </View>
     );
   }

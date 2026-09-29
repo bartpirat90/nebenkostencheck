@@ -78,7 +78,7 @@ export function GET() {
               letterSpacing: "-1.6px",
             }}
           >
-            Nebenkostenabrechnung in Sekunden geprüft
+            Nebenkostenabrechnung in unter einer Minute geprüft
           </div>
           <div style={{ display: "flex", width: "130px", height: "6px", background: "#047857", borderRadius: "3px" }} />
           <div style={{ display: "flex", fontSize: "27px", color: "#4E555C", lineHeight: 1.35 }}>

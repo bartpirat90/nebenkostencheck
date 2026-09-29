@@ -111,7 +111,7 @@ export default function UploadScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <LoadingIndicator />
+        <LoadingIndicator kind="analysis" />
       </View>
     );
   }

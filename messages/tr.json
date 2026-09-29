@@ -2,7 +2,7 @@
   "_meta": { "status": "ai-draft", "review": "Yayına almadan önce anadili Türkçe olan biri kontrol etmeli." },
   "meta": {
     "title": "Nebenkostenabrechnung kontrolü – Nebenkostencheck",
-    "description": "Alman yan gider faturanızı (Nebenkostenabrechnung) yükleyin ve saniyeler içinde tipik hataları bulun – güncel Alman kira hukukuna (BetrKV, HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre kontrol edilir. İlk kontrol ücretsiz.",
+    "description": "Alman yan gider faturanızı (Nebenkostenabrechnung) yükleyin ve bir dakikadan kısa sürede tipik hataları bulun – güncel Alman kira hukukuna (BetrKV, HeizkV) ve Federal Mahkeme (BGH) içtihatlarına göre kontrol edilir. İlk kontrol ücretsiz.",
     "ogAlt": "Nebenkostencheck – Alman yan gider faturanızı kontrol edin ve paranızı geri alın"
   },
   "nav": {
@@ -22,7 +22,7 @@
   },
   "hero": {
     "headline": "Yan gider faturanızda para gizli mi?",
-    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin. Saniyeler içinde tipik hatalar açısından kontrol edilir ve tahmini iade tutarınız hesaplanır.",
+    "subline": "Nebenkostenabrechnung veya Betriebskostenabrechnung yükleyin. Bir dakikadan kısa sürede tipik hatalar açısından kontrol edilir ve tahmini iade tutarınız hesaplanır.",
     "cta": "Faturamı kontrol edin",
     "priceNote": "İlk kontrol ücretsiz · tam rapor tek seferlik 9,90 €, abonelik yok"
   },
@@ -63,7 +63,7 @@
         "source": "Deutscher Mieterbund"
       },
       {
-        "value": "15 saniye",
+        "value": "Yaklaşık 40 saniye",
         "text": "faturanızın otomatik kontrolü bu kadar sürer.",
         "source": "Kendi ölçümümüz"
       },
@@ -102,7 +102,8 @@
     "errSourceTooLarge": "Dosya çok büyük (en fazla {mb} MB).",
     "privacyHint": "Yükleme ile dosya kontrol amacıyla Anthropic'e (ABD) iletilir ve en geç 24 saat sonra silinir. Ayrıntılar <link>gizlilik politikasında</link>.",
     "loadingTitle": "Faturanız kontrol ediliyor…",
-    "loadingSubtitle": "Bu genellikle 10–20 saniye sürer",
+    "loadingSubtitle": "Bu genellikle 30 ila 60 saniye sürer",
+    "loadingSlow": "Kapsamlı faturalar biraz daha uzun sürer. Lütfen bu pencereyi açık tutun.",
     "phases": [
       "Belge okunuyor",
       "Kalemler alınıyor",
@@ -395,7 +396,7 @@
     "readyDesc": "Mektubunuz hazır. Sonraki adımlar:",
     "close": "Kapat",
     "loadingTitle": "Mektubunuz oluşturuluyor…",
-    "loadingSubtitle": "Bu genellikle 5–15 saniye sürer.",
+    "loadingSubtitle": "Bu genellikle 10 ila 20 saniye sürer.",
     "phaseFormulating": "Mektup yazılıyor",
     "phasePdf": "PDF oluşturuluyor",
     "downloadPdf": "PDF indir",

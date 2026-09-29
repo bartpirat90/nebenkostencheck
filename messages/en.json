@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Check your Nebenkostenabrechnung – Nebenkostencheck",
-    "description": "Upload your German utility-cost statement (Nebenkostenabrechnung) and find common errors in seconds – checked against current German tenancy law (BetrKV, HeizkV) and Federal Court (BGH) case law. First check is free.",
+    "description": "Upload your German utility-cost statement (Nebenkostenabrechnung) and find common errors in under a minute – checked against current German tenancy law (BetrKV, HeizkV) and Federal Court (BGH) case law. First check is free.",
     "ogAlt": "Nebenkostencheck – check your German utility bill and get money back"
   },
   "nav": {
@@ -21,7 +21,7 @@
   },
   "hero": {
     "headline": "Is there money hidden in your utility bill?",
-    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung. It is checked for typical errors in seconds, with your estimated refund.",
+    "subline": "Upload your Nebenkostenabrechnung or Betriebskostenabrechnung. It is checked for typical errors in under a minute, with your estimated refund.",
     "cta": "Check my bill",
     "priceNote": "First check free · full report once for €9.90, no subscription"
   },
@@ -62,7 +62,7 @@
         "source": "German Tenants’ Association"
       },
       {
-        "value": "15 seconds",
+        "value": "About 40 seconds",
         "text": "is how long the automatic check of your statement takes.",
         "source": "Own measurement"
       },
@@ -101,7 +101,8 @@
     "errSourceTooLarge": "The file is too large (max. {mb} MB).",
     "privacyHint": "By uploading, the file is transmitted to Anthropic (USA) for checking and deleted after 24 hours at the latest. Details in the <link>privacy policy</link>.",
     "loadingTitle": "Your bill is being checked…",
-    "loadingSubtitle": "This usually takes 10–20 seconds",
+    "loadingSubtitle": "This usually takes 30 to 60 seconds",
+    "loadingSlow": "Longer statements take a little more time. Please keep this window open.",
     "phases": [
       "Reading the document",
       "Capturing line items",
@@ -394,7 +395,7 @@
     "readyDesc": "Your letter is ready. Here is what to do next:",
     "close": "Close",
     "loadingTitle": "Your letter is being created…",
-    "loadingSubtitle": "This usually takes 5–15 seconds.",
+    "loadingSubtitle": "This usually takes 10 to 20 seconds.",
     "phaseFormulating": "Drafting the letter",
     "phasePdf": "Generating the PDF",
     "downloadPdf": "Download PDF",

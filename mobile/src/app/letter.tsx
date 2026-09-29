@@ -49,7 +49,7 @@ export default function LetterScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <LoadingIndicator />
+        <LoadingIndicator kind="letter" />
       </View>
     );
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, DragEvent, ChangeEvent } from "react";
+import { useState, useEffect, useRef, DragEvent, ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import { ProgressBar, PhaseList } from "./ActivityIndicator";
 import { Link } from "@/i18n/navigation";
@@ -151,9 +151,26 @@ export default function UploadZone({ onUpload, loading, error }: Props) {
   );
 }
 
+/**
+ * Eine Prüfung dauert mit Sonnet 5 rund 35–45 s. Die Phasen laufen deshalb
+ * im 9-s-Takt und erreichen die letzte nach 36 s, statt nach 16 s scheinbar
+ * hängen zu bleiben.
+ */
+const PHASE_INTERVAL_MS = 9_000;
+
+/** Ab hier liegt die Prüfung über dem Üblichen; ohne Hinweis brechen Nutzer ab. */
+const SLOW_HINT_AFTER_MS = 60_000;
+
 function LoadingState() {
   const t = useTranslations("upload");
   const phases = t.raw("phases") as string[];
+  const [slow, setSlow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setSlow(true), SLOW_HINT_AFTER_MS);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-xs">
       <div className="w-full">
@@ -163,8 +180,11 @@ function LoadingState() {
       <div className="space-y-1 text-center">
         <p className="font-semibold text-fg">{t("loadingTitle")}</p>
         <p className="text-sm text-muted">{t("loadingSubtitle")}</p>
+        <p className="text-sm text-muted" aria-live="polite">
+          {slow ? t("loadingSlow") : null}
+        </p>
       </div>
-      <PhaseList phases={phases} />
+      <PhaseList phases={phases} intervalMs={PHASE_INTERVAL_MS} />
     </div>
   );
 }
